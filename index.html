@@ -138,16 +138,12 @@
         </ul>
     </nav>
 </header>
-<main class="main"> 
-<article class="first-entry home-info">
-    <header class="entry-header">
-        <h1>Hi there 👋</h1>
-    </header>
-    <div class="entry-content">
-        <p>Welcome to my blog</p>
-    </div>
-    <footer class="entry-footer">
-        <div class="social-icons">
+<main class="main"><div class="profile">
+    <div class="profile_inner">
+        <img src="https://chhanz88.github.io/%3Cimg%20location%3E" alt="my image"
+            height="120" width="120" />
+        <h1>ExampleSite</h1>
+        <span>This is subtitle</span><div class="social-icons">
     <a href="https://twitter.com/" target="_blank" rel="noopener noreferrer me" title="Twitter">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
     stroke-linecap="round" stroke-linejoin="round">
@@ -173,164 +169,16 @@
     </a>
 </div>
 
-    </footer>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>[Ubuntu] unattended-upgrades 설정 (자동 업데이트)
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>unattended-upgrades 란? unattended-upgrades 는 Ubuntu system 의 최신 보안 패치 및 기타 업데이트를 자동으로 수행하고 시스템을 유지, 관리 하는 것에 목적이 있는 서비스 입니다.
-설치 Ubuntu 를 설치하면 기본적으로 해당 서비스는 설치되어 작동하고 있습니다.
-만약 설치가 안되어 있다면 아래와 같이 설치를 진행합니다.
-$ sudo apt install unattended-upgrades -y 구동중인 daemon 정보는 아래와 같습니다.
-$ sudo systemctl status unattended-upgrades ● unattended-upgrades.service - Unattended Upgrades Shutdown  Loaded: loaded (/lib/systemd/system/unattended-upgrades.service; enabled; vendor preset: enabled)  Active: active (running) since Thu 2022-04-28 14:26:19 KST; 3 days ago  Docs: man:unattended-upgrade(8)  Main PID: 681 (unattended-upgr)  Tasks: 2 (limit: 9495)  Memory: 14....</p>
-  </div>
-  <footer class="entry-footer"><span title='2022-05-11 00:00:00 +0000 UTC'>May 11, 2022</span>&nbsp;·&nbsp;chhanz</footer>
-  <a class="entry-link" aria-label="post link to [Ubuntu] unattended-upgrades 설정 (자동 업데이트)" href="https://chhanz88.github.io/post/2022-05-11-ubuntu-unattended-upgrades/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>[Ubuntu] APT Repository 사용법
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Ubuntu 22.04 - APT Repository 사용법 Repository Component 종류 Ubuntu 에서 사용되는 Repository Component 는 아래와 같습니다.
-  Main : Ubuntu 무료 및 오픈소스 소프트웨어 Universe : Linux 커뮤니티의 무료 및 오픈소스 소프트웨어 Restricted : Vender 장치 드라이버 및 소프트웨어 Multiverse : 법적 제한(저작권 등)이 있는 소프트웨어   Default Repository Ubuntu 가 설치되면 기본적으로 아래와 같이 /etc/apt/sources.list 파일로 Repository 가 관리됩니다.
-root@u-node-1:/etc/apt/sources.list.d# cat /etc/apt/sources.list | egrep -v &#34;#|^$&#34; deb http://archive....</p>
-  </div>
-  <footer class="entry-footer"><span title='2022-05-09 00:00:00 +0000 UTC'>May 9, 2022</span>&nbsp;·&nbsp;chhanz</footer>
-  <a class="entry-link" aria-label="post link to [Ubuntu] APT Repository 사용법" href="https://chhanz88.github.io/post/2022-05-09-ubuntu-apt/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>[Ubuntu] apt-mirror 를 이용하여 sync 후, apt-get error 발생
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>apt-mirror 를 이용하여 sync 후, apt-get error 발생 apt-mirror 를 이용하여 Repository 를 sync 하고 아래와 같은 에러가 발생했습니다.
-... 생략 Ign:22 http://localhost:8000/ubuntu jammy/multiverse amd64 c-n-f Metadata Err:7 http://localhost:8000/ubuntu jammy/main amd64 c-n-f Metadata  404 File not found [IP: 127.0.0.1 8000] &lt;&lt;&lt; Ign:10 http://localhost:8000/ubuntu jammy/restricted amd64 c-n-f Metadata Ign:16 http://localhost:8000/ubuntu jammy/universe amd64 c-n-f Metadata Ign:22 http://localhost:8000/ubuntu jammy/multiverse amd64 c-n-f Metadata Fetched 38.0 MB in 0s (128 MB/s) Reading package lists... Done E: Failed to fetch http://localhost:8000/ubuntu/dists/jammy/main/cnf/Commands-amd64 404 File not found [IP: 127....</p>
-  </div>
-  <footer class="entry-footer"><span title='2022-05-09 00:00:00 +0000 UTC'>May 9, 2022</span>&nbsp;·&nbsp;chhanz</footer>
-  <a class="entry-link" aria-label="post link to [Ubuntu] apt-mirror 를 이용하여 sync 후, apt-get error 발생" href="https://chhanz88.github.io/post/2022-05-09-ubuntu-apt-mirror-issue/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>[Ubuntu] Local mirror site 구성(DVD/Repository sync)
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>목차  overview DVD 사용  Mount DVD sources.list 추가 Repository 추가   Sync Repository  apt-mirror 설치 mirror.list 수정 Sync Repository Check Sync mirror data location   Mirror site 운영  Mirror site 추가 APT update    overview 이번 포스팅은 DVD 를 활용하여 인터넷이 안되는 환경에서 Ubuntu package 를 다루는 방법과
-외부 환경이 아닌 내부에 Repository mirror site 를 구성하는 방법에 대해 알아보도록 하겠습니다.
-DVD 사용 주로 인터넷이 안되는 망분리 된 곳에서 많이 활용될 방식입니다....</p>
-  </div>
-  <footer class="entry-footer"><span title='2022-05-09 00:00:00 +0000 UTC'>May 9, 2022</span>&nbsp;·&nbsp;chhanz</footer>
-  <a class="entry-link" aria-label="post link to [Ubuntu] Local mirror site 구성(DVD/Repository sync)" href="https://chhanz88.github.io/post/2022-05-09-ubuntu-config-apt-mirror-site/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>[Ubuntu] NTP Service
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Ubuntu 20.04 NTP Service Ubuntu Server Version 을 설치하게 되면 기본적으로 NTP 서비스를 활성화가 되어있습니다.
-root@u-node-0:/etc/systemd# timedatectl -a  Local time: Thu 2022-04-28 11:14:26 KST  Universal time: Thu 2022-04-28 02:14:26 UTC  RTC time: Thu 2022-04-28 02:14:27  Time zone: Asia/Seoul (KST, &#43;0900) System clock synchronized: yes &lt;&lt;  NTP service: active  RTC in local TZ: no RHEL 계열의 ntpd 혹은 chronyd 가 자동으로 설치가 되어서 그런건가?
-Ubuntu 는 설치가 되면 systemd-timesyncd 라는 daemon 이 기본적으로 NTP 서비스를 수행합니다....</p>
-  </div>
-  <footer class="entry-footer"><span title='2022-05-02 00:00:00 +0000 UTC'>May 2, 2022</span>&nbsp;·&nbsp;chhanz</footer>
-  <a class="entry-link" aria-label="post link to [Ubuntu] NTP Service" href="https://chhanz88.github.io/post/2022-05-02-ubuntu-ntp-chrony/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>[Linux] VirtualBMC 를 이용한 IPMI node 생성
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>VirtualBMC 를 이용한 IPMI node 생성 IPMI Node 설정 SSH Key 배포 SSH 를 이용하여 KVM 에 접근 및 통제를 하기 위해 SSH KEY Password 배포를 진행합니다.
-[root@ipmi-node ~]# ssh-copy-id root@kvm Python-pip 설치 아래와 같은 방법으로 pip 을 설치합니다.
-[root@ipmi-node ~]# yum -y install python3 python3-pip  [root@ipmi-node ~]# pip3 install -U pip VirtualBMC 설치 아래와 같은 방법으로 vBMC 를 설치합니다.
-[root@ipmi-node ~]# pip3 install virtualbmc 설치 과정 중, 아래와 같은 Error 가 발생되면 추가 Package 를 설치합니다....</p>
-  </div>
-  <footer class="entry-footer"><span title='2022-04-14 00:00:00 +0000 UTC'>April 14, 2022</span>&nbsp;·&nbsp;chhanz</footer>
-  <a class="entry-link" aria-label="post link to [Linux] VirtualBMC 를 이용한 IPMI node 생성" href="https://chhanz88.github.io/post/2022-04-14-vbmcd-ipminode/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>[Linux] ipmitool 사용법
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>매번 잊어버려서 따로 정리함.
- ipmitool 설치 아래 명령을 통해 ipmitool 명령을 설치 할 수 있다.
-  RHEL/CentOS/Rocky 계열
-$ sudo yum install ipmitool or $ sudo dnf install ipmitool   Ubuntu
-$ sudo apt install ipmitool   IPMI 정보 확인 아래 명령을 통해 IPMI 정보를 확인 할 수 있다.
-$ ipmitool lan print [&lt;channel num&gt;] Set in Progress : Set Complete Auth Type Support : NONE MD5 PASSWORD Auth Type Enable : Callback : MD5 PASSWORD  : User : MD5 PASSWORD  : Operator : MD5 PASSWORD  : Admin : MD5 PASSWORD  : OEM : IP Address Source : Static Address IP Address : 222....</p>
-  </div>
-  <footer class="entry-footer"><span title='2022-03-01 00:00:00 +0000 UTC'>March 1, 2022</span>&nbsp;·&nbsp;chhanz</footer>
-  <a class="entry-link" aria-label="post link to [Linux] ipmitool 사용법" href="https://chhanz88.github.io/post/2022-03-01-ipmitool/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>[Linux] njmon with Prometheus
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>목차  Njmon 란? Architecture Telegraf config Njmon config  Prometheus config Grafana Dashboard 참고 자료  Njmon 이란? Architecture Telegraf config 이번 글에서 사용한 테스트 시스템은 Rocky Linux 8 이며 아래 문서를 참고 하여 Telegraf 를 구성하였습니다.
-(https://docs.influxdata.com/telegraf/v1.21/introduction/installation/?t=RedHat&#43;%26amp%3B&#43;CentOS)
-아래와 같이 Repository 를 추가합니다.
-cat &lt;&lt;EOF | sudo tee /etc/yum.repos.d/influxdb.repo [influxdb] name = InfluxDB Repository - RHEL \$releasever baseurl = https://repos.influxdata.com/rhel/\$releasever/\$basearch/stable enabled = 1 gpgcheck = 1 gpgkey = https://repos.influxdata.com/influxdb.key EOF dnf 를 통해 Package 를 설치합니다....</p>
-  </div>
-  <footer class="entry-footer"><span title='2022-02-18 00:00:00 +0000 UTC'>February 18, 2022</span>&nbsp;·&nbsp;chhanz</footer>
-  <a class="entry-link" aria-label="post link to [Linux] njmon with Prometheus" href="https://chhanz88.github.io/post/2022-02-18-njmon-telegraf-grafana/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>[Linux] CentOS 8: Failed to download metadata for repo &#39;appstream&#39;
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>EOS CentOS 8 CentOS 8 은 December 31, 2021 부로 EOS 되었습니다.
-지속적인 사용을 위해서는 CentOS 8 Stream 으로 배포판 변경을 해야지 지속적인 지원을 받을 수 있습니다.
-Error dnf Error: Failed to download metadata for repo &#39;appstream&#39;: Cannot prepare internal mirrorlist: No URLs in mirrorlist
-메시지가 나오면서 dnf 가 수행이 안되는 것을 확인 할 수 있습니다.
-[root@chhan-c8 ~]# dnf repolist CentOS Linux 8 - AppStream 87 B/s | 38 B 00:00 Error: Failed to download metadata for repo &#39;appstream&#39;: Cannot prepare internal mirrorlist: No URLs in mirrorlist 해결 방안 이는 CentOS 8 EOS 로 인해 CentOS 8 Mirror site 가 vault 로 전환되어 Mirror site 를 못 찾아 발생되는 문제입니다....</p>
-  </div>
-  <footer class="entry-footer"><span title='2022-02-04 00:00:00 +0000 UTC'>February 4, 2022</span>&nbsp;·&nbsp;chhanz</footer>
-  <a class="entry-link" aria-label="post link to [Linux] CentOS 8: Failed to download metadata for repo &#39;appstream&#39;" href="https://chhanz88.github.io/post/2022-02-04-dnf-error-centos-8/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>[Ventoy] ISO 를 바로 사용하는 OS Install Boot Device 생성
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Intro 시스템 장애로 인해 OS 를 재설치 해야되는 경우가 생겼다.
-시스템팀에서 OS 재설치를 해야되는데 DVD 도 없고 USB 이미지도 없었다.
-급하게 설치를 해야되서 내가 가지고 있는 IODD 를 이용하여 OS 설치를 하게 되었다.
-Ventoy 무료로 IODD 와 같이 사용 할 수 있는 것이 있나 찾다가 발견된 것은 Ventoy 이다.
-따로 Boot device 로 생성안하고 바로 ISO 이미지를 넣어서 OS Install Device 로 사용이 가능하다.
-Ventoy 설치 (for Linux) Ubuntu 시스템에서 Ventoy device 설치를 해본다....</p>
-  </div>
-  <footer class="entry-footer"><span title='2022-02-03 00:00:00 +0000 UTC'>February 3, 2022</span>&nbsp;·&nbsp;chhanz</footer>
-  <a class="entry-link" aria-label="post link to [Ventoy] ISO 를 바로 사용하는 OS Install Boot Device 생성" href="https://chhanz88.github.io/post/2022-02-03-ventoy/"></a>
-</article>
-<footer class="page-footer">
-  <nav class="pagination">
-    <a class="next" href="https://chhanz88.github.io/page/2/">Next Page »</a>
-  </nav>
-</footer>
+        <div class="buttons">
+            <a class="button" href="posts" rel="noopener" title="Posts">
+                <span class="button-inner">Posts</span>
+            </a>
+            <a class="button" href="tags" rel="noopener" title="Tags">
+                <span class="button-inner">Tags</span>
+            </a>
+        </div>
+    </div>
+</div>
     </main>
     
 <footer class="footer">
