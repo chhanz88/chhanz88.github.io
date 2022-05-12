@@ -1,5 +1,3 @@
 User-agent: *
-Allow: /
-Sitemap: https://chhanz.github.io/sitemap.xml
-Sitemap: http://chhanz.github.io/sitemap.xml
-Disallow: /assets/
+Disallow:
+Sitemap: https://chhanz88.github.io/sitemap.xml
