@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>[Openshift] Openshift 의 HPA 를 이용한 Auto-Scaling 구현 | chhanz 
+기술 블로그
+</title>
+<meta name="keywords" content="openshift">
+<meta name="description" content=" ">
+<meta name="author" content="chhanz">
+<link rel="canonical" href="https://chhanz88.github.io/post/2019-07-15-okd-hpa/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.ec8da366ca2fb647537ccb7a8f6fa5b4e9cd3c7a0d3171dd2d3baad1e49c8bfc.css" integrity="sha256-7I2jZsovtkdTfMt6j2&#43;ltOnNPHoNMXHdLTuq0eSci/w=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.min.4dcb3c4f38462f66c6b6137227726f5543cb934cca9788f041c087e374491df2.js" integrity="sha256-Tcs8TzhGL2bGthNyJ3JvVUPLk0zKl4jwQcCH43RJHfI="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://chhanz88.github.io/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://chhanz88.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://chhanz88.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://chhanz88.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://chhanz88.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="[Openshift] Openshift 의 HPA 를 이용한 Auto-Scaling 구현" />
+<meta property="og:description" content=" " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://chhanz88.github.io/post/2019-07-15-okd-hpa/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2019-07-15T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2019-07-15T00:00:00&#43;00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[Openshift] Openshift 의 HPA 를 이용한 Auto-Scaling 구현"/>
+<meta name="twitter:description" content=" "/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Posts",
+      "item": "https://chhanz88.github.io/post/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "[Openshift] Openshift 의 HPA 를 이용한 Auto-Scaling 구현",
+      "item": "https://chhanz88.github.io/post/2019-07-15-okd-hpa/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "[Openshift] Openshift 의 HPA 를 이용한 Auto-Scaling 구현",
+  "name": "[Openshift] Openshift 의 HPA 를 이용한 Auto-Scaling 구현",
+  "description": " ",
+  "keywords": [
+    "openshift"
+  ],
+  "articleBody": "이전 포스팅 다시 보기    [Openshift] Openshift Origin v3.11 설치, App 배포 [Openshift] Openshift Web Console 을 이용한 배포   Openshift 의 HPA 를 이용한 Auto-Scaling 구현  Openshift 에서 Horizontal Pod Autoscaler(이하 HPA) 를 이용하여 설정한 CPU 사용률을 기반으로 Replicaset, Deployment 의 Pod 수를 자동으로 Scaling 할 수 있습니다.\nHPA 를 하기 위해서는 Pod 의 부하에 대해 모니터링 및 수집을 하는 Metrics-Server 가 필요합니다.\n아래에서 Openshift 에 Metrics-Server 를 배포하고 성능 수집을 해보도록 하겠습니다.\nMetrics-Server 배포  기본적으로 Openshift 설치 과정에서는 metric-server 는 기본 배포로 설정이 안되어 있습니다.\n추가로 설치를 진행 해야됩니다.\n 참고 문서: okd v3.11 Documentation - Pod Autoscaling  아래와 같이 이전 포스팅에서 사용한 Openshift Playbook 을 이용합니다.\n# ansible-playbook -i inventory/hosts.localhost /usr/share/ansible/openshift-ansible/playbooks/metrics-server/config.yml -e openshift_metrics_server_install=true ... ...  PLAY RECAP ******************************************************************************************************************************************************************************************************************************************** localhost : ok=119 changed=13 unreachable=0 failed=0   INSTALLER STATUS ************************************************************************************************************************************************************************************************************************************** Initialization : Complete (0:00:59) metrics-server Install : Complete (0:00:56) Thursday 06 June 2019 13:28:05 +0200 (0:00:00.105) 0:01:56.691 ********* =============================================================================== Run variable sanity checks -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- 23.51s Gathering Facts -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- 4.03s Gather Cluster facts --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- 3.00s metrics_server : Ensure metrics-server namespace is present ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ 2.80s metrics_server : slurp ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- 2.44s Initialize openshift.node.sdn_mtu -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- 2.28s get openshift_current_version ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ 2.09s metrics_server : generate metrics-server keys -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- 1.64s metrics_server : generate metrics-server secret template --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- 1.26s metrics_server : Applying /tmp/openshift-metrics-server-ansible-56a8WR/templates/metrics-server-certs.yaml ------------------------------------------------------------------------------------------------------------------------------------- 1.17s metrics_server : Applying /tmp/openshift-metrics-server-ansible-56a8WR/templates/metrics-server-sa.yaml ---------------------------------------------------------------------------------------------------------------------------------------- 1.14s metrics_server : Applying /tmp/openshift-metrics-server-ansible-56a8WR/templates/metrics-server-resource-reader-rolebinding.yaml --------------------------------------------------------------------------------------------------------------- 1.14s metrics_server : Applying /tmp/openshift-metrics-server-ansible-56a8WR/templates/metrics-server-service.yaml ----------------------------------------------------------------------------------------------------------------------------------- 1.13s metrics_server : generate ca certificate chain ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- 1.13s metrics_server : Applying /tmp/openshift-metrics-server-ansible-56a8WR/templates/metrics-server-auth-delegator-rolebinding.yaml ---------------------------------------------------------------------------------------------------------------- 1.12s metrics_server : Applying /tmp/openshift-metrics-server-ansible-56a8WR/templates/extension-apiserver-authentication-reader-metrics-server-rolebinding.yaml ------------------------------------------------------------------------------------- 1.09s metrics_server : Applying /tmp/openshift-metrics-server-ansible-56a8WR/templates/metrics-server-apiservice.yaml -------------------------------------------------------------------------------------------------------------------------------- 1.08s metrics_server : Applying /tmp/openshift-metrics-server-ansible-56a8WR/templates/metrics-server-deployment.yaml -------------------------------------------------------------------------------------------------------------------------------- 1.06s metrics_server : Checking generation of Service metrics-server --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- 1.03s metrics_server : Determine change status of ClusterRoleBinding system:metrics-server ----------------------------------------------------------------------------------------------------------------------------------------------------------- 1.03s [root@master openshift-ansible]# 위와 같이 배포가 완료되면, oc 명령을 통해 metrics-server 가 정상 작동하는지 확인 할 수 있습니다.\n[root@master ~]# oc adm top node NAME CPU(cores) CPU% MEMORY(bytes) MEMORY% master.example.com 907m 11% 6146Mi 38% //openshift-metrics-server namespaces 에 metrics-server 가 배포 된 것을 확인 할 수 있습니다. [root@master ~]# oc adm top pod --all-namespaces NAMESPACE NAME CPU(cores) MEMORY(bytes) default docker-registry-1-9t2zp 2m 32Mi default registry-console-1-n4v9t 0m 1Mi default router-1-58cpz 4m 45Mi kube-service-catalog apiserver-pnsnf 1m 51Mi kube-service-catalog controller-manager-qsq5m 10m 22Mi kube-system master-api-master.example.com 96m 1061Mi kube-system master-controllers-master.example.com 99m 532Mi kube-system master-etcd-master.example.com 36m 408Mi openshift-ansible-service-broker asb-1-k9nww 2m 19Mi openshift-console console-5677c7c58d-n5z5h 2m 9Mi openshift-metrics-server metrics-server-7bf4cf7dd4-svfs7 1m 30Mi openshift-monitoring alertmanager-main-0 4m 25Mi openshift-monitoring alertmanager-main-1 7m 25Mi openshift-monitoring alertmanager-main-2 6m 26Mi openshift-monitoring cluster-monitoring-operator-6465f8fbc7-f4w4t 0m 35Mi openshift-monitoring grafana-6b9f85786f-z9gpj 6m 42Mi openshift-monitoring kube-state-metrics-7449d589bc-qsrvh 7m 67Mi openshift-monitoring node-exporter-hjh46 2m 21Mi openshift-monitoring prometheus-k8s-0 64m 495Mi openshift-monitoring prometheus-k8s-1 47m 485Mi openshift-monitoring prometheus-operator-6644b8cd54-cv2hf 0m 25Mi openshift-node sync-fnd6m 0m 7Mi openshift-sdn ovs-ssckw 5m 80Mi openshift-sdn sdn-77shb 12m 37Mi openshift-template-service-broker apiserver-2mpk8 4m 30Mi openshift-web-console webconsole-7df4f9f689-mxfkj 15m 25Mi sample-project chhanz-hello-example 0m 0Mi sample-project http-example-1-5dhj5 3m 9Mi sample-project sampleapp-2-hbmzs 7m 222Mi test-project load-generator-779c5f458c-g4kff 0m 0Mi test-project mysample-3-cr8cp 1m 215Mi test-project mysample-3-dvrlp 1m 206Mi test-project mysample-3-npgq7 1m 228Mi test-project mysample-3-t9dwg 1m 214Mi test-project mysample-3-vtm5j 1m 217Mi test-project nginx-1-rjd86 0m 1Mi test-project php-apache-b5b7bd9c8-hpcw8 0m 9Mi test-project ruby-ex-1-nkfxn 1m 83Mi [root@master ~]# 참고로 $ oc top nodes 명령을 통해 성능 수집이 정상적으로 동작하려면 배포 후, 일정 시간이 지나야 됩니다.\nHPA 구현  HPA 를 이용한 Auto-Scaling 을 구현하기 위해 아래와 같이 신규 Project 를 생성합니다.\n[root@master ~]# oc new-project hpa-project Now using project \"hpa-project\" on server \"https://master.example.com:8443\".  You can add applications to this project with the 'new-app' command. For example, try:   oc new-app centos/ruby-25-centos7~https://github.com/sclorg/ruby-ex.git  to build a new example application in Ruby. [root@master ~]# [root@master ~]# oc get po No resources found. [root@master ~]# [root@master ~]# 부하(load)를 감지하고 응답 할 수 있는 App 을 생성합니다.\n 참고 문서 - Horizontal Pod Autoscaler 연습  Dockerfile 생성 및 Build # ls Dockerfile index.php # cat Dockerfile FROM php:5-apache ADD index.php /var/www/html/index.php RUN chmod a+rx index.php # cat index.php  $x = 0.0001;  for ($i = 0; $i  $x += sqrt($x);  }  echo \"OK!\"; ? # docker build -t hpa-example . Sending build context to Docker daemon 3.072kB Step 1/3 : FROM php:5-apache 5-apache: Pulling from library/php 5e6ec7f28fb7: Pull complete cf165947b5b7: Pull complete 7bd37682846d: Pull complete 99daf8e838e1: Pull complete ae320713efba: Pull complete ebcb99c48d8c: Pull complete 9867e71b4ab6: Pull complete 936eb418164a: Pull complete bc298e7adaf7: Pull complete ccd61b587bcd: Pull complete b2d4b347f67c: Pull complete 56e9dde34152: Pull complete 9ad99b17eb78: Pull complete Digest: sha256:0a40fd273961b99d8afe69a61a68c73c04bc0caa9de384d3b2dd9e7986eec86d Status: Downloaded newer image for php:5-apache  --- 24c791995c1e Step 2/3 : ADD index.php /var/www/html/index.php  --- bcc3ff35ceb8 Step 3/3 : RUN chmod a+rx index.php  --- Running in d1e173fb27a3 Removing intermediate container d1e173fb27a3  --- f4bb43246866 Successfully built f4bb43246866 Successfully tagged hpa-example:latest  # docker push han0495/hpa-example The push refers to repository [docker.io/han0495/hpa-example] b42dc42a2d18: Pushed 056e15bb815c: Pushed 1aab22401f12: Mounted from library/php 13ab94c9aa15: Mounted from library/php 588ee8a7eeec: Mounted from library/php bebcda512a6d: Mounted from library/php 5ce59bfe8a3a: Mounted from library/php d89c229e40ae: Mounted from library/php 9311481e1bdc: Mounted from library/php 4dd88f8a7689: Mounted from library/php b1841504f6c8: Mounted from library/php 6eb3cfd4ad9e: Mounted from library/php 82bded2c3a7c: Mounted from library/php b87a266e6a9c: Mounted from library/php 3c816b4ead84: Mounted from library/php latest: digest: sha256:07c8ebfbe5b8084b878d0ed4ebafe5baad124b0b932e4f56d81480fbf715f03f size: 3449 App 배포 php 로 만들어진 App 을 Openshift 에 배포합니다.\n[root@master ~]# oc login -u admin Logged into \"https://master.example.com:8443\" as \"admin\" using existing credentials.  You have access to the following projects and can switch between them with 'oc project ':   default  * hpa-project  kube-public  kube-service-catalog  kube-system  management-infra  openshift  openshift-ansible-service-broker  openshift-console  openshift-infra  openshift-logging  openshift-metrics-server  openshift-monitoring  openshift-node  openshift-sdn  openshift-template-service-broker  openshift-web-console  sample-project  test-project  Using project \"hpa-project\".  [root@master ~]# oc run hpa-example-pod --image=han0495/hpa-example --expose --port 80 --requests=cpu=200m service/hpa-example-pod created deploymentconfig.apps.openshift.io/hpa-example-pod created [root@master ~]# oc get all NAME READY STATUS RESTARTS AGE pod/hpa-example-pod-1-deploy 1/1 Running 0 9s pod/hpa-example-pod-1-ngj64 0/1 ContainerCreating 0 6s  NAME DESIRED CURRENT READY AGE replicationcontroller/hpa-example-pod-1 1 1 0 9s  NAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGE service/hpa-example-pod ClusterIP 172.30.193.122  80/TCP 9s  NAME REVISION DESIRED CURRENT TRIGGERED BY deploymentconfig.apps.openshift.io/hpa-example-pod 1 1 1 config 위와 같이 배포가 완료 되었습니다.\n해당 Pod 은 CPU 리소스를 200m 까지 요청 수 있도록 설정 하였습니다.\nHPA 생성 생성된 Pod 에 HPA 를 만들고 연결합니다.\n[root@master ~]# oc autoscale deploymentconfig.apps.openshift.io/hpa-example-pod --min 1 --max 8 --cpu-percent=70 horizontalpodautoscaler.autoscaling/hpa-example-pod autoscaled   [root@master ~]# oc describe hpa Name: hpa-example-pod Namespace: hpa-project Labels:  Annotations:  CreationTimestamp: Mon, 24 Jun 2019 08:20:40 +0200 Reference: DeploymentConfig/hpa-example-pod Metrics: ( current / target )  resource cpu on pods (as a percentage of request): 0% (0) / 70% Min replicas: 1 Max replicas: 8 DeploymentConfig pods: 1 current / 1 desired Conditions:  Type Status Reason Message  ---- ------ ------ -------  AbleToScale True ReadyForNewScale the last scale time was sufficiently old as to warrant a new scale  ScalingActive True ValidMetricFound the HPA was able to successfully calculate a replica count from cpu resource utilization (percentage of request)  ScalingLimited True TooFewReplicas the desired replica count is increasing faster than the maximum scale rate Events:  [root@master ~]# 생성된 HPA 의 상세 정보를 보도록 하겠습니다.\n부하(load)가 발생되면 해당 Pod 의 평균 CPU 사용량이 70% 을 유지하도록 설정 되어 있습니다. 최소 1개의 Pod 을 만들 수 있고, 최대 8개까지 Pod 을 증가 시킬 수 있습니다.\n부하 테스트  Openshift 에서 제공하는 Grafana 를 이용하여 실제 Pod 에 발생되는 부하(load)를 모니터링 하도록 하겠습니다.\nCPU 의 사용량은 0% 로 거의 부하(load)가 없습니다.\n해당 Pod 에 부하(load)를 발생 시키도록 하겠습니다.\n[root@master ~]# oc run -it load-generator --image=busybox [root@master ~]# oc get all NAME READY STATUS RESTARTS AGE pod/hpa-example-pod-1-ngj64 1/1 Running 0 16m pod/load-generator-1-tl2s4 1/1 Running 0 29s  NAME DESIRED CURRENT READY AGE replicationcontroller/hpa-example-pod-1 1 1 1 16m replicationcontroller/load-generator-1 1 1 1 32s  NAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGE service/hpa-example-pod ClusterIP 172.30.193.122  80/TCP 16m  NAME REFERENCE TARGETS MINPODS MAXPODS REPLICAS AGE horizontalpodautoscaler.autoscaling/hpa-example-pod DeploymentConfig/hpa-example-pod 0%/70% 1 8 1 13m  NAME REVISION DESIRED CURRENT TRIGGERED BY deploymentconfig.apps.openshift.io/hpa-example-pod 1 1 1 config deploymentconfig.apps.openshift.io/load-generator 1 1 1 config  [root@master ~]# oc exec load-generator-1-f9xrd -ti /bin/sh / # / # while true; do wget -q -O- http://hpa-example-pod.hpa-project.svc.cluster.local; done 위와 같이 busybox를 이용하여 load-generator 를 만들었습니다.\n# while true; do wget -q -O- http://hpa-example-pod.hpa-project.svc.cluster.local; done 명령을 통해 App 에 부하(load)를 유발합니다.\n점점 HPA 에서 부하(load)를 감지합니다.\n본격적으로 HPA 에서 부하(load)를 감지하고 CPU 사용률 평균 70%를 유지하기 위해 Pod 를 Auto-Scaling 합니다.\n지속된 부하(load)로 인해 Pod이 7개까지 증가 되었습니다.\nGrafana에서 Pod 상태를 보도록 하겠습니다.\n다량의 부하(load)로 인해 설정된 최대 Pod 수 8개까지 증가 된 것을 확인 할 수 있습니다.\nGrafana 에서도 Pod 8개가 Auto-Scaling 되어 작동하는 것을 확인 하였습니다.\n이처럼 HPA에서 부하(load)를 감지하고 Auto-Scaling 을 하여 정상적인 서비스를 유지 할 수 있습니다.\n부하 테스트 종료 부하(load) 발생을 중지하면 HPA에서 감지하고 다시 Pod 의 수를 조절합니다.\n이번 포스팅에서는 HPA 를 이용하여 Auto-Scaling 을 구현 하였습니다.\nOpenshift의 HPA 을 이용하면 유연하고 지속적인 서비스를 구현하고 운영 할 수 있습니다.\n참고 자료   okd Documentation - pod_autoscaling k8s Documentation - Horizontal Pod Autoscaler 연습  ",
+  "wordCount" : "1396",
+  "inLanguage": "en",
+  "datePublished": "2019-07-15T00:00:00Z",
+  "dateModified": "2019-07-15T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "chhanz"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://chhanz88.github.io/post/2019-07-15-okd-hpa/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "chhanz \n기술 블로그\n",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://chhanz88.github.io/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://chhanz88.github.io" accesskey="h" title="chhanz 
+기술 블로그
+ (Alt + H)">chhanz 
+기술 블로그
+</a>
+            <span class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </span>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title">
+      [Openshift] Openshift 의 HPA 를 이용한 Auto-Scaling 구현
+    </h1>
+    <div class="post-description">
+       
+    </div>
+    <div class="post-meta"><span title='2019-07-15 00:00:00 +0000 UTC'>July 15, 2019</span>&nbsp;·&nbsp;chhanz
+
+</div>
+  </header> 
+  <div class="post-content"><h1 id="이전-포스팅-다시-보기">이전 포스팅 다시 보기<a hidden class="anchor" aria-hidden="true" href="#이전-포스팅-다시-보기">#</a></h1>
+<hr>
+<blockquote>
+<ol>
+<li><a href="https://chhanz.github.io/openshift/2019/06/07/install-okd-all-in-one/">[Openshift] Openshift Origin v3.11 설치, App 배포</a></li>
+<li><a href="https://chhanz.github.io/openshift/2019/06/24/overview-okd-gui/">[Openshift] Openshift Web Console 을 이용한 배포</a></li>
+</ol>
+</blockquote>
+<h1 id="openshift-의-hpa-를-이용한-auto-scaling-구현">Openshift 의 HPA 를 이용한 Auto-Scaling 구현<a hidden class="anchor" aria-hidden="true" href="#openshift-의-hpa-를-이용한-auto-scaling-구현">#</a></h1>
+<hr>
+<p>Openshift 에서 Horizontal Pod Autoscaler(이하 <code>HPA</code>) 를 이용하여 설정한 CPU 사용률을 기반으로 <code>Replicaset</code>, <code>Deployment</code> 의 Pod 수를 자동으로 Scaling 할 수 있습니다.</p>
+<p>HPA 를 하기 위해서는 Pod 의 부하에 대해 모니터링 및 수집을 하는 <code>Metrics-Server</code> 가 필요합니다.<br>
+아래에서 Openshift 에 <code>Metrics-Server</code> 를 배포하고 성능 수집을 해보도록 하겠습니다.</p>
+<h1 id="metrics-server-배포">Metrics-Server 배포<a hidden class="anchor" aria-hidden="true" href="#metrics-server-배포">#</a></h1>
+<hr>
+<p>기본적으로 Openshift 설치 과정에서는 <code>metric-server</code> 는 기본 배포로 설정이 안되어 있습니다.<br>
+추가로 설치를 진행 해야됩니다.</p>
+<ul>
+<li><a href="https://docs.okd.io/3.11/dev_guide/pod_autoscaling.html">참고 문서: okd v3.11 Documentation - Pod Autoscaling</a></li>
+</ul>
+<p>아래와 같이 이전 포스팅에서 사용한 Openshift Playbook 을 이용합니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span># ansible-playbook -i inventory/hosts.localhost /usr/share/ansible/openshift-ansible/playbooks/metrics-server/config.yml -e openshift_metrics_server_install<span style="color:#f92672">=</span>true
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>... &lt; 중략 &gt; ...
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>PLAY RECAP ********************************************************************************************************************************************************************************************************************************************
+</span></span><span style="display:flex;"><span>localhost                  : ok=119  changed=13   unreachable=0    failed=0
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>INSTALLER STATUS **************************************************************************************************************************************************************************************************************************************
+</span></span><span style="display:flex;"><span>Initialization          : Complete (0:00:59)
+</span></span><span style="display:flex;"><span>metrics-server Install  : Complete (0:00:56)
+</span></span><span style="display:flex;"><span>Thursday 06 June 2019  13:28:05 +0200 (0:00:00.105)       0:01:56.691 *********
+</span></span><span style="display:flex;"><span>===============================================================================
+</span></span><span style="display:flex;"><span>Run variable sanity checks -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- 23.51s
+</span></span><span style="display:flex;"><span>Gathering Facts -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- 4.03s
+</span></span><span style="display:flex;"><span>Gather Cluster facts --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- 3.00s
+</span></span><span style="display:flex;"><span>metrics_server : Ensure metrics-server namespace is present ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ 2.80s
+</span></span><span style="display:flex;"><span>metrics_server : slurp ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- 2.44s
+</span></span><span style="display:flex;"><span>Initialize openshift.node.sdn_mtu -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- 2.28s
+</span></span><span style="display:flex;"><span>get openshift_current_version ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ 2.09s
+</span></span><span style="display:flex;"><span>metrics_server : generate metrics-server keys -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- 1.64s
+</span></span><span style="display:flex;"><span>metrics_server : generate metrics-server secret template --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- 1.26s
+</span></span><span style="display:flex;"><span>metrics_server : Applying /tmp/openshift-metrics-server-ansible-56a8WR/templates/metrics-server-certs.yaml ------------------------------------------------------------------------------------------------------------------------------------- 1.17s
+</span></span><span style="display:flex;"><span>metrics_server : Applying /tmp/openshift-metrics-server-ansible-56a8WR/templates/metrics-server-sa.yaml ---------------------------------------------------------------------------------------------------------------------------------------- 1.14s
+</span></span><span style="display:flex;"><span>metrics_server : Applying /tmp/openshift-metrics-server-ansible-56a8WR/templates/metrics-server-resource-reader-rolebinding.yaml --------------------------------------------------------------------------------------------------------------- 1.14s
+</span></span><span style="display:flex;"><span>metrics_server : Applying /tmp/openshift-metrics-server-ansible-56a8WR/templates/metrics-server-service.yaml ----------------------------------------------------------------------------------------------------------------------------------- 1.13s
+</span></span><span style="display:flex;"><span>metrics_server : generate ca certificate chain ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- 1.13s
+</span></span><span style="display:flex;"><span>metrics_server : Applying /tmp/openshift-metrics-server-ansible-56a8WR/templates/metrics-server-auth-delegator-rolebinding.yaml ---------------------------------------------------------------------------------------------------------------- 1.12s
+</span></span><span style="display:flex;"><span>metrics_server : Applying /tmp/openshift-metrics-server-ansible-56a8WR/templates/extension-apiserver-authentication-reader-metrics-server-rolebinding.yaml ------------------------------------------------------------------------------------- 1.09s
+</span></span><span style="display:flex;"><span>metrics_server : Applying /tmp/openshift-metrics-server-ansible-56a8WR/templates/metrics-server-apiservice.yaml -------------------------------------------------------------------------------------------------------------------------------- 1.08s
+</span></span><span style="display:flex;"><span>metrics_server : Applying /tmp/openshift-metrics-server-ansible-56a8WR/templates/metrics-server-deployment.yaml -------------------------------------------------------------------------------------------------------------------------------- 1.06s
+</span></span><span style="display:flex;"><span>metrics_server : Checking generation of Service metrics-server --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- 1.03s
+</span></span><span style="display:flex;"><span>metrics_server : Determine change status of ClusterRoleBinding system:metrics-server ----------------------------------------------------------------------------------------------------------------------------------------------------------- 1.03s
+</span></span><span style="display:flex;"><span>[root@master openshift-ansible]#
+</span></span></code></pre></div><p>위와 같이 배포가 완료되면, <code>oc</code> 명령을 통해 <code>metrics-server</code> 가 정상 작동하는지 확인 할 수 있습니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>[root@master ~]# oc adm top node
+</span></span><span style="display:flex;"><span>NAME                 CPU(cores)   CPU%      MEMORY(bytes)   MEMORY%
+</span></span><span style="display:flex;"><span>master.example.com   907m         11%       6146Mi          38%
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>//openshift-metrics-server namespaces 에 metrics-server 가 배포 된 것을 확인 할 수 있습니다. 
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>[root@master ~]#  oc adm top pod --all-namespaces
+</span></span><span style="display:flex;"><span>NAMESPACE                           NAME                                           CPU(cores)   MEMORY(bytes)
+</span></span><span style="display:flex;"><span>default                             docker-registry-1-9t2zp                        2m           32Mi
+</span></span><span style="display:flex;"><span>default                             registry-console-1-n4v9t                       0m           1Mi
+</span></span><span style="display:flex;"><span>default                             router-1-58cpz                                 4m           45Mi
+</span></span><span style="display:flex;"><span>kube-service-catalog                apiserver-pnsnf                                1m           51Mi
+</span></span><span style="display:flex;"><span>kube-service-catalog                controller-manager-qsq5m                       10m          22Mi
+</span></span><span style="display:flex;"><span>kube-system                         master-api-master.example.com                  96m          1061Mi
+</span></span><span style="display:flex;"><span>kube-system                         master-controllers-master.example.com          99m          532Mi
+</span></span><span style="display:flex;"><span>kube-system                         master-etcd-master.example.com                 36m          408Mi
+</span></span><span style="display:flex;"><span>openshift-ansible-service-broker    asb-1-k9nww                                    2m           19Mi
+</span></span><span style="display:flex;"><span>openshift-console                   console-5677c7c58d-n5z5h                       2m           9Mi
+</span></span><span style="display:flex;"><span>openshift-metrics-server            metrics-server-7bf4cf7dd4-svfs7                1m           30Mi
+</span></span><span style="display:flex;"><span>openshift-monitoring                alertmanager-main-0                            4m           25Mi
+</span></span><span style="display:flex;"><span>openshift-monitoring                alertmanager-main-1                            7m           25Mi
+</span></span><span style="display:flex;"><span>openshift-monitoring                alertmanager-main-2                            6m           26Mi
+</span></span><span style="display:flex;"><span>openshift-monitoring                cluster-monitoring-operator-6465f8fbc7-f4w4t   0m           35Mi
+</span></span><span style="display:flex;"><span>openshift-monitoring                grafana-6b9f85786f-z9gpj                       6m           42Mi
+</span></span><span style="display:flex;"><span>openshift-monitoring                kube-state-metrics-7449d589bc-qsrvh            7m           67Mi
+</span></span><span style="display:flex;"><span>openshift-monitoring                node-exporter-hjh46                            2m           21Mi
+</span></span><span style="display:flex;"><span>openshift-monitoring                prometheus-k8s-0                               64m          495Mi
+</span></span><span style="display:flex;"><span>openshift-monitoring                prometheus-k8s-1                               47m          485Mi
+</span></span><span style="display:flex;"><span>openshift-monitoring                prometheus-operator-6644b8cd54-cv2hf           0m           25Mi
+</span></span><span style="display:flex;"><span>openshift-node                      sync-fnd6m                                     0m           7Mi
+</span></span><span style="display:flex;"><span>openshift-sdn                       ovs-ssckw                                      5m           80Mi
+</span></span><span style="display:flex;"><span>openshift-sdn                       sdn-77shb                                      12m          37Mi
+</span></span><span style="display:flex;"><span>openshift-template-service-broker   apiserver-2mpk8                                4m           30Mi
+</span></span><span style="display:flex;"><span>openshift-web-console               webconsole-7df4f9f689-mxfkj                    15m          25Mi
+</span></span><span style="display:flex;"><span>sample-project                      chhanz-hello-example                           0m           0Mi
+</span></span><span style="display:flex;"><span>sample-project                      http-example-1-5dhj5                           3m           9Mi
+</span></span><span style="display:flex;"><span>sample-project                      sampleapp-2-hbmzs                              7m           222Mi
+</span></span><span style="display:flex;"><span>test-project                        load-generator-779c5f458c-g4kff                0m           0Mi
+</span></span><span style="display:flex;"><span>test-project                        mysample-3-cr8cp                               1m           215Mi
+</span></span><span style="display:flex;"><span>test-project                        mysample-3-dvrlp                               1m           206Mi
+</span></span><span style="display:flex;"><span>test-project                        mysample-3-npgq7                               1m           228Mi
+</span></span><span style="display:flex;"><span>test-project                        mysample-3-t9dwg                               1m           214Mi
+</span></span><span style="display:flex;"><span>test-project                        mysample-3-vtm5j                               1m           217Mi
+</span></span><span style="display:flex;"><span>test-project                        nginx-1-rjd86                                  0m           1Mi
+</span></span><span style="display:flex;"><span>test-project                        php-apache-b5b7bd9c8-hpcw8                     0m           9Mi
+</span></span><span style="display:flex;"><span>test-project                        ruby-ex-1-nkfxn                                1m           83Mi
+</span></span><span style="display:flex;"><span>[root@master ~]#
+</span></span></code></pre></div><p>참고로 <code>$ oc top nodes</code>  명령을 통해 성능 수집이 정상적으로 동작하려면 배포 후, 일정 시간이 지나야 됩니다.</p>
+<h1 id="hpa-구현">HPA 구현<a hidden class="anchor" aria-hidden="true" href="#hpa-구현">#</a></h1>
+<hr>
+<p><code>HPA</code> 를 이용한 Auto-Scaling 을 구현하기 위해 아래와 같이 신규 Project 를 생성합니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>[root@master ~]# oc new-project hpa-project
+</span></span><span style="display:flex;"><span>Now using project &#34;hpa-project&#34; on server &#34;https://master.example.com:8443&#34;.
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>You can add applications to this project with the &#39;new-app&#39; command. For example, try:
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    oc new-app centos/ruby-25-centos7~https://github.com/sclorg/ruby-ex.git
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>to build a new example application in Ruby.
+</span></span><span style="display:flex;"><span>[root@master ~]#
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master ~<span style="color:#f92672">]</span><span style="color:#75715e"># oc get po</span>
+</span></span><span style="display:flex;"><span>No resources found.
+</span></span><span style="display:flex;"><span>[root@master ~]#
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@master ~<span style="color:#f92672">]</span><span style="color:#75715e">#</span>
+</span></span></code></pre></div><p>부하(load)를 감지하고 응답 할 수 있는 <code>App</code> 을 생성합니다.</p>
+<ul>
+<li><a href="https://kubernetes.io/ko/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/">참고 문서 - Horizontal Pod Autoscaler 연습</a></li>
+</ul>
+<h2 id="dockerfile-생성-및-build">Dockerfile 생성 및 Build<a hidden class="anchor" aria-hidden="true" href="#dockerfile-생성-및-build">#</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span># ls
+</span></span><span style="display:flex;"><span>Dockerfile  index.php
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span># cat Dockerfile
+</span></span><span style="display:flex;"><span>FROM php:5-apache
+</span></span><span style="display:flex;"><span>ADD index.php /var/www/html/index.php
+</span></span><span style="display:flex;"><span>RUN chmod a+rx index.php
+</span></span><span style="display:flex;"><span># cat index.php
+</span></span><span style="display:flex;"><span>&lt;?php
+</span></span><span style="display:flex;"><span>  $x = 0.0001;
+</span></span><span style="display:flex;"><span>  for ($i = 0; $i &lt;= 1000000; $i++) {
+</span></span><span style="display:flex;"><span>    $x += sqrt($x);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  echo &#34;OK!&#34;;
+</span></span><span style="display:flex;"><span>?&gt;
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span># docker build -t hpa-example .
+</span></span><span style="display:flex;"><span>Sending build context to Docker daemon  3.072kB
+</span></span><span style="display:flex;"><span>Step 1/3 : FROM php:5-apache
+</span></span><span style="display:flex;"><span>5-apache: Pulling from library/php
+</span></span><span style="display:flex;"><span>5e6ec7f28fb7: Pull complete
+</span></span><span style="display:flex;"><span>cf165947b5b7: Pull complete
+</span></span><span style="display:flex;"><span>7bd37682846d: Pull complete
+</span></span><span style="display:flex;"><span>99daf8e838e1: Pull complete
+</span></span><span style="display:flex;"><span>ae320713efba: Pull complete
+</span></span><span style="display:flex;"><span>ebcb99c48d8c: Pull complete
+</span></span><span style="display:flex;"><span>9867e71b4ab6: Pull complete
+</span></span><span style="display:flex;"><span>936eb418164a: Pull complete
+</span></span><span style="display:flex;"><span>bc298e7adaf7: Pull complete
+</span></span><span style="display:flex;"><span>ccd61b587bcd: Pull complete
+</span></span><span style="display:flex;"><span>b2d4b347f67c: Pull complete
+</span></span><span style="display:flex;"><span>56e9dde34152: Pull complete
+</span></span><span style="display:flex;"><span>9ad99b17eb78: Pull complete
+</span></span><span style="display:flex;"><span>Digest: sha256:0a40fd273961b99d8afe69a61a68c73c04bc0caa9de384d3b2dd9e7986eec86d
+</span></span><span style="display:flex;"><span>Status: Downloaded newer image for php:5-apache
+</span></span><span style="display:flex;"><span> ---&gt; 24c791995c1e
+</span></span><span style="display:flex;"><span>Step 2/3 : ADD index.php /var/www/html/index.php
+</span></span><span style="display:flex;"><span> ---&gt; bcc3ff35ceb8
+</span></span><span style="display:flex;"><span>Step 3/3 : RUN chmod a+rx index.php
+</span></span><span style="display:flex;"><span> ---&gt; Running in d1e173fb27a3
+</span></span><span style="display:flex;"><span>Removing intermediate container d1e173fb27a3
+</span></span><span style="display:flex;"><span> ---&gt; f4bb43246866
+</span></span><span style="display:flex;"><span>Successfully built f4bb43246866
+</span></span><span style="display:flex;"><span>Successfully tagged hpa-example:latest
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span># docker push han0495/hpa-example
+</span></span><span style="display:flex;"><span>The push refers to repository [docker.io/han0495/hpa-example]
+</span></span><span style="display:flex;"><span>b42dc42a2d18: Pushed
+</span></span><span style="display:flex;"><span>056e15bb815c: Pushed
+</span></span><span style="display:flex;"><span>1aab22401f12: Mounted from library/php
+</span></span><span style="display:flex;"><span>13ab94c9aa15: Mounted from library/php
+</span></span><span style="display:flex;"><span>588ee8a7eeec: Mounted from library/php
+</span></span><span style="display:flex;"><span>bebcda512a6d: Mounted from library/php
+</span></span><span style="display:flex;"><span>5ce59bfe8a3a: Mounted from library/php
+</span></span><span style="display:flex;"><span>d89c229e40ae: Mounted from library/php
+</span></span><span style="display:flex;"><span>9311481e1bdc: Mounted from library/php
+</span></span><span style="display:flex;"><span>4dd88f8a7689: Mounted from library/php
+</span></span><span style="display:flex;"><span>b1841504f6c8: Mounted from library/php
+</span></span><span style="display:flex;"><span>6eb3cfd4ad9e: Mounted from library/php
+</span></span><span style="display:flex;"><span>82bded2c3a7c: Mounted from library/php
+</span></span><span style="display:flex;"><span>b87a266e6a9c: Mounted from library/php
+</span></span><span style="display:flex;"><span>3c816b4ead84: Mounted from library/php
+</span></span><span style="display:flex;"><span>latest: digest: sha256:07c8ebfbe5b8084b878d0ed4ebafe5baad124b0b932e4f56d81480fbf715f03f size: 3449
+</span></span></code></pre></div><h2 id="app-배포">App 배포<a hidden class="anchor" aria-hidden="true" href="#app-배포">#</a></h2>
+<p>php 로 만들어진 <code>App</code> 을 Openshift 에 배포합니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>[root@master ~]# oc login -u admin
+</span></span><span style="display:flex;"><span>Logged into &#34;https://master.example.com:8443&#34; as &#34;admin&#34; using existing credentials.
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>You have access to the following projects and can switch between them with &#39;oc project &lt;projectname&gt;&#39;:
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    default
+</span></span><span style="display:flex;"><span>  * hpa-project
+</span></span><span style="display:flex;"><span>    kube-public
+</span></span><span style="display:flex;"><span>    kube-service-catalog
+</span></span><span style="display:flex;"><span>    kube-system
+</span></span><span style="display:flex;"><span>    management-infra
+</span></span><span style="display:flex;"><span>    openshift
+</span></span><span style="display:flex;"><span>    openshift-ansible-service-broker
+</span></span><span style="display:flex;"><span>    openshift-console
+</span></span><span style="display:flex;"><span>    openshift-infra
+</span></span><span style="display:flex;"><span>    openshift-logging
+</span></span><span style="display:flex;"><span>    openshift-metrics-server
+</span></span><span style="display:flex;"><span>    openshift-monitoring
+</span></span><span style="display:flex;"><span>    openshift-node
+</span></span><span style="display:flex;"><span>    openshift-sdn
+</span></span><span style="display:flex;"><span>    openshift-template-service-broker
+</span></span><span style="display:flex;"><span>    openshift-web-console
+</span></span><span style="display:flex;"><span>    sample-project
+</span></span><span style="display:flex;"><span>    test-project
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>Using project &#34;hpa-project&#34;.
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>[root@master ~]# oc run hpa-example-pod --image<span style="color:#f92672">=</span>han0495/hpa-example --expose --port <span style="color:#ae81ff">80</span> --requests<span style="color:#f92672">=</span>cpu<span style="color:#f92672">=</span>200m
+</span></span><span style="display:flex;"><span>service/hpa-example-pod created
+</span></span><span style="display:flex;"><span>deploymentconfig.apps.openshift.io/hpa-example-pod created
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>[root@master ~]# oc get all
+</span></span><span style="display:flex;"><span>NAME                           READY     STATUS              RESTARTS   AGE
+</span></span><span style="display:flex;"><span>pod/hpa-example-pod-1-deploy   1/1       Running             0          9s
+</span></span><span style="display:flex;"><span>pod/hpa-example-pod-1-ngj64    0/1       ContainerCreating   0          6s
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>NAME                                      DESIRED   CURRENT   READY     AGE
+</span></span><span style="display:flex;"><span>replicationcontroller/hpa-example-pod-1   1         1         0         9s
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>NAME                      TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)   AGE
+</span></span><span style="display:flex;"><span>service/hpa-example-pod   ClusterIP   172.30.193.122   &lt;none&gt;        80/TCP    9s
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>NAME                                                 REVISION   DESIRED   CURRENT   TRIGGERED BY
+</span></span><span style="display:flex;"><span>deploymentconfig.apps.openshift.io/hpa-example-pod   1          1         1         config
+</span></span></code></pre></div><p>위와 같이 배포가 완료 되었습니다.<br>
+해당 Pod 은 CPU 리소스를 200m 까지 요청 수 있도록 설정 하였습니다.</p>
+<h2 id="hpa-생성">HPA 생성<a hidden class="anchor" aria-hidden="true" href="#hpa-생성">#</a></h2>
+<p>생성된 Pod 에 HPA 를 만들고 연결합니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>[root@master ~]# oc autoscale deploymentconfig.apps.openshift.io/hpa-example-pod --min <span style="color:#ae81ff">1</span> --max <span style="color:#ae81ff">8</span> --cpu-percent<span style="color:#f92672">=</span><span style="color:#ae81ff">70</span>
+</span></span><span style="display:flex;"><span>horizontalpodautoscaler.autoscaling/hpa-example-pod autoscaled
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>[root@master ~]# oc describe hpa
+</span></span><span style="display:flex;"><span>Name:                                                  hpa-example-pod
+</span></span><span style="display:flex;"><span>Namespace:                                             hpa-project
+</span></span><span style="display:flex;"><span>Labels:                                                &lt;none&gt;
+</span></span><span style="display:flex;"><span>Annotations:                                           &lt;none&gt;
+</span></span><span style="display:flex;"><span>CreationTimestamp:                                     Mon, 24 Jun 2019 08:20:40 +0200
+</span></span><span style="display:flex;"><span>Reference:                                             DeploymentConfig/hpa-example-pod
+</span></span><span style="display:flex;"><span>Metrics:                                               ( current / target )
+</span></span><span style="display:flex;"><span>  resource cpu on pods  (as a percentage of request):  0% (0) / 70%
+</span></span><span style="display:flex;"><span>Min replicas:                                          1
+</span></span><span style="display:flex;"><span>Max replicas:                                          8
+</span></span><span style="display:flex;"><span>DeploymentConfig pods:                                 1 current / 1 desired
+</span></span><span style="display:flex;"><span>Conditions:
+</span></span><span style="display:flex;"><span>  Type            Status  Reason            Message
+</span></span><span style="display:flex;"><span>  ----            ------  ------            -------
+</span></span><span style="display:flex;"><span>  AbleToScale     True    ReadyForNewScale  the last scale time was sufficiently old as to warrant a new scale
+</span></span><span style="display:flex;"><span>  ScalingActive   True    ValidMetricFound  the HPA was able to successfully calculate a replica count from cpu resource utilization (percentage of request)
+</span></span><span style="display:flex;"><span>  ScalingLimited  True    TooFewReplicas    the desired replica count is increasing faster than the maximum scale rate
+</span></span><span style="display:flex;"><span>Events:           &lt;none&gt;
+</span></span><span style="display:flex;"><span>[root@master ~]#
+</span></span></code></pre></div><p>생성된 <code>HPA</code> 의 상세 정보를 보도록 하겠습니다.<br>
+부하(load)가 발생되면 해당 Pod 의 평균 CPU 사용량이 70% 을 유지하도록 설정 되어 있습니다. 최소 1개의 Pod 을 만들 수 있고, 최대 8개까지 Pod 을 증가 시킬 수 있습니다.</p>
+<h1 id="부하-테스트">부하 테스트<a hidden class="anchor" aria-hidden="true" href="#부하-테스트">#</a></h1>
+<hr>
+<p>Openshift 에서 제공하는 Grafana 를 이용하여 실제 Pod 에 발생되는 부하(load)를 모니터링 하도록 하겠습니다.</p>
+<!-- raw HTML omitted -->
+<p>CPU 의 사용량은 0% 로 거의 부하(load)가 없습니다.</p>
+<p>해당 Pod 에 부하(load)를 발생 시키도록 하겠습니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>[root@master ~]# oc run -it load-generator --image<span style="color:#f92672">=</span>busybox
+</span></span><span style="display:flex;"><span>[root@master ~]# oc get all
+</span></span><span style="display:flex;"><span>NAME                          READY     STATUS    RESTARTS   AGE
+</span></span><span style="display:flex;"><span>pod/hpa-example-pod-1-ngj64   1/1       Running   0          16m
+</span></span><span style="display:flex;"><span>pod/load-generator-1-tl2s4    1/1       Running   0          29s
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>NAME                                      DESIRED   CURRENT   READY     AGE
+</span></span><span style="display:flex;"><span>replicationcontroller/hpa-example-pod-1   1         1         1         16m
+</span></span><span style="display:flex;"><span>replicationcontroller/load-generator-1    1         1         1         32s
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>NAME                      TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)   AGE
+</span></span><span style="display:flex;"><span>service/hpa-example-pod   ClusterIP   172.30.193.122   &lt;none&gt;        80/TCP    16m
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>NAME                                                  REFERENCE                          TARGETS   MINPODS   MAXPODS   REPLICAS   AGE
+</span></span><span style="display:flex;"><span>horizontalpodautoscaler.autoscaling/hpa-example-pod   DeploymentConfig/hpa-example-pod   0%/70%    1         8         1          13m
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>NAME                                                 REVISION   DESIRED   CURRENT   TRIGGERED BY
+</span></span><span style="display:flex;"><span>deploymentconfig.apps.openshift.io/hpa-example-pod   1          1         1         config
+</span></span><span style="display:flex;"><span>deploymentconfig.apps.openshift.io/load-generator    1          1         1         config
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>[root@master ~]# oc exec load-generator-1-f9xrd -ti /bin/sh
+</span></span><span style="display:flex;"><span>/ #
+</span></span><span style="display:flex;"><span>/ # while true; do wget -q -O- http://hpa-example-pod.hpa-project.svc.cluster.local; done
+</span></span></code></pre></div><p>위와 같이 <code>busybox</code>를 이용하여 load-generator 를 만들었습니다.<br>
+<code># while true; do wget -q -O- http://hpa-example-pod.hpa-project.svc.cluster.local; done</code> 명령을 통해 App 에 부하(load)를 유발합니다.</p>
+<!-- raw HTML omitted -->
+<p>점점 <code>HPA</code> 에서 부하(load)를 감지합니다.</p>
+<!-- raw HTML omitted -->
+<p>본격적으로 <code>HPA</code> 에서 부하(load)를 감지하고 CPU 사용률 평균 70%를 유지하기 위해 Pod 를 Auto-Scaling 합니다.</p>
+<!-- raw HTML omitted -->
+<p>지속된 부하(load)로 인해 Pod이 7개까지 증가 되었습니다.</p>
+<p>Grafana에서 Pod 상태를 보도록 하겠습니다.</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>다량의 부하(load)로 인해 설정된 최대 Pod 수 8개까지 증가 된 것을 확인 할 수 있습니다.</p>
+<!-- raw HTML omitted -->
+<p>Grafana 에서도 Pod 8개가 Auto-Scaling 되어 작동하는 것을 확인 하였습니다.<br>
+이처럼 <code>HPA</code>에서 부하(load)를 감지하고 Auto-Scaling 을 하여 정상적인 서비스를 유지 할 수 있습니다.</p>
+<h2 id="부하-테스트-종료">부하 테스트 종료<a hidden class="anchor" aria-hidden="true" href="#부하-테스트-종료">#</a></h2>
+<p>부하(load) 발생을 중지하면 <code>HPA</code>에서 감지하고 다시 Pod 의 수를 조절합니다.</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>이번 포스팅에서는 <code>HPA</code> 를 이용하여 Auto-Scaling 을 구현 하였습니다.<br>
+Openshift의 <code>HPA</code> 을 이용하면 유연하고 지속적인 서비스를 구현하고 운영 할 수 있습니다.</p>
+<h1 id="참고-자료">참고 자료<a hidden class="anchor" aria-hidden="true" href="#참고-자료">#</a></h1>
+<hr>
+<ul>
+<li><a href="https://docs.okd.io/3.11/dev_guide/pod_autoscaling.html">okd Documentation - pod_autoscaling</a></li>
+<li><a href="https://kubernetes.io/ko/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/">k8s Documentation - Horizontal Pod Autoscaler 연습</a></li>
+</ul>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://chhanz88.github.io/tags/openshift/">openshift</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2022 <a href="https://chhanz88.github.io">chhanz 
+기술 블로그
+</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://git.io/hugopapermod" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

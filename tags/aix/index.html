@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>aix | chhanz 
+기술 블로그
+</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="canonical" href="https://chhanz88.github.io/tags/aix/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.ec8da366ca2fb647537ccb7a8f6fa5b4e9cd3c7a0d3171dd2d3baad1e49c8bfc.css" integrity="sha256-7I2jZsovtkdTfMt6j2&#43;ltOnNPHoNMXHdLTuq0eSci/w=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://chhanz88.github.io/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://chhanz88.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://chhanz88.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://chhanz88.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://chhanz88.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" type="application/rss+xml" href="https://chhanz88.github.io/tags/aix/index.xml">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="aix" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://chhanz88.github.io/tags/aix/" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="aix"/>
+<meta name="twitter:description" content=""/>
+
+</head>
+
+<body class="list" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://chhanz88.github.io" accesskey="h" title="chhanz 
+기술 블로그
+ (Alt + H)">chhanz 
+기술 블로그
+</a>
+            <span class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </span>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main"> 
+<header class="page-header">
+  <h1>
+    aix
+  </h1>
+</header>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2>[Linux] njmon with Prometheus
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>목차  Njmon 란? Architecture Telegraf config Njmon config  Prometheus config Grafana Dashboard 참고 자료  Njmon 이란? Architecture Telegraf config 이번 글에서 사용한 테스트 시스템은 Rocky Linux 8 이며 아래 문서를 참고 하여 Telegraf 를 구성하였습니다.
+(https://docs.influxdata.com/telegraf/v1.21/introduction/installation/?t=RedHat&#43;%26amp%3B&#43;CentOS)
+아래와 같이 Repository 를 추가합니다.
+cat &lt;&lt;EOF | sudo tee /etc/yum.repos.d/influxdb.repo [influxdb] name = InfluxDB Repository - RHEL \$releasever baseurl = https://repos.influxdata.com/rhel/\$releasever/\$basearch/stable enabled = 1 gpgcheck = 1 gpgkey = https://repos.influxdata.com/influxdb.key EOF dnf 를 통해 Package 를 설치합니다....</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-02-18 00:00:00 +0000 UTC'>February 18, 2022</span>&nbsp;·&nbsp;chhanz</footer>
+  <a class="entry-link" aria-label="post link to [Linux] njmon with Prometheus" href="https://chhanz88.github.io/post/2022-02-18-njmon-telegraf-grafana/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2>[AIX] System Information collection Script
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>[AIX] System Information collection Script  회사 U2C 솔루션 개발을 하는 중, AIX 에서 필수 시스템 정보를 수집하는 Script 가 필요로 해서 간단하게 제작한 Script 입니다.
+Script 내용  #! /bin/ksh # Make by. chhan  DATEC=$(date &#43;%Y%m%d-%H%M) IdChk=`id | grep root | wc -l` OutFile=&#34;`hostname`_&#34;$DATEC&#34;.txt&#34;  #Checking ROOT  if [ $IdChk -eq 0 ]; then  echo  echo &#34;You must login root... Try again...&#34;  echo  exit  fi  echo &#34; * * * * * Check AIX System Information * * * * * &#34; echo &#34; &#34; echo &#34; This Check Output File &#34; echo &#34; View ....</p>
+  </div>
+  <footer class="entry-footer"><span title='2018-11-04 00:00:00 +0000 UTC'>November 4, 2018</span>&nbsp;·&nbsp;chhanz</footer>
+  <a class="entry-link" aria-label="post link to [AIX] System Information collection Script" href="https://chhanz88.github.io/post/2018-11-04-aix-system-info-script/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2>[AIX] hdisk format - diag command
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>AIX - DISK FORMAT  주로 AIX 에서는 diag 를 통해 hdisk format 을 진행하고 데이터 삭제 검증을 합니다.
+하지만 동시에 여러개의 hdisk 를 format 을 진행 할 수는 없습니다.
+아래와 같이 명령어를 이용하면 동시에 hdisk format 이 가능합니다.
+/usr/lpp/diagnostics/bin/uformat -d hdisk1 -c -o format 동시에 여러 hdisk format 진행 하는 Command lspv | grep None | awk &#39;{print &#34;/usr/lpp/diagnostics/bin/uformat -d &#34;$1&#34; -c -o format &amp;&#34;}&#39; | sh -x </p>
+  </div>
+  <footer class="entry-footer"><span title='2018-02-21 00:00:00 +0000 UTC'>February 21, 2018</span>&nbsp;·&nbsp;chhanz</footer>
+  <a class="entry-link" aria-label="post link to [AIX] hdisk format - diag command" href="https://chhanz88.github.io/post/2018-02-21-aixuformat/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2>[AIX] Create a raw Logical Volume for Oracle ASM On AIX
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Create a raw Logical Volume for Oracle ASM On AIX  Raw Device 의 용량 산정은 VG 의 PP Size 를 기준으로 합니다.
+# lsvg RAWVG VOLUME GROUP: RAWVG VG IDENTIFIER: 00c25b6700004c00000001399f63219x VG STATE: active PP SIZE: 64 megabyte(s) VG PERMISSION: read/write TOTAL PPs: 30 (1920 megabytes) MAX LVs: 4096 FREE PPs: 6 (384 megabytes) LVs: 3 USED PPs: 24 (1536 megabytes) OPEN LVs: 3 QUORUM: 2 (Enabled) TOTAL PVs: 1 VG DESCRIPTORS: 2 STALE PVs: 0 STALE PPs: 0 ACTIVE PVs: 1 AUTO ON: no Concurrent: Enhanced-Capable Auto-Concurrent: Disabled VG Mode: Concurrent Node ID: 1 Active Nodes: 2 MAX PPs per VG: 2097152 MAX PVs: 1024 LTG size (Dynamic): 1024 kilobyte(s) AUTO SYNC: no HOT SPARE: no BB POLICY: relocatable MIRROR POOL STRICT: off PV RESTRICTION: none INFINITE RETRY: no 위 RAWVG 정보를 보면 PP SIZE 가 64 mb 로 확인 됩니다....</p>
+  </div>
+  <footer class="entry-footer"><span title='2017-05-25 00:00:00 +0000 UTC'>May 25, 2017</span>&nbsp;·&nbsp;chhanz</footer>
+  <a class="entry-link" aria-label="post link to [AIX] Create a raw Logical Volume for Oracle ASM On AIX" href="https://chhanz88.github.io/post/2017-05-25-aixasmraw/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2>[AIX] Could not load program: Cannot run a 64-bit program until the 64-bit environment has been configured.
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Could not load program: Cannot run a 64-bit program until the 64-bit environment has been configured. aix maintenance mode 로 부팅 진행 후, shell 환경에서 아래와 같이 Error 가 발생하면서
+일부 명령어들이 정상 작동 하지 않습니다.
+cf. Booting AIX into Maintenance Mode
+Error 내용 # ls Could not load program ls: Cannot run a 64-bit program until the 64-bit environment has been configured. See the system administrator. 해결 방법 # /etc/methods/cfg64 해결 이후 # ls test....</p>
+  </div>
+  <footer class="entry-footer"><span title='2017-01-16 00:00:00 +0000 UTC'>January 16, 2017</span>&nbsp;·&nbsp;chhanz</footer>
+  <a class="entry-link" aria-label="post link to [AIX] Could not load program: Cannot run a 64-bit program until the 64-bit environment has been configured." href="https://chhanz88.github.io/post/2017-01-16-aixerrorcfg64/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2>[AIX] RDX Device Backup Guide
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>[AIX] RDX Device Backup Guide  AIX RDX Device Backup Guide 입니다.
+(RDX 를 이용한 백업 방법입니다.)
+2016년 프로젝트 참여하면서 작성한 가이드입니다.
+ 작성일 : 2016.02.15 배포일 : 2019.01.11  </p>
+  </div>
+  <footer class="entry-footer"><span title='2016-02-15 00:00:00 +0000 UTC'>February 15, 2016</span>&nbsp;·&nbsp;chhanz</footer>
+  <a class="entry-link" aria-label="post link to [AIX] RDX Device Backup Guide" href="https://chhanz88.github.io/post/2016-02-15-aix-rdx-drive-backup-mksysb/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2>[HACMP71] Force remove cluster
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Force remove cluster - PowerHA 7.1  HACMP 7.1 에서 CAAVG 가 삭제가 안되면서, Cluster 를 제거 할 수 없는 경우가 있습니다.
+해당 이슈가 발생 할 경우, 아래와 같이 진행 하면 됩니다.
+# lspv | grep caavg hdiskpower426 000000000r508909 caavg_private active There is caavg so customer failed to create new HA cluster. To remove CAA cluster, run below command at both nodes. # export CAA_FORCE_ENABLED=1; rmcluster -fr hdiskpower426 &lt;&lt;== hdisk no....</p>
+  </div>
+  <footer class="entry-footer"><span title='2014-07-25 00:00:00 +0000 UTC'>July 25, 2014</span>&nbsp;·&nbsp;chhanz</footer>
+  <a class="entry-link" aria-label="post link to [HACMP71] Force remove cluster" href="https://chhanz88.github.io/post/2014-07-25-hacmpforceremove/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2>[AIX] LVM 이란?
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>LVM 이란?  사원 시절 작성한 문서입니다.
+  작성일 : 2014.01.12 배포일 : 2019.01.10  </p>
+  </div>
+  <footer class="entry-footer"><span title='2014-01-12 00:00:00 +0000 UTC'>January 12, 2014</span>&nbsp;·&nbsp;chhanz</footer>
+  <a class="entry-link" aria-label="post link to [AIX] LVM 이란?" href="https://chhanz88.github.io/post/2014-01-12-aix-lvm-informarion/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2>[AIX] JFS vs JFS2
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>JFS 와 JFS2 차이점  JFS2 는 AIX V4.3. 에서 소개되었던 JFS 의 upgrade version
+JFS 와 JFS2 는 모두 AIX 에 기본적으로 탑재되어 있습니다. 다만 POWER system 에서는 JFS/JFS2 를 모두 사용할 수 있지만, IA64 system 에서는 JFS2 만 사용할 수 있습니다.
+JFS vs JFS2     Function JFS2 JFS     Fragments/Block Size 512~4096 Block Size 512~4096 Block Size   Architectural Maximum File (만들 수 있는 최대 File Size) 1PB(**1) 64GB   Architectural Maximum File System Size (만들 수 있는 최대 파일 시스템 Size) 4PB 1TB(**2)   Maximum File Size Tested (최대 파일 크기 테스트) 1TB 64GB   Maximum File System Size (최대 파일 시스템 크기) 1TB 1TB   Number of Inodes (Inodes 수) Dynamic, Limited by disk space Fixed, set at file system creation   Directory Organization (디렉토리 조직) B-tree Linear   Compresssion (압축) No Yes   Default Ownership at Creation(생성 시 기본 소유권) root....</p>
+  </div>
+  <footer class="entry-footer"><span title='2012-09-06 00:00:00 +0000 UTC'>September 6, 2012</span>&nbsp;·&nbsp;chhanz</footer>
+  <a class="entry-link" aria-label="post link to [AIX] JFS vs JFS2" href="https://chhanz88.github.io/post/2012-09-06-aixjfsvsjfs2/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2>[AIX] Mirror 상태인 VG, alt_disk_install 하는 법
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Mirror VG, 한개의 PV 로 alt_disk_install 하는 방법  Mirror 된 VG 를 alt_disk_install 을 진행하면 target PV 는 2EA 가 필요합니다.
+따라서 Mirror 된 VG 는 한개의 target PV 에 하기 위해서는 -i 옵션을 사용합니다.
+image.data 수정  -i 옵션에 사용될 image.data 를 수정합니다.
+# lspv hdisk0 000aaaa120011111 rootvg active hdisk1 000aaaa120222222 rootvg active hdisk2 none None # vi /image.data ## lv_data의 항목중 * LV_SOURCE_DISK_LIST= hdisk0 hdisk1 -&gt; hdisk0로 변경 * COPIES= 2 -&gt; 1로 변경 * PP= 2 -&gt; 1로 변경 위와 같이 Source PV 하나를 제거하고, LV의 COPY 수량, LV 용량을 수정합니다....</p>
+  </div>
+  <footer class="entry-footer"><span title='2012-09-06 00:00:00 +0000 UTC'>September 6, 2012</span>&nbsp;·&nbsp;chhanz</footer>
+  <a class="entry-link" aria-label="post link to [AIX] Mirror 상태인 VG, alt_disk_install 하는 법" href="https://chhanz88.github.io/post/2012-09-06-aixmirroraltdisk/"></a>
+</article>
+<footer class="page-footer">
+  <nav class="pagination">
+    <a class="next" href="https://chhanz88.github.io/tags/aix/page/2/">Next Page »</a>
+  </nav>
+</footer>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2022 <a href="https://chhanz88.github.io">chhanz 
+기술 블로그
+</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://git.io/hugopapermod" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

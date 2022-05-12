@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>[Kubernetes] App 확인 (Pod 확인) | chhanz 
+기술 블로그
+</title>
+<meta name="keywords" content="kubernetes">
+<meta name="description" content=" ">
+<meta name="author" content="chhanz">
+<link rel="canonical" href="https://chhanz88.github.io/post/2020-09-24-check-the-app/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.ec8da366ca2fb647537ccb7a8f6fa5b4e9cd3c7a0d3171dd2d3baad1e49c8bfc.css" integrity="sha256-7I2jZsovtkdTfMt6j2&#43;ltOnNPHoNMXHdLTuq0eSci/w=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.min.4dcb3c4f38462f66c6b6137227726f5543cb934cca9788f041c087e374491df2.js" integrity="sha256-Tcs8TzhGL2bGthNyJ3JvVUPLk0zKl4jwQcCH43RJHfI="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://chhanz88.github.io/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://chhanz88.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://chhanz88.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://chhanz88.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://chhanz88.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="[Kubernetes] App 확인 (Pod 확인)" />
+<meta property="og:description" content=" " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://chhanz88.github.io/post/2020-09-24-check-the-app/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2020-09-24T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2020-09-24T00:00:00&#43;00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[Kubernetes] App 확인 (Pod 확인)"/>
+<meta name="twitter:description" content=" "/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Posts",
+      "item": "https://chhanz88.github.io/post/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "[Kubernetes] App 확인 (Pod 확인)",
+      "item": "https://chhanz88.github.io/post/2020-09-24-check-the-app/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "[Kubernetes] App 확인 (Pod 확인)",
+  "name": "[Kubernetes] App 확인 (Pod 확인)",
+  "description": " ",
+  "keywords": [
+    "kubernetes"
+  ],
+  "articleBody": "목차  Build APP - Container image Deploy APP  Build APP Create The Deployment   Check APP  Check The Node Check The APP   Expose APP  Expose APP - NodePort   Scale APP  Scale APP   Update APP  Update APP - Rolling Update/Rollback    Check The Pod 이 문서는 Pod 를 확인하는 방법에 대해 포함되어 있습니다.\nKubernetes Pod 앞선 Create the Deployment 를 통해 Deployment 가 생성이 되고 나면\nKubernetes 는 여러분의 애플리케이션 인스턴스에 Pod 를 생성했습니다.\nPod 는 하나 또는 그 이상의 애플리케이션 컨테이너 (도커 또는 rkt와 같은)들의 그룹을 나타내는 쿠버네티스의 추상적 개념으로 일부는 컨테이너에 대한 자원을 공유합니다.\nCheck The Pod  Pod 정보 확인 $ kubectl get pod NAME READY STATUS RESTARTS AGE flask-example-app-959c5f88d-k95wk 1/1 Running 0 24m  Pod 성능 사용량 확인 $ kubectl top pod NAME CPU(cores) MEMORY(bytes) flask-example-app-959c5f88d-k95wk 1m 2Mi  Pod 내 Container 의 log 확인 $ kubectl logs flask-example-app-959c5f88d-k95wk 실시간 확인을 위해서는 아래와 같이 -f 옵션을 추가합니다. $ kubectl logs -f flask-example-app-959c5f88d-k95wk  Pod 내 Container 에 명령어 수행 $ kubectl exec -ti flask-example-app-959c5f88d-k95wk -- pwd /usr/src/app  Pod 상세 정보 확인 - 1 $ kubectl get pod -o wide NAME READY STATUS RESTARTS AGE IP NODE NOMINATED NODE READINESS GATES flask-example-app-959c5f88d-k95wk 1/1 Running 0 24m 10.42.0.36 fastvm-centos-7-7-110    Pod 상세 정보 확인 - 2 $ kubectl describe pod flask-example-app-959c5f88d-k95wk Name: flask-example-app-959c5f88d-k95wk Namespace: default Priority: 0 Node: fastvm-centos-7-7-110/192.168.200.110 Start Time: Wed, 09 Sep 2020 15:38:00 +0900 Labels: app=flask-example-app  pod-template-hash=959c5f88d Annotations:  Status: Running IP: 10.42.0.36 IPs:  IP: 10.42.0.36 Controlled By: ReplicaSet/flask-example-app-959c5f88d Containers:  flask-example-app:  Container ID: containerd://f99d19b1ac52ced19e300a294cd93ad62a97f6259cf6e426c63c545e0918a9d8  Image: han0495/flask-example-app:v1  Image ID: docker.io/han0495/flask-example-app@sha256:f3d45e996bc86a13e1a8a363d9736e18c1501804690733b86aa02df3f59bda10  Port:   Host Port:   State: Running  Started: Wed, 09 Sep 2020 15:38:01 +0900  Ready: True  Restart Count: 0  Environment:   Mounts:  /var/run/secrets/kubernetes.io/serviceaccount from default-token-89vwb (ro) Conditions:  Type Status  Initialized True  Ready True  ContainersReady True  PodScheduled True Volumes:  default-token-89vwb:  Type: Secret (a volume populated by a Secret)  SecretName: default-token-89vwb  Optional: false QoS Class: BestEffort Node-Selectors:  Tolerations: node.kubernetes.io/not-ready:NoExecute for 300s  node.kubernetes.io/unreachable:NoExecute for 300s Events:  Type Reason Age From Message  ---- ------ ---- ---- -------  Normal Scheduled  default-scheduler Successfully assigned default/flask-example-app-959c5f88d-k95wk to fastvm-centos-7-7-110  Normal Pulled 29m kubelet, fastvm-centos-7-7-110 Container image \"han0495/flask-example-app:v1\" already present on machine  Normal Created 29m kubelet, fastvm-centos-7-7-110 Created container flask-example-app  Normal Started 29m kubelet, fastvm-centos-7-7-110 Started container flask-example-app  현재 실행중인 Pod 의 정보를 yaml 형식으로 출력 $ kubectl get pod flask-example-app-959c5f88d-k95wk -o yaml 아래와 같이 저장이 가능합니다. $ kubectl get pod flask-example-app-959c5f88d-k95wk -o yaml  flask-example-app.yml   Create Pod 아래 명령어를 통해 Pod 을 생성 할 수 있습니다.\n$ kubectl run pod-test-app --image=nginx pod/pod-test-app created  $ kubectl get pod NAME READY STATUS RESTARTS AGE flask-example-app-959c5f88d-k95wk 1/1 Running 0 38m pod-test-app 1/1 Running 0 66s 아래와 같이 yaml 을 이용해서 Pod 을 생성 할 수 있습니다.\n$ cat apiVersion: v1 kind: Pod metadata: labels: run: pod-test-app-2 name: pod-test-app-2 namespace: default spec: containers: - image: nginx name: pod-test-app-2 EOF or\n$ kubectl create -f pod-test-app-2.yml Delete Pod 아래 명령을 통해 Pod 삭제 할 수 있습니다.\n$ kubectl delete pod pod-test-app $ kubectl delete pod pod-test-app-2 연습 문제 아래 container 를 포함한 하나의 Pod 을 생성하시오.\n nginx redis memcached  연습문제 정답 apiVersion: v1 kind: Pod metadata:  labels:  run: pod-practice-app  name: pod-practice-app spec:  containers:  - image: nginx  name: nginx  - image: redis  name: redis  - image: memcached  name: memcached 참고 문서  https://github.com/chhanz/kubernetes-hands-on-lab https://github.com/chhanz/kubernetes-hands-on-lab/blob/master/doc/check-the-pod.md  ",
+  "wordCount" : "537",
+  "inLanguage": "en",
+  "datePublished": "2020-09-24T00:00:00Z",
+  "dateModified": "2020-09-24T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "chhanz"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://chhanz88.github.io/post/2020-09-24-check-the-app/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "chhanz \n기술 블로그\n",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://chhanz88.github.io/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://chhanz88.github.io" accesskey="h" title="chhanz 
+기술 블로그
+ (Alt + H)">chhanz 
+기술 블로그
+</a>
+            <span class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </span>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title">
+      [Kubernetes] App 확인 (Pod 확인)
+    </h1>
+    <div class="post-description">
+       
+    </div>
+    <div class="post-meta"><span title='2020-09-24 00:00:00 +0000 UTC'>September 24, 2020</span>&nbsp;·&nbsp;chhanz
+
+</div>
+  </header> 
+  <div class="post-content"><h1 id="목차">목차<a hidden class="anchor" aria-hidden="true" href="#목차">#</a></h1>
+<ul>
+<li><a href="/container/2020/09/21/buildah/">Build APP - Container image</a></li>
+<li>Deploy APP
+<ul>
+<li><a href="/container/2020/09/22/podman-build-flask-example-app/">Build APP</a></li>
+<li><a href="/kubernetes/2020/09/23/create-deployment/">Create The Deployment</a></li>
+</ul>
+</li>
+<li>Check APP
+<ul>
+<li><a href="/kubernetes/2020/09/24/check-the-node/">Check The Node</a></li>
+<li><a href="/kubernetes/2020/09/24/check-the-app/">Check The APP</a></li>
+</ul>
+</li>
+<li>Expose APP
+<ul>
+<li><a href="/kubernetes/2020/09/25/expose-app/">Expose APP - <code>NodePort</code></a></li>
+</ul>
+</li>
+<li>Scale APP
+<ul>
+<li><a href="/kubernetes/2020/09/27/scale-app/">Scale APP</a></li>
+</ul>
+</li>
+<li>Update APP
+<ul>
+<li><a href="/kubernetes/2020/09/28/update-app/">Update APP - <code>Rolling Update</code>/<code>Rollback</code></a></li>
+</ul>
+</li>
+</ul>
+<h1 id="check-the-pod">Check The Pod<a hidden class="anchor" aria-hidden="true" href="#check-the-pod">#</a></h1>
+<p>이 문서는 Pod 를 확인하는 방법에 대해 포함되어 있습니다.</p>
+<h1 id="kubernetes-pod">Kubernetes Pod<a hidden class="anchor" aria-hidden="true" href="#kubernetes-pod">#</a></h1>
+<p><img loading="lazy" src="https://d33wubrfki0l68.cloudfront.net/fe03f68d8ede9815184852ca2a4fd30325e5d15a/98064/docs/tutorials/kubernetes-basics/public/images/module_03_pods.svg" alt=""  />
+<br>
+앞선 <a href="/kubernetes/2020/09/23/create-deployment/"><code>Create the Deployment</code></a> 를 통해 <code>Deployment</code> 가 생성이 되고 나면<br>
+Kubernetes 는 여러분의 애플리케이션 인스턴스에 Pod 를 생성했습니다.<br>
+<em><strong>Pod 는 하나 또는 그 이상의 애플리케이션 컨테이너 (도커 또는 rkt와 같은)들의 그룹을 나타내는 쿠버네티스의 추상적 개념으로 일부는 컨테이너에 대한 자원을 공유합니다.</strong></em></p>
+<h1 id="check-the-pod-1">Check The Pod<a hidden class="anchor" aria-hidden="true" href="#check-the-pod-1">#</a></h1>
+<ul>
+<li>Pod 정보 확인
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ kubectl get pod
+</span></span><span style="display:flex;"><span>NAME                                READY   STATUS    RESTARTS   AGE
+</span></span><span style="display:flex;"><span>flask-example-app-959c5f88d-k95wk   1/1     Running   <span style="color:#ae81ff">0</span>          24m
+</span></span></code></pre></div></li>
+<li>Pod 성능 사용량 확인
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ kubectl top pod
+</span></span><span style="display:flex;"><span>NAME                                CPU<span style="color:#f92672">(</span>cores<span style="color:#f92672">)</span>   MEMORY<span style="color:#f92672">(</span>bytes<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>flask-example-app-959c5f88d-k95wk   1m           2Mi
+</span></span></code></pre></div></li>
+<li>Pod 내 Container 의 log 확인
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ kubectl logs flask-example-app-959c5f88d-k95wk
+</span></span></code></pre></div>실시간 확인을 위해서는 아래와 같이 <code>-f</code> 옵션을 추가합니다.
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ kubectl logs -f flask-example-app-959c5f88d-k95wk
+</span></span></code></pre></div></li>
+<li>Pod 내 Container 에 명령어 수행
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ kubectl exec -ti flask-example-app-959c5f88d-k95wk -- pwd
+</span></span><span style="display:flex;"><span>/usr/src/app
+</span></span></code></pre></div></li>
+<li>Pod 상세 정보 확인 - 1
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ kubectl get pod -o wide
+</span></span><span style="display:flex;"><span>NAME                                READY   STATUS    RESTARTS   AGE   IP           NODE                    NOMINATED NODE   READINESS GATES
+</span></span><span style="display:flex;"><span>flask-example-app-959c5f88d-k95wk   1/1     Running   <span style="color:#ae81ff">0</span>          24m   10.42.0.36   fastvm-centos-7-7-110   &lt;none&gt;           &lt;none&gt;
+</span></span></code></pre></div></li>
+<li>Pod 상세 정보 확인 - 2
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ kubectl describe pod flask-example-app-959c5f88d-k95wk
+</span></span><span style="display:flex;"><span>Name:         flask-example-app-959c5f88d-k95wk
+</span></span><span style="display:flex;"><span>Namespace:    default
+</span></span><span style="display:flex;"><span>Priority:     <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>Node:         fastvm-centos-7-7-110/192.168.200.110
+</span></span><span style="display:flex;"><span>Start Time:   Wed, <span style="color:#ae81ff">09</span> Sep <span style="color:#ae81ff">2020</span> 15:38:00 +0900
+</span></span><span style="display:flex;"><span>Labels:       app<span style="color:#f92672">=</span>flask-example-app
+</span></span><span style="display:flex;"><span>              pod-template-hash<span style="color:#f92672">=</span>959c5f88d
+</span></span><span style="display:flex;"><span>Annotations:  &lt;none&gt;
+</span></span><span style="display:flex;"><span>Status:       Running
+</span></span><span style="display:flex;"><span>IP:           10.42.0.36
+</span></span><span style="display:flex;"><span>IPs:
+</span></span><span style="display:flex;"><span>  IP:           10.42.0.36
+</span></span><span style="display:flex;"><span>Controlled By:  ReplicaSet/flask-example-app-959c5f88d
+</span></span><span style="display:flex;"><span>Containers:
+</span></span><span style="display:flex;"><span>  flask-example-app:
+</span></span><span style="display:flex;"><span>    Container ID:   containerd://f99d19b1ac52ced19e300a294cd93ad62a97f6259cf6e426c63c545e0918a9d8
+</span></span><span style="display:flex;"><span>    Image:          han0495/flask-example-app:v1
+</span></span><span style="display:flex;"><span>    Image ID:       docker.io/han0495/flask-example-app@sha256:f3d45e996bc86a13e1a8a363d9736e18c1501804690733b86aa02df3f59bda10
+</span></span><span style="display:flex;"><span>    Port:           &lt;none&gt;
+</span></span><span style="display:flex;"><span>    Host Port:      &lt;none&gt;
+</span></span><span style="display:flex;"><span>    State:          Running
+</span></span><span style="display:flex;"><span>      Started:      Wed, <span style="color:#ae81ff">09</span> Sep <span style="color:#ae81ff">2020</span> 15:38:01 +0900
+</span></span><span style="display:flex;"><span>    Ready:          True
+</span></span><span style="display:flex;"><span>    Restart Count:  <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    Environment:    &lt;none&gt;
+</span></span><span style="display:flex;"><span>    Mounts:
+</span></span><span style="display:flex;"><span>      /var/run/secrets/kubernetes.io/serviceaccount from default-token-89vwb <span style="color:#f92672">(</span>ro<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Conditions:
+</span></span><span style="display:flex;"><span>  Type              Status
+</span></span><span style="display:flex;"><span>  Initialized       True
+</span></span><span style="display:flex;"><span>  Ready             True
+</span></span><span style="display:flex;"><span>  ContainersReady   True
+</span></span><span style="display:flex;"><span>  PodScheduled      True
+</span></span><span style="display:flex;"><span>Volumes:
+</span></span><span style="display:flex;"><span>  default-token-89vwb:
+</span></span><span style="display:flex;"><span>    Type:        Secret <span style="color:#f92672">(</span>a volume populated by a Secret<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>    SecretName:  default-token-89vwb
+</span></span><span style="display:flex;"><span>    Optional:    false
+</span></span><span style="display:flex;"><span>QoS Class:       BestEffort
+</span></span><span style="display:flex;"><span>Node-Selectors:  &lt;none&gt;
+</span></span><span style="display:flex;"><span>Tolerations:     node.kubernetes.io/not-ready:NoExecute <span style="color:#66d9ef">for</span> 300s
+</span></span><span style="display:flex;"><span>                 node.kubernetes.io/unreachable:NoExecute <span style="color:#66d9ef">for</span> 300s
+</span></span><span style="display:flex;"><span>Events:
+</span></span><span style="display:flex;"><span>  Type    Reason     Age        From                            Message
+</span></span><span style="display:flex;"><span>  ----    ------     ----       ----                            -------
+</span></span><span style="display:flex;"><span>  Normal  Scheduled  &lt;unknown&gt;  default-scheduler               Successfully assigned default/flask-example-app-959c5f88d-k95wk to fastvm-centos-7-7-110
+</span></span><span style="display:flex;"><span>  Normal  Pulled     29m        kubelet, fastvm-centos-7-7-110  Container image <span style="color:#e6db74">&#34;han0495/flask-example-app:v1&#34;</span> already present on machine
+</span></span><span style="display:flex;"><span>  Normal  Created    29m        kubelet, fastvm-centos-7-7-110  Created container flask-example-app
+</span></span><span style="display:flex;"><span>  Normal  Started    29m        kubelet, fastvm-centos-7-7-110  Started container flask-example-app
+</span></span></code></pre></div></li>
+<li>현재 실행중인 Pod 의 정보를 <code>yaml</code> 형식으로 출력
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ kubectl get pod flask-example-app-959c5f88d-k95wk -o yaml 
+</span></span></code></pre></div>아래와 같이 저장이 가능합니다.
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ kubectl get pod flask-example-app-959c5f88d-k95wk -o yaml &gt; flask-example-app.yml
+</span></span></code></pre></div></li>
+</ul>
+<h1 id="create-pod">Create Pod<a hidden class="anchor" aria-hidden="true" href="#create-pod">#</a></h1>
+<p>아래 명령어를 통해 Pod 을 생성 할 수 있습니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ kubectl run pod-test-app --image<span style="color:#f92672">=</span>nginx
+</span></span><span style="display:flex;"><span>pod/pod-test-app created
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ kubectl get pod
+</span></span><span style="display:flex;"><span>NAME                                READY   STATUS    RESTARTS   AGE
+</span></span><span style="display:flex;"><span>flask-example-app-959c5f88d-k95wk   1/1     Running   <span style="color:#ae81ff">0</span>          38m
+</span></span><span style="display:flex;"><span>pod-test-app                        1/1     Running   <span style="color:#ae81ff">0</span>          66s    &lt;&lt;
+</span></span></code></pre></div><p>아래와 같이 <code>yaml</code> 을 이용해서 Pod 을 생성 할 수 있습니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ cat <span style="color:#e6db74">&lt;&lt; EOF | kubectl create -f -
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">apiVersion: v1
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">kind: Pod
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">metadata:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  labels:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    run: pod-test-app-2
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  name: pod-test-app-2
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  namespace: default
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">spec:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  containers:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  - image: nginx
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    name: pod-test-app-2
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
+</span></span></code></pre></div><p>or</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ kubectl create -f pod-test-app-2.yml
+</span></span></code></pre></div><h1 id="delete-pod">Delete Pod<a hidden class="anchor" aria-hidden="true" href="#delete-pod">#</a></h1>
+<p>아래 명령을 통해 Pod 삭제 할 수 있습니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ kubectl delete pod pod-test-app
+</span></span><span style="display:flex;"><span>$ kubectl delete pod pod-test-app-2
+</span></span></code></pre></div><h1 id="연습-문제">연습 문제<a hidden class="anchor" aria-hidden="true" href="#연습-문제">#</a></h1>
+<p>아래 container 를 포함한 하나의 Pod 을 생성하시오.</p>
+<ul>
+<li>nginx</li>
+<li>redis</li>
+<li>memcached</li>
+</ul>
+<h1 id="연습문제-정답">연습문제 정답<a hidden class="anchor" aria-hidden="true" href="#연습문제-정답">#</a></h1>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Pod</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">labels</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">run</span>: <span style="color:#ae81ff">pod-practice-app</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">pod-practice-app</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">containers</span>:
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">image</span>: <span style="color:#ae81ff">nginx</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">nginx</span>
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">image</span>: <span style="color:#ae81ff">redis</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">redis</span>
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">image</span>: <span style="color:#ae81ff">memcached</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">name</span>: <span style="color:#ae81ff">memcached</span>
+</span></span></code></pre></div><h1 id="참고-문서">참고 문서<a hidden class="anchor" aria-hidden="true" href="#참고-문서">#</a></h1>
+<ul>
+<li><a href="https://github.com/chhanz/kubernetes-hands-on-lab">https://github.com/chhanz/kubernetes-hands-on-lab</a></li>
+<li><a href="https://github.com/chhanz/kubernetes-hands-on-lab/blob/master/doc/check-the-pod.md">https://github.com/chhanz/kubernetes-hands-on-lab/blob/master/doc/check-the-pod.md</a></li>
+</ul>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://chhanz88.github.io/tags/kubernetes/">kubernetes</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2022 <a href="https://chhanz88.github.io">chhanz 
+기술 블로그
+</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://git.io/hugopapermod" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

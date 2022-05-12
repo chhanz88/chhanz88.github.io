@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>[Ubuntu] Local mirror site 구성(DVD/Repository sync) | chhanz 
+기술 블로그
+</title>
+<meta name="keywords" content="linux">
+<meta name="description" content="Ubuntu 22.04">
+<meta name="author" content="chhanz">
+<link rel="canonical" href="https://chhanz88.github.io/post/2022-05-09-ubuntu-config-apt-mirror-site/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.ec8da366ca2fb647537ccb7a8f6fa5b4e9cd3c7a0d3171dd2d3baad1e49c8bfc.css" integrity="sha256-7I2jZsovtkdTfMt6j2&#43;ltOnNPHoNMXHdLTuq0eSci/w=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.min.4dcb3c4f38462f66c6b6137227726f5543cb934cca9788f041c087e374491df2.js" integrity="sha256-Tcs8TzhGL2bGthNyJ3JvVUPLk0zKl4jwQcCH43RJHfI="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://chhanz88.github.io/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://chhanz88.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://chhanz88.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://chhanz88.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://chhanz88.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="[Ubuntu] Local mirror site 구성(DVD/Repository sync)" />
+<meta property="og:description" content="Ubuntu 22.04" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://chhanz88.github.io/post/2022-05-09-ubuntu-config-apt-mirror-site/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2022-05-09T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2022-05-09T00:00:00&#43;00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[Ubuntu] Local mirror site 구성(DVD/Repository sync)"/>
+<meta name="twitter:description" content="Ubuntu 22.04"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Posts",
+      "item": "https://chhanz88.github.io/post/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "[Ubuntu] Local mirror site 구성(DVD/Repository sync)",
+      "item": "https://chhanz88.github.io/post/2022-05-09-ubuntu-config-apt-mirror-site/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "[Ubuntu] Local mirror site 구성(DVD/Repository sync)",
+  "name": "[Ubuntu] Local mirror site 구성(DVD\/Repository sync)",
+  "description": "Ubuntu 22.04",
+  "keywords": [
+    "linux"
+  ],
+  "articleBody": "목차  overview DVD 사용  Mount DVD sources.list 추가 Repository 추가   Sync Repository  apt-mirror 설치 mirror.list 수정 Sync Repository Check Sync mirror data location   Mirror site 운영  Mirror site 추가 APT update    overview 이번 포스팅은 DVD 를 활용하여 인터넷이 안되는 환경에서 Ubuntu package 를 다루는 방법과\n외부 환경이 아닌 내부에 Repository mirror site 를 구성하는 방법에 대해 알아보도록 하겠습니다.\nDVD 사용 주로 인터넷이 안되는 망분리 된 곳에서 많이 활용될 방식입니다.\nMount DVD 아래 명령어를 통해 DVD 를 Mount 합니다.\n$ sudo mount /dev/sr0 /mnt mount: /mnt: WARNING: source write-protected, mounted read-only. sources.list 추가 아래와 같이 /etc/apt/sources.list.d/ 경로에 list 파일을 추가합니다.\n$ cat /etc/apt/sources.list.d/dvd.list deb file:/mnt/ubuntu jammy main 외부와 통신이 안되는 상황이라면 외부로 설정 되어 있는 Repository 설정을 주석으로 막거나 제거합니다.\n$ vi /etc/apt/sources.list # deb ...... ....... ... Repository 추가 아래와 같이 Repository 목록을 update 합니다.\nroot@u-node-1:/etc/apt/sources.list.d# apt-get update Get:1 file:/mnt/ubuntu jammy InRelease Ign:1 file:/mnt/ubuntu jammy InRelease Get:2 file:/mnt/ubuntu jammy Release [1486 B] Get:2 file:/mnt/ubuntu jammy Release [1486 B] Get:3 file:/mnt/ubuntu jammy Release.gpg [833 B] Get:3 file:/mnt/ubuntu jammy Release.gpg [833 B] Get:4 file:/mnt/ubuntu jammy/main amd64 Packages [32.3 kB] Ign:4 file:/mnt/ubuntu jammy/main amd64 Packages Get:4 file:/mnt/ubuntu jammy/main amd64 Packages [32.3 kB] Hit:5 https://ftp.lanet.kr/ubuntu jammy InRelease Hit:6 http://security.ubuntu.com/ubuntu jammy-security InRelease Hit:7 http://archive.ubuntu.com/ubuntu jammy InRelease Hit:8 http://archive.ubuntu.com/ubuntu jammy-updates InRelease Hit:9 http://archive.ubuntu.com/ubuntu jammy-backports InRelease Reading package lists... Done  root@u-node-1:/etc/apt/sources.list.d# apt-add-repository -L deb http://archive.ubuntu.com/ubuntu jammy multiverse main universe restricted deb http://archive.ubuntu.com/ubuntu jammy-updates multiverse main universe restricted deb http://archive.ubuntu.com/ubuntu jammy-backports multiverse main universe restricted deb http://security.ubuntu.com/ubuntu jammy-security multiverse main universe restricted deb https://ftp.lanet.kr/ubuntu/ jammy multiverse main universe deb file:/mnt/ubuntu jammy main  \"추가된 local DVD repository\" Sync Repository  내부 망 분리된 환경에 한대의 시스템에 Repository 를 Sync 하고 Sync 된 시스템에서 HTTP 서비스를 하여 Repository mirror site 를 구성하고 이용하는 방법에 대해 알아보도록 하겠습니다.\napt-mirror 설치 아래와 같이 apt-mirror 를 설치합니다.\n주의 : 공식 apt-mirror 는 최신 버전의 Ubuntu Release 를 정상적으로 Sync 하지 못하고 있습니다.\n(사유: 해당 명령어가 유지보수가 안되고 있음)\n관련하여 issue 및 workaround 는 아래 문서를 참고합니다.\nhttps://chhanz.github.io/linux/2022/05/09/ubuntu-apt-mirror-issue/\nmirror.list 수정 /etc/apt/mirror.list 를 수정하여 mirror 할 내용을 점검합니다.\n$ cat /etc/apt/mirror.list ############# config ################## # # set base_path /var/spool/apt-mirror # # set mirror_path $base_path/mirror # set skel_path $base_path/skel # set var_path $base_path/var # set cleanscript $var_path/clean.sh # set defaultarch  # set postmirror_script $var_path/postmirror.sh # set run_postmirror 0 set nthreads 5 set _tilde 0 # ############# end config ##############  deb http://archive.ubuntu.com/ubuntu jammy main restricted universe multiverse deb-amd64 http://archive.ubuntu.com/ubuntu jammy main restricted universe multiverse deb-i386 http://archive.ubuntu.com/ubuntu jammy main restricted universe multiverse #deb http://archive.ubuntu.com/ubuntu jammy-security main restricted universe multiverse #deb http://archive.ubuntu.com/ubuntu jammy-updates main restricted universe multiverse #deb http://archive.ubuntu.com/ubuntu artful-proposed main restricted universe multiverse #deb http://archive.ubuntu.com/ubuntu artful-backports main restricted universe multiverse  #deb-src http://archive.ubuntu.com/ubuntu artful main restricted universe multiverse #deb-src http://archive.ubuntu.com/ubuntu artful-security main restricted universe multiverse #deb-src http://archive.ubuntu.com/ubuntu artful-updates main restricted universe multiverse #deb-src http://archive.ubuntu.com/ubuntu artful-proposed main restricted universe multiverse #deb-src http://archive.ubuntu.com/ubuntu artful-backports main restricted universe multiverse  clean http://archive.ubuntu.com/ubuntu 간단하게 주요 옵션들에 대해 정리하면,\n base_path : mirror site data 저장 경로\nnthreads : sync 간 사용될 wget thread 수 deb , deb-amd64 , deb-i386 : 현재 사용하는 OS 의 Bit, 64 Bit, 32 Bit\n Sync Repository 아래와 같이 Repository 를 Sync 합니다.\n$ sudo apt-mirror Downloading 114 index files using 5 threads... Begin time: Mon May 9 10:54:15 2022 [5]... [4]... [3]... [2]... [1]... [0]... End time: Mon May 9 10:54:21 2022  Processing translation indexes: [TTT]  Downloading 558 translation files using 5 threads... Begin time: Mon May 9 10:54:21 2022 [5]... [4]... [3]... [2]... [1]... [0]... End time: Mon May 9 10:54:51 2022  Processing DEP-11 indexes: [DDD]  Downloading 56 dep11 files using 5 threads... Begin time: Mon May 9 10:54:51 2022 [5]... [4]... [3]... [2]... [1]... [0]... End time: Mon May 9 10:54:55 2022  Processing indexes: [PPP]  3.5 GiB will be downloaded into archive. Downloading 422 archive files using 5 threads... Begin time: Mon May 9 10:54:58 2022 [5]... [4]... [3]... [2]... [1]... [0]... End time: Mon May 9 10:57:47 2022  16.0 KiB in 1 files and 0 directories can be freed. Run /var/spool/apt-mirror/var/clean.sh for this purpose.  Running the Post Mirror script ... (/var/spool/apt-mirror/var/postmirror.sh)   Post Mirror script has completed. See above output for any possible errors. Check Sync mirror data location 기본적으로 base_path 를 설정 안했다면 아래와 같은 경로로 mirror site sync 가 완료 되어있습니다.\nroot@u-node-1:/var/spool/apt-mirror/mirror/archive.ubuntu.com# ls ubuntu root@u-node-1:/var/spool/apt-mirror/mirror/archive.ubuntu.com# pwd /var/spool/apt-mirror/mirror/archive.ubuntu.com Mirror site 운영 apache 혹은 nginx 를 사용하는 것이 제일 좋은 방법이고 아래와 같이 간단하게 명령어 한줄로도 Mirror site 를 구동 할 수 있습니다.\nPython Simple HTTP Server 모듈을 이용합니다.\nroot@u-node-1:/var/spool/apt-mirror/mirror/archive.ubuntu.com# python3 -m http.server Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ... Mirror site 추가 아래와 같이 내부 Mirror site 정보를 추가합니다.\nroot@u-node-1:/etc/apt# cat sources.list deb http://localhost:8000/ubuntu jammy main restricted universe multiverse APT update 아래와 같이 정상적으로 내부 Repository 에서 정보를 가져오는 것을 확인 할 수 있습니다.\nroot@u-node-1:~# apt-get update Get:1 http://localhost:8000/ubuntu jammy InRelease [270 kB] Get:2 http://localhost:8000/ubuntu jammy/main amd64 Packages [1395 kB] Get:3 http://localhost:8000/ubuntu jammy/main Translation-en [510 kB] Get:4 http://localhost:8000/ubuntu jammy/main amd64 DEP-11 Metadata [423 kB] Get:5 http://localhost:8000/ubuntu jammy/main DEP-11 48x48 Icons [100.0 kB] Get:6 http://localhost:8000/ubuntu jammy/main DEP-11 64x64 Icons [148 kB] Ign:7 http://localhost:8000/ubuntu jammy/main amd64 c-n-f Metadata Get:8 http://localhost:8000/ubuntu jammy/restricted amd64 Packages [129 kB] Get:9 http://localhost:8000/ubuntu jammy/restricted Translation-en [18.6 kB] Ign:10 http://localhost:8000/ubuntu jammy/restricted amd64 c-n-f Metadata Get:11 http://localhost:8000/ubuntu jammy/universe amd64 Packages [14.1 MB] Get:12 http://localhost:8000/ubuntu jammy/universe Translation-en [5652 kB] Get:13 http://localhost:8000/ubuntu jammy/universe amd64 DEP-11 Metadata [3559 kB] Get:14 http://localhost:8000/ubuntu jammy/universe DEP-11 48x48 Icons [3447 kB] Get:15 http://localhost:8000/ubuntu jammy/universe DEP-11 64x64 Icons [7609 kB] Ign:16 http://localhost:8000/ubuntu jammy/universe amd64 c-n-f Metadata Get:17 http://localhost:8000/ubuntu jammy/multiverse amd64 Packages [217 kB] Get:18 http://localhost:8000/ubuntu jammy/multiverse Translation-en [112 kB] Get:19 http://localhost:8000/ubuntu jammy/multiverse amd64 DEP-11 Metadata [42.1 kB] Get:20 http://localhost:8000/ubuntu jammy/multiverse DEP-11 48x48 Icons [42.7 kB] Get:21 http://localhost:8000/ubuntu jammy/multiverse DEP-11 64x64 Icons [193 kB] Ign:22 http://localhost:8000/ubuntu jammy/multiverse amd64 c-n-f Metadata Get:7 http://localhost:8000/ubuntu jammy/main amd64 c-n-f Metadata [30.3 kB] Get:10 http://localhost:8000/ubuntu jammy/restricted amd64 c-n-f Metadata [488 B] Get:16 http://localhost:8000/ubuntu jammy/universe amd64 c-n-f Metadata [286 kB] Get:22 http://localhost:8000/ubuntu jammy/multiverse amd64 c-n-f Metadata [8372 B] Fetched 595 kB in 3s (199 kB/s) Reading package lists... Done ",
+  "wordCount" : "984",
+  "inLanguage": "en",
+  "datePublished": "2022-05-09T00:00:00Z",
+  "dateModified": "2022-05-09T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "chhanz"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://chhanz88.github.io/post/2022-05-09-ubuntu-config-apt-mirror-site/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "chhanz \n기술 블로그\n",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://chhanz88.github.io/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://chhanz88.github.io" accesskey="h" title="chhanz 
+기술 블로그
+ (Alt + H)">chhanz 
+기술 블로그
+</a>
+            <span class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </span>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title">
+      [Ubuntu] Local mirror site 구성(DVD/Repository sync)
+    </h1>
+    <div class="post-description">
+      Ubuntu 22.04
+    </div>
+    <div class="post-meta"><span title='2022-05-09 00:00:00 +0000 UTC'>May 9, 2022</span>&nbsp;·&nbsp;chhanz
+
+</div>
+  </header> 
+  <div class="post-content"><h1 id="목차">목차<a hidden class="anchor" aria-hidden="true" href="#목차">#</a></h1>
+<ul>
+<li><a href="#overview">overview</a></li>
+<li><a href="#dvd">DVD 사용</a>
+<ul>
+<li><a href="#dvd1">Mount DVD</a></li>
+<li><a href="#dvd2">sources.list 추가</a></li>
+<li><a href="#dvd3">Repository 추가</a></li>
+</ul>
+</li>
+<li><a href="#sync">Sync Repository</a>
+<ul>
+<li><a href="#sync1">apt-mirror 설치</a></li>
+<li><a href="#sync2">mirror.list 수정</a></li>
+<li><a href="#sync3">Sync Repository</a></li>
+<li><a href="#sync4">Check Sync mirror data location</a></li>
+</ul>
+</li>
+<li><a href="#site">Mirror site 운영</a>
+<ul>
+<li><a href="#site1">Mirror site 추가</a></li>
+<li><a href="#site2">APT update</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="overview">overview<a hidden class="anchor" aria-hidden="true" href="#overview">#</a></h1>
+<p>이번 포스팅은 DVD 를 활용하여 인터넷이 안되는 환경에서 Ubuntu package 를 다루는 방법과<br>
+외부 환경이 아닌 내부에 Repository mirror site 를 구성하는 방법에 대해 알아보도록 하겠습니다.</p>
+<h1 id="dvd">DVD 사용<a hidden class="anchor" aria-hidden="true" href="#dvd">#</a></h1>
+<p>주로 인터넷이 안되는 망분리 된 곳에서 많이 활용될 방식입니다.</p>
+<h2 id="dvd1">Mount DVD<a hidden class="anchor" aria-hidden="true" href="#dvd1">#</a></h2>
+<p>아래 명령어를 통해 DVD 를 Mount 합니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ sudo mount /dev/sr0 /mnt
+</span></span><span style="display:flex;"><span>mount: /mnt: WARNING: source write-protected, mounted read-only.
+</span></span></code></pre></div><h2 id="dvd2">sources.list 추가<a hidden class="anchor" aria-hidden="true" href="#dvd2">#</a></h2>
+<p>아래와 같이 <code>/etc/apt/sources.list.d/</code> 경로에 list 파일을 추가합니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ cat /etc/apt/sources.list.d/dvd.list
+</span></span><span style="display:flex;"><span>deb file:/mnt/ubuntu jammy main
+</span></span></code></pre></div><p>외부와 통신이 안되는 상황이라면 외부로 설정 되어 있는 Repository 설정을 주석으로 막거나 제거합니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ vi /etc/apt/sources.list
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># deb ...... .......   &lt;&lt; 주석 처리</span>
+</span></span><span style="display:flex;"><span>...
+</span></span></code></pre></div><h2 id="dvd3">Repository 추가<a hidden class="anchor" aria-hidden="true" href="#dvd3">#</a></h2>
+<p>아래와 같이 Repository 목록을 update 합니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@u-node-1:/etc/apt/sources.list.d# apt-get update
+</span></span><span style="display:flex;"><span>Get:1 file:/mnt/ubuntu jammy InRelease
+</span></span><span style="display:flex;"><span>Ign:1 file:/mnt/ubuntu jammy InRelease
+</span></span><span style="display:flex;"><span>Get:2 file:/mnt/ubuntu jammy Release <span style="color:#f92672">[</span><span style="color:#ae81ff">1486</span> B<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>Get:2 file:/mnt/ubuntu jammy Release <span style="color:#f92672">[</span><span style="color:#ae81ff">1486</span> B<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>Get:3 file:/mnt/ubuntu jammy Release.gpg <span style="color:#f92672">[</span><span style="color:#ae81ff">833</span> B<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>Get:3 file:/mnt/ubuntu jammy Release.gpg <span style="color:#f92672">[</span><span style="color:#ae81ff">833</span> B<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>Get:4 file:/mnt/ubuntu jammy/main amd64 Packages <span style="color:#f92672">[</span>32.3 kB<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>Ign:4 file:/mnt/ubuntu jammy/main amd64 Packages
+</span></span><span style="display:flex;"><span>Get:4 file:/mnt/ubuntu jammy/main amd64 Packages <span style="color:#f92672">[</span>32.3 kB<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>Hit:5 https://ftp.lanet.kr/ubuntu jammy InRelease
+</span></span><span style="display:flex;"><span>Hit:6 http://security.ubuntu.com/ubuntu jammy-security InRelease
+</span></span><span style="display:flex;"><span>Hit:7 http://archive.ubuntu.com/ubuntu jammy InRelease
+</span></span><span style="display:flex;"><span>Hit:8 http://archive.ubuntu.com/ubuntu jammy-updates InRelease
+</span></span><span style="display:flex;"><span>Hit:9 http://archive.ubuntu.com/ubuntu jammy-backports InRelease
+</span></span><span style="display:flex;"><span>Reading package lists... Done
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>root@u-node-1:/etc/apt/sources.list.d# apt-add-repository -L
+</span></span><span style="display:flex;"><span>deb http://archive.ubuntu.com/ubuntu jammy multiverse main universe restricted
+</span></span><span style="display:flex;"><span>deb http://archive.ubuntu.com/ubuntu jammy-updates multiverse main universe restricted
+</span></span><span style="display:flex;"><span>deb http://archive.ubuntu.com/ubuntu jammy-backports multiverse main universe restricted
+</span></span><span style="display:flex;"><span>deb http://security.ubuntu.com/ubuntu jammy-security multiverse main universe restricted
+</span></span><span style="display:flex;"><span>deb https://ftp.lanet.kr/ubuntu/ jammy multiverse main universe
+</span></span><span style="display:flex;"><span>deb file:/mnt/ubuntu jammy main          <span style="color:#f92672">&lt;&lt;&lt;</span> <span style="color:#e6db74">&#34;추가된 local DVD repository&#34;</span>
+</span></span></code></pre></div><h1 id="sync">Sync Repository <a hidden class="anchor" aria-hidden="true" href="#sync">#</a></h1>
+<p>내부 망 분리된 환경에 한대의 시스템에 Repository 를 Sync 하고 Sync 된 시스템에서 HTTP 서비스를 하여 Repository mirror site 를 구성하고 이용하는 방법에 대해 알아보도록 하겠습니다.</p>
+<h2 id="sync1">apt-mirror 설치<a hidden class="anchor" aria-hidden="true" href="#sync1">#</a></h2>
+<p>아래와 같이 <code>apt-mirror</code> 를 설치합니다.<br>
+<strong>주의</strong> : 공식 <code>apt-mirror</code> 는 최신 버전의 Ubuntu Release 를 정상적으로 Sync 하지 못하고 있습니다.<br>
+(사유: 해당 명령어가 유지보수가 안되고 있음)</p>
+<p>관련하여 issue 및 workaround 는 아래 문서를 참고합니다.<br>
+<a href="https://chhanz.github.io/linux/2022/05/09/ubuntu-apt-mirror-issue/">https://chhanz.github.io/linux/2022/05/09/ubuntu-apt-mirror-issue/</a></p>
+<h2 id="sync2">mirror.list 수정<a hidden class="anchor" aria-hidden="true" href="#sync2">#</a></h2>
+<p><code>/etc/apt/mirror.list</code> 를 수정하여 mirror 할 내용을 점검합니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ cat /etc/apt/mirror.list
+</span></span><span style="display:flex;"><span><span style="color:#75715e">############# config ##################</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># set base_path    /var/spool/apt-mirror</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># set mirror_path  $base_path/mirror</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># set skel_path    $base_path/skel</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># set var_path     $base_path/var</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># set cleanscript $var_path/clean.sh</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># set defaultarch  &lt;running host architecture&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># set postmirror_script $var_path/postmirror.sh</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># set run_postmirror 0</span>
+</span></span><span style="display:flex;"><span>set nthreads     <span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span>set _tilde <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">############# end config ##############</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>deb http://archive.ubuntu.com/ubuntu jammy main restricted universe multiverse
+</span></span><span style="display:flex;"><span>deb-amd64 http://archive.ubuntu.com/ubuntu jammy main restricted universe multiverse
+</span></span><span style="display:flex;"><span>deb-i386 http://archive.ubuntu.com/ubuntu jammy main restricted universe multiverse
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#deb http://archive.ubuntu.com/ubuntu jammy-security main restricted universe multiverse</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#deb http://archive.ubuntu.com/ubuntu jammy-updates main restricted universe multiverse</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#deb http://archive.ubuntu.com/ubuntu artful-proposed main restricted universe multiverse</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#deb http://archive.ubuntu.com/ubuntu artful-backports main restricted universe multiverse</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#deb-src http://archive.ubuntu.com/ubuntu artful main restricted universe multiverse</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#deb-src http://archive.ubuntu.com/ubuntu artful-security main restricted universe multiverse</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#deb-src http://archive.ubuntu.com/ubuntu artful-updates main restricted universe multiverse</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#deb-src http://archive.ubuntu.com/ubuntu artful-proposed main restricted universe multiverse</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#deb-src http://archive.ubuntu.com/ubuntu artful-backports main restricted universe multiverse</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>clean http://archive.ubuntu.com/ubuntu
+</span></span></code></pre></div><p>간단하게 주요 옵션들에 대해 정리하면,</p>
+<blockquote>
+<p><code>base_path</code> : mirror site data 저장 경로<br>
+<code>nthreads</code> : sync 간 사용될 wget thread 수 <br>
+<code>deb</code> , <code>deb-amd64</code> , <code>deb-i386</code> : 현재 사용하는 OS 의 Bit, 64 Bit, 32 Bit</p>
+</blockquote>
+<h2 id="sync3">Sync Repository<a hidden class="anchor" aria-hidden="true" href="#sync3">#</a></h2>
+<p>아래와 같이 Repository 를 Sync 합니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ sudo apt-mirror
+</span></span><span style="display:flex;"><span>Downloading <span style="color:#ae81ff">114</span> index files using <span style="color:#ae81ff">5</span> threads...
+</span></span><span style="display:flex;"><span>Begin time: Mon May  <span style="color:#ae81ff">9</span> 10:54:15 <span style="color:#ae81ff">2022</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>5<span style="color:#f92672">]</span>... <span style="color:#f92672">[</span>4<span style="color:#f92672">]</span>... <span style="color:#f92672">[</span>3<span style="color:#f92672">]</span>... <span style="color:#f92672">[</span>2<span style="color:#f92672">]</span>... <span style="color:#f92672">[</span>1<span style="color:#f92672">]</span>... <span style="color:#f92672">[</span>0<span style="color:#f92672">]</span>...
+</span></span><span style="display:flex;"><span>End time: Mon May  <span style="color:#ae81ff">9</span> 10:54:21 <span style="color:#ae81ff">2022</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>Processing translation indexes: <span style="color:#f92672">[</span>TTT<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>Downloading <span style="color:#ae81ff">558</span> translation files using <span style="color:#ae81ff">5</span> threads...
+</span></span><span style="display:flex;"><span>Begin time: Mon May  <span style="color:#ae81ff">9</span> 10:54:21 <span style="color:#ae81ff">2022</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>5<span style="color:#f92672">]</span>... <span style="color:#f92672">[</span>4<span style="color:#f92672">]</span>... <span style="color:#f92672">[</span>3<span style="color:#f92672">]</span>... <span style="color:#f92672">[</span>2<span style="color:#f92672">]</span>... <span style="color:#f92672">[</span>1<span style="color:#f92672">]</span>... <span style="color:#f92672">[</span>0<span style="color:#f92672">]</span>...
+</span></span><span style="display:flex;"><span>End time: Mon May  <span style="color:#ae81ff">9</span> 10:54:51 <span style="color:#ae81ff">2022</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>Processing DEP-11 indexes: <span style="color:#f92672">[</span>DDD<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>Downloading <span style="color:#ae81ff">56</span> dep11 files using <span style="color:#ae81ff">5</span> threads...
+</span></span><span style="display:flex;"><span>Begin time: Mon May  <span style="color:#ae81ff">9</span> 10:54:51 <span style="color:#ae81ff">2022</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>5<span style="color:#f92672">]</span>... <span style="color:#f92672">[</span>4<span style="color:#f92672">]</span>... <span style="color:#f92672">[</span>3<span style="color:#f92672">]</span>... <span style="color:#f92672">[</span>2<span style="color:#f92672">]</span>... <span style="color:#f92672">[</span>1<span style="color:#f92672">]</span>... <span style="color:#f92672">[</span>0<span style="color:#f92672">]</span>...
+</span></span><span style="display:flex;"><span>End time: Mon May  <span style="color:#ae81ff">9</span> 10:54:55 <span style="color:#ae81ff">2022</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>Processing indexes: <span style="color:#f92672">[</span>PPP<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>3.5 GiB will be downloaded into archive.
+</span></span><span style="display:flex;"><span>Downloading <span style="color:#ae81ff">422</span> archive files using <span style="color:#ae81ff">5</span> threads...
+</span></span><span style="display:flex;"><span>Begin time: Mon May  <span style="color:#ae81ff">9</span> 10:54:58 <span style="color:#ae81ff">2022</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>5<span style="color:#f92672">]</span>... <span style="color:#f92672">[</span>4<span style="color:#f92672">]</span>... <span style="color:#f92672">[</span>3<span style="color:#f92672">]</span>... <span style="color:#f92672">[</span>2<span style="color:#f92672">]</span>... <span style="color:#f92672">[</span>1<span style="color:#f92672">]</span>... <span style="color:#f92672">[</span>0<span style="color:#f92672">]</span>...
+</span></span><span style="display:flex;"><span>End time: Mon May  <span style="color:#ae81ff">9</span> 10:57:47 <span style="color:#ae81ff">2022</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>16.0 KiB in <span style="color:#ae81ff">1</span> files and <span style="color:#ae81ff">0</span> directories can be freed.
+</span></span><span style="display:flex;"><span>Run /var/spool/apt-mirror/var/clean.sh <span style="color:#66d9ef">for</span> this purpose.
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>Running the Post Mirror script ...
+</span></span><span style="display:flex;"><span><span style="color:#f92672">(</span>/var/spool/apt-mirror/var/postmirror.sh<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>Post Mirror script has completed. See above output <span style="color:#66d9ef">for</span> any possible errors.
+</span></span></code></pre></div><h2 id="sync4">Check Sync mirror data location<a hidden class="anchor" aria-hidden="true" href="#sync4">#</a></h2>
+<p>기본적으로 base_path 를 설정 안했다면 아래와 같은 경로로 mirror site sync 가 완료 되어있습니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@u-node-1:/var/spool/apt-mirror/mirror/archive.ubuntu.com# ls
+</span></span><span style="display:flex;"><span>ubuntu
+</span></span><span style="display:flex;"><span>root@u-node-1:/var/spool/apt-mirror/mirror/archive.ubuntu.com# pwd
+</span></span><span style="display:flex;"><span>/var/spool/apt-mirror/mirror/archive.ubuntu.com
+</span></span></code></pre></div><h1 id="site">Mirror site 운영<a hidden class="anchor" aria-hidden="true" href="#site">#</a></h1>
+<p><code>apache</code> 혹은 <code>nginx</code> 를 사용하는 것이 제일 좋은 방법이고 아래와 같이 간단하게 명령어 한줄로도 Mirror site 를 구동 할 수 있습니다.</p>
+<p>Python Simple HTTP Server 모듈을 이용합니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@u-node-1:/var/spool/apt-mirror/mirror/archive.ubuntu.com# python3 -m http.server
+</span></span><span style="display:flex;"><span>Serving HTTP on 0.0.0.0 port <span style="color:#ae81ff">8000</span> <span style="color:#f92672">(</span>http://0.0.0.0:8000/<span style="color:#f92672">)</span> ...
+</span></span></code></pre></div><h2 id="site1">Mirror site 추가<a hidden class="anchor" aria-hidden="true" href="#site1">#</a></h2>
+<p>아래와 같이 내부 Mirror site 정보를 추가합니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@u-node-1:/etc/apt# cat sources.list
+</span></span><span style="display:flex;"><span>deb http://localhost:8000/ubuntu jammy main restricted universe multiverse
+</span></span></code></pre></div><h2 id="site2">APT update<a hidden class="anchor" aria-hidden="true" href="#site2">#</a></h2>
+<p>아래와 같이 정상적으로 내부 Repository 에서 정보를 가져오는 것을 확인 할 수 있습니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@u-node-1:~# apt-get update
+</span></span><span style="display:flex;"><span>Get:1 http://localhost:8000/ubuntu jammy InRelease <span style="color:#f92672">[</span><span style="color:#ae81ff">270</span> kB<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>Get:2 http://localhost:8000/ubuntu jammy/main amd64 Packages <span style="color:#f92672">[</span><span style="color:#ae81ff">1395</span> kB<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>Get:3 http://localhost:8000/ubuntu jammy/main Translation-en <span style="color:#f92672">[</span><span style="color:#ae81ff">510</span> kB<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>Get:4 http://localhost:8000/ubuntu jammy/main amd64 DEP-11 Metadata <span style="color:#f92672">[</span><span style="color:#ae81ff">423</span> kB<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>Get:5 http://localhost:8000/ubuntu jammy/main DEP-11 48x48 Icons <span style="color:#f92672">[</span>100.0 kB<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>Get:6 http://localhost:8000/ubuntu jammy/main DEP-11 64x64 Icons <span style="color:#f92672">[</span><span style="color:#ae81ff">148</span> kB<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>Ign:7 http://localhost:8000/ubuntu jammy/main amd64 c-n-f Metadata
+</span></span><span style="display:flex;"><span>Get:8 http://localhost:8000/ubuntu jammy/restricted amd64 Packages <span style="color:#f92672">[</span><span style="color:#ae81ff">129</span> kB<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>Get:9 http://localhost:8000/ubuntu jammy/restricted Translation-en <span style="color:#f92672">[</span>18.6 kB<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>Ign:10 http://localhost:8000/ubuntu jammy/restricted amd64 c-n-f Metadata
+</span></span><span style="display:flex;"><span>Get:11 http://localhost:8000/ubuntu jammy/universe amd64 Packages <span style="color:#f92672">[</span>14.1 MB<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>Get:12 http://localhost:8000/ubuntu jammy/universe Translation-en <span style="color:#f92672">[</span><span style="color:#ae81ff">5652</span> kB<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>Get:13 http://localhost:8000/ubuntu jammy/universe amd64 DEP-11 Metadata <span style="color:#f92672">[</span><span style="color:#ae81ff">3559</span> kB<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>Get:14 http://localhost:8000/ubuntu jammy/universe DEP-11 48x48 Icons <span style="color:#f92672">[</span><span style="color:#ae81ff">3447</span> kB<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>Get:15 http://localhost:8000/ubuntu jammy/universe DEP-11 64x64 Icons <span style="color:#f92672">[</span><span style="color:#ae81ff">7609</span> kB<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>Ign:16 http://localhost:8000/ubuntu jammy/universe amd64 c-n-f Metadata
+</span></span><span style="display:flex;"><span>Get:17 http://localhost:8000/ubuntu jammy/multiverse amd64 Packages <span style="color:#f92672">[</span><span style="color:#ae81ff">217</span> kB<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>Get:18 http://localhost:8000/ubuntu jammy/multiverse Translation-en <span style="color:#f92672">[</span><span style="color:#ae81ff">112</span> kB<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>Get:19 http://localhost:8000/ubuntu jammy/multiverse amd64 DEP-11 Metadata <span style="color:#f92672">[</span>42.1 kB<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>Get:20 http://localhost:8000/ubuntu jammy/multiverse DEP-11 48x48 Icons <span style="color:#f92672">[</span>42.7 kB<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>Get:21 http://localhost:8000/ubuntu jammy/multiverse DEP-11 64x64 Icons <span style="color:#f92672">[</span><span style="color:#ae81ff">193</span> kB<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>Ign:22 http://localhost:8000/ubuntu jammy/multiverse amd64 c-n-f Metadata
+</span></span><span style="display:flex;"><span>Get:7 http://localhost:8000/ubuntu jammy/main amd64 c-n-f Metadata <span style="color:#f92672">[</span>30.3 kB<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>Get:10 http://localhost:8000/ubuntu jammy/restricted amd64 c-n-f Metadata <span style="color:#f92672">[</span><span style="color:#ae81ff">488</span> B<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>Get:16 http://localhost:8000/ubuntu jammy/universe amd64 c-n-f Metadata <span style="color:#f92672">[</span><span style="color:#ae81ff">286</span> kB<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>Get:22 http://localhost:8000/ubuntu jammy/multiverse amd64 c-n-f Metadata <span style="color:#f92672">[</span><span style="color:#ae81ff">8372</span> B<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>Fetched <span style="color:#ae81ff">595</span> kB in 3s <span style="color:#f92672">(</span><span style="color:#ae81ff">199</span> kB/s<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Reading package lists... Done
+</span></span></code></pre></div>
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://chhanz88.github.io/tags/linux/">linux</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2022 <a href="https://chhanz88.github.io">chhanz 
+기술 블로그
+</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://git.io/hugopapermod" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

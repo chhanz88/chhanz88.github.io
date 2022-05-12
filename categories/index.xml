@@ -1,27 +1,175 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Categories on test hugopage</title>
+    <title>Categories on chhanz 
+기술 블로그
+</title>
     <link>https://chhanz88.github.io/categories/</link>
-    <description>Recent content in Categories on test hugopage</description>
+    <description>Recent content in Categories on chhanz 
+기술 블로그
+</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 11 May 2022 08:48:49 +0000</lastBuildDate><atom:link href="https://chhanz88.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 11 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://chhanz88.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>category</title>
-      <link>https://chhanz88.github.io/categories/category/</link>
-      <pubDate>Wed, 11 May 2022 08:48:49 +0000</pubDate>
+      <title>linux</title>
+      <link>https://chhanz88.github.io/categories/linux/</link>
+      <pubDate>Wed, 11 May 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/categories/category/</guid>
+      <guid>https://chhanz88.github.io/categories/linux/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>subcategory</title>
-      <link>https://chhanz88.github.io/categories/subcategory/</link>
-      <pubDate>Wed, 11 May 2022 08:48:49 +0000</pubDate>
+      <title>openstack</title>
+      <link>https://chhanz88.github.io/categories/openstack/</link>
+      <pubDate>Mon, 17 Jan 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/categories/subcategory/</guid>
+      <guid>https://chhanz88.github.io/categories/openstack/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>kubernetes</title>
+      <link>https://chhanz88.github.io/categories/kubernetes/</link>
+      <pubDate>Wed, 01 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://chhanz88.github.io/categories/kubernetes/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ceph</title>
+      <link>https://chhanz88.github.io/categories/ceph/</link>
+      <pubDate>Wed, 18 Aug 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://chhanz88.github.io/categories/ceph/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ansible</title>
+      <link>https://chhanz88.github.io/categories/ansible/</link>
+      <pubDate>Wed, 24 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://chhanz88.github.io/categories/ansible/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>openshift</title>
+      <link>https://chhanz88.github.io/categories/openshift/</link>
+      <pubDate>Tue, 26 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://chhanz88.github.io/categories/openshift/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>linux, dhcp</title>
+      <link>https://chhanz88.github.io/categories/linux-dhcp/</link>
+      <pubDate>Tue, 17 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://chhanz88.github.io/categories/linux-dhcp/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>container</title>
+      <link>https://chhanz88.github.io/categories/container/</link>
+      <pubDate>Tue, 22 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://chhanz88.github.io/categories/container/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>python</title>
+      <link>https://chhanz88.github.io/categories/python/</link>
+      <pubDate>Sun, 05 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://chhanz88.github.io/categories/python/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>devops</title>
+      <link>https://chhanz88.github.io/categories/devops/</link>
+      <pubDate>Mon, 04 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://chhanz88.github.io/categories/devops/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tomcat</title>
+      <link>https://chhanz88.github.io/categories/tomcat/</link>
+      <pubDate>Thu, 12 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://chhanz88.github.io/categories/tomcat/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>RHV</title>
+      <link>https://chhanz88.github.io/categories/RHV/</link>
+      <pubDate>Sat, 18 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://chhanz88.github.io/categories/RHV/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>docker</title>
+      <link>https://chhanz88.github.io/categories/docker/</link>
+      <pubDate>Fri, 20 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://chhanz88.github.io/categories/docker/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>github</title>
+      <link>https://chhanz88.github.io/categories/github/</link>
+      <pubDate>Wed, 24 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://chhanz88.github.io/categories/github/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>VMware</title>
+      <link>https://chhanz88.github.io/categories/VMware/</link>
+      <pubDate>Sun, 16 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://chhanz88.github.io/categories/VMware/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>aix</title>
+      <link>https://chhanz88.github.io/categories/aix/</link>
+      <pubDate>Sun, 04 Nov 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://chhanz88.github.io/categories/aix/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>SAN</title>
+      <link>https://chhanz88.github.io/categories/SAN/</link>
+      <pubDate>Fri, 13 May 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://chhanz88.github.io/categories/SAN/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Windows</title>
+      <link>https://chhanz88.github.io/categories/Windows/</link>
+      <pubDate>Sat, 27 Apr 2013 00:00:00 +0000</pubDate>
+      
+      <guid>https://chhanz88.github.io/categories/Windows/</guid>
       <description></description>
     </item>
     

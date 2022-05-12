@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>[Linux] VirtualBMC 를 이용한 IPMI node 생성 | chhanz 
+기술 블로그
+</title>
+<meta name="keywords" content="linux">
+<meta name="description" content="use kvm">
+<meta name="author" content="chhanz">
+<link rel="canonical" href="https://chhanz88.github.io/post/2022-04-14-vbmcd-ipminode/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.ec8da366ca2fb647537ccb7a8f6fa5b4e9cd3c7a0d3171dd2d3baad1e49c8bfc.css" integrity="sha256-7I2jZsovtkdTfMt6j2&#43;ltOnNPHoNMXHdLTuq0eSci/w=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.min.4dcb3c4f38462f66c6b6137227726f5543cb934cca9788f041c087e374491df2.js" integrity="sha256-Tcs8TzhGL2bGthNyJ3JvVUPLk0zKl4jwQcCH43RJHfI="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://chhanz88.github.io/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://chhanz88.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://chhanz88.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://chhanz88.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://chhanz88.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="[Linux] VirtualBMC 를 이용한 IPMI node 생성" />
+<meta property="og:description" content="use kvm" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://chhanz88.github.io/post/2022-04-14-vbmcd-ipminode/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2022-04-14T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2022-04-14T00:00:00&#43;00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[Linux] VirtualBMC 를 이용한 IPMI node 생성"/>
+<meta name="twitter:description" content="use kvm"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Posts",
+      "item": "https://chhanz88.github.io/post/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "[Linux] VirtualBMC 를 이용한 IPMI node 생성",
+      "item": "https://chhanz88.github.io/post/2022-04-14-vbmcd-ipminode/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "[Linux] VirtualBMC 를 이용한 IPMI node 생성",
+  "name": "[Linux] VirtualBMC 를 이용한 IPMI node 생성",
+  "description": "use kvm",
+  "keywords": [
+    "linux"
+  ],
+  "articleBody": "VirtualBMC 를 이용한 IPMI node 생성 IPMI Node 설정 SSH Key 배포 SSH 를 이용하여 KVM 에 접근 및 통제를 하기 위해 SSH KEY Password 배포를 진행합니다.\n[root@ipmi-node ~]# ssh-copy-id root@kvm Python-pip 설치 아래와 같은 방법으로 pip 을 설치합니다.\n[root@ipmi-node ~]# yum -y install python3 python3-pip  [root@ipmi-node ~]# pip3 install -U pip VirtualBMC 설치 아래와 같은 방법으로 vBMC 를 설치합니다.\n[root@ipmi-node ~]# pip3 install virtualbmc 설치 과정 중, 아래와 같은 Error 가 발생되면 추가 Package 를 설치합니다.\n[root@ipmi-node ~]# yum install -y libvirt-devel gcc python3-devel ipmitool Error Case \"case 1\" ...  Complete output (16 lines):  Package libvirt was not found in the pkg-config search path.  Perhaps you should add the directory containing `libvirt.pc'  to the PKG_CONFIG_PATH environment variable  No package 'libvirt' found  Package libvirt was not found in the pkg-config search path.  Perhaps you should add the directory containing `libvirt.pc'  to the PKG_CONFIG_PATH environment variable  No package 'libvirt' found  running install  running build  /usr/bin/pkg-config --print-errors --atleast-version=0.9.11 libvirt  Package libvirt was not found in the pkg-config search path.  Perhaps you should add the directory containing `libvirt.pc'  to the PKG_CONFIG_PATH environment variable  No package 'libvirt' found  error: command '/usr/bin/pkg-config' failed with exit status ... \"case 2\" ...  creating build/temp.linux-x86_64-3.6  creating build/temp.linux-x86_64-3.6/build  gcc -pthread -Wno-unused-result -Wsign-compare -DNDEBUG -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -m64 -mtune=generic -D_GNU_SOURCE -fPIC -fwrapv -fPIC -I. -I/usr/include/python3.6m -c libvirt-override.c -o build/temp.linux-x86_64-3.6/libvirt-override.o  unable to execute 'gcc': No such file or directory  error: command 'gcc' failed with exit status 1 ... \"case 3\" ...  gcc -pthread -Wno-unused-result -Wsign-compare -DNDEBUG -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -m64 -mtune=generic -D_GNU_SOURCE -fPIC -fwrapv -fPIC -I. -I/usr/include/python3.6m -c libvirt-override.c -o build/temp.linux-x86_64-3.6/libvirt-override.o  libvirt-override.c:21:20: fatal error: Python.h: No such file or directory  #include  ... vBMC 서비스 시작 아래 명령을 통해 서비스를 시작합니다.\n[root@ipmi-node ~]# vbmcd vBMC 포트 추가 아래 명령과 같이 vBMC IPMI Port 를 생성합니다.\n$ vbmc --username --password --port --libvirt-uri qemu+ssh://root@/system 실제 추가 명령 예제는 아래와 같습니다.\n[root@ipmi-node ~]# vbmc add --username admin --password testtest --port 6250 --libvirt-uri qemu+ssh://root@kvm/system u20 vBMC 포트 확인 아래 명령을 통해 생성된 포트를 확인합니다.\n[root@ipmi-node ~]# vbmc list +-------------+--------+---------+------+ | Domain name | Status | Address | Port | +-------------+--------+---------+------+ | u20 | down | :: | 6250 | +-------------+--------+---------+------+ vBMC 포트 서비스 시작 아래 명령을 통해 vBMC 포트 서비스를 시작합니다.\n[root@ipmi-node ~]# vbmc start u20 ... [root@ipmi-node ~]# vbmc list +-------------+---------+---------+------+ | Domain name | Status | Address | Port | +-------------+---------+---------+------+ | ipmi-node | down | :: | 6252 | | maas-node | down | :: | 6251 | | u20 | running | :: | 6250 | +-------------+---------+---------+------+ vBMC 포트 상세 정보 확인 아래 명령을 통해 vBMC 포트 상세 정보를 확인 할 수 있습니다.\n[root@ipmi-node ~]# vbmc show u20 +-----------------------+----------------------------+ | Property | Value | +-----------------------+----------------------------+ | active | True | | address | :: | | domain_name | u20 | | libvirt_sasl_password | *** | | libvirt_sasl_username | None | | libvirt_uri | qemu+ssh://root@kvm/system | | password | *** | | port | 6250 | | status | running | | username | admin | +-----------------------+----------------------------+ vBMC 포트 서비스 확인 (netstat) netstat 를 통해 IPMI Node 에 각각의 포트로 vBMC port 가 활성화 됩니다.\n[root@ipmi-node ~]# netstat -anup Active Internet connections (servers and established) Proto Recv-Q Send-Q Local Address Foreign Address State PID/Program name udp 0 0 0.0.0.0:68 0.0.0.0:* 831/dhclient udp 0 0 0.0.0.0:111 0.0.0.0:* 550/rpcbind udp 0 0 127.0.0.1:323 0.0.0.0:* 554/chronyd udp 0 0 0.0.0.0:722 0.0.0.0:* 550/rpcbind udp6 0 0 :::6250 :::* 1934/python3  udp6 0 0 :::6251 :::* 1983/python3  udp6 0 0 :::6252 :::* 2000/python3  udp6 0 0 :::111 :::* 550/rpcbind udp6 0 0 ::1:323 :::* 554/chronyd udp6 0 0 :::722 :::* 550/rpcbind IPMITOOL 을 통해 전원 제어 아래와 같은 방법을 통해서 VM 의 전원을 통제 할 수 있습니다.\n[root@c-node-0 ~]# ipmitool -I lanplus -p 6250 -Uadmin -Ptesttest -H ipmi-node chassis power status Chassis Power is off  [root@c-node-0 ~]# ipmitool -I lanplus -p 6251 -Uadmin -Ptesttest -H ipmi-node chassis power status Chassis Power is on 전원 on/off 예제는 아래와 같습니다.\n$ ipmitool -I lanplus -p 6251 -Uadmin -Ptesttest -H ipmi-node chassis power 참고 자료  IPMITOOL 사용 가이드 : https://chhanz.github.io/linux/2022/03/01/ipmitool/  ",
+  "wordCount" : "702",
+  "inLanguage": "en",
+  "datePublished": "2022-04-14T00:00:00Z",
+  "dateModified": "2022-04-14T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "chhanz"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://chhanz88.github.io/post/2022-04-14-vbmcd-ipminode/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "chhanz \n기술 블로그\n",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://chhanz88.github.io/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://chhanz88.github.io" accesskey="h" title="chhanz 
+기술 블로그
+ (Alt + H)">chhanz 
+기술 블로그
+</a>
+            <span class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </span>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title">
+      [Linux] VirtualBMC 를 이용한 IPMI node 생성
+    </h1>
+    <div class="post-description">
+      use kvm
+    </div>
+    <div class="post-meta"><span title='2022-04-14 00:00:00 +0000 UTC'>April 14, 2022</span>&nbsp;·&nbsp;chhanz
+
+</div>
+  </header> 
+  <div class="post-content"><h1 id="virtualbmc-를-이용한-ipmi-node-생성">VirtualBMC 를 이용한 IPMI node 생성<a hidden class="anchor" aria-hidden="true" href="#virtualbmc-를-이용한-ipmi-node-생성">#</a></h1>
+<!-- raw HTML omitted -->
+<h1 id="ipmi-node-설정">IPMI Node 설정<a hidden class="anchor" aria-hidden="true" href="#ipmi-node-설정">#</a></h1>
+<h2 id="ssh-key-배포">SSH Key 배포<a hidden class="anchor" aria-hidden="true" href="#ssh-key-배포">#</a></h2>
+<p>SSH 를 이용하여 KVM 에 접근 및 통제를 하기 위해 SSH KEY Password 배포를 진행합니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@ipmi-node ~<span style="color:#f92672">]</span><span style="color:#75715e"># ssh-copy-id root@kvm</span>
+</span></span></code></pre></div><h2 id="python-pip-설치">Python-pip 설치<a hidden class="anchor" aria-hidden="true" href="#python-pip-설치">#</a></h2>
+<p>아래와 같은 방법으로 <code>pip</code> 을 설치합니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@ipmi-node ~<span style="color:#f92672">]</span><span style="color:#75715e"># yum -y install python3 python3-pip</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@ipmi-node ~<span style="color:#f92672">]</span><span style="color:#75715e"># pip3 install -U pip</span>
+</span></span></code></pre></div><h2 id="virtualbmc-설치">VirtualBMC 설치<a hidden class="anchor" aria-hidden="true" href="#virtualbmc-설치">#</a></h2>
+<p>아래와 같은 방법으로 <code>vBMC</code> 를 설치합니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@ipmi-node ~<span style="color:#f92672">]</span><span style="color:#75715e"># pip3 install virtualbmc</span>
+</span></span></code></pre></div><p>설치 과정 중, 아래와 같은 Error 가 발생되면 추가 Package 를 설치합니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@ipmi-node ~<span style="color:#f92672">]</span><span style="color:#75715e"># yum install -y libvirt-devel gcc python3-devel ipmitool</span>
+</span></span></code></pre></div><h3 id="error-case">Error Case<a hidden class="anchor" aria-hidden="true" href="#error-case">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>&#34;case 1&#34;
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>    Complete output (16 lines):
+</span></span><span style="display:flex;"><span>    Package libvirt was not found in the pkg-config search path.
+</span></span><span style="display:flex;"><span>    Perhaps you should add the directory containing `libvirt.pc&#39;
+</span></span><span style="display:flex;"><span>    to the PKG_CONFIG_PATH environment variable
+</span></span><span style="display:flex;"><span>    No package &#39;libvirt&#39; found
+</span></span><span style="display:flex;"><span>    Package libvirt was not found in the pkg-config search path.
+</span></span><span style="display:flex;"><span>    Perhaps you should add the directory containing `libvirt.pc&#39;
+</span></span><span style="display:flex;"><span>    to the PKG_CONFIG_PATH environment variable
+</span></span><span style="display:flex;"><span>    No package &#39;libvirt&#39; found
+</span></span><span style="display:flex;"><span>    running install
+</span></span><span style="display:flex;"><span>    running build
+</span></span><span style="display:flex;"><span>    /usr/bin/pkg-config --print-errors --atleast-version=0.9.11 libvirt
+</span></span><span style="display:flex;"><span>    Package libvirt was not found in the pkg-config search path.
+</span></span><span style="display:flex;"><span>    Perhaps you should add the directory containing `libvirt.pc&#39;
+</span></span><span style="display:flex;"><span>    to the PKG_CONFIG_PATH environment variable
+</span></span><span style="display:flex;"><span>    No package &#39;libvirt&#39; found
+</span></span><span style="display:flex;"><span>    error: command &#39;/usr/bin/pkg-config&#39; failed with exit status
+</span></span><span style="display:flex;"><span>...
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>&#34;case 2&#34;
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>    creating build/temp.linux-x86_64-3.6
+</span></span><span style="display:flex;"><span>    creating build/temp.linux-x86_64-3.6/build
+</span></span><span style="display:flex;"><span>    gcc -pthread -Wno-unused-result -Wsign-compare -DNDEBUG -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -m64 -mtune=generic -D_GNU_SOURCE -fPIC -fwrapv -fPIC -I. -I/usr/include/python3.6m -c libvirt-override.c -o build/temp.linux-x86_64-3.6/libvirt-override.o
+</span></span><span style="display:flex;"><span>    unable to execute &#39;gcc&#39;: No such file or directory
+</span></span><span style="display:flex;"><span>    error: command &#39;gcc&#39; failed with exit status 1
+</span></span><span style="display:flex;"><span>...
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>&#34;case 3&#34;
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>    gcc -pthread -Wno-unused-result -Wsign-compare -DNDEBUG -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -m64 -mtune=generic -D_GNU_SOURCE -fPIC -fwrapv -fPIC -I. -I/usr/include/python3.6m -c libvirt-override.c -o build/temp.linux-x86_64-3.6/libvirt-override.o
+</span></span><span style="display:flex;"><span>    libvirt-override.c:21:20: fatal error: Python.h: No such file or directory
+</span></span><span style="display:flex;"><span>     #include &lt;Python.h&gt;
+</span></span><span style="display:flex;"><span>...
+</span></span></code></pre></div><h2 id="vbmc-서비스-시작">vBMC 서비스 시작<a hidden class="anchor" aria-hidden="true" href="#vbmc-서비스-시작">#</a></h2>
+<p>아래 명령을 통해 서비스를 시작합니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@ipmi-node ~<span style="color:#f92672">]</span><span style="color:#75715e"># vbmcd</span>
+</span></span></code></pre></div><h2 id="vbmc-포트-추가">vBMC 포트 추가<a hidden class="anchor" aria-hidden="true" href="#vbmc-포트-추가">#</a></h2>
+<p>아래 명령과 같이 vBMC IPMI Port 를 생성합니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ vbmc --username &lt;vBMC IPMI 계정 이름&gt; --password &lt;vBMC IPMI 계정의 패스워드&gt; --port &lt;vBMC IPMI PORT&gt; --libvirt-uri qemu+ssh://root@&lt;KVM HOSTNAME&gt;/system &lt;VM NAME&gt;
+</span></span></code></pre></div><p>실제 추가 명령 예제는 아래와 같습니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@ipmi-node ~<span style="color:#f92672">]</span><span style="color:#75715e"># vbmc add --username admin --password testtest --port 6250 --libvirt-uri qemu+ssh://root@kvm/system u20</span>
+</span></span></code></pre></div><h2 id="vbmc-포트-확인">vBMC 포트 확인<a hidden class="anchor" aria-hidden="true" href="#vbmc-포트-확인">#</a></h2>
+<p>아래 명령을 통해 생성된 포트를 확인합니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@ipmi-node ~<span style="color:#f92672">]</span><span style="color:#75715e"># vbmc list</span>
+</span></span><span style="display:flex;"><span>+-------------+--------+---------+------+
+</span></span><span style="display:flex;"><span>| Domain name | Status | Address | Port |
+</span></span><span style="display:flex;"><span>+-------------+--------+---------+------+
+</span></span><span style="display:flex;"><span>| u20         | down   | ::      | <span style="color:#ae81ff">6250</span> |
+</span></span><span style="display:flex;"><span>+-------------+--------+---------+------+
+</span></span></code></pre></div><h2 id="vbmc-포트-서비스-시작">vBMC 포트 서비스 시작<a hidden class="anchor" aria-hidden="true" href="#vbmc-포트-서비스-시작">#</a></h2>
+<p>아래 명령을 통해 vBMC 포트 서비스를 시작합니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@ipmi-node ~<span style="color:#f92672">]</span><span style="color:#75715e"># vbmc start u20</span>
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@ipmi-node ~<span style="color:#f92672">]</span><span style="color:#75715e"># vbmc list</span>
+</span></span><span style="display:flex;"><span>+-------------+---------+---------+------+
+</span></span><span style="display:flex;"><span>| Domain name | Status  | Address | Port |
+</span></span><span style="display:flex;"><span>+-------------+---------+---------+------+
+</span></span><span style="display:flex;"><span>| ipmi-node   | down    | ::      | <span style="color:#ae81ff">6252</span> |
+</span></span><span style="display:flex;"><span>| maas-node   | down    | ::      | <span style="color:#ae81ff">6251</span> |
+</span></span><span style="display:flex;"><span>| u20         | running | ::      | <span style="color:#ae81ff">6250</span> |      &lt;&lt;
+</span></span><span style="display:flex;"><span>+-------------+---------+---------+------+
+</span></span></code></pre></div><h2 id="vbmc-포트-상세-정보-확인">vBMC 포트 상세 정보 확인<a hidden class="anchor" aria-hidden="true" href="#vbmc-포트-상세-정보-확인">#</a></h2>
+<p>아래 명령을 통해 vBMC 포트 상세 정보를 확인 할 수 있습니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@ipmi-node ~<span style="color:#f92672">]</span><span style="color:#75715e"># vbmc show u20</span>
+</span></span><span style="display:flex;"><span>+-----------------------+----------------------------+
+</span></span><span style="display:flex;"><span>| Property              | Value                      |
+</span></span><span style="display:flex;"><span>+-----------------------+----------------------------+
+</span></span><span style="display:flex;"><span>| active                | True                       |
+</span></span><span style="display:flex;"><span>| address               | ::                         |
+</span></span><span style="display:flex;"><span>| domain_name           | u20                        |
+</span></span><span style="display:flex;"><span>| libvirt_sasl_password | ***                        |
+</span></span><span style="display:flex;"><span>| libvirt_sasl_username | None                       |
+</span></span><span style="display:flex;"><span>| libvirt_uri           | qemu+ssh://root@kvm/system |
+</span></span><span style="display:flex;"><span>| password              | ***                        |
+</span></span><span style="display:flex;"><span>| port                  | <span style="color:#ae81ff">6250</span>                       |
+</span></span><span style="display:flex;"><span>| status                | running                    |
+</span></span><span style="display:flex;"><span>| username              | admin                      |
+</span></span><span style="display:flex;"><span>+-----------------------+----------------------------+
+</span></span></code></pre></div><h2 id="vbmc-포트-서비스-확인-netstat">vBMC 포트 서비스 확인 (netstat)<a hidden class="anchor" aria-hidden="true" href="#vbmc-포트-서비스-확인-netstat">#</a></h2>
+<p><code>netstat</code> 를 통해 IPMI Node 에 각각의 포트로 vBMC port 가 활성화 됩니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@ipmi-node ~<span style="color:#f92672">]</span><span style="color:#75715e"># netstat -anup</span>
+</span></span><span style="display:flex;"><span>Active Internet connections <span style="color:#f92672">(</span>servers and established<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+</span></span><span style="display:flex;"><span>udp        <span style="color:#ae81ff">0</span>      <span style="color:#ae81ff">0</span> 0.0.0.0:68              0.0.0.0:*                           831/dhclient
+</span></span><span style="display:flex;"><span>udp        <span style="color:#ae81ff">0</span>      <span style="color:#ae81ff">0</span> 0.0.0.0:111             0.0.0.0:*                           550/rpcbind
+</span></span><span style="display:flex;"><span>udp        <span style="color:#ae81ff">0</span>      <span style="color:#ae81ff">0</span> 127.0.0.1:323           0.0.0.0:*                           554/chronyd
+</span></span><span style="display:flex;"><span>udp        <span style="color:#ae81ff">0</span>      <span style="color:#ae81ff">0</span> 0.0.0.0:722             0.0.0.0:*                           550/rpcbind
+</span></span><span style="display:flex;"><span>udp6       <span style="color:#ae81ff">0</span>      <span style="color:#ae81ff">0</span> :::6250                 :::*                                1934/python3                <span style="color:#f92672">&lt;&lt;&lt;</span>
+</span></span><span style="display:flex;"><span>udp6       <span style="color:#ae81ff">0</span>      <span style="color:#ae81ff">0</span> :::6251                 :::*                                1983/python3                <span style="color:#f92672">&lt;&lt;&lt;</span>
+</span></span><span style="display:flex;"><span>udp6       <span style="color:#ae81ff">0</span>      <span style="color:#ae81ff">0</span> :::6252                 :::*                                2000/python3                <span style="color:#f92672">&lt;&lt;&lt;</span>
+</span></span><span style="display:flex;"><span>udp6       <span style="color:#ae81ff">0</span>      <span style="color:#ae81ff">0</span> :::111                  :::*                                550/rpcbind
+</span></span><span style="display:flex;"><span>udp6       <span style="color:#ae81ff">0</span>      <span style="color:#ae81ff">0</span> ::1:323                 :::*                                554/chronyd
+</span></span><span style="display:flex;"><span>udp6       <span style="color:#ae81ff">0</span>      <span style="color:#ae81ff">0</span> :::722                  :::*                                550/rpcbind
+</span></span></code></pre></div><h2 id="ipmitool-을-통해-전원-제어"><code>IPMITOOL</code> 을 통해 전원 제어<a hidden class="anchor" aria-hidden="true" href="#ipmitool-을-통해-전원-제어">#</a></h2>
+<p>아래와 같은 방법을 통해서 VM 의 전원을 통제 할 수 있습니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@c-node-0 ~<span style="color:#f92672">]</span><span style="color:#75715e"># ipmitool -I lanplus -p 6250 -Uadmin -Ptesttest -H ipmi-node chassis power status</span>
+</span></span><span style="display:flex;"><span>Chassis Power is off
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@c-node-0 ~<span style="color:#f92672">]</span><span style="color:#75715e"># ipmitool -I lanplus -p 6251 -Uadmin -Ptesttest -H ipmi-node chassis power status</span>
+</span></span><span style="display:flex;"><span>Chassis Power is on
+</span></span></code></pre></div><p>전원 on/off 예제는 아래와 같습니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ ipmitool -I lanplus -p <span style="color:#ae81ff">6251</span> -Uadmin -Ptesttest -H ipmi-node chassis power &lt;on | off&gt;
+</span></span></code></pre></div><h1 id="참고-자료">참고 자료<a hidden class="anchor" aria-hidden="true" href="#참고-자료">#</a></h1>
+<ul>
+<li>IPMITOOL 사용 가이드 : <a href="https://chhanz.github.io/linux/2022/03/01/ipmitool/">https://chhanz.github.io/linux/2022/03/01/ipmitool/</a></li>
+</ul>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://chhanz88.github.io/tags/linux/">linux</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2022 <a href="https://chhanz88.github.io">chhanz 
+기술 블로그
+</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://git.io/hugopapermod" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

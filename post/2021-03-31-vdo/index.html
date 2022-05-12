@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>[Linux] VDO(Virtual Data Optimizer) 활용 | chhanz 
+기술 블로그
+</title>
+<meta name="keywords" content="linux">
+<meta name="description" content="VDO 란? VDO(Virtual Data Optimizer)는 데이터의 중복제거, 압축 등의 기능을 사용해 스토리지의 공간 활용도를 높이는 기술입니다.
+VDO 활용 VDO 장단점  장점 : 중복 제거 및 압축 기능을 이용하여 스토리지 공간 활용도가 높아지며, 주로 VM 및 컨테이너 환경에서 높은 효율을 보인다고 합니다. 단점 : 일반적인 스토리지에 비해 성능 저하가 발생합니다. 참고 자료 : https://www.redhat.com/en/blog/look-vdo-new-linux-compression-layer  VDO 설치  설치 환경 : CentOS 8.1  아래 명령을 통해 설치를 진행합니다.
+[root@fastvm-centos-8-1-30 ~]# dnf install vdo kmod-kvdo .">
+<meta name="author" content="chhanz">
+<link rel="canonical" href="https://chhanz88.github.io/post/2021-03-31-vdo/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.ec8da366ca2fb647537ccb7a8f6fa5b4e9cd3c7a0d3171dd2d3baad1e49c8bfc.css" integrity="sha256-7I2jZsovtkdTfMt6j2&#43;ltOnNPHoNMXHdLTuq0eSci/w=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.min.4dcb3c4f38462f66c6b6137227726f5543cb934cca9788f041c087e374491df2.js" integrity="sha256-Tcs8TzhGL2bGthNyJ3JvVUPLk0zKl4jwQcCH43RJHfI="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://chhanz88.github.io/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://chhanz88.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://chhanz88.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://chhanz88.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://chhanz88.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="[Linux] VDO(Virtual Data Optimizer) 활용" />
+<meta property="og:description" content="VDO 란? VDO(Virtual Data Optimizer)는 데이터의 중복제거, 압축 등의 기능을 사용해 스토리지의 공간 활용도를 높이는 기술입니다.
+VDO 활용 VDO 장단점  장점 : 중복 제거 및 압축 기능을 이용하여 스토리지 공간 활용도가 높아지며, 주로 VM 및 컨테이너 환경에서 높은 효율을 보인다고 합니다. 단점 : 일반적인 스토리지에 비해 성능 저하가 발생합니다. 참고 자료 : https://www.redhat.com/en/blog/look-vdo-new-linux-compression-layer  VDO 설치  설치 환경 : CentOS 8.1  아래 명령을 통해 설치를 진행합니다.
+[root@fastvm-centos-8-1-30 ~]# dnf install vdo kmod-kvdo ." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://chhanz88.github.io/post/2021-03-31-vdo/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2021-03-31T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2021-03-31T00:00:00&#43;00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[Linux] VDO(Virtual Data Optimizer) 활용"/>
+<meta name="twitter:description" content="VDO 란? VDO(Virtual Data Optimizer)는 데이터의 중복제거, 압축 등의 기능을 사용해 스토리지의 공간 활용도를 높이는 기술입니다.
+VDO 활용 VDO 장단점  장점 : 중복 제거 및 압축 기능을 이용하여 스토리지 공간 활용도가 높아지며, 주로 VM 및 컨테이너 환경에서 높은 효율을 보인다고 합니다. 단점 : 일반적인 스토리지에 비해 성능 저하가 발생합니다. 참고 자료 : https://www.redhat.com/en/blog/look-vdo-new-linux-compression-layer  VDO 설치  설치 환경 : CentOS 8.1  아래 명령을 통해 설치를 진행합니다.
+[root@fastvm-centos-8-1-30 ~]# dnf install vdo kmod-kvdo ."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Posts",
+      "item": "https://chhanz88.github.io/post/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "[Linux] VDO(Virtual Data Optimizer) 활용",
+      "item": "https://chhanz88.github.io/post/2021-03-31-vdo/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "[Linux] VDO(Virtual Data Optimizer) 활용",
+  "name": "[Linux] VDO(Virtual Data Optimizer) 활용",
+  "description": "VDO 란? VDO(Virtual Data Optimizer)는 데이터의 중복제거, 압축 등의 기능을 사용해 스토리지의 공간 활용도를 높이는 기술입니다.\nVDO 활용 VDO 장단점  장점 : 중복 제거 및 압축 기능을 이용하여 스토리지 공간 활용도가 높아지며, 주로 VM 및 컨테이너 환경에서 높은 효율을 보인다고 합니다. 단점 : 일반적인 스토리지에 비해 성능 저하가 발생합니다. 참고 자료 : https://www.redhat.com/en/blog/look-vdo-new-linux-compression-layer  VDO 설치  설치 환경 : CentOS 8.1  아래 명령을 통해 설치를 진행합니다.\n[root@fastvm-centos-8-1-30 ~]# dnf install vdo kmod-kvdo .",
+  "keywords": [
+    "linux"
+  ],
+  "articleBody": "VDO 란? VDO(Virtual Data Optimizer)는 데이터의 중복제거, 압축 등의 기능을 사용해 스토리지의 공간 활용도를 높이는 기술입니다.\nVDO 활용 VDO 장단점  장점 : 중복 제거 및 압축 기능을 이용하여 스토리지 공간 활용도가 높아지며, 주로 VM 및 컨테이너 환경에서 높은 효율을 보인다고 합니다. 단점 : 일반적인 스토리지에 비해 성능 저하가 발생합니다. 참고 자료 : https://www.redhat.com/en/blog/look-vdo-new-linux-compression-layer  VDO 설치  설치 환경 : CentOS 8.1  아래 명령을 통해 설치를 진행합니다.\n[root@fastvm-centos-8-1-30 ~]# dnf install vdo kmod-kvdo ... 설치가 완료된 이후, 서비스를 시작합니다.\n[root@fastvm-centos-8-1-30 ~]# systemctl enable --now vdo [root@fastvm-centos-8-1-30 ~]# systemctl status vdo ● vdo.service - VDO volume services  Loaded: loaded (/usr/lib/systemd/system/vdo.service; enabled; vendor preset: enabled)  Active: active (exited) since Fri 2021-03-19 11:25:01 KST; 3min 21s ago  Process: 875 ExecStart=/usr/bin/vdo start --all --confFile /etc/vdoconf.yml (code=exited, status=0/SUCCESS)  Main PID: 875 (code=exited, status=0/SUCCESS)  Mar 19 11:24:58 fastvm-centos-8-1-30 systemd[1]: Starting VDO volume services... Mar 19 11:25:01 fastvm-centos-8-1-30 systemd[1]: Started VDO volume services. VDO Volume 생성 아래와 같이 VDO Device 를 생성할 수 있습니다.\n[root@fastvm-centos-8-1-30 ~]# vdo create --device /dev/sda3 --vdoLogicalSize 200G --name vdo1 Creating VDO vdo1  The VDO volume can address 90 GB in 45 data slabs, each 2 GB.  It can grow to address at most 16 TB of physical storage in 8192 slabs.  If a larger maximum size might be needed, use bigger slabs. Starting VDO vdo1 Starting compression on VDO vdo1 VDO instance 0 volume is ready at /dev/mapper/vdo1 VDO 파일시스템 생성 생성된 VDO Device 를 LVM 을 이용하여 LV 로 만들고 filesystem 을 생성하도록 하겠습니다.\n# pvcreate /dev/mapper/vdo1 # vgcreate testvg /dev/mapper/vdo1 # lvcreate -l 100%FREE -n testlv testvg # mkfs.xfs /dev/testvg/testlv /etc/fstab 등록 향후 시스템 재부팅 간 자동으로 Mount 되도록 /etc/fstab 에 등록합니다.\n/dev/testvg/testlv /mnt/testlv xfs defaults,_netdev,x-systemd.device-timeout=0,x-systemd.requires=vdo.service 0 0 중복 제거 및 압축 설정 확인 아래 명령을 통해 확인이 가능합니다.\n[root@fastvm-centos-8-1-30 testlv]# vdo status | egrep 'Deduplication|Compression'  Compression: enabled  Deduplication: enabled 중복 제거 테스트 아래 명령을 통해 5GB 의 테스트 파일을 생성합니다.\n[root@fastvm-centos-8-1-30 testlv]# dd if=/dev/urandom of=dd.file1 count=1024 bs=1024k 1024+0 records in 1024+0 records out 1073741824 bytes (1.1 GB, 1.0 GiB) copied, 13.1108 s, 81.9 MB/s [root@fastvm-centos-8-1-30 testlv]# dd if=/dev/urandom of=dd.file2 count=1024 bs=1024k 1024+0 records in 1024+0 records out 1073741824 bytes (1.1 GB, 1.0 GiB) copied, 14.5352 s, 73.9 MB/s [root@fastvm-centos-8-1-30 testlv]# dd if=/dev/urandom of=dd.file3 count=1024 bs=1024k 1024+0 records in 1024+0 records out 1073741824 bytes (1.1 GB, 1.0 GiB) copied, 16.0602 s, 66.9 MB/s [root@fastvm-centos-8-1-30 testlv]# dd if=/dev/urandom of=dd.file4 count=1024 bs=1024k 1024+0 records in 1024+0 records out 1073741824 bytes (1.1 GB, 1.0 GiB) copied, 17.0693 s, 62.9 MB/s [root@fastvm-centos-8-1-30 testlv]# dd if=/dev/urandom of=dd.file5 count=1024 bs=1024k 1024+0 records in 1024+0 records out 1073741824 bytes (1.1 GB, 1.0 GiB) copied, 17.0444 s, 63.0 MB/s VDO 사용량은 아래와 같이 변화가 생겼습니다.\n\"데이터 생성 이전\" [root@fastvm-centos-8-1-30 ~]# vdostats --hu Device Size Used Available Use% Space saving% /dev/mapper/vdo1 94.0G 4.1G 89.9G 4% N/A  \"데이터 생성 이후\" [root@fastvm-centos-8-1-30 testlv]# vdostats --hu Device Size Used Available Use% Space saving% /dev/mapper/vdo1 94.0G 9.1G 84.9G 9% 1% 생성된 파일을 cp 하여 파일시스템 사용률을 높이도록 하겠습니다.\n[root@fastvm-centos-8-1-30 testlv]# for i in {1..400}; do cp -v dd.file1 cp.file$i; done 'dd.file1' - 'cp.file1' 'dd.file1' - 'cp.file2' ... 'dd.file1' - 'cp.file100' ... 아래와 같이 중복 제거가 되면서 스토리지 공간 Saving 을 하는 것을 확인 할 수 있습니다.\n[root@fastvm-centos-8-1-30 testlv]# df -h /mnt/testlv Filesystem Size Used Avail Use% Mounted on /dev/mapper/testvg-testlv 200G 47G 154G 24% /mnt/testlv [root@fastvm-centos-8-1-30 testlv]# vdostats --hu Device Size Used Available Use% Space saving% /dev/mapper/vdo1 94.0G 9.1G 84.9G 9% 88% VDO 스토리지 공간 Full 테스트 중복 제거가 불가능한 데이터를 넣으면 VDO 가 어떻게 동작하는지 테스트 해보았습니다.\n[root@fastvm-centos-8-1-30 /]# cat /var/log/messages | grep lvm | grep full Mar 31 15:59:37 fastvm-centos-8-1-30 lvm[1622]: WARNING: VDO pool vdo1 is now 80.33% full. Mar 31 16:01:37 fastvm-centos-8-1-30 lvm[1622]: WARNING: VDO pool vdo1 is now 85.04% full. Mar 31 16:03:37 fastvm-centos-8-1-30 lvm[1622]: WARNING: VDO pool vdo1 is now 90.14% full. Mar 31 16:05:27 fastvm-centos-8-1-30 lvm[1622]: WARNING: VDO pool vdo1 is now 95.03% full. Mar 31 16:07:27 fastvm-centos-8-1-30 lvm[1622]: WARNING: VDO pool vdo1 is now 100.00% full. 먼저 위와 같이 /var/log/messages 에서 error message 가 발생합니다.\n[root@fastvm-centos-8-1-30 /]# vdostats --hu Device Size Used Available Use% Space saving% /dev/mapper/vdo1 94.0G 94.0G 0.0B 100% 0% ... dd: failed to open 'dd.file143': Input/output error dd: failed to open 'dd.file144': Input/output error dd: failed to open 'dd.file145': Input/output error dd: failed to open 'dd.file146': Input/output error dd: failed to open 'dd.file147': Input/output error dd: failed to open 'dd.file148': Input/output error dd: failed to open 'dd.file149': Input/output error dd: failed to open 'dd.file150': Input/output error ... 위와 같이 VDO 의 Used 는 100% 가 되고 해당 filesystem 은 데이터 생성이 불가능합니다.\n참고 자료  https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/storage_administration_guide/vdo-quick-start https://www.redhat.com/en/blog/look-vdo-new-linux-compression-layer  ",
+  "wordCount" : "752",
+  "inLanguage": "en",
+  "datePublished": "2021-03-31T00:00:00Z",
+  "dateModified": "2021-03-31T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "chhanz"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://chhanz88.github.io/post/2021-03-31-vdo/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "chhanz \n기술 블로그\n",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://chhanz88.github.io/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://chhanz88.github.io" accesskey="h" title="chhanz 
+기술 블로그
+ (Alt + H)">chhanz 
+기술 블로그
+</a>
+            <span class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </span>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title">
+      [Linux] VDO(Virtual Data Optimizer) 활용
+    </h1>
+    <div class="post-meta"><span title='2021-03-31 00:00:00 +0000 UTC'>March 31, 2021</span>&nbsp;·&nbsp;chhanz
+
+</div>
+  </header> 
+  <div class="post-content"><h1 id="vdo-란">VDO 란?<a hidden class="anchor" aria-hidden="true" href="#vdo-란">#</a></h1>
+<p>VDO(Virtual Data Optimizer)는 데이터의 중복제거, 압축 등의 기능을 사용해 스토리지의 공간 활용도를 높이는 기술입니다.</p>
+<h1 id="vdo-활용">VDO 활용<a hidden class="anchor" aria-hidden="true" href="#vdo-활용">#</a></h1>
+<!-- raw HTML omitted -->
+<h1 id="vdo-장단점">VDO 장단점<a hidden class="anchor" aria-hidden="true" href="#vdo-장단점">#</a></h1>
+<ul>
+<li>장점 : 중복 제거 및 압축 기능을 이용하여 스토리지 공간 활용도가 높아지며, 주로 VM 및 컨테이너 환경에서 높은 효율을 보인다고 합니다.</li>
+<li>단점 : 일반적인 스토리지에 비해 성능 저하가 발생합니다.</li>
+<li>참고 자료 : <a href="https://www.redhat.com/en/blog/look-vdo-new-linux-compression-layer">https://www.redhat.com/en/blog/look-vdo-new-linux-compression-layer</a></li>
+</ul>
+<h1 id="vdo-설치">VDO 설치<a hidden class="anchor" aria-hidden="true" href="#vdo-설치">#</a></h1>
+<ul>
+<li>설치 환경 : <code>CentOS 8.1</code></li>
+</ul>
+<p>아래 명령을 통해 설치를 진행합니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@fastvm-centos-8-1-30 ~<span style="color:#f92672">]</span><span style="color:#75715e"># dnf install vdo kmod-kvdo</span>
+</span></span><span style="display:flex;"><span>...
+</span></span></code></pre></div><p>설치가 완료된 이후, 서비스를 시작합니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@fastvm-centos-8-1-30 ~<span style="color:#f92672">]</span><span style="color:#75715e"># systemctl enable --now vdo</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@fastvm-centos-8-1-30 ~<span style="color:#f92672">]</span><span style="color:#75715e"># systemctl status vdo</span>
+</span></span><span style="display:flex;"><span>● vdo.service - VDO volume services
+</span></span><span style="display:flex;"><span>   Loaded: loaded <span style="color:#f92672">(</span>/usr/lib/systemd/system/vdo.service; enabled; vendor preset: enabled<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>   Active: active <span style="color:#f92672">(</span>exited<span style="color:#f92672">)</span> since Fri 2021-03-19 11:25:01 KST; 3min 21s ago
+</span></span><span style="display:flex;"><span>  Process: <span style="color:#ae81ff">875</span> ExecStart<span style="color:#f92672">=</span>/usr/bin/vdo start --all --confFile /etc/vdoconf.yml <span style="color:#f92672">(</span>code<span style="color:#f92672">=</span>exited, status<span style="color:#f92672">=</span>0/SUCCESS<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span> Main PID: <span style="color:#ae81ff">875</span> <span style="color:#f92672">(</span>code<span style="color:#f92672">=</span>exited, status<span style="color:#f92672">=</span>0/SUCCESS<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Mar <span style="color:#ae81ff">19</span> 11:24:58 fastvm-centos-8-1-30 systemd<span style="color:#f92672">[</span>1<span style="color:#f92672">]</span>: Starting VDO volume services...
+</span></span><span style="display:flex;"><span>Mar <span style="color:#ae81ff">19</span> 11:25:01 fastvm-centos-8-1-30 systemd<span style="color:#f92672">[</span>1<span style="color:#f92672">]</span>: Started VDO volume services.
+</span></span></code></pre></div><h1 id="vdo-volume-생성">VDO Volume 생성<a hidden class="anchor" aria-hidden="true" href="#vdo-volume-생성">#</a></h1>
+<p>아래와 같이 VDO Device 를 생성할 수 있습니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@fastvm-centos-8-1-30 ~<span style="color:#f92672">]</span><span style="color:#75715e"># vdo create --device /dev/sda3 --vdoLogicalSize 200G --name vdo1</span>
+</span></span><span style="display:flex;"><span>Creating VDO vdo1
+</span></span><span style="display:flex;"><span>      The VDO volume can address <span style="color:#ae81ff">90</span> GB in <span style="color:#ae81ff">45</span> data slabs, each <span style="color:#ae81ff">2</span> GB.
+</span></span><span style="display:flex;"><span>      It can grow to address at most <span style="color:#ae81ff">16</span> TB of physical storage in <span style="color:#ae81ff">8192</span> slabs.
+</span></span><span style="display:flex;"><span>      If a larger maximum size might be needed, use bigger slabs.
+</span></span><span style="display:flex;"><span>Starting VDO vdo1
+</span></span><span style="display:flex;"><span>Starting compression on VDO vdo1
+</span></span><span style="display:flex;"><span>VDO instance <span style="color:#ae81ff">0</span> volume is ready at /dev/mapper/vdo1
+</span></span></code></pre></div><h1 id="vdo-파일시스템-생성">VDO 파일시스템 생성<a hidden class="anchor" aria-hidden="true" href="#vdo-파일시스템-생성">#</a></h1>
+<p>생성된 VDO Device 를 LVM 을 이용하여 LV 로 만들고 filesystem 을 생성하도록 하겠습니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span># pvcreate /dev/mapper/vdo1
+</span></span><span style="display:flex;"><span># vgcreate testvg /dev/mapper/vdo1
+</span></span><span style="display:flex;"><span># lvcreate -l 100%FREE -n testlv testvg
+</span></span><span style="display:flex;"><span># mkfs.xfs /dev/testvg/testlv
+</span></span></code></pre></div><h1 id="etcfstab-등록"><code>/etc/fstab</code> 등록<a hidden class="anchor" aria-hidden="true" href="#etcfstab-등록">#</a></h1>
+<p>향후 시스템 재부팅 간 자동으로 Mount 되도록 <code>/etc/fstab</code> 에 등록합니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>/dev/testvg/testlv /mnt/testlv xfs defaults,_netdev,x-systemd.device-timeout=0,x-systemd.requires=vdo.service 0 0
+</span></span></code></pre></div><h1 id="중복-제거-및-압축-설정-확인">중복 제거 및 압축 설정 확인<a hidden class="anchor" aria-hidden="true" href="#중복-제거-및-압축-설정-확인">#</a></h1>
+<p>아래 명령을 통해 확인이 가능합니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@fastvm-centos-8-1-30 testlv<span style="color:#f92672">]</span><span style="color:#75715e"># vdo status | egrep &#39;Deduplication|Compression&#39;</span>
+</span></span><span style="display:flex;"><span>    Compression: enabled
+</span></span><span style="display:flex;"><span>    Deduplication: enabled
+</span></span></code></pre></div><h1 id="중복-제거-테스트">중복 제거 테스트<a hidden class="anchor" aria-hidden="true" href="#중복-제거-테스트">#</a></h1>
+<p>아래 명령을 통해 5GB 의 테스트 파일을 생성합니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@fastvm-centos-8-1-30 testlv<span style="color:#f92672">]</span><span style="color:#75715e"># dd if=/dev/urandom of=dd.file1 count=1024 bs=1024k</span>
+</span></span><span style="display:flex;"><span>1024+0 records in
+</span></span><span style="display:flex;"><span>1024+0 records out
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1073741824</span> bytes <span style="color:#f92672">(</span>1.1 GB, 1.0 GiB<span style="color:#f92672">)</span> copied, 13.1108 s, 81.9 MB/s
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@fastvm-centos-8-1-30 testlv<span style="color:#f92672">]</span><span style="color:#75715e"># dd if=/dev/urandom of=dd.file2 count=1024 bs=1024k</span>
+</span></span><span style="display:flex;"><span>1024+0 records in
+</span></span><span style="display:flex;"><span>1024+0 records out
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1073741824</span> bytes <span style="color:#f92672">(</span>1.1 GB, 1.0 GiB<span style="color:#f92672">)</span> copied, 14.5352 s, 73.9 MB/s
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@fastvm-centos-8-1-30 testlv<span style="color:#f92672">]</span><span style="color:#75715e"># dd if=/dev/urandom of=dd.file3 count=1024 bs=1024k</span>
+</span></span><span style="display:flex;"><span>1024+0 records in
+</span></span><span style="display:flex;"><span>1024+0 records out
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1073741824</span> bytes <span style="color:#f92672">(</span>1.1 GB, 1.0 GiB<span style="color:#f92672">)</span> copied, 16.0602 s, 66.9 MB/s
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@fastvm-centos-8-1-30 testlv<span style="color:#f92672">]</span><span style="color:#75715e"># dd if=/dev/urandom of=dd.file4 count=1024 bs=1024k</span>
+</span></span><span style="display:flex;"><span>1024+0 records in
+</span></span><span style="display:flex;"><span>1024+0 records out
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1073741824</span> bytes <span style="color:#f92672">(</span>1.1 GB, 1.0 GiB<span style="color:#f92672">)</span> copied, 17.0693 s, 62.9 MB/s
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@fastvm-centos-8-1-30 testlv<span style="color:#f92672">]</span><span style="color:#75715e"># dd if=/dev/urandom of=dd.file5 count=1024 bs=1024k</span>
+</span></span><span style="display:flex;"><span>1024+0 records in
+</span></span><span style="display:flex;"><span>1024+0 records out
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1073741824</span> bytes <span style="color:#f92672">(</span>1.1 GB, 1.0 GiB<span style="color:#f92672">)</span> copied, 17.0444 s, 63.0 MB/s
+</span></span></code></pre></div><p>VDO 사용량은 아래와 같이 변화가 생겼습니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#e6db74">&#34;데이터 생성 이전&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@fastvm-centos-8-1-30 ~<span style="color:#f92672">]</span><span style="color:#75715e"># vdostats --hu</span>
+</span></span><span style="display:flex;"><span>Device                    Size      Used Available Use% Space saving%
+</span></span><span style="display:flex;"><span>/dev/mapper/vdo1         94.0G      4.1G     89.9G   4%           N/A
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;데이터 생성 이후&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@fastvm-centos-8-1-30 testlv<span style="color:#f92672">]</span><span style="color:#75715e"># vdostats --hu</span>
+</span></span><span style="display:flex;"><span>Device                    Size      Used Available Use% Space saving%
+</span></span><span style="display:flex;"><span>/dev/mapper/vdo1         94.0G      9.1G     84.9G   9%            1%
+</span></span></code></pre></div><p>생성된 파일을 <code>cp</code> 하여 파일시스템 사용률을 높이도록 하겠습니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@fastvm-centos-8-1-30 testlv<span style="color:#f92672">]</span><span style="color:#75715e"># for i in {1..400}; do cp -v dd.file1 cp.file$i;  done</span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;dd.file1&#39;</span> -&gt; <span style="color:#e6db74">&#39;cp.file1&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;dd.file1&#39;</span> -&gt; <span style="color:#e6db74">&#39;cp.file2&#39;</span>
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;dd.file1&#39;</span> -&gt; <span style="color:#e6db74">&#39;cp.file100&#39;</span>
+</span></span><span style="display:flex;"><span>...
+</span></span></code></pre></div><p>아래와 같이 중복 제거가 되면서 스토리지 공간 Saving 을 하는 것을 확인 할 수 있습니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>[root@fastvm-centos-8-1-30 testlv]# df -h /mnt/testlv 
+</span></span><span style="display:flex;"><span>Filesystem                 Size  Used Avail Use% Mounted on
+</span></span><span style="display:flex;"><span>/dev/mapper/testvg-testlv  200G   47G  154G  24% /mnt/testlv               &lt;&lt;
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>[root@fastvm-centos-8-1-30 testlv]# vdostats --hu
+</span></span><span style="display:flex;"><span>Device                    Size      Used Available Use% Space saving%
+</span></span><span style="display:flex;"><span>/dev/mapper/vdo1         94.0G      9.1G     84.9G   9%           88%      &lt;&lt;
+</span></span></code></pre></div><h1 id="vdo-스토리지-공간-full-테스트">VDO 스토리지 공간 Full 테스트<a hidden class="anchor" aria-hidden="true" href="#vdo-스토리지-공간-full-테스트">#</a></h1>
+<p>중복 제거가 불가능한 데이터를 넣으면 VDO 가 어떻게 동작하는지 테스트 해보았습니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@fastvm-centos-8-1-30 /<span style="color:#f92672">]</span><span style="color:#75715e"># cat /var/log/messages  | grep lvm | grep full</span>
+</span></span><span style="display:flex;"><span>Mar <span style="color:#ae81ff">31</span> 15:59:37 fastvm-centos-8-1-30 lvm<span style="color:#f92672">[</span>1622<span style="color:#f92672">]</span>: WARNING: VDO pool vdo1 is now 80.33% full.
+</span></span><span style="display:flex;"><span>Mar <span style="color:#ae81ff">31</span> 16:01:37 fastvm-centos-8-1-30 lvm<span style="color:#f92672">[</span>1622<span style="color:#f92672">]</span>: WARNING: VDO pool vdo1 is now 85.04% full.
+</span></span><span style="display:flex;"><span>Mar <span style="color:#ae81ff">31</span> 16:03:37 fastvm-centos-8-1-30 lvm<span style="color:#f92672">[</span>1622<span style="color:#f92672">]</span>: WARNING: VDO pool vdo1 is now 90.14% full.
+</span></span><span style="display:flex;"><span>Mar <span style="color:#ae81ff">31</span> 16:05:27 fastvm-centos-8-1-30 lvm<span style="color:#f92672">[</span>1622<span style="color:#f92672">]</span>: WARNING: VDO pool vdo1 is now 95.03% full.
+</span></span><span style="display:flex;"><span>Mar <span style="color:#ae81ff">31</span> 16:07:27 fastvm-centos-8-1-30 lvm<span style="color:#f92672">[</span>1622<span style="color:#f92672">]</span>: WARNING: VDO pool vdo1 is now 100.00% full.
+</span></span></code></pre></div><p>먼저 위와 같이 <code>/var/log/messages</code> 에서 error message 가 발생합니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@fastvm-centos-8-1-30 /<span style="color:#f92672">]</span><span style="color:#75715e"># vdostats --hu</span>
+</span></span><span style="display:flex;"><span>Device                    Size      Used Available Use% Space saving%
+</span></span><span style="display:flex;"><span>/dev/mapper/vdo1         94.0G     94.0G      0.0B 100%            0%
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>dd: failed to open <span style="color:#e6db74">&#39;dd.file143&#39;</span>: Input/output error
+</span></span><span style="display:flex;"><span>dd: failed to open <span style="color:#e6db74">&#39;dd.file144&#39;</span>: Input/output error
+</span></span><span style="display:flex;"><span>dd: failed to open <span style="color:#e6db74">&#39;dd.file145&#39;</span>: Input/output error
+</span></span><span style="display:flex;"><span>dd: failed to open <span style="color:#e6db74">&#39;dd.file146&#39;</span>: Input/output error
+</span></span><span style="display:flex;"><span>dd: failed to open <span style="color:#e6db74">&#39;dd.file147&#39;</span>: Input/output error
+</span></span><span style="display:flex;"><span>dd: failed to open <span style="color:#e6db74">&#39;dd.file148&#39;</span>: Input/output error
+</span></span><span style="display:flex;"><span>dd: failed to open <span style="color:#e6db74">&#39;dd.file149&#39;</span>: Input/output error
+</span></span><span style="display:flex;"><span>dd: failed to open <span style="color:#e6db74">&#39;dd.file150&#39;</span>: Input/output error
+</span></span><span style="display:flex;"><span>...
+</span></span></code></pre></div><p>위와 같이 VDO 의 Used 는 100% 가 되고 해당 filesystem 은 데이터 생성이 불가능합니다.</p>
+<h1 id="참고-자료">참고 자료<a hidden class="anchor" aria-hidden="true" href="#참고-자료">#</a></h1>
+<ul>
+<li><a href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/storage_administration_guide/vdo-quick-start">https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/storage_administration_guide/vdo-quick-start</a></li>
+<li><a href="https://www.redhat.com/en/blog/look-vdo-new-linux-compression-layer">https://www.redhat.com/en/blog/look-vdo-new-linux-compression-layer</a></li>
+</ul>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://chhanz88.github.io/tags/linux/">linux</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2022 <a href="https://chhanz88.github.io">chhanz 
+기술 블로그
+</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://git.io/hugopapermod" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>[VMware] Linux SCSI ID 확인 방법 | chhanz 
+기술 블로그
+</title>
+<meta name="keywords" content="VMware, linux">
+<meta name="description" content=" ">
+<meta name="author" content="chhanz">
+<link rel="canonical" href="https://chhanz88.github.io/post/2019-06-16-vmware-scsi-id-check/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.ec8da366ca2fb647537ccb7a8f6fa5b4e9cd3c7a0d3171dd2d3baad1e49c8bfc.css" integrity="sha256-7I2jZsovtkdTfMt6j2&#43;ltOnNPHoNMXHdLTuq0eSci/w=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.min.4dcb3c4f38462f66c6b6137227726f5543cb934cca9788f041c087e374491df2.js" integrity="sha256-Tcs8TzhGL2bGthNyJ3JvVUPLk0zKl4jwQcCH43RJHfI="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://chhanz88.github.io/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://chhanz88.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://chhanz88.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://chhanz88.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://chhanz88.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="[VMware] Linux SCSI ID 확인 방법" />
+<meta property="og:description" content=" " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://chhanz88.github.io/post/2019-06-16-vmware-scsi-id-check/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2019-06-16T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2019-06-16T00:00:00&#43;00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[VMware] Linux SCSI ID 확인 방법"/>
+<meta name="twitter:description" content=" "/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Posts",
+      "item": "https://chhanz88.github.io/post/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "[VMware] Linux SCSI ID 확인 방법",
+      "item": "https://chhanz88.github.io/post/2019-06-16-vmware-scsi-id-check/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "[VMware] Linux SCSI ID 확인 방법",
+  "name": "[VMware] Linux SCSI ID 확인 방법",
+  "description": " ",
+  "keywords": [
+    "VMware", "linux"
+  ],
+  "articleBody": "VMware ESXi에서 Linux SCSI ID 확인 방법  VMware ESXi 상에서 운영중인 Linux 의 경우, 아래와 같이 DISK 의 SCSI ID 가 확인이 불가능합니다.\nGuestOS 의 DISK 를 다른 GuestOS 로 이관을 하거나, GuestOS 의 VMX 를 재생성 하였을때, VMDK 의 순서가 확인이 안될 경우…\n이러한 경우로 인해 명확하게 어떤 VMDK 가 실제로 운영체제에서 어떤 DISK 로 사용 되었는지 확인이 필요합니다.\n실제로 VMware 시스템에서는 아래와 같이 SCSI ID 가 확인이 기본적으로 안됩니다.\n이처럼 SCSI ID 가 확인이 불가능합니다.\nVMware ESXi 설정 변경  ESXi 에서 GuestOS를 수정합니다.( 해당 설정을 변경하기 위해 GuestOS 는 중지해야합니다.)\n[VM 선택] - [작업] - [설정 편집] - [VM 옵션] - [고급] - [구성 매개 변수] - [구성 편집] 을 선택합니다.\n위와 같이 disk.enableuuid=true 항목을 추가합니다.\n설정 확인  VM 설정을 하면 아래와 같이 SCSI ID를 정상적으로 확인 할 수 있습니다.\n참고 자료   https://blogs.vmware.com/kb/2013/03/setting-disk-enableuuidtrue-in-vmware-data-protection.html  ",
+  "wordCount" : "135",
+  "inLanguage": "en",
+  "datePublished": "2019-06-16T00:00:00Z",
+  "dateModified": "2019-06-16T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "chhanz"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://chhanz88.github.io/post/2019-06-16-vmware-scsi-id-check/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "chhanz \n기술 블로그\n",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://chhanz88.github.io/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://chhanz88.github.io" accesskey="h" title="chhanz 
+기술 블로그
+ (Alt + H)">chhanz 
+기술 블로그
+</a>
+            <span class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </span>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title">
+      [VMware] Linux SCSI ID 확인 방법
+    </h1>
+    <div class="post-description">
+       
+    </div>
+    <div class="post-meta"><span title='2019-06-16 00:00:00 +0000 UTC'>June 16, 2019</span>&nbsp;·&nbsp;chhanz
+
+</div>
+  </header> 
+  <div class="post-content"><h1 id="vmware-esxi에서-linux-scsi-id-확인-방법">VMware ESXi에서 Linux SCSI ID 확인 방법<a hidden class="anchor" aria-hidden="true" href="#vmware-esxi에서-linux-scsi-id-확인-방법">#</a></h1>
+<hr>
+<p>VMware ESXi 상에서 운영중인 Linux 의 경우, 아래와 같이 DISK 의 SCSI ID 가 확인이 불가능합니다.<br>
+GuestOS 의 DISK 를 다른 GuestOS 로 이관을 하거나, GuestOS 의 VMX 를 재생성 하였을때, VMDK 의 순서가 확인이 안될 경우&hellip;<br>
+이러한 경우로 인해 명확하게 어떤 VMDK 가 실제로 운영체제에서 어떤 DISK 로 사용 되었는지 확인이 필요합니다.</p>
+<p>실제로 VMware 시스템에서는 아래와 같이 SCSI ID 가 확인이 기본적으로 안됩니다.</p>
+<!-- raw HTML omitted -->
+<p>이처럼 SCSI ID 가 확인이 불가능합니다.</p>
+<h2 id="vmware-esxi-설정-변경">VMware ESXi 설정 변경<a hidden class="anchor" aria-hidden="true" href="#vmware-esxi-설정-변경">#</a></h2>
+<hr>
+<p>ESXi 에서 GuestOS를 수정합니다.( 해당 설정을 변경하기 위해 GuestOS 는 중지해야합니다.)<br>
+<strong>[VM 선택]</strong> - <strong>[작업]</strong> - <strong>[설정 편집]</strong> - <strong>[VM 옵션]</strong> - <strong>[고급]</strong> - <strong>[구성 매개 변수]</strong> - <strong>[구성 편집]</strong> 을 선택합니다.</p>
+<!-- raw HTML omitted -->
+<p>위와 같이 <code>disk.enableuuid=true</code> 항목을 추가합니다.</p>
+<h2 id="설정-확인">설정 확인<a hidden class="anchor" aria-hidden="true" href="#설정-확인">#</a></h2>
+<hr>
+<p>VM 설정을 하면 아래와 같이 SCSI ID를 정상적으로 확인 할 수 있습니다.</p>
+<!-- raw HTML omitted -->
+<h2 id="참고-자료">참고 자료<a hidden class="anchor" aria-hidden="true" href="#참고-자료">#</a></h2>
+<hr>
+<ul>
+<li><a href="https://blogs.vmware.com/kb/2013/03/setting-disk-enableuuidtrue-in-vmware-data-protection.html">https://blogs.vmware.com/kb/2013/03/setting-disk-enableuuidtrue-in-vmware-data-protection.html</a></li>
+</ul>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://chhanz88.github.io/tags/VMware/">VMware</a></li>
+      <li><a href="https://chhanz88.github.io/tags/linux/">linux</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2022 <a href="https://chhanz88.github.io">chhanz 
+기술 블로그
+</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://git.io/hugopapermod" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

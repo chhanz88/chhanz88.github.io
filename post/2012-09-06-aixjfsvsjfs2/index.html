@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>[AIX] JFS vs JFS2 | chhanz 
+기술 블로그
+</title>
+<meta name="keywords" content="aix, jfs, jfs2">
+<meta name="description" content="JFS 와 JFS2의 차이점">
+<meta name="author" content="chhanz">
+<link rel="canonical" href="https://chhanz88.github.io/post/2012-09-06-aixjfsvsjfs2/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.ec8da366ca2fb647537ccb7a8f6fa5b4e9cd3c7a0d3171dd2d3baad1e49c8bfc.css" integrity="sha256-7I2jZsovtkdTfMt6j2&#43;ltOnNPHoNMXHdLTuq0eSci/w=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.min.4dcb3c4f38462f66c6b6137227726f5543cb934cca9788f041c087e374491df2.js" integrity="sha256-Tcs8TzhGL2bGthNyJ3JvVUPLk0zKl4jwQcCH43RJHfI="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://chhanz88.github.io/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://chhanz88.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://chhanz88.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://chhanz88.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://chhanz88.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="[AIX] JFS vs JFS2" />
+<meta property="og:description" content="JFS 와 JFS2의 차이점" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://chhanz88.github.io/post/2012-09-06-aixjfsvsjfs2/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2012-09-06T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2012-09-06T00:00:00&#43;00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[AIX] JFS vs JFS2"/>
+<meta name="twitter:description" content="JFS 와 JFS2의 차이점"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Posts",
+      "item": "https://chhanz88.github.io/post/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "[AIX] JFS vs JFS2",
+      "item": "https://chhanz88.github.io/post/2012-09-06-aixjfsvsjfs2/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "[AIX] JFS vs JFS2",
+  "name": "[AIX] JFS vs JFS2",
+  "description": "JFS 와 JFS2의 차이점",
+  "keywords": [
+    "aix", "jfs", "jfs2"
+  ],
+  "articleBody": "JFS 와 JFS2 차이점  JFS2 는 AIX V4.3. 에서 소개되었던 JFS 의 upgrade version\nJFS 와 JFS2 는 모두 AIX 에 기본적으로 탑재되어 있습니다. 다만 POWER system 에서는 JFS/JFS2 를 모두 사용할 수 있지만, IA64 system 에서는 JFS2 만 사용할 수 있습니다.\nJFS vs JFS2     Function JFS2 JFS     Fragments/Block Size 512~4096 Block Size 512~4096 Block Size   Architectural Maximum File (만들 수 있는 최대 File Size) 1PB(**1) 64GB   Architectural Maximum File System Size (만들 수 있는 최대 파일 시스템 Size) 4PB 1TB(**2)   Maximum File Size Tested (최대 파일 크기 테스트) 1TB 64GB   Maximum File System Size (최대 파일 시스템 크기) 1TB 1TB   Number of Inodes (Inodes 수) Dynamic, Limited by disk space Fixed, set at file system creation   Directory Organization (디렉토리 조직) B-tree Linear   Compresssion (압축) No Yes   Default Ownership at Creation(생성 시 기본 소유권) root.system sys.sys   SGID of Default File Mode(기본 파일 모드 SGID) SGID=off SGID=on   Quotas No Yes   Available on IA64 Architecture(IA64 아키텍처에서 사용 가능) Yes No   Available on POWER Architecture (POWER 아키텍처에서 사용 가능) Yes Yes    (**1) PB (PetaBytes) = 1,048,576 GB (**2) TB (TeraBytes) = 1,024 GB cf) SGID = Linux SetUID 와 같은 기능\nJFS2 의 대표적인 몇 가지 특징   Extent based addressing structure ( 범위 기반 주소 지정 구조 ) Dynamic disk inode allocation ( 동적 디스크 inode 할당 ) Directory organization ( 디렉토리 조직 ) On-line file system space defragmentation ( 온라인 파일 시스템 공간 조각 모음 ) Variable block size ( 가변 블록 크기 )  JFS 와 JFS2 의 addressing 구조에 많은 차이가 있습니다.\nJFS2 의 addressing structure 를 살펴보면, block allocation policy 가 변화하면서 좀 더 효율적이고, 확장성이 뛰어나면, compact 한 구조를 가지게 되있습니다. 특히 JFS2 에서는 더 이상 필요 없는 공간을 free 시켜서, 다른 공간에 할당하는 inode의 dynamic allocation 이 가능합니다. 기존의 JFS 는 file system 을 생성할 때 inode 가 고정되지만, JFS2 에서는 사용중인 file system 의 inode 를 변화시킬 수 있다.\n또 현재 mount 되어 사용 중인 file system 을 defragmentation(조각 모음) 이 가능합니다. File system 의 남은 공간을 다시 fragement 하면 I/O 가 그만큼 더 빨라질 수 있고, 공간 효율도 더 높일 수 있습니다.\n이와 같은 이유로 JFS2 에서는 “Large File enabled System ( 큰 용량의 파일 허용 )” 이라는 옵션이 없어졌다. JFS2 에는 두 가지의 directory 구조를 사용합니다. 작은 directory 와 큰 directory 에 사용하는 directory 구조가 다른데, 큰 directory 구조에는 기존의 linear 가 아닌 B-tree 형태를 사용합니다. 이 B-tree 구조는 좀 더 빠른 operation(directory look up, delete, insert…) 이 가능합니다.\nJFS2 가 512, 1024, 2048, 4096 byte 의 block size 를 지원하는 것은 JFS 와 같습니다. Block size 가 작으면, disk 사용률은 높아지는 대신에, fragment(조각모음)율이 높아져서 path(경로) 가 길어지고, block size 가 커지면, path 가 짧기 때문에 performance(작업)는 좋아지지만, 디스크 사용률은 약간 낮아집니다. 이 밖에도 performance 를 높이기 위해서 vnode cache 가 NFS 에 추가되고, File system cache 가 좀 더 확장된 면이 있습니다.\n",
+  "wordCount" : "468",
+  "inLanguage": "en",
+  "datePublished": "2012-09-06T00:00:00Z",
+  "dateModified": "2012-09-06T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "chhanz"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://chhanz88.github.io/post/2012-09-06-aixjfsvsjfs2/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "chhanz \n기술 블로그\n",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://chhanz88.github.io/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://chhanz88.github.io" accesskey="h" title="chhanz 
+기술 블로그
+ (Alt + H)">chhanz 
+기술 블로그
+</a>
+            <span class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </span>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title">
+      [AIX] JFS vs JFS2
+    </h1>
+    <div class="post-description">
+      JFS 와 JFS2의 차이점
+    </div>
+    <div class="post-meta"><span title='2012-09-06 00:00:00 +0000 UTC'>September 6, 2012</span>&nbsp;·&nbsp;chhanz
+
+</div>
+  </header> 
+  <div class="post-content"><h1 id="jfs-와-jfs2-차이점">JFS 와 JFS2 차이점<a hidden class="anchor" aria-hidden="true" href="#jfs-와-jfs2-차이점">#</a></h1>
+<hr>
+<p>JFS2 는 AIX V4.3. 에서 소개되었던 JFS 의 upgrade version<br>
+JFS 와 JFS2 는 모두 AIX 에 기본적으로 탑재되어 있습니다. 다만 POWER system 에서는 JFS/JFS2 를 모두 사용할 수 있지만, <br>
+IA64 system 에서는 JFS2 만 사용할 수 있습니다.</p>
+<h2 id="jfs-vs-jfs2">JFS vs JFS2<a hidden class="anchor" aria-hidden="true" href="#jfs-vs-jfs2">#</a></h2>
+<hr>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Function</th>
+<th style="text-align:center">JFS2</th>
+<th style="text-align:center">JFS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Fragments/Block Size</td>
+<td style="text-align:center">512~4096 Block Size</td>
+<td style="text-align:center">512~4096 Block Size</td>
+</tr>
+<tr>
+<td style="text-align:center">Architectural Maximum File (만들 수 있는 최대  File Size)</td>
+<td style="text-align:center">1PB(**1)</td>
+<td style="text-align:center">64GB</td>
+</tr>
+<tr>
+<td style="text-align:center">Architectural Maximum File System Size (만들 수 있는 최대 파일 시스템 Size)</td>
+<td style="text-align:center">4PB</td>
+<td style="text-align:center">1TB(**2)</td>
+</tr>
+<tr>
+<td style="text-align:center">Maximum File Size Tested (최대 파일 크기 테스트)</td>
+<td style="text-align:center">1TB</td>
+<td style="text-align:center">64GB</td>
+</tr>
+<tr>
+<td style="text-align:center">Maximum File System Size (최대 파일 시스템 크기)</td>
+<td style="text-align:center">1TB</td>
+<td style="text-align:center">1TB</td>
+</tr>
+<tr>
+<td style="text-align:center">Number of Inodes (Inodes 수)</td>
+<td style="text-align:center">Dynamic, Limited by disk space</td>
+<td style="text-align:center">Fixed, set at file system creation</td>
+</tr>
+<tr>
+<td style="text-align:center">Directory Organization (디렉토리 조직)</td>
+<td style="text-align:center">B-tree</td>
+<td style="text-align:center">Linear</td>
+</tr>
+<tr>
+<td style="text-align:center">Compresssion (압축)</td>
+<td style="text-align:center">No</td>
+<td style="text-align:center">Yes</td>
+</tr>
+<tr>
+<td style="text-align:center">Default Ownership at Creation(생성 시 기본 소유권)</td>
+<td style="text-align:center">root.system</td>
+<td style="text-align:center">sys.sys</td>
+</tr>
+<tr>
+<td style="text-align:center">SGID of Default File Mode(기본 파일 모드 SGID)</td>
+<td style="text-align:center">SGID=off</td>
+<td style="text-align:center">SGID=on</td>
+</tr>
+<tr>
+<td style="text-align:center">Quotas</td>
+<td style="text-align:center">No</td>
+<td style="text-align:center">Yes</td>
+</tr>
+<tr>
+<td style="text-align:center">Available on IA64 Architecture(IA64 아키텍처에서 사용 가능)</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">No</td>
+</tr>
+<tr>
+<td style="text-align:center">Available on POWER Architecture (POWER 아키텍처에서 사용 가능)</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+</tr>
+</tbody>
+</table>
+<pre tabindex="0"><code>(**1) PB (PetaBytes) = 1,048,576 GB
+(**2) TB (TeraBytes) = 1,024 GB    
+</code></pre><p>cf) SGID = Linux SetUID 와 같은 기능</p>
+<h2 id="jfs2-의-대표적인-몇-가지-특징">JFS2 의 대표적인 몇 가지 특징<a hidden class="anchor" aria-hidden="true" href="#jfs2-의-대표적인-몇-가지-특징">#</a></h2>
+<hr>
+<ul>
+<li>Extent based addressing structure ( 범위 기반 주소 지정 구조 )</li>
+<li>Dynamic disk inode allocation ( 동적 디스크 inode 할당 )</li>
+<li>Directory organization ( 디렉토리 조직 )</li>
+<li>On-line file system space defragmentation ( 온라인 파일 시스템 공간 조각 모음 )</li>
+<li>Variable block size ( 가변 블록 크기 )</li>
+</ul>
+<p>JFS 와 JFS2 의 addressing 구조에 많은 차이가 있습니다.<br>
+JFS2 의 addressing structure 를 살펴보면, block allocation policy 가 변화하면서 좀 더 효율적이고, 확장성이 뛰어나면, compact 한 구조를 가지게 되있습니다.
+특히 JFS2 에서는 더 이상 필요 없는 공간을 free 시켜서, 다른 공간에 할당하는 inode의 dynamic allocation 이 가능합니다.
+기존의 JFS 는 file system 을 생성할 때 inode 가 고정되지만, JFS2 에서는 사용중인 file system 의 inode 를 변화시킬 수 있다.</p>
+<p>또 현재 mount 되어 사용 중인 file system 을 defragmentation(조각 모음) 이 가능합니다. <br>
+File system 의 남은 공간을 다시 fragement 하면 I/O 가 그만큼 더 빨라질 수 있고, 공간 효율도 더 높일 수 있습니다.</p>
+<p>이와 같은 이유로 JFS2 에서는 “Large File enabled System    ( 큰 용량의 파일 허용 )” 이라는 옵션이 없어졌다. JFS2 에는 두 가지의 directory 구조를 사용합니다. <br>
+작은 directory 와 큰 directory 에 사용하는 directory 구조가 다른데, 큰 directory 구조에는 기존의 linear 가 아닌 B-tree 형태를 사용합니다.
+이 B-tree 구조는 좀 더 빠른 operation(directory look up, delete, insert&hellip;) 이 가능합니다.</p>
+<p>JFS2 가 512, 1024, 2048, 4096 byte 의 block size 를 지원하는 것은 JFS 와 같습니다.
+Block size 가 작으면, disk 사용률은 높아지는 대신에, fragment(조각모음)율이 높아져서 path(경로) 가 길어지고, block size 가 커지면, path 가 짧기 때문에 performance(작업)는 좋아지지만, 디스크 사용률은 약간 낮아집니다.
+이 밖에도 performance 를 높이기 위해서 vnode cache 가 NFS 에 추가되고, File system cache 가 좀 더 확장된 면이 있습니다.</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://chhanz88.github.io/tags/aix/">aix</a></li>
+      <li><a href="https://chhanz88.github.io/tags/jfs/">jfs</a></li>
+      <li><a href="https://chhanz88.github.io/tags/jfs2/">jfs2</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2022 <a href="https://chhanz88.github.io">chhanz 
+기술 블로그
+</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://git.io/hugopapermod" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

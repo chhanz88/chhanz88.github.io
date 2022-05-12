@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>openshift | chhanz 
+기술 블로그
+</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="canonical" href="https://chhanz88.github.io/tags/openshift/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.ec8da366ca2fb647537ccb7a8f6fa5b4e9cd3c7a0d3171dd2d3baad1e49c8bfc.css" integrity="sha256-7I2jZsovtkdTfMt6j2&#43;ltOnNPHoNMXHdLTuq0eSci/w=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://chhanz88.github.io/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://chhanz88.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://chhanz88.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://chhanz88.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://chhanz88.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" type="application/rss+xml" href="https://chhanz88.github.io/tags/openshift/index.xml">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="openshift" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://chhanz88.github.io/tags/openshift/" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="openshift"/>
+<meta name="twitter:description" content=""/>
+
+</head>
+
+<body class="list" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://chhanz88.github.io" accesskey="h" title="chhanz 
+기술 블로그
+ (Alt + H)">chhanz 
+기술 블로그
+</a>
+            <span class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </span>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main"> 
+<header class="page-header">
+  <h1>
+    openshift
+  </h1>
+</header>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2>[OpenShift] Matchbox 를 이용하여 OpenShift 배포서버 구성
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>[OpenShift] Matchbox 를 이용하여 OpenShift 배포서버 구성 OpenShift / OKD 4 version 이 되면서 일반 Linux (RHEL/CentOS) 가 아닌 CoreOS (RHCOS/Fedora CoreOS) 를 사용하면서 OpenShift 설치 방법이 많이 달라졌습니다.
+OpenShift 설치를 위해 ignition, kernel image, initramfs, rootfs 등의 배포 관리가 필요합니다.
+OpenShift Document 에서는 httpd 및 pxe 를 이용하여 배포를 하도록 하지만 matchbox 를 이용하면 향후 운영에도 편리한 배포가 가능합니다.
+matchbox 란? matchbox 의 주요 기능은 MAC 주소 기반으로 OpenShift 설치에 필요한 파일을 제공하는 오픈소스 솔루션입니다....</p>
+  </div>
+  <footer class="entry-footer"><span title='2021-01-26 00:00:00 +0000 UTC'>January 26, 2021</span>&nbsp;·&nbsp;chhanz</footer>
+  <a class="entry-link" aria-label="post link to [OpenShift] Matchbox 를 이용하여 OpenShift 배포서버 구성" href="https://chhanz88.github.io/post/2021-01-26-matchbox/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2>[OpenShift] OpenShift 를 이용한 CI(Continuous Integration) 구성
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>[OpenShift] OpenShift 4.5 를 이용한 CI(Continuous Integration) 구성 이번 포스팅은 OpenShift 를 이용한 Continuous Integration(이하 CI)를 구성하도록 하겠습니다.
+ 사전 구성 : gogs  Continuous Integration 란? CI는 개발자를 위한 자동화 프로세스인 지속적인 통합(Continuous Integration)을 의미합니다.
+CI를 성공적으로 구현할 경우 애플리케이션에 대한 새로운 코드 변경 사항이 정기적으로 빌드 및 테스트되어 공유 리포지토리에 통합되므로 여러 명의 개발자가 동시에 애플리케이션 개발과 관련된 코드 작업을 할 경우 서로 충돌할 수 있는 문제를 해결할 수 있습니다....</p>
+  </div>
+  <footer class="entry-footer"><span title='2020-10-16 00:00:00 +0000 UTC'>October 16, 2020</span>&nbsp;·&nbsp;chhanz</footer>
+  <a class="entry-link" aria-label="post link to [OpenShift] OpenShift 를 이용한 CI(Continuous Integration) 구성" href="https://chhanz88.github.io/post/2020-10-16-ocp4-ci/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2>[OpenShift 4.4] CodeReady Workspaces 를 이용하여 통합 개발 환경(IDE) 구현
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>CodeReady Workspace 란? Red Hat® CodeReady Workspaces는 팀을 위한 클라우드 네이티브 개발을 실용적으로 만들어주는 개발자 툴입니다.
+쿠버네티스와 컨테이너를 사용해 개발 또는 IT 팀의 누구에게든 일관적으로 사전 설정된 개발 환경을 제공합니다.
+개발자는 Red Hat OpenShift®에서 구동되는 컨테이너에서 코드를 작성하고, 빌드하고, 테스트할 수 있습니다.
+사용자 경험 또한 노트북에서 통합 개발 환경(IDE)을 사용하는 것만큼이나 빠르고 친숙합니다.
+ https://www.redhat.com/ko/technologies/jboss-middleware/codeready-workspaces  CodeReady Workspace 배포 CodeReady 배포 할 Project 생성합니다.
+admin 계정으로 로그인 후, OperatorHub 에서 CodeReady 를 검색합니다....</p>
+  </div>
+  <footer class="entry-footer"><span title='2020-07-01 00:00:00 +0000 UTC'>July 1, 2020</span>&nbsp;·&nbsp;chhanz</footer>
+  <a class="entry-link" aria-label="post link to [OpenShift 4.4] CodeReady Workspaces 를 이용하여 통합 개발 환경(IDE) 구현" href="https://chhanz88.github.io/post/2020-07-01-ocp-codeready/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2>[OpenShift 4.4] Deploying Applications From Template
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>해당 자료는 사내 교육용으로 제작된 자료입니다.
+자료 사용시 출처 부탁 드려요.
+ 목차  Deploying Applications From Images Deploying Applications From Source Deploying Applications From Template  Deploying Applications From Template 이번 Lab 은 Template 로 생성된 App 을 배포 하도록 하겠습니다.
+Django &#43; pgsql 배포 (no pv) 신규 Project 생성
+From Catalog 를 선택합니다. Django &#43; pgsql(Ephemeral) 선택합니다.
+필요한 옵션을 입력하고 APP 을 배포합니다. pgsql 이 배포됩니다.
+Django 가 Build 됩니다....</p>
+  </div>
+  <footer class="entry-footer"><span title='2020-06-24 00:00:00 +0000 UTC'>June 24, 2020</span>&nbsp;·&nbsp;chhanz</footer>
+  <a class="entry-link" aria-label="post link to [OpenShift 4.4] Deploying Applications From Template" href="https://chhanz88.github.io/post/2020-06-24-ocp4-template/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2>[OpenShift 4.4] Deploying Applications From Source
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>해당 자료는 사내 교육용으로 제작된 자료입니다.
+자료 사용시 출처 부탁 드려요.
+ 목차  Deploying Applications From Images Deploying Applications From Source Deploying Applications From Template  Deploying Applications From Source 이번 Lab 은 Source 를 이용하여 App 을 배포 하도록 하겠습니다.
+PHP WebApp 배포  Web Console 로 developer 계정으로 로그인합니다.
+ 테스트를 위한 신규 Project 생성합니다. From Git 항목을 선택합니다. 소스 주소 https://github.com/chhanz/docker-swarm-demo.git 를 입력하고 사용할 Builder 로 PHP 를 선택합니다....</p>
+  </div>
+  <footer class="entry-footer"><span title='2020-06-22 00:00:00 +0000 UTC'>June 22, 2020</span>&nbsp;·&nbsp;chhanz</footer>
+  <a class="entry-link" aria-label="post link to [OpenShift 4.4] Deploying Applications From Source" href="https://chhanz88.github.io/post/2020-06-22-ocp4-deploy-source/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2>[OpenShift 4.4] Deploying Applications From Images
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>해당 자료는 사내 교육용으로 제작된 자료입니다.
+자료 사용시 출처 부탁 드려요.
+ 목차  Deploying Applications From Images Deploying Applications From Source Deploying Applications From Template  Deploying Applications From Images 이번 Lab 은 Container Image 로 생성된 App 을 배포 하도록 하겠습니다.
+Django WebApp 배포  Web Console 로 developer 계정으로 로그인합니다.
+ CLI 로 배포 $ oc login -u developer $ oc project django-project $ oc new-app openshiftkatacoda/blog-django-py --name blog-from-image $ oc expose svc/blog-from-image  $ oc get all NAME READY STATUS RESTARTS AGE pod/blog-django-py-6b787ccc9f-hl7tk 1/1 Running 0 16m pod/blog-from-image-1-74snj 1/1 Running 0 41s pod/blog-from-image-1-deploy 0/1 Completed 0 45s  NAME DESIRED CURRENT READY AGE replicationcontroller/blog-from-image-1 1 1 1 45s  NAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGE service/blog-django-py ClusterIP 172....</p>
+  </div>
+  <footer class="entry-footer"><span title='2020-06-18 00:00:00 +0000 UTC'>June 18, 2020</span>&nbsp;·&nbsp;chhanz</footer>
+  <a class="entry-link" aria-label="post link to [OpenShift 4.4] Deploying Applications From Images" href="https://chhanz88.github.io/post/2020-06-18-ocp4-deploy-image/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2>[Container] Container &amp; Orchestration 교육 자료 
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>해당 자료는 사내 교육용으로 제작된 자료입니다.
+자료 사용시 출처 부탁 드려요.
+  https://github.com/chhanz/container-hands-on  Container &amp; Orchestration 교육 자료 목차  Docker Podman Kubernetes OpenShift  Docker Hands-on 환경  OS : CentOS 7.7
+Disable SELinux, Firewalld
+ Install  Install Package  $ yum -y install docker  start service docker  $ systemctl enable --now docker RUN  start container nginx  $ docker run -d -ti --name nginx -p 80:80 nginx  check container nginx  $ docker ps -a  access web  $ crul http://192....</p>
+  </div>
+  <footer class="entry-footer"><span title='2020-05-21 00:00:00 +0000 UTC'>May 21, 2020</span>&nbsp;·&nbsp;chhanz</footer>
+  <a class="entry-link" aria-label="post link to [Container] Container &amp; Orchestration 교육 자료 " href="https://chhanz88.github.io/post/2020-05-21-container-hands-on/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2>[OpenShift] KVM 환경에 OpenShift 4 구동해보자!
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>OpenShift 3.X 에서는 minishift 를 Laptop 에 배포하여 OpenShift 를 체험하고 테스트 간단하게 할 수 있습니다.
+그런데 &#34; OpenShift 4.X 에서는 minishift 와 같은 테스트 환경을 구축 할 수 없을까? “ 라는 생각에서 검색을 시작했습니다.
+OpenShift 4 on Laptop OpenShift 4 부터는 Red Hat OpenShift Cluster Manager 에서 각종 환경에 배포 할 수 있는 가이드를 제공하고 있습니다.
+저는 Linux 를 선택하고 libvirt 를 사용하는 KVM 환경에 배포 해보도록 하겠습니다.
+Install crc command $ https://mirror....</p>
+  </div>
+  <footer class="entry-footer"><span title='2019-11-29 00:00:00 +0000 UTC'>November 29, 2019</span>&nbsp;·&nbsp;chhanz</footer>
+  <a class="entry-link" aria-label="post link to [OpenShift] KVM 환경에 OpenShift 4 구동해보자!" href="https://chhanz88.github.io/post/2019-11-29-openshift4-dev-env/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2>[Openshift] Openshift 의 HPA 를 이용한 Auto-Scaling 구현
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>이전 포스팅 다시 보기    [Openshift] Openshift Origin v3.11 설치, App 배포 [Openshift] Openshift Web Console 을 이용한 배포   Openshift 의 HPA 를 이용한 Auto-Scaling 구현  Openshift 에서 Horizontal Pod Autoscaler(이하 HPA) 를 이용하여 설정한 CPU 사용률을 기반으로 Replicaset, Deployment 의 Pod 수를 자동으로 Scaling 할 수 있습니다.
+HPA 를 하기 위해서는 Pod 의 부하에 대해 모니터링 및 수집을 하는 Metrics-Server 가 필요합니다.
+아래에서 Openshift 에 Metrics-Server 를 배포하고 성능 수집을 해보도록 하겠습니다....</p>
+  </div>
+  <footer class="entry-footer"><span title='2019-07-15 00:00:00 +0000 UTC'>July 15, 2019</span>&nbsp;·&nbsp;chhanz</footer>
+  <a class="entry-link" aria-label="post link to [Openshift] Openshift 의 HPA 를 이용한 Auto-Scaling 구현" href="https://chhanz88.github.io/post/2019-07-15-okd-hpa/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2>[Openshift] Openshift Web Console 을 이용한 배포
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>[Openshift] Openshift Web Console 을 이용한 배포  안녕하세요. chhanz 입니다.
+이전 포스팅인 Openshift Origin 설치에 이어서 Openshift Web Console 을 살펴보고 Web Console 을 이용하여 APP 배포도 해보겠습니다.
+Openshift Web Console  기본적으로 설치가 완료된 Openshift는 Web Console 이 expose 되어 있습니다.
+생성되어 있는 route 를 확인하고 접속 해보도록 하겠습니다.
+위와 같이 모든 namespace 의 route 를 확인 할 수 있습니다.
+현재 테스트 시스템에서는 http://console.apps.example.com 로 route 가 생성이 되어 있습니다....</p>
+  </div>
+  <footer class="entry-footer"><span title='2019-06-24 00:00:00 +0000 UTC'>June 24, 2019</span>&nbsp;·&nbsp;chhanz</footer>
+  <a class="entry-link" aria-label="post link to [Openshift] Openshift Web Console 을 이용한 배포" href="https://chhanz88.github.io/post/2019-06-24-overview-okd-gui/"></a>
+</article>
+<footer class="page-footer">
+  <nav class="pagination">
+    <a class="next" href="https://chhanz88.github.io/tags/openshift/page/2/">Next Page »</a>
+  </nav>
+</footer>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2022 <a href="https://chhanz88.github.io">chhanz 
+기술 블로그
+</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://git.io/hugopapermod" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

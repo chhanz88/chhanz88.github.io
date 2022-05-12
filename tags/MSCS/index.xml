@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>MSCS on chhanz 
+기술 블로그
+</title>
+    <link>https://chhanz88.github.io/tags/MSCS/</link>
+    <description>Recent content in MSCS on chhanz 
+기술 블로그
+</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 27 Apr 2013 00:00:00 +0000</lastBuildDate><atom:link href="https://chhanz88.github.io/tags/MSCS/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[Windows] MSCS Cluster 구성 메뉴얼</title>
+      <link>https://chhanz88.github.io/post/2013-04-27-windows-mscs-cluster/</link>
+      <pubDate>Sat, 27 Apr 2013 00:00:00 +0000</pubDate>
+      
+      <guid>https://chhanz88.github.io/post/2013-04-27-windows-mscs-cluster/</guid>
+      <description>Windows 2003 / Windows 2008</description>
+    </item>
+    
+  </channel>
+</rss>

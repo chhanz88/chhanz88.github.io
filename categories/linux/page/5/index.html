@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>linux | chhanz 
+기술 블로그
+</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="canonical" href="https://chhanz88.github.io/categories/linux/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.ec8da366ca2fb647537ccb7a8f6fa5b4e9cd3c7a0d3171dd2d3baad1e49c8bfc.css" integrity="sha256-7I2jZsovtkdTfMt6j2&#43;ltOnNPHoNMXHdLTuq0eSci/w=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://chhanz88.github.io/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://chhanz88.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://chhanz88.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://chhanz88.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://chhanz88.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" type="application/rss+xml" href="https://chhanz88.github.io/categories/linux/index.xml">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="linux" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://chhanz88.github.io/categories/linux/" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="linux"/>
+<meta name="twitter:description" content=""/>
+
+</head>
+
+<body class="list" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://chhanz88.github.io" accesskey="h" title="chhanz 
+기술 블로그
+ (Alt + H)">chhanz 
+기술 블로그
+</a>
+            <span class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </span>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main"> 
+<header class="page-header">
+  <h1>
+    linux
+  </h1>
+</header>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2>[Linux] CentOS 7 raw device 생성
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>[Linux] CentOS 7 raw device 생성   raw device 생성을 위해 아래 절차를 따라 /etc/udev/rules.d/60-raw.rules 을 수정합니다.
+  udev rules 을 사용하여 raw device 를 생성합니다.  # vi /etc/udev/rules.d/60-raw.rules SCSI Device 를 사용하는 경우,  ACTION==&#34;add|change&#34;, KERNEL==&#34;sdc&#34;, RUN&#43;=&#34;/usr/bin/raw /dev/raw/raw1 %N&#34; multipath device 를 사용하는 경우,  ACTION==&#34;add|change&#34;, ENV{DM_NAME}==&#34;mpath1&#34;, RUN&#43;=&#34;/usr/bin/raw /dev/raw/raw1 %N&#34; LVM device 를 사용하는 경우,  ACTION==&#34;add|change&#34;, ENV{DM_VG_NAME}==&#34;vg_test&#34;, ENV{DM_LV_NAME}==&#34;lv_test1&#34;, RUN&#43;=&#34;/bin/raw /dev/raw/raw1 %N&#34; raw device 의 권한 설정  ACTION==&#34;add&#34;, KERNEL==&#34;raw*&#34;, OWNER=&#34;oracle&#34;, GROUP=&#34;dba&#34;, MODE=&#34;0660&#34; udev rules 갱신  # udevadm trigger --action=add raw device 설정 확인  # raw -qa /dev/raw/raw1: bound to major 8, minor 17 # ls -l /dev/raw total 0 crw-rw---- 1 oracle dba 162, 2 Jan 21 05:21 raw1 </p>
+  </div>
+  <footer class="entry-footer"><span title='2018-10-01 00:00:00 +0000 UTC'>October 1, 2018</span>&nbsp;·&nbsp;chhanz</footer>
+  <a class="entry-link" aria-label="post link to [Linux] CentOS 7 raw device 생성" href="https://chhanz88.github.io/post/2018-10-01-linux_rawdevice/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2>[Linux] Bonding Network Currently Active Slave 변경
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>RHEL / CentOS 7 Bonding Currently Active Slave 변경  Bonding(본딩) 는 이중화 구성을 통한 빠른 장애 대응 및 네트워크 대역폭 증가에 매우 유용합니다.
+아래 절차는 본딩 인터페이스를 중단하지 않고, Slave 인터페이스로 전환하는 방법을 설명하려고 합니다.
+# cat /proc/net/bonding/bond0 Ethernet Channel Bonding Driver: v3.7.1 (April 27, 2011) Bonding Mode: fault-tolerance (active-backup) Primary Slave: None Currently Active Slave: eth1 MII Status: up MII Polling Interval (ms): 100 Up Delay (ms): 0 Down Delay (ms): 0 Slave Interface: eth1 MII Status: up Speed: 1000 Mbps Duplex: full Link Failure Count: 0 Permanent HW addr: 00:2a:4a:16:01:63 Slave queue ID: 0 Slave Interface: eth2 MII Status: up Speed: 1000 Mbps Duplex: full Link Failure Count: 0 Permanent HW addr: 00:2a:4a:16:01:64 Slave queue ID: 0 위와 같이 본딩 구성이 되어 있습니다....</p>
+  </div>
+  <footer class="entry-footer"><span title='2018-08-16 00:00:00 +0000 UTC'>August 16, 2018</span>&nbsp;·&nbsp;chhanz</footer>
+  <a class="entry-link" aria-label="post link to [Linux] Bonding Network Currently Active Slave 변경" href="https://chhanz88.github.io/post/2018-08-16-linux-change-slave-bond-device/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2>[PowerKVM] PowerKVM Install Guide
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>[PowerKVM] PowerKVM Install Guide  IBM PowerKVM Install Guide 입니다.
+ 작성일 : 2018.08.01 배포일 : 2019.01.14  </p>
+  </div>
+  <footer class="entry-footer"><span title='2018-08-01 00:00:00 +0000 UTC'>August 1, 2018</span>&nbsp;·&nbsp;chhanz</footer>
+  <a class="entry-link" aria-label="post link to [PowerKVM] PowerKVM Install Guide" href="https://chhanz88.github.io/post/2018-08-01-linux-powerkvm-install-guide/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2>[Linux] CentOS 7 네트워크 Bonding 구성
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>[Linux] CentOS 7 네트워크 Bonding 구성  CentOS 7 에서 bonding 구성을 위해서는 아래와 같은 절차가 필요합니다.
+ CentOS 7 에서는 bonding 모듈이 기본적으로 로드가 되어 있지 않습니다. 아래 명령을 통해 boning 모듈을 로드합니다.  # modprobe --first-time bonding Bond Interface 생성 Bond Interface 생성을 하기위해서는 /etc/sysconfig/network-scripts/ 의 ifcfg-bond0 파일을 생성해야됩니다.  # cat /etc/sysconfig/network-scripts/ifcfg-bond0 DEVICE=bond0 NAME=bond0 TYPE=Bond IPADDR=10.0.0.1 NETMASK=255.255.255.0 ONBOOT=yes BOOTPROTO=none BONDING_OPTS=&#34;mode=1 miimon=100&#34; SLAVE Interface 생성 bond Interface 의 SLAVE Interface 파일을 생성합니다....</p>
+  </div>
+  <footer class="entry-footer"><span title='2018-03-02 00:00:00 +0000 UTC'>March 2, 2018</span>&nbsp;·&nbsp;chhanz</footer>
+  <a class="entry-link" aria-label="post link to [Linux] CentOS 7 네트워크 Bonding 구성" href="https://chhanz88.github.io/post/2018-03-02-linux-create-bond-device/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2>[RHEL] Local Yum Repository 만들기
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>[RHEL] Local Yum Repository 만들기  Red Hat Enterprise Linux 설치 ISO 및 물리 DVD 가 있다면 외부 rhn 을 사용하지 않고,
+base yum Repository 를 만들 수 있습니다.
+구성 절차는 아래와 같습니다.
+ DVD 혹은 ISO 파일 mount 진행   ISO 파일의 경우, 시스템에 Upload 진행합니다.  // DVD # mount /dev/sr0 /mnt // ISO # mount /root/rhel-server-7.5-x86_64-dvd.iso /mnt Local Disk 로 DVD 혹은 ISO 파일 데이터 복사  # cp -rpH /mnt /home/repo # vi /etc/yum....</p>
+  </div>
+  <footer class="entry-footer"><span title='2018-02-02 00:00:00 +0000 UTC'>February 2, 2018</span>&nbsp;·&nbsp;chhanz</footer>
+  <a class="entry-link" aria-label="post link to [RHEL] Local Yum Repository 만들기" href="https://chhanz88.github.io/post/2018-02-02-rhel-create-yum-repo/"></a>
+</article>
+<footer class="page-footer">
+  <nav class="pagination">
+    <a class="prev" href="https://chhanz88.github.io/categories/linux/page/4/">« Prev Page</a>
+  </nav>
+</footer>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2022 <a href="https://chhanz88.github.io">chhanz 
+기술 블로그
+</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://git.io/hugopapermod" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

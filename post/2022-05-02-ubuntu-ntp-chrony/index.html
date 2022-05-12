@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>[Ubuntu] NTP Service | chhanz 
+기술 블로그
+</title>
+<meta name="keywords" content="linux">
+<meta name="description" content="Ubuntu 20.04">
+<meta name="author" content="chhanz">
+<link rel="canonical" href="https://chhanz88.github.io/post/2022-05-02-ubuntu-ntp-chrony/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.ec8da366ca2fb647537ccb7a8f6fa5b4e9cd3c7a0d3171dd2d3baad1e49c8bfc.css" integrity="sha256-7I2jZsovtkdTfMt6j2&#43;ltOnNPHoNMXHdLTuq0eSci/w=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.min.4dcb3c4f38462f66c6b6137227726f5543cb934cca9788f041c087e374491df2.js" integrity="sha256-Tcs8TzhGL2bGthNyJ3JvVUPLk0zKl4jwQcCH43RJHfI="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://chhanz88.github.io/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://chhanz88.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://chhanz88.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://chhanz88.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://chhanz88.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="[Ubuntu] NTP Service" />
+<meta property="og:description" content="Ubuntu 20.04" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://chhanz88.github.io/post/2022-05-02-ubuntu-ntp-chrony/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2022-05-02T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2022-05-02T00:00:00&#43;00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[Ubuntu] NTP Service"/>
+<meta name="twitter:description" content="Ubuntu 20.04"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Posts",
+      "item": "https://chhanz88.github.io/post/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "[Ubuntu] NTP Service",
+      "item": "https://chhanz88.github.io/post/2022-05-02-ubuntu-ntp-chrony/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "[Ubuntu] NTP Service",
+  "name": "[Ubuntu] NTP Service",
+  "description": "Ubuntu 20.04",
+  "keywords": [
+    "linux"
+  ],
+  "articleBody": "Ubuntu 20.04 NTP Service Ubuntu Server Version 을 설치하게 되면 기본적으로 NTP 서비스를 활성화가 되어있습니다.\nroot@u-node-0:/etc/systemd# timedatectl -a  Local time: Thu 2022-04-28 11:14:26 KST  Universal time: Thu 2022-04-28 02:14:26 UTC  RTC time: Thu 2022-04-28 02:14:27  Time zone: Asia/Seoul (KST, +0900) System clock synchronized: yes  NTP service: active  RTC in local TZ: no RHEL 계열의 ntpd 혹은 chronyd 가 자동으로 설치가 되어서 그런건가?\nUbuntu 는 설치가 되면 systemd-timesyncd 라는 daemon 이 기본적으로 NTP 서비스를 수행합니다.\nroot@u-node-0:/etc/systemd# systemctl status systemd-timesyncd ● systemd-timesyncd.service - Network Time Synchronization  Loaded: loaded (/lib/systemd/system/systemd-timesyncd.service; enabled; vendor preset: enabled)  Active: active (running) since Sat 2022-01-15 06:36:26 KST; 3 months 11 days ago  Docs: man:systemd-timesyncd.service(8)  Main PID: 164170 (systemd-timesyn)  Status: \"Initial synchronization to time server 91.189.91.157:123 (ntp.ubuntu.com).\"  Tasks: 2 (limit: 2343)  Memory: 1.4M  CGroup: /system.slice/systemd-timesyncd.service  └─164170 /lib/systemd/systemd-timesyncd  Apr 06 20:29:10 u-node-0 systemd-timesyncd[164170]: Initial synchronization to time server 91.189.91.157:123 (ntp.ubuntu.com). systemd-timesyncd의 설정을 변경하기 위해서는 /etc/systemd/timesyncd.conf 을 수정해야 되고,\nroot@u-node-0:/etc/systemd# cat /etc/systemd/timesyncd.conf ... 생략  [Time] #NTP= #FallbackNTP=ntp.ubuntu.com #RootDistanceMaxSec=5 #PollIntervalMinSec=32 #PollIntervalMaxSec=2048 자세한 설정 수정 방법은 $ man timesyncd.conf를 참고합니다.\nChronyd 위와 같이 기본 timesyncd 를 사용하거나 내부 NTP Client 및 Server 를 구축하기 위해서는 권장되는 솔루션은 chronyd 입니다.\n설치 아래 명령을 통해 설치가 가능힙니다.\n$ sudo apt search chronyd Sorting... Done Full Text Search... Done chrony/focal-updates,focal-security,now 3.5-6ubuntu6.2 amd64 [installed]  Versatile implementation of the Network Time Protocol  $ sudo apt install chrony -y 재미있는건 chrony 가 설치가 되면 자동으로 enable 되어 있던 systemd-timesyncd는 disable 이 되고 chrony 가 enable 됩니다.\n$ cat /var/log/apt/history.log ... Commandline: apt install chrony Install: chrony:amd64 (3.5-6ubuntu6.2) Upgrade: libsystemd0:amd64 (245.4-4ubuntu3.15, 245.4-4ubuntu3.16), systemd-sysv:amd64 (245.4-4ubuntu3.15, 245.4-4ubuntu3.16), libpam-systemd:amd64 (245.4-4ubuntu3.15, 245.4-4ubuntu3.16), systemd:amd64 (245.4-4ubuntu3.15, 245.4-4ubuntu3.16), libnss-systemd:amd64 (245.4-4ubuntu3.15, 245.4-4ubuntu3.16) Remove: systemd-timesyncd:amd64 (245.4-4ubuntu3.15) $ systemctl status systemd-timesyncd ● systemd-timesyncd.service  Loaded: masked (Reason: Unit systemd-timesyncd.service is masked.)  Active: inactive (dead) since Thu 2022-04-28 11:15:22 KST; 7min ago  Main PID: 164170 (code=exited, status=0/SUCCESS)  Status: \"Shutting down...\" 설치가 완료되면 아래와 같이 서비스가 기동중입니다.\n$ systemctl status chronyd ● chrony.service - chrony, an NTP client/server  Loaded: loaded (/lib/systemd/system/chrony.service; enabled; vendor preset: enabled)  Active: active (running) since Thu 2022-04-28 11:15:25 KST; 7min ago  Docs: man:chronyd(8)  man:chronyc(1)  man:chrony.conf(5)  Main PID: 414899 (chronyd)  Tasks: 2 (limit: 2343)  Memory: 1.2M  CGroup: /system.slice/chrony.service  ├─414899 /usr/sbin/chronyd -F -1  └─414900 /usr/sbin/chronyd -F -1 설정 chronyd 의 설정은 RHEL 에서 사용하는 방식과 동일하지만 설정 파일의 경로에 차이가 있습니다.\n  RHEL 계열 : /etc/chrony.conf Debian 계열 : /etc/chrony/chrony.conf   $ cat /etc/chrony/chrony.conf ... 생략  pool ntp.ubuntu.com iburst maxsources 4 pool 0.ubuntu.pool.ntp.org iburst maxsources 1 pool 1.ubuntu.pool.ntp.org iburst maxsources 1 pool 2.ubuntu.pool.ntp.org iburst maxsources 2  ... 생략 chrony 설정 파일은 위와 같으며 내부 NTP 서비스를 하기 위해서는\nallow 1.2.3.4 위와 같이 allow line 을 추가하면 됩니다.\n그 외 자세한 설정은 문서 를 참고 합니다.\nCheck 아래 명령을 통해 NTP 서비스 동기화 상태를 확인 할 수 있습니다.\n$ chronyc sources -v 210 Number of sources = 8   .-- Source mode '^' = server, '=' = peer, '#' = local clock.  / .- Source state '*' = current synced, '+' = combined , '-' = not combined, | / '?' = unreachable, 'x' = time may be in error, '~' = time too variable. || .- xxxx [ yyyy ] +/- zzzz || Reachability register (octal) -. | xxxx = adjusted offset, || Log2(Polling interval) --. | | yyyy = measured offset, || \\  | | zzzz = estimated error. || | | \\ MS Name/IP address Stratum Poll Reach LastRx Last sample =============================================================================== ^- 91.189.91.157 2 6 377 36 +8219us[+8219us] +/- 151ms ^- 91.189.94.4 2 6 377 35 +4838us[+4838us] +/- 146ms ^- 91.189.89.198 2 6 337 35 +4675us[+4675us] +/- 137ms ^- 91.189.89.199 2 6 377 35 +5279us[+5279us] +/- 158ms ^- 194.0.5.123 2 6 377 38 -2538us[-2538us] +/- 41ms ^- 193.123.243.2 2 6 377 40 -778us[ -846us] +/- 36ms ^- 3.36.253.109 2 6 377 39 -273us[ -273us] +/- 44ms ^* 163.152.23.171 2 6 377 39 -250us[ -317us] +/- 9385us 참고 문서  Ubuntu - NTP : https://ubuntu.com/server/docs/network-ntp RHEL - chrony :\nhttps://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/system_administrators_guide/ch-configuring_ntp_using_the_chrony_suite chrony.conf : https://chrony.tuxfamily.org/doc/3.1/chrony.conf.html  ",
+  "wordCount" : "643",
+  "inLanguage": "en",
+  "datePublished": "2022-05-02T00:00:00Z",
+  "dateModified": "2022-05-02T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "chhanz"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://chhanz88.github.io/post/2022-05-02-ubuntu-ntp-chrony/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "chhanz \n기술 블로그\n",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://chhanz88.github.io/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://chhanz88.github.io" accesskey="h" title="chhanz 
+기술 블로그
+ (Alt + H)">chhanz 
+기술 블로그
+</a>
+            <span class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </span>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title">
+      [Ubuntu] NTP Service
+    </h1>
+    <div class="post-description">
+      Ubuntu 20.04
+    </div>
+    <div class="post-meta"><span title='2022-05-02 00:00:00 +0000 UTC'>May 2, 2022</span>&nbsp;·&nbsp;chhanz
+
+</div>
+  </header> 
+  <div class="post-content"><h1 id="ubuntu-2004-ntp-service">Ubuntu 20.04 NTP Service<a hidden class="anchor" aria-hidden="true" href="#ubuntu-2004-ntp-service">#</a></h1>
+<p>Ubuntu Server Version 을 설치하게 되면 기본적으로 NTP 서비스를 활성화가 되어있습니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@u-node-0:/etc/systemd# timedatectl -a
+</span></span><span style="display:flex;"><span>               Local time: Thu 2022-04-28 11:14:26 KST
+</span></span><span style="display:flex;"><span>           Universal time: Thu 2022-04-28 02:14:26 UTC
+</span></span><span style="display:flex;"><span>                 RTC time: Thu 2022-04-28 02:14:27
+</span></span><span style="display:flex;"><span>                Time zone: Asia/Seoul <span style="color:#f92672">(</span>KST, +0900<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>System clock synchronized: yes                          &lt;&lt;
+</span></span><span style="display:flex;"><span>              NTP service: active
+</span></span><span style="display:flex;"><span>          RTC in local TZ: no
+</span></span></code></pre></div><p>RHEL 계열의 <code>ntpd</code> 혹은 <code>chronyd</code> 가 자동으로 설치가 되어서 그런건가?</p>
+<p>Ubuntu 는 설치가 되면 <code>systemd-timesyncd</code> 라는 daemon 이 기본적으로 NTP 서비스를 수행합니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@u-node-0:/etc/systemd# systemctl status systemd-timesyncd
+</span></span><span style="display:flex;"><span>● systemd-timesyncd.service - Network Time Synchronization
+</span></span><span style="display:flex;"><span>     Loaded: loaded <span style="color:#f92672">(</span>/lib/systemd/system/systemd-timesyncd.service; enabled; vendor preset: enabled<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>     Active: active <span style="color:#f92672">(</span>running<span style="color:#f92672">)</span> since Sat 2022-01-15 06:36:26 KST; <span style="color:#ae81ff">3</span> months <span style="color:#ae81ff">11</span> days ago
+</span></span><span style="display:flex;"><span>       Docs: man:systemd-timesyncd.service<span style="color:#f92672">(</span>8<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>   Main PID: <span style="color:#ae81ff">164170</span> <span style="color:#f92672">(</span>systemd-timesyn<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>     Status: <span style="color:#e6db74">&#34;Initial synchronization to time server 91.189.91.157:123 (ntp.ubuntu.com).&#34;</span>
+</span></span><span style="display:flex;"><span>      Tasks: <span style="color:#ae81ff">2</span> <span style="color:#f92672">(</span>limit: 2343<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>     Memory: 1.4M
+</span></span><span style="display:flex;"><span>     CGroup: /system.slice/systemd-timesyncd.service
+</span></span><span style="display:flex;"><span>             └─164170 /lib/systemd/systemd-timesyncd
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>Apr <span style="color:#ae81ff">06</span> 20:29:10 u-node-0 systemd-timesyncd<span style="color:#f92672">[</span>164170<span style="color:#f92672">]</span>: Initial synchronization to time server 91.189.91.157:123 <span style="color:#f92672">(</span>ntp.ubuntu.com<span style="color:#f92672">)</span>.
+</span></span></code></pre></div><p><code>systemd-timesyncd</code>의 설정을 변경하기 위해서는 <code>/etc/systemd/timesyncd.conf</code> 을 수정해야 되고,</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@u-node-0:/etc/systemd# cat /etc/systemd/timesyncd.conf
+</span></span><span style="display:flex;"><span>... 생략
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>Time<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#NTP=</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#FallbackNTP=ntp.ubuntu.com</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#RootDistanceMaxSec=5</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#PollIntervalMinSec=32</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#PollIntervalMaxSec=2048</span>
+</span></span></code></pre></div><p>자세한 설정 수정 방법은 <code>$ man timesyncd.conf</code>를 참고합니다.</p>
+<h1 id="chronyd">Chronyd<a hidden class="anchor" aria-hidden="true" href="#chronyd">#</a></h1>
+<p>위와 같이 기본 timesyncd 를 사용하거나 내부 NTP Client 및 Server 를 구축하기 위해서는 권장되는 솔루션은 <code>chronyd</code> 입니다.</p>
+<h2 id="설치">설치<a hidden class="anchor" aria-hidden="true" href="#설치">#</a></h2>
+<p>아래 명령을 통해 설치가 가능힙니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ sudo apt search chronyd
+</span></span><span style="display:flex;"><span>Sorting... Done
+</span></span><span style="display:flex;"><span>Full Text Search... Done
+</span></span><span style="display:flex;"><span>chrony/focal-updates,focal-security,now 3.5-6ubuntu6.2 amd64 <span style="color:#f92672">[</span>installed<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>  Versatile implementation of the Network Time Protocol
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>$ sudo apt install chrony -y
+</span></span></code></pre></div><p>재미있는건 <code>chrony</code> 가 설치가 되면 자동으로 enable 되어 있던 <code>systemd-timesyncd</code>는 disable 이 되고 <code>chrony</code> 가 enable 됩니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ cat /var/log/apt/history.log
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>Commandline: apt install chrony
+</span></span><span style="display:flex;"><span>Install: chrony:amd64 (3.5-6ubuntu6.2)
+</span></span><span style="display:flex;"><span>Upgrade: libsystemd0:amd64 (245.4-4ubuntu3.15, 245.4-4ubuntu3.16), systemd-sysv:amd64 (245.4-4ubuntu3.15, 245.4-4ubuntu3.16), libpam-systemd:amd64 (245.4-4ubuntu3.15, 245.4-4ubuntu3.16), systemd:amd64 (245.4-4ubuntu3.15, 245.4-4ubuntu3.16), libnss-systemd:amd64 (245.4-4ubuntu3.15, 245.4-4ubuntu3.16)
+</span></span><span style="display:flex;"><span>Remove: systemd-timesyncd:amd64 (245.4-4ubuntu3.15)   &lt;&lt;&lt;
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>$ systemctl status systemd-timesyncd
+</span></span><span style="display:flex;"><span>● systemd-timesyncd.service
+</span></span><span style="display:flex;"><span>     Loaded: masked (Reason: Unit systemd-timesyncd.service is masked.)         &lt;&lt;&lt;
+</span></span><span style="display:flex;"><span>     Active: inactive (dead) since Thu 2022-04-28 11:15:22 KST; 7min ago
+</span></span><span style="display:flex;"><span>   Main PID: 164170 (code=exited, status=0/SUCCESS)
+</span></span><span style="display:flex;"><span>     Status: &#34;Shutting down...&#34;
+</span></span></code></pre></div><p>설치가 완료되면 아래와 같이 서비스가 기동중입니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ systemctl status chronyd
+</span></span><span style="display:flex;"><span>● chrony.service - chrony, an NTP client/server
+</span></span><span style="display:flex;"><span>     Loaded: loaded <span style="color:#f92672">(</span>/lib/systemd/system/chrony.service; enabled; vendor preset: enabled<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>     Active: active <span style="color:#f92672">(</span>running<span style="color:#f92672">)</span> since Thu 2022-04-28 11:15:25 KST; 7min ago
+</span></span><span style="display:flex;"><span>       Docs: man:chronyd<span style="color:#f92672">(</span>8<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>             man:chronyc<span style="color:#f92672">(</span>1<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>             man:chrony.conf<span style="color:#f92672">(</span>5<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>   Main PID: <span style="color:#ae81ff">414899</span> <span style="color:#f92672">(</span>chronyd<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>      Tasks: <span style="color:#ae81ff">2</span> <span style="color:#f92672">(</span>limit: 2343<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>     Memory: 1.2M
+</span></span><span style="display:flex;"><span>     CGroup: /system.slice/chrony.service
+</span></span><span style="display:flex;"><span>             ├─414899 /usr/sbin/chronyd -F -1
+</span></span><span style="display:flex;"><span>             └─414900 /usr/sbin/chronyd -F -1
+</span></span></code></pre></div><h2 id="설정">설정<a hidden class="anchor" aria-hidden="true" href="#설정">#</a></h2>
+<p><code>chronyd</code> 의 설정은 RHEL 에서 사용하는 방식과 동일하지만 설정 파일의 경로에 차이가 있습니다.</p>
+<blockquote>
+<ul>
+<li>RHEL 계열 : <code>/etc/chrony.conf</code></li>
+<li>Debian 계열 : <code>/etc/chrony/chrony.conf</code></li>
+</ul>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ cat /etc/chrony/chrony.conf
+</span></span><span style="display:flex;"><span>... 생략
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>pool ntp.ubuntu.com        iburst maxsources <span style="color:#ae81ff">4</span>
+</span></span><span style="display:flex;"><span>pool 0.ubuntu.pool.ntp.org iburst maxsources <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>pool 1.ubuntu.pool.ntp.org iburst maxsources <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>pool 2.ubuntu.pool.ntp.org iburst maxsources <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>... 생략
+</span></span></code></pre></div><p><code>chrony</code> 설정 파일은 위와 같으며 내부 NTP 서비스를 하기 위해서는</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>allow 1.2.3.4
+</span></span></code></pre></div><p>위와 같이 <code>allow</code> line 을 추가하면 됩니다.</p>
+<p>그 외 자세한 설정은 <a href="https://chrony.tuxfamily.org/doc/3.1/chrony.conf.html">문서</a> 를 참고 합니다.</p>
+<h2 id="check">Check<a hidden class="anchor" aria-hidden="true" href="#check">#</a></h2>
+<p>아래 명령을 통해 NTP 서비스 동기화 상태를 확인 할 수 있습니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ chronyc sources -v
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">210</span> Number of sources <span style="color:#f92672">=</span> <span style="color:#ae81ff">8</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>  .-- Source mode  <span style="color:#e6db74">&#39;^&#39;</span> <span style="color:#f92672">=</span> server, <span style="color:#e6db74">&#39;=&#39;</span> <span style="color:#f92672">=</span> peer, <span style="color:#e6db74">&#39;#&#39;</span> <span style="color:#f92672">=</span> local clock.
+</span></span><span style="display:flex;"><span> / .- Source state <span style="color:#e6db74">&#39;*&#39;</span> <span style="color:#f92672">=</span> current synced, <span style="color:#e6db74">&#39;+&#39;</span> <span style="color:#f92672">=</span> combined , <span style="color:#e6db74">&#39;-&#39;</span> <span style="color:#f92672">=</span> not combined,
+</span></span><span style="display:flex;"><span>| /   <span style="color:#e6db74">&#39;?&#39;</span> <span style="color:#f92672">=</span> unreachable, <span style="color:#e6db74">&#39;x&#39;</span> <span style="color:#f92672">=</span> time may be in error, <span style="color:#e6db74">&#39;~&#39;</span> <span style="color:#f92672">=</span> time too variable.
+</span></span><span style="display:flex;"><span><span style="color:#f92672">||</span>                                                 .- xxxx <span style="color:#f92672">[</span> yyyy <span style="color:#f92672">]</span> +/- zzzz
+</span></span><span style="display:flex;"><span><span style="color:#f92672">||</span>      Reachability register <span style="color:#f92672">(</span>octal<span style="color:#f92672">)</span> -.           |  xxxx <span style="color:#f92672">=</span> adjusted offset,
+</span></span><span style="display:flex;"><span><span style="color:#f92672">||</span>      Log2<span style="color:#f92672">(</span>Polling interval<span style="color:#f92672">)</span> --.      |          |  yyyy <span style="color:#f92672">=</span> measured offset,
+</span></span><span style="display:flex;"><span><span style="color:#f92672">||</span>                                <span style="color:#ae81ff">\ </span>    |          |  zzzz <span style="color:#f92672">=</span> estimated error.
+</span></span><span style="display:flex;"><span><span style="color:#f92672">||</span>                                 |    |           <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>MS Name/IP address         Stratum Poll Reach LastRx Last sample
+</span></span><span style="display:flex;"><span><span style="color:#f92672">===============================================================================</span>
+</span></span><span style="display:flex;"><span>^- 91.189.91.157                 <span style="color:#ae81ff">2</span>   <span style="color:#ae81ff">6</span>   <span style="color:#ae81ff">377</span>    <span style="color:#ae81ff">36</span>  +8219us<span style="color:#f92672">[</span>+8219us<span style="color:#f92672">]</span> +/-  151ms
+</span></span><span style="display:flex;"><span>^- 91.189.94.4                   <span style="color:#ae81ff">2</span>   <span style="color:#ae81ff">6</span>   <span style="color:#ae81ff">377</span>    <span style="color:#ae81ff">35</span>  +4838us<span style="color:#f92672">[</span>+4838us<span style="color:#f92672">]</span> +/-  146ms
+</span></span><span style="display:flex;"><span>^- 91.189.89.198                 <span style="color:#ae81ff">2</span>   <span style="color:#ae81ff">6</span>   <span style="color:#ae81ff">337</span>    <span style="color:#ae81ff">35</span>  +4675us<span style="color:#f92672">[</span>+4675us<span style="color:#f92672">]</span> +/-  137ms
+</span></span><span style="display:flex;"><span>^- 91.189.89.199                 <span style="color:#ae81ff">2</span>   <span style="color:#ae81ff">6</span>   <span style="color:#ae81ff">377</span>    <span style="color:#ae81ff">35</span>  +5279us<span style="color:#f92672">[</span>+5279us<span style="color:#f92672">]</span> +/-  158ms
+</span></span><span style="display:flex;"><span>^- 194.0.5.123                   <span style="color:#ae81ff">2</span>   <span style="color:#ae81ff">6</span>   <span style="color:#ae81ff">377</span>    <span style="color:#ae81ff">38</span>  -2538us<span style="color:#f92672">[</span>-2538us<span style="color:#f92672">]</span> +/-   41ms
+</span></span><span style="display:flex;"><span>^- 193.123.243.2                 <span style="color:#ae81ff">2</span>   <span style="color:#ae81ff">6</span>   <span style="color:#ae81ff">377</span>    <span style="color:#ae81ff">40</span>   -778us<span style="color:#f92672">[</span> -846us<span style="color:#f92672">]</span> +/-   36ms
+</span></span><span style="display:flex;"><span>^- 3.36.253.109                  <span style="color:#ae81ff">2</span>   <span style="color:#ae81ff">6</span>   <span style="color:#ae81ff">377</span>    <span style="color:#ae81ff">39</span>   -273us<span style="color:#f92672">[</span> -273us<span style="color:#f92672">]</span> +/-   44ms
+</span></span><span style="display:flex;"><span>^* 163.152.23.171                <span style="color:#ae81ff">2</span>   <span style="color:#ae81ff">6</span>   <span style="color:#ae81ff">377</span>    <span style="color:#ae81ff">39</span>   -250us<span style="color:#f92672">[</span> -317us<span style="color:#f92672">]</span> +/- 9385us
+</span></span></code></pre></div><h1 id="참고-문서">참고 문서<a hidden class="anchor" aria-hidden="true" href="#참고-문서">#</a></h1>
+<ul>
+<li>Ubuntu - NTP : <a href="https://ubuntu.com/server/docs/network-ntp">https://ubuntu.com/server/docs/network-ntp</a></li>
+<li>RHEL - chrony :<br>
+<a href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/system_administrators_guide/ch-configuring_ntp_using_the_chrony_suite">https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/system_administrators_guide/ch-configuring_ntp_using_the_chrony_suite</a></li>
+<li>chrony.conf : <a href="https://chrony.tuxfamily.org/doc/3.1/chrony.conf.html">https://chrony.tuxfamily.org/doc/3.1/chrony.conf.html</a></li>
+</ul>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://chhanz88.github.io/tags/linux/">linux</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2022 <a href="https://chhanz88.github.io">chhanz 
+기술 블로그
+</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://git.io/hugopapermod" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

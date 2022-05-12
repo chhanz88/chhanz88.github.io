@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>[Ansible] USER/GROUP 생성 Playbook | chhanz 
+기술 블로그
+</title>
+<meta name="keywords" content="ansible">
+<meta name="description" content=" ">
+<meta name="author" content="chhanz">
+<link rel="canonical" href="https://chhanz88.github.io/post/2021-01-18-ansible-role-user-grp/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.ec8da366ca2fb647537ccb7a8f6fa5b4e9cd3c7a0d3171dd2d3baad1e49c8bfc.css" integrity="sha256-7I2jZsovtkdTfMt6j2&#43;ltOnNPHoNMXHdLTuq0eSci/w=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.min.4dcb3c4f38462f66c6b6137227726f5543cb934cca9788f041c087e374491df2.js" integrity="sha256-Tcs8TzhGL2bGthNyJ3JvVUPLk0zKl4jwQcCH43RJHfI="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://chhanz88.github.io/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://chhanz88.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://chhanz88.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://chhanz88.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://chhanz88.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="[Ansible] USER/GROUP 생성 Playbook" />
+<meta property="og:description" content=" " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://chhanz88.github.io/post/2021-01-18-ansible-role-user-grp/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2021-01-18T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2021-01-18T00:00:00&#43;00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[Ansible] USER/GROUP 생성 Playbook"/>
+<meta name="twitter:description" content=" "/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Posts",
+      "item": "https://chhanz88.github.io/post/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "[Ansible] USER/GROUP 생성 Playbook",
+      "item": "https://chhanz88.github.io/post/2021-01-18-ansible-role-user-grp/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "[Ansible] USER/GROUP 생성 Playbook",
+  "name": "[Ansible] USER\/GROUP 생성 Playbook",
+  "description": " ",
+  "keywords": [
+    "ansible"
+  ],
+  "articleBody": "[Ansible] USER/GROUP 생성 Playbook 잡설 (회고?) 연말과 연초가 너무 바빴습니다. 몸이 바쁘다 보니 글 쓰는게 소홀했습니다. 올해는 바쁘더라도 짧은 내용이라도 더 열심히 글 작성해보겠습니다.\nPlaybook 위에서 말한 것과 같이 작업도 많고 시간은 부족한데 BAU 업무는 여전히 진행 되야 합니다.\n이번에 작성한 Playbook 은 다량의 시스템에 USER과 GROUP 을 생성하는 Playbook 을 작성하였습니다.\nPlaybook 을 이용하여 BAU 업무 투자 시간이 채감상 3분의 1로 줄었습니다.\nPlaybook 사용법 Clone Playbook 아래와 같이 Playbook 을 Clone 진행합니다.\n$ cd /etc/ansible/roles $ sudo git clone https://github.com/chhanz/ansible.role-mgt-usergrp.git Playbook 및 Varfile 작성 아래와 같이 Playbook 및 Varfile 을 작성합니다.\n예제 Playbook 과 Varfile 은 ansible.role-mgt-usergrp/tests/ 경로의 예제 파일을 참고 하시면 됩니다.\nPlaybook 예제 $ cat create_usergrp.yml --- - name: management 'user'  hosts: node  vars_files:  - userlist.yml  roles:  - role: ansible.role-mgt-usergrp Varfile 예제 $ cat userlist.yml --- group_list:  - grp_name: demogrp  gid: 777  user_list:  - id: demouser  new_password: 6af286f0509e7c166abf710850f44fc4  uid: 770  groups: demogrp  comment: \"KR/ANSIBLE/DEMO/USER/\"  - id: demouser1  new_password: 6af286f0509e7c166abf710850f44fc4  uid: 771  groups: demogrp  comment: \"KR/ANSIBLE/DEMO/USER/\"  - id: demouser2  new_password: 6af286f0509e7c166abf710850f44fc4  uid: 772  groups: demogrp  comment: \"KR/ANSIBLE/DEMO/USER/\"  - id: demouser3  new_password: 6af286f0509e7c166abf710850f44fc4  uid: 773  groups: demogrp  comment: \"KR/ANSIBLE/DEMO/USER/\" Inventory 예제 $ cat inventory [node] 192.168.200.201 192.168.200.202  [node:vars] ansible_ssh_user=root ansible_ssh_pass=testtest Playbook 수행 아래와 같이 Playbook 을 수행합니다.\n$ ansible-playbook -i inventory create_usergrp.yml 참고 : 수행 로그 $ ansible-playbook -i inventory create_usergrp.yml  PLAY [management 'user'] **********************************************************************************  TASK [Gathering Facts] ************************************************************************************ ok: [192.168.200.202] ok: [192.168.200.201]  TASK [ansible.role-mgt-usergrp : create 'groups'] ********************************************************* changed: [192.168.200.202] = (item={u'grp_name': u'demogrp', u'gid': 777}) changed: [192.168.200.201] = (item={u'grp_name': u'demogrp', u'gid': 777})  TASK [ansible.role-mgt-usergrp : create 'users'] ********************************************************** changed: [192.168.200.202] = (item={u'comment': u'KR/ANSIBLE/DEMO/USER/', u'new_password': u'6af286f0509e7c166abf710850f44fc4', u'id': u'demouser', u'groups': u'demogrp', u'uid': 770}) changed: [192.168.200.201] = (item={u'comment': u'KR/ANSIBLE/DEMO/USER/', u'new_password': u'6af286f0509e7c166abf710850f44fc4', u'id': u'demouser', u'groups': u'demogrp', u'uid': 770}) changed: [192.168.200.202] = (item={u'comment': u'KR/ANSIBLE/DEMO/USER/', u'new_password': u'6af286f0509e7c166abf710850f44fc4', u'id': u'demouser1', u'groups': u'demogrp', u'uid': 771}) changed: [192.168.200.201] = (item={u'comment': u'KR/ANSIBLE/DEMO/USER/', u'new_password': u'6af286f0509e7c166abf710850f44fc4', u'id': u'demouser1', u'groups': u'demogrp', u'uid': 771}) changed: [192.168.200.201] = (item={u'comment': u'KR/ANSIBLE/DEMO/USER/', u'new_password': u'6af286f0509e7c166abf710850f44fc4', u'id': u'demouser2', u'groups': u'demogrp', u'uid': 772}) changed: [192.168.200.202] = (item={u'comment': u'KR/ANSIBLE/DEMO/USER/', u'new_password': u'6af286f0509e7c166abf710850f44fc4', u'id': u'demouser2', u'groups': u'demogrp', u'uid': 772}) changed: [192.168.200.202] = (item={u'comment': u'KR/ANSIBLE/DEMO/USER/', u'new_password': u'6af286f0509e7c166abf710850f44fc4', u'id': u'demouser3', u'groups': u'demogrp', u'uid': 773}) changed: [192.168.200.201] = (item={u'comment': u'KR/ANSIBLE/DEMO/USER/', u'new_password': u'6af286f0509e7c166abf710850f44fc4', u'id': u'demouser3', u'groups': u'demogrp', u'uid': 773})  PLAY RECAP ************************************************************************************************ 192.168.200.201 : ok=3 changed=2 unreachable=0 failed=0 skipped=0 rescued=0 ignored=0 192.168.200.202 : ok=3 changed=2 unreachable=0 failed=0 skipped=0 rescued=0 ignored=0 점검 아래와 같이 계정 생성이 문제없이 된 것을 확인 할 수 있습니다.\n[root@fastvm-centos-7-7-201 ~]# cat /etc/passwd | tail -n4 demouser:x:770:777:KR/ANSIBLE/DEMO/USER/:/home/demouser:/bin/bash demouser1:x:771:777:KR/ANSIBLE/DEMO/USER/:/home/demouser1:/bin/bash demouser2:x:772:777:KR/ANSIBLE/DEMO/USER/:/home/demouser2:/bin/bash demouser3:x:773:777:KR/ANSIBLE/DEMO/USER/:/home/demouser3:/bin/bash  [root@fastvm-centos-7-7-201 ~]# id demouser uid=770(demouser) gid=777(demogrp) groups=777(demogrp)  [root@fastvm-centos-7-7-201 ~]# id demouser1 uid=771(demouser1) gid=777(demogrp) groups=777(demogrp)  [root@fastvm-centos-7-7-201 ~]# id demouser2 uid=772(demouser2) gid=777(demogrp) groups=777(demogrp)  [root@fastvm-centos-7-7-201 ~]# id demouser3 uid=773(demouser3) gid=777(demogrp) groups=777(demogrp) 참고 자료  https://github.com/chhanz/ansible.role-mgt-usergrp  ",
+  "wordCount" : "429",
+  "inLanguage": "en",
+  "datePublished": "2021-01-18T00:00:00Z",
+  "dateModified": "2021-01-18T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "chhanz"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://chhanz88.github.io/post/2021-01-18-ansible-role-user-grp/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "chhanz \n기술 블로그\n",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://chhanz88.github.io/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://chhanz88.github.io" accesskey="h" title="chhanz 
+기술 블로그
+ (Alt + H)">chhanz 
+기술 블로그
+</a>
+            <span class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </span>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title">
+      [Ansible] USER/GROUP 생성 Playbook
+    </h1>
+    <div class="post-description">
+       
+    </div>
+    <div class="post-meta"><span title='2021-01-18 00:00:00 +0000 UTC'>January 18, 2021</span>&nbsp;·&nbsp;chhanz
+
+</div>
+  </header> 
+  <div class="post-content"><h1 id="ansible-usergroup-생성-playbook">[Ansible] USER/GROUP 생성 Playbook<a hidden class="anchor" aria-hidden="true" href="#ansible-usergroup-생성-playbook">#</a></h1>
+<h2 id="잡설-회고">잡설 (회고?)<a hidden class="anchor" aria-hidden="true" href="#잡설-회고">#</a></h2>
+<p>연말과 연초가 너무 바빴습니다. <br>
+몸이 바쁘다 보니 글 쓰는게 소홀했습니다. 올해는 바쁘더라도 짧은 내용이라도 더 열심히 글 작성해보겠습니다.</p>
+<h1 id="playbook">Playbook<a hidden class="anchor" aria-hidden="true" href="#playbook">#</a></h1>
+<p>위에서 말한 것과 같이 작업도 많고 시간은 부족한데 BAU 업무는 여전히 진행 되야 합니다.<br>
+이번에 작성한 Playbook 은 다량의 시스템에 USER과 GROUP 을 생성하는 Playbook 을 작성하였습니다.</p>
+<p><em><strong>Playbook 을 이용하여 BAU 업무 투자 시간이 채감상 3분의 1로 줄었습니다.</strong></em></p>
+<h1 id="playbook-사용법">Playbook 사용법<a hidden class="anchor" aria-hidden="true" href="#playbook-사용법">#</a></h1>
+<h2 id="clone-playbook">Clone Playbook<a hidden class="anchor" aria-hidden="true" href="#clone-playbook">#</a></h2>
+<p>아래와 같이 Playbook 을 Clone 진행합니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ cd /etc/ansible/roles
+</span></span><span style="display:flex;"><span>$ sudo git clone https://github.com/chhanz/ansible.role-mgt-usergrp.git
+</span></span></code></pre></div><h2 id="playbook-및-varfile-작성">Playbook 및 Varfile 작성<a hidden class="anchor" aria-hidden="true" href="#playbook-및-varfile-작성">#</a></h2>
+<p>아래와 같이 Playbook 및 Varfile 을 작성합니다.<br>
+예제 Playbook 과 Varfile 은 <code>ansible.role-mgt-usergrp/tests/</code> 경로의 예제 파일을 참고 하시면 됩니다.</p>
+<h3 id="playbook-예제">Playbook 예제<a hidden class="anchor" aria-hidden="true" href="#playbook-예제">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ cat create_usergrp.yml
+</span></span><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span>- name: management <span style="color:#e6db74">&#39;user&#39;</span>
+</span></span><span style="display:flex;"><span>  hosts: node
+</span></span><span style="display:flex;"><span>  vars_files:
+</span></span><span style="display:flex;"><span>    - userlist.yml
+</span></span><span style="display:flex;"><span>  roles:
+</span></span><span style="display:flex;"><span>  - role: ansible.role-mgt-usergrp
+</span></span></code></pre></div><h3 id="varfile-예제">Varfile 예제<a hidden class="anchor" aria-hidden="true" href="#varfile-예제">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ cat userlist.yml
+</span></span><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span>group_list:
+</span></span><span style="display:flex;"><span>    - grp_name: demogrp
+</span></span><span style="display:flex;"><span>      gid: <span style="color:#ae81ff">777</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>user_list:
+</span></span><span style="display:flex;"><span>    - id: demouser
+</span></span><span style="display:flex;"><span>      new_password: 6af286f0509e7c166abf710850f44fc4
+</span></span><span style="display:flex;"><span>      uid: <span style="color:#ae81ff">770</span>
+</span></span><span style="display:flex;"><span>      groups: demogrp
+</span></span><span style="display:flex;"><span>      comment: <span style="color:#e6db74">&#34;KR/ANSIBLE/DEMO/USER/&#34;</span>
+</span></span><span style="display:flex;"><span>    - id: demouser1
+</span></span><span style="display:flex;"><span>      new_password: 6af286f0509e7c166abf710850f44fc4
+</span></span><span style="display:flex;"><span>      uid: <span style="color:#ae81ff">771</span>
+</span></span><span style="display:flex;"><span>      groups: demogrp
+</span></span><span style="display:flex;"><span>      comment: <span style="color:#e6db74">&#34;KR/ANSIBLE/DEMO/USER/&#34;</span>
+</span></span><span style="display:flex;"><span>    - id: demouser2
+</span></span><span style="display:flex;"><span>      new_password: 6af286f0509e7c166abf710850f44fc4
+</span></span><span style="display:flex;"><span>      uid: <span style="color:#ae81ff">772</span>
+</span></span><span style="display:flex;"><span>      groups: demogrp
+</span></span><span style="display:flex;"><span>      comment: <span style="color:#e6db74">&#34;KR/ANSIBLE/DEMO/USER/&#34;</span>
+</span></span><span style="display:flex;"><span>    - id: demouser3
+</span></span><span style="display:flex;"><span>      new_password: 6af286f0509e7c166abf710850f44fc4
+</span></span><span style="display:flex;"><span>      uid: <span style="color:#ae81ff">773</span>
+</span></span><span style="display:flex;"><span>      groups: demogrp
+</span></span><span style="display:flex;"><span>      comment: <span style="color:#e6db74">&#34;KR/ANSIBLE/DEMO/USER/&#34;</span>
+</span></span></code></pre></div><h2 id="inventory-예제">Inventory 예제<a hidden class="anchor" aria-hidden="true" href="#inventory-예제">#</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ cat inventory
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>node<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>192.168.200.201
+</span></span><span style="display:flex;"><span>192.168.200.202
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>node:vars<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>ansible_ssh_user<span style="color:#f92672">=</span>root
+</span></span><span style="display:flex;"><span>ansible_ssh_pass<span style="color:#f92672">=</span>testtest
+</span></span></code></pre></div><h1 id="playbook-수행">Playbook 수행<a hidden class="anchor" aria-hidden="true" href="#playbook-수행">#</a></h1>
+<p>아래와 같이 Playbook 을 수행합니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ ansible-playbook -i inventory create_usergrp.yml
+</span></span></code></pre></div><h2 id="참고--수행-로그">참고 : 수행 로그<a hidden class="anchor" aria-hidden="true" href="#참고--수행-로그">#</a></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ ansible-playbook -i inventory create_usergrp.yml
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>PLAY <span style="color:#f92672">[</span>management <span style="color:#e6db74">&#39;user&#39;</span><span style="color:#f92672">]</span> **********************************************************************************
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>TASK <span style="color:#f92672">[</span>Gathering Facts<span style="color:#f92672">]</span> ************************************************************************************
+</span></span><span style="display:flex;"><span>ok: <span style="color:#f92672">[</span>192.168.200.202<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>ok: <span style="color:#f92672">[</span>192.168.200.201<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>TASK <span style="color:#f92672">[</span>ansible.role-mgt-usergrp : create <span style="color:#e6db74">&#39;groups&#39;</span><span style="color:#f92672">]</span> *********************************************************
+</span></span><span style="display:flex;"><span>changed: <span style="color:#f92672">[</span>192.168.200.202<span style="color:#f92672">]</span> <span style="color:#f92672">=</span>&gt; <span style="color:#f92672">(</span>item<span style="color:#f92672">={</span>u<span style="color:#e6db74">&#39;grp_name&#39;</span>: u<span style="color:#e6db74">&#39;demogrp&#39;</span>, u<span style="color:#e6db74">&#39;gid&#39;</span>: 777<span style="color:#f92672">})</span>
+</span></span><span style="display:flex;"><span>changed: <span style="color:#f92672">[</span>192.168.200.201<span style="color:#f92672">]</span> <span style="color:#f92672">=</span>&gt; <span style="color:#f92672">(</span>item<span style="color:#f92672">={</span>u<span style="color:#e6db74">&#39;grp_name&#39;</span>: u<span style="color:#e6db74">&#39;demogrp&#39;</span>, u<span style="color:#e6db74">&#39;gid&#39;</span>: 777<span style="color:#f92672">})</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>TASK <span style="color:#f92672">[</span>ansible.role-mgt-usergrp : create <span style="color:#e6db74">&#39;users&#39;</span><span style="color:#f92672">]</span> **********************************************************
+</span></span><span style="display:flex;"><span>changed: <span style="color:#f92672">[</span>192.168.200.202<span style="color:#f92672">]</span> <span style="color:#f92672">=</span>&gt; <span style="color:#f92672">(</span>item<span style="color:#f92672">={</span>u<span style="color:#e6db74">&#39;comment&#39;</span>: u<span style="color:#e6db74">&#39;KR/ANSIBLE/DEMO/USER/&#39;</span>, u<span style="color:#e6db74">&#39;new_password&#39;</span>: u<span style="color:#e6db74">&#39;6af286f0509e7c166abf710850f44fc4&#39;</span>, u<span style="color:#e6db74">&#39;id&#39;</span>: u<span style="color:#e6db74">&#39;demouser&#39;</span>, u<span style="color:#e6db74">&#39;groups&#39;</span>: u<span style="color:#e6db74">&#39;demogrp&#39;</span>, u<span style="color:#e6db74">&#39;uid&#39;</span>: 770<span style="color:#f92672">})</span>
+</span></span><span style="display:flex;"><span>changed: <span style="color:#f92672">[</span>192.168.200.201<span style="color:#f92672">]</span> <span style="color:#f92672">=</span>&gt; <span style="color:#f92672">(</span>item<span style="color:#f92672">={</span>u<span style="color:#e6db74">&#39;comment&#39;</span>: u<span style="color:#e6db74">&#39;KR/ANSIBLE/DEMO/USER/&#39;</span>, u<span style="color:#e6db74">&#39;new_password&#39;</span>: u<span style="color:#e6db74">&#39;6af286f0509e7c166abf710850f44fc4&#39;</span>, u<span style="color:#e6db74">&#39;id&#39;</span>: u<span style="color:#e6db74">&#39;demouser&#39;</span>, u<span style="color:#e6db74">&#39;groups&#39;</span>: u<span style="color:#e6db74">&#39;demogrp&#39;</span>, u<span style="color:#e6db74">&#39;uid&#39;</span>: 770<span style="color:#f92672">})</span>
+</span></span><span style="display:flex;"><span>changed: <span style="color:#f92672">[</span>192.168.200.202<span style="color:#f92672">]</span> <span style="color:#f92672">=</span>&gt; <span style="color:#f92672">(</span>item<span style="color:#f92672">={</span>u<span style="color:#e6db74">&#39;comment&#39;</span>: u<span style="color:#e6db74">&#39;KR/ANSIBLE/DEMO/USER/&#39;</span>, u<span style="color:#e6db74">&#39;new_password&#39;</span>: u<span style="color:#e6db74">&#39;6af286f0509e7c166abf710850f44fc4&#39;</span>, u<span style="color:#e6db74">&#39;id&#39;</span>: u<span style="color:#e6db74">&#39;demouser1&#39;</span>, u<span style="color:#e6db74">&#39;groups&#39;</span>: u<span style="color:#e6db74">&#39;demogrp&#39;</span>, u<span style="color:#e6db74">&#39;uid&#39;</span>: 771<span style="color:#f92672">})</span>
+</span></span><span style="display:flex;"><span>changed: <span style="color:#f92672">[</span>192.168.200.201<span style="color:#f92672">]</span> <span style="color:#f92672">=</span>&gt; <span style="color:#f92672">(</span>item<span style="color:#f92672">={</span>u<span style="color:#e6db74">&#39;comment&#39;</span>: u<span style="color:#e6db74">&#39;KR/ANSIBLE/DEMO/USER/&#39;</span>, u<span style="color:#e6db74">&#39;new_password&#39;</span>: u<span style="color:#e6db74">&#39;6af286f0509e7c166abf710850f44fc4&#39;</span>, u<span style="color:#e6db74">&#39;id&#39;</span>: u<span style="color:#e6db74">&#39;demouser1&#39;</span>, u<span style="color:#e6db74">&#39;groups&#39;</span>: u<span style="color:#e6db74">&#39;demogrp&#39;</span>, u<span style="color:#e6db74">&#39;uid&#39;</span>: 771<span style="color:#f92672">})</span>
+</span></span><span style="display:flex;"><span>changed: <span style="color:#f92672">[</span>192.168.200.201<span style="color:#f92672">]</span> <span style="color:#f92672">=</span>&gt; <span style="color:#f92672">(</span>item<span style="color:#f92672">={</span>u<span style="color:#e6db74">&#39;comment&#39;</span>: u<span style="color:#e6db74">&#39;KR/ANSIBLE/DEMO/USER/&#39;</span>, u<span style="color:#e6db74">&#39;new_password&#39;</span>: u<span style="color:#e6db74">&#39;6af286f0509e7c166abf710850f44fc4&#39;</span>, u<span style="color:#e6db74">&#39;id&#39;</span>: u<span style="color:#e6db74">&#39;demouser2&#39;</span>, u<span style="color:#e6db74">&#39;groups&#39;</span>: u<span style="color:#e6db74">&#39;demogrp&#39;</span>, u<span style="color:#e6db74">&#39;uid&#39;</span>: 772<span style="color:#f92672">})</span>
+</span></span><span style="display:flex;"><span>changed: <span style="color:#f92672">[</span>192.168.200.202<span style="color:#f92672">]</span> <span style="color:#f92672">=</span>&gt; <span style="color:#f92672">(</span>item<span style="color:#f92672">={</span>u<span style="color:#e6db74">&#39;comment&#39;</span>: u<span style="color:#e6db74">&#39;KR/ANSIBLE/DEMO/USER/&#39;</span>, u<span style="color:#e6db74">&#39;new_password&#39;</span>: u<span style="color:#e6db74">&#39;6af286f0509e7c166abf710850f44fc4&#39;</span>, u<span style="color:#e6db74">&#39;id&#39;</span>: u<span style="color:#e6db74">&#39;demouser2&#39;</span>, u<span style="color:#e6db74">&#39;groups&#39;</span>: u<span style="color:#e6db74">&#39;demogrp&#39;</span>, u<span style="color:#e6db74">&#39;uid&#39;</span>: 772<span style="color:#f92672">})</span>
+</span></span><span style="display:flex;"><span>changed: <span style="color:#f92672">[</span>192.168.200.202<span style="color:#f92672">]</span> <span style="color:#f92672">=</span>&gt; <span style="color:#f92672">(</span>item<span style="color:#f92672">={</span>u<span style="color:#e6db74">&#39;comment&#39;</span>: u<span style="color:#e6db74">&#39;KR/ANSIBLE/DEMO/USER/&#39;</span>, u<span style="color:#e6db74">&#39;new_password&#39;</span>: u<span style="color:#e6db74">&#39;6af286f0509e7c166abf710850f44fc4&#39;</span>, u<span style="color:#e6db74">&#39;id&#39;</span>: u<span style="color:#e6db74">&#39;demouser3&#39;</span>, u<span style="color:#e6db74">&#39;groups&#39;</span>: u<span style="color:#e6db74">&#39;demogrp&#39;</span>, u<span style="color:#e6db74">&#39;uid&#39;</span>: 773<span style="color:#f92672">})</span>
+</span></span><span style="display:flex;"><span>changed: <span style="color:#f92672">[</span>192.168.200.201<span style="color:#f92672">]</span> <span style="color:#f92672">=</span>&gt; <span style="color:#f92672">(</span>item<span style="color:#f92672">={</span>u<span style="color:#e6db74">&#39;comment&#39;</span>: u<span style="color:#e6db74">&#39;KR/ANSIBLE/DEMO/USER/&#39;</span>, u<span style="color:#e6db74">&#39;new_password&#39;</span>: u<span style="color:#e6db74">&#39;6af286f0509e7c166abf710850f44fc4&#39;</span>, u<span style="color:#e6db74">&#39;id&#39;</span>: u<span style="color:#e6db74">&#39;demouser3&#39;</span>, u<span style="color:#e6db74">&#39;groups&#39;</span>: u<span style="color:#e6db74">&#39;demogrp&#39;</span>, u<span style="color:#e6db74">&#39;uid&#39;</span>: 773<span style="color:#f92672">})</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>PLAY RECAP ************************************************************************************************
+</span></span><span style="display:flex;"><span>192.168.200.201            : ok<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>    changed<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>    unreachable<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>    failed<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>    skipped<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>    rescued<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>    ignored<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>192.168.200.202            : ok<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>    changed<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>    unreachable<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>    failed<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>    skipped<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>    rescued<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>    ignored<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</span></span></code></pre></div><h2 id="점검">점검<a hidden class="anchor" aria-hidden="true" href="#점검">#</a></h2>
+<p>아래와 같이 계정 생성이 문제없이 된 것을 확인 할 수 있습니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@fastvm-centos-7-7-201 ~<span style="color:#f92672">]</span><span style="color:#75715e"># cat /etc/passwd | tail -n4</span>
+</span></span><span style="display:flex;"><span>demouser:x:770:777:KR/ANSIBLE/DEMO/USER/:/home/demouser:/bin/bash
+</span></span><span style="display:flex;"><span>demouser1:x:771:777:KR/ANSIBLE/DEMO/USER/:/home/demouser1:/bin/bash
+</span></span><span style="display:flex;"><span>demouser2:x:772:777:KR/ANSIBLE/DEMO/USER/:/home/demouser2:/bin/bash
+</span></span><span style="display:flex;"><span>demouser3:x:773:777:KR/ANSIBLE/DEMO/USER/:/home/demouser3:/bin/bash
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@fastvm-centos-7-7-201 ~<span style="color:#f92672">]</span><span style="color:#75715e"># id demouser</span>
+</span></span><span style="display:flex;"><span>uid<span style="color:#f92672">=</span>770<span style="color:#f92672">(</span>demouser<span style="color:#f92672">)</span> gid<span style="color:#f92672">=</span>777<span style="color:#f92672">(</span>demogrp<span style="color:#f92672">)</span> groups<span style="color:#f92672">=</span>777<span style="color:#f92672">(</span>demogrp<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@fastvm-centos-7-7-201 ~<span style="color:#f92672">]</span><span style="color:#75715e"># id demouser1</span>
+</span></span><span style="display:flex;"><span>uid<span style="color:#f92672">=</span>771<span style="color:#f92672">(</span>demouser1<span style="color:#f92672">)</span> gid<span style="color:#f92672">=</span>777<span style="color:#f92672">(</span>demogrp<span style="color:#f92672">)</span> groups<span style="color:#f92672">=</span>777<span style="color:#f92672">(</span>demogrp<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@fastvm-centos-7-7-201 ~<span style="color:#f92672">]</span><span style="color:#75715e"># id demouser2</span>
+</span></span><span style="display:flex;"><span>uid<span style="color:#f92672">=</span>772<span style="color:#f92672">(</span>demouser2<span style="color:#f92672">)</span> gid<span style="color:#f92672">=</span>777<span style="color:#f92672">(</span>demogrp<span style="color:#f92672">)</span> groups<span style="color:#f92672">=</span>777<span style="color:#f92672">(</span>demogrp<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@fastvm-centos-7-7-201 ~<span style="color:#f92672">]</span><span style="color:#75715e"># id demouser3</span>
+</span></span><span style="display:flex;"><span>uid<span style="color:#f92672">=</span>773<span style="color:#f92672">(</span>demouser3<span style="color:#f92672">)</span> gid<span style="color:#f92672">=</span>777<span style="color:#f92672">(</span>demogrp<span style="color:#f92672">)</span> groups<span style="color:#f92672">=</span>777<span style="color:#f92672">(</span>demogrp<span style="color:#f92672">)</span>
+</span></span></code></pre></div><h1 id="참고-자료">참고 자료<a hidden class="anchor" aria-hidden="true" href="#참고-자료">#</a></h1>
+<ul>
+<li><a href="https://github.com/chhanz/ansible.role-mgt-usergrp">https://github.com/chhanz/ansible.role-mgt-usergrp</a></li>
+</ul>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://chhanz88.github.io/tags/ansible/">ansible</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2022 <a href="https://chhanz88.github.io">chhanz 
+기술 블로그
+</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://git.io/hugopapermod" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>jfs2 on chhanz 
+기술 블로그
+</title>
+    <link>https://chhanz88.github.io/tags/jfs2/</link>
+    <description>Recent content in jfs2 on chhanz 
+기술 블로그
+</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 06 Sep 2012 00:00:00 +0000</lastBuildDate><atom:link href="https://chhanz88.github.io/tags/jfs2/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[AIX] JFS vs JFS2</title>
+      <link>https://chhanz88.github.io/post/2012-09-06-aixjfsvsjfs2/</link>
+      <pubDate>Thu, 06 Sep 2012 00:00:00 +0000</pubDate>
+      
+      <guid>https://chhanz88.github.io/post/2012-09-06-aixjfsvsjfs2/</guid>
+      <description>JFS 와 JFS2의 차이점</description>
+    </item>
+    
+  </channel>
+</rss>

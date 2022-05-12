@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>[Kubernetes] Kubernetes Volume #2 | chhanz 
+기술 블로그
+</title>
+<meta name="keywords" content="kubernetes">
+<meta name="description" content="Network Volume - nfs / cephfs / ceph rbd">
+<meta name="author" content="chhanz">
+<link rel="canonical" href="https://chhanz88.github.io/post/2019-04-15-kubernetes-chapter-2-network-volume/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.ec8da366ca2fb647537ccb7a8f6fa5b4e9cd3c7a0d3171dd2d3baad1e49c8bfc.css" integrity="sha256-7I2jZsovtkdTfMt6j2&#43;ltOnNPHoNMXHdLTuq0eSci/w=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.min.4dcb3c4f38462f66c6b6137227726f5543cb934cca9788f041c087e374491df2.js" integrity="sha256-Tcs8TzhGL2bGthNyJ3JvVUPLk0zKl4jwQcCH43RJHfI="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://chhanz88.github.io/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://chhanz88.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://chhanz88.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://chhanz88.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://chhanz88.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="[Kubernetes] Kubernetes Volume #2" />
+<meta property="og:description" content="Network Volume - nfs / cephfs / ceph rbd" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://chhanz88.github.io/post/2019-04-15-kubernetes-chapter-2-network-volume/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2019-04-15T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2019-04-15T00:00:00&#43;00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[Kubernetes] Kubernetes Volume #2"/>
+<meta name="twitter:description" content="Network Volume - nfs / cephfs / ceph rbd"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Posts",
+      "item": "https://chhanz88.github.io/post/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "[Kubernetes] Kubernetes Volume #2",
+      "item": "https://chhanz88.github.io/post/2019-04-15-kubernetes-chapter-2-network-volume/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "[Kubernetes] Kubernetes Volume #2",
+  "name": "[Kubernetes] Kubernetes Volume #2",
+  "description": "Network Volume - nfs / cephfs / ceph rbd",
+  "keywords": [
+    "kubernetes"
+  ],
+  "articleBody": " 이번 포스팅은 Kubernetes Korea Group의 Kubernetes Architecture Study 모임에서 스터디 후, 발표된 내용입니다.\nLink : k8skr-study-architecture Github\n Kubernetes Volume #2  저번 포스팅 Kubernetes Volume #1 에서는 Local Volume 에 관련된 emptyDir / hostPath / gitRepo 에 대해 설명드렸습니다.\n이어서 이번 포스팅에서는 Network Volume 으로 사용될 nfs / cephfs / ceph rbd 를 예제와 함께 알아보도록 하겠습니다.\nPersistent Volume 와 Persistent Volume Claim  Persistent Volume 와 Persistent VolumeClaim 가 있는데,\n Persistent Volume(이하 PV) 는 Kubernetes 에서 관리되는 저장소로 Pod 과는 다른 수명 주기로 관리됩니다.\nPod 이 재실행 되더라도, PV의 데이터는 정책에 따라 유지/삭제가 됩니다.\n  Persistent Volume Claim(이하 PVC) 는 PV를 추상화하여 개발자가 손쉽게 PV를 사용 가능하게 만들어주는 기능입니다.\n개발자는 사용에 필요한 Volume의 크기, Volume의 정책을 선택하고 요청만 하면 됩니다.\n운영자는 개발자의 요청에 맞게 PV 를 생성하게 되고, PVC는 해당 PV를 가져가게 됩니다.\n 이와 같은 방식을 Static Provisioning 이라 합니다.\n예제를 통해 Static Provisioning을 확인 해보겠습니다.\nStatic Provisioning  NFS NFS 서버를 PV로 사용하는 방식입니다.\n예제에 활용될 yaml 파일 내용은 아래와 같습니다.\n[root@m01 pod-example]# cat nfs-pod.yml apiVersion: v1 kind: Pod metadata:  name: nfs-nginx spec:  containers:  - name: nginx  image: nginx  volumeMounts:  - name: nfsvol  mountPath: /usr/share/nginx/html  volumes:  - name : nfsvol  nfs:  path: /data/nfs-ngnix  server: 192.168.13.10 위 yaml 파일을 이용해 Pod 을 생성하면\n[root@m01 pod-example]# kubectl describe po nfs-nginx Name: nfs-nginx Namespace: default Priority: 0 PriorityClassName:  Node: w03/192.168.13.16 Start Time: Sun, 14 Apr 2019 13:44:52 +0900 Labels:  Annotations:  Status: Running IP: 10.233.89.5 Containers:  nginx:  Container ID: docker://20fa842803535803e1c0c48c204cffe1d464f9f96e3fcf4d7eed11c0bb8aeed0  Image: nginx  Image ID: docker-pullable://nginx@sha256:50174b19828157e94f8273e3991026dc7854ec7dd2bbb33e7d3bd91f0a4b333d  Port:   Host Port:   State: Running  Started: Sun, 14 Apr 2019 13:45:13 +0900  Ready: True  Restart Count: 0  Environment:   Mounts:  /usr/share/nginx/html from nfsvol (rw)  /var/run/secrets/kubernetes.io/serviceaccount from default-token-9vmtn (ro) Conditions:  Type Status  Initialized True  Ready True  ContainersReady True  PodScheduled True Volumes:  nfsvol:  Type: NFS (an NFS mount that lasts the lifetime of a pod)  Server: 192.168.13.10  Path: /data/nfs-ngnix  ReadOnly: false  default-token-9vmtn:  Type: Secret (a volume populated by a Secret)  SecretName: default-token-9vmtn  Optional: false QoS Class: BestEffort Node-Selectors:  Tolerations: node.kubernetes.io/not-ready:NoExecute for 300s  node.kubernetes.io/unreachable:NoExecute for 300s Events:  Type Reason Age From Message  ---- ------ ---- ---- -------  Normal Scheduled 50s default-scheduler Successfully assigned default/nfs-nginx to w03  Normal Pulling 46s kubelet, w03 pulling image \"nginx\"  Normal Pulled 28s kubelet, w03 Successfully pulled image \"nginx\"  Normal Created 28s kubelet, w03 Created container  Normal Started 28s kubelet, w03 Started container nfs-nginx 라는 Pod 이 생성이 되고 위와 같이 nfsvol 이라는 Volume 이 Attach 된 것을 확인 할 수 있습니다.\nnginx 서비스가 연결된 Volume 을 통해 서비스가 되는지 확인해봅니다.\n[root@m01 pod-example]# curl 10.233.89.5   NFS Index-v1\n  [root@m01 pod-example]#  # Pod 내부에 접근해서 확인 [root@m01 pod-example]# kubectl exec -ti nfs-nginx /bin/bash root@nfs-nginx:/# root@nfs-nginx:/# cd /usr/share/nginx/html/ root@nfs-nginx:/usr/share/nginx/html# cat index.html   NFS Index-v1\n  root@nfs-nginx:/usr/share/nginx/html# NFS Index-v1 라는 index.html 을 가지고 있는 Volume 입니다.\nNFS 서버에 직접 접근해서 index.html 파일을 수정해보겠습니다.\n[root@kube-depoly nfs-ngnix]# pwd /data/nfs-ngnix [root@kube-depoly nfs-ngnix]# cat index.html   NFS Index-v1\n  [root@kube-depoly nfs-ngnix]# vi index.html // index.html 수정 [root@kube-depoly nfs-ngnix]# cat index.html   NFS Index-v2\n  [root@kube-depoly nfs-ngnix]#  # 적용 확인 [root@m01 pod-example]# curl 10.233.89.5   NFS Index-v2\n  [root@m01 pod-example]# 이와 같이 Pod 에 NFS 서버가 연결 되어 있는 것을 확인 할 수 있었습니다.\n# NFS 로 Volume Attach 되어 있음 root@nfs-nginx:/usr/share/nginx/html# mount | grep nfs 192.168.13.10:/data/nfs-ngnix on /usr/share/nginx/html type nfs4 (rw,relatime,vers=4.1,rsize=262144,wsize=262144,namlen=255,hard,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=192.168.13.15,local_lock=none,addr=192.168.13.10) root@nfs-nginx:/usr/share/nginx/html# cephfs Software Defined Storage 인 ceph 를 이용하는 방식입니다.\n Worker 노드에서 cephfs 를 사용하기 위해 ceph-common 패키지를 설치합니다.\n # yum -y install epel-release # rpm -Uvh https://download.ceph.com/rpm-luminous/el7/noarch/ceph-release-1-0.el7.noarch.rpm # yum -y install ceph-common cephfs 를 사용하기 위해서는 Key 가 필요로 한데, 아래와 같은 방식으로 Key 값을 수집하고 Kubernete Secret 에 등록합니다.\n[root@s01 yum.repos.d]# ceph auth get client.admin exported keyring for client.admin [client.admin]  key = AQC6s6Vc83jwKBAAtckE6yz3eTM9lWwK60QNYw==  caps mds = \"allow *\"  caps mgr = \"allow *\"  caps mon = \"allow *\"  caps osd = \"allow *\" [root@s01 yum.repos.d]#  [root@s01 ceph]# ceph-authtool -p ceph.client.admin.keyring AQC6s6Vc83jwKBAAtckE6yz3eTM9lWwK60QNYw== [root@s01 ceph]#  # Secret 생성 [root@m01 cephfs]# cat ceph-secret.yaml apiVersion: v1 kind: Secret metadata:  name: ceph-secret data:  key: QVFDNnM2VmM4M2p3S0JBQXRja0U2eXozZVRNOWxXd0s2MFFOWXc9PQ==  [root@m01 cephfs]# kubectl create -f ceph-secret.yaml secret/ceph-secret created  [root@m01 cephfs]# kubectl get secret ceph-secret NAME TYPE DATA AGE ceph-secret Opaque 1 23s [root@m01 cephfs]# kubectl get secret ceph-secret -o yaml apiVersion: v1 data:  key: QVFDNnM2VmM4M2p3S0JBQXRja0U2eXozZVRNOWxXd0s2MFFOWXc9PQ== kind: Secret metadata:  creationTimestamp: \"2019-04-14T06:13:44Z\"  name: ceph-secret  namespace: default  resourceVersion: \"873772\"  selfLink: /api/v1/namespaces/default/secrets/ceph-secret  uid: 7515ad43-5e7c-11e9-ba95-001a4a160172 type: Opaque [root@m01 cephfs]# Pod 에 cephfs Volume 을 연결합니다.\n[root@m01 cephfs]# cat cephfs-with-secret.yaml apiVersion: v1 kind: Pod metadata:  name: cephfs-httpd spec:  containers:  - name: cephfs-httpd  image: httpd  volumeMounts:  - mountPath: /usr/local/apache2/htdocs  name: cephfs  volumes:  - name: cephfs  cephfs:  monitors:  - 192.168.13.6:6789  - 192.168.13.7:6789  - 192.168.13.8:6789  user: admin  path: /httpd-index  secretRef:  name: ceph-secret  readOnly: false cephfs 의 /httpd-index 경로에는 index.html 이 존재합니다.\nPod 을 생성합니다.\n[root@m01 cephfs]# kubectl create -f cephfs-with-secret.yaml pod/cephfs-httpd created [root@m01 cephfs]# kubectl get po NAME READY STATUS RESTARTS AGE cephfs-httpd 1/1 Running 0 24s load-generator-557649ddcd-jq987 1/1 Running 1 4d20h php-apache-9bd5c887f-p6lrq 1/1 Running 0 4d20h [root@m01 cephfs]#  [root@m01 cephfs]# kubectl describe po cephfs-httpd Name: cephfs-httpd Namespace: default Priority: 0 PriorityClassName:  Node: w03/192.168.13.16 Start Time: Sun, 14 Apr 2019 15:16:48 +0900 Labels:  Annotations:  Status: Running IP: 10.233.89.6 Containers:  cephfs-httpd:  Container ID: docker://71e17fb3708a68448fdded4a20c81af63716a1146156dc5a5b4b8145a290f3dc  Image: httpd  Image ID: docker-pullable://httpd@sha256:b4096b744d92d1825a36b3ace61ef4caa2ba57d0307b985cace4621139c285f7  Port:   Host Port:   State: Running  Started: Sun, 14 Apr 2019 15:17:04 +0900  Ready: True  Restart Count: 0  Environment:   Mounts:  /usr/local/apache2/htdocs from cephfs (rw)  /var/run/secrets/kubernetes.io/serviceaccount from default-token-9vmtn (ro) Conditions:  Type Status  Initialized True  Ready True  ContainersReady True  PodScheduled True Volumes:  cephfs:  Type: CephFS (a CephFS mount on the host that shares a pods lifetime)  Monitors: [192.168.13.6:6789 192.168.13.7:6789 192.168.13.8:6789]  Path: /httpd-index  User: admin  SecretFile:  SecretRef: \u0026LocalObjectReference{Name:ceph-secret,}  ReadOnly: false  default-token-9vmtn:  Type: Secret (a volume populated by a Secret)  SecretName: default-token-9vmtn  Optional: false QoS Class: BestEffort Node-Selectors:  Tolerations: node.kubernetes.io/not-ready:NoExecute for 300s  node.kubernetes.io/unreachable:NoExecute for 300s Events:  Type Reason Age From Message  ---- ------ ---- ---- -------  Normal Scheduled 36s default-scheduler Successfully assigned default/cephfs-httpd to w03  Normal Pulling 33s kubelet, w03 pulling image \"httpd\"  Normal Pulled 21s kubelet, w03 Successfully pulled image \"httpd\"  Normal Created 20s kubelet, w03 Created container  Normal Started 20s kubelet, w03 Started container [root@m01 cephfs]#  # Pod 테스트 [root@m01 cephfs]# curl 10.233.89.6 cephfs Index - v1 [root@m01 cephfs]# cephfs는 NFS 와 매우 유사합니다. 그로 인해 NFS와 동일하게 PV에 직접 접근해서 파일 내용을 수정하고, Volume Attach 내용을 확인 할 수 있습니다.\n# Mount 확인 - Pod 이 작동중인 Worker 노드 [root@w03 ~]# mount | grep ceph 192.168.13.6:6789,192.168.13.7:6789,192.168.13.8:6789:/httpd-index on /var/lib/kubelet/pods/e2b5c688-5e7c-11e9-ba95-001a4a160172/volumes/kubernetes.io~cephfs/cephfs type ceph (rw,relatime,name=admin,secret=,acl,wsize=16777216) [root@w03 ~]# [root@w03 ~]# cd /var/lib/kubelet/pods/e2b5c688-5e7c-11e9-ba95-001a4a160172/volumes/kubernetes.io~cephfs/cephfs [root@w03 cephfs]# ls -la 합계 1 drwxr-xr-x 1 root root 1 4월 14 15:05 . drwxr-x--- 3 root root 20 4월 14 15:16 .. -rw-r--r-- 1 root root 18 4월 14 15:05 index.html [root@w03 cephfs]# cat index.html cephfs Index - v1 [root@w03 cephfs]#  # Cephfs 에 접근해서 직접 파일 수정 [root@kube-depoly httpd-index]# pwd /cephfs/httpd-index [root@kube-depoly httpd-index]# vi index.html [root@kube-depoly httpd-index]# cat index.html cephfs Index - v2 [root@kube-depoly httpd-index]#  [root@m01 cephfs]# curl 10.233.89.6 cephfs Index - v2 [root@m01 cephfs]# 지금까지 Static Provisioning 관련 해서 확인 해보았습니다.\n개발자가 PVC를 통해 시스템 관리자에게 PV를 요구하는 과정을 통해 PV를 할당 받고 사용이 가능한데 이 과정을 자동화를 하게 되면 Dynamic Provisioning 이라고 합니다.\nDynamic Provisioning  ceph rbd Dynamic Provisioning는 PVC를 통해 요청하는 PV대해 동적으로 생성을 해주는 제공 방식을 말합니다.\n개발자는 StorageClass 를 통해 필요한 Storage Type을 지정하여 동적으로 할당을 받을 수 있습니다.\n# Secret 생성 - ceph Login을 위한 Key [root@m01 ceph-rbd]# kubectl create -f ceph-admin-secret.yml secret/ceph-admin-secret created [root@m01 ceph-rbd]# kubectl create -f ceph-secret.yml secret/ceph-secret created # StorageClass 생성 [root@m01 ceph-rbd]# cat class.yaml kind: StorageClass apiVersion: storage.k8s.io/v1 metadata:  name: rbd provisioner: ceph.com/rbd parameters:  monitors: 192.168.13.6:6789,192.168.13.7:6789,192.168.13.8:6789  pool: kube  adminId: admin  adminSecretNamespace: kube-system  adminSecretName: ceph-admin-secret  userId: kube  userSecretNamespace: kube-system  userSecretName: ceph-secret  imageFormat: \"2\"  imageFeatures: layering [root@m01 ceph-rbd]# kubectl get sc NAME PROVISIONER AGE rbd ceph.com/rbd 17h [root@m01 ceph-rbd]# StorageClass yaml 파일을 보면 provisioner: ceph.com/rbd 항목이 있습니다.\n 위와 같이 ceph rbd 를 제공해줄 provisioner 가 필요합니다.\nprovisioner 상세 배포 방식은 ceph-rbd-depoly 문서를 참조합니다.\n # Pod  [root@m01 ceph-rbd]# kubectl get po -n kube-system | grep rbd rbd-provisioner-67b4857bcd-7ctlz 1/1 Running 0 17h  # Pod 상세 내역 [root@m01 ceph-rbd]# kubectl describe po rbd-provisioner-67b4857bcd-7ctlz -n kube-system Name: rbd-provisioner-67b4857bcd-7ctlz Namespace: kube-system Priority: 0 PriorityClassName:  Node: w02/192.168.13.15 Start Time: Sun, 14 Apr 2019 21:13:49 +0900 Labels: app=rbd-provisioner  pod-template-hash=67b4857bcd Annotations:  Status: Running IP: 10.233.96.9 Controlled By: ReplicaSet/rbd-provisioner-67b4857bcd Containers:  rbd-provisioner:  Container ID: docker://8f25dca0c870685dc0140294787124e288793243ed6120921d278c701b6c7039  Image: quay.io/external_storage/rbd-provisioner:latest  Image ID: docker-pullable://quay.io/external_storage/rbd-provisioner@sha256:94fd36b8625141b62ff1addfa914d45f7b39619e55891bad0294263ecd2ce09a  Port:   Host Port:   State: Running  Started: Sun, 14 Apr 2019 21:13:54 +0900  Ready: True  Restart Count: 0  Environment:  PROVISIONER_NAME: ceph.com/rbd  Mounts:  /var/run/secrets/kubernetes.io/serviceaccount from rbd-provisioner-token-79f4c (ro) Conditions:  Type Status  Initialized True  Ready True  ContainersReady True  PodScheduled True Volumes:  rbd-provisioner-token-79f4c:  Type: Secret (a volume populated by a Secret)  SecretName: rbd-provisioner-token-79f4c  Optional: false QoS Class: BestEffort Node-Selectors:  Tolerations: node.kubernetes.io/not-ready:NoExecute for 300s  node.kubernetes.io/unreachable:NoExecute for 300s Events:  PVC 를 통해 rbd PV를 요청합니다.\n[root@m01 ceph-rbd]# cat claim.yaml kind: PersistentVolumeClaim apiVersion: v1 metadata:  name: rbd-pvc spec:  accessModes:  - ReadWriteOnce  storageClassName: rbd  resources:  requests:  storage: 2Gi  # PVC 생성 [root@m01 ceph-rbd]# kubectl create -f claim.yaml persistentvolumeclaim/rbd-pvc created  # PVC 확인 [root@m01 ceph-rbd]# kubectl get pvc NAME STATUS VOLUME CAPACITY ACCESS MODES STORAGECLASS AGE claim1 Bound pvc-fe9d8199-5eae-11e9-ba95-001a4a160172 1Gi RWO rbd 17h nginx-vol-pvc Bound nginx-pv 3Gi RWX 17h rbd-pvc Bound pvc-5b571f95-5f43-11e9-ba95-001a4a160172 2Gi RWO rbd 3s  # PV 연결 확인 [root@m01 ceph-rbd]# kubectl get pv NAME CAPACITY ACCESS MODES RECLAIM POLICY STATUS CLAIM STORAGECLASS REASON AGE nginx-pv 3Gi RWX Retain Bound default/nginx-vol-pvc 17h pvc-5b571f95-5f43-11e9-ba95-001a4a160172 2Gi RWO Delete Bound default/rbd-pvc rbd 5s pvc-fe9d8199-5eae-11e9-ba95-001a4a160172 1Gi RWO Delete Bound default/claim1 rbd 17h [root@m01 ceph-rbd]# 위와 같이 PVC 를 요청하자 바로 PV가 ceph rbd 형식으로 생성이 되고 Attach 된 것을 확인 할 수 있었습니다.\n[root@m01 ceph-rbd]# kubectl logs -f rbd-provisioner-67b4857bcd-7ctlz -n kube-system I0414 12:13:54.944458 1 main.go:85] Creating RBD provisioner ceph.com/rbd with identity: ceph.com/rbd I0414 12:13:54.949989 1 leaderelection.go:185] attempting to acquire leader lease kube-system/ceph.com-rbd... I0414 12:13:55.001529 1 leaderelection.go:194] successfully acquired lease kube-system/ceph.com-rbd I0414 12:13:55.001754 1 event.go:221] Event(v1.ObjectReference{Kind:\"Endpoints\", Namespace:\"kube-system\", Name:\"ceph.com-rbd\", UID:\"c5bb0c91-5eae-11e9-b387-001a4a160174\", APIVersion:\"v1\", ResourceVersion:\"919145\", FieldPath:\"\"}): type: 'Normal' reason: 'LeaderElection' rbd-provisioner-67b4857bcd-7ctlz_c5ecdcd7-5eae-11e9-a9ca-6e9439dbce0f became leader I0414 12:13:55.001901 1 controller.go:631] Starting provisioner controller ceph.com/rbd_rbd-provisioner-67b4857bcd-7ctlz_c5ecdcd7-5eae-11e9-a9ca-6e9439dbce0f! I0414 12:13:55.102448 1 controller.go:680] Started provisioner controller ceph.com/rbd_rbd-provisioner-67b4857bcd-7ctlz_c5ecdcd7-5eae-11e9-a9ca-6e9439dbce0f! I0414 12:15:33.439001 1 controller.go:987] provision \"default/claim1\" class \"rbd\": started I0414 12:15:33.455112 1 event.go:221] Event(v1.ObjectReference{Kind:\"PersistentVolumeClaim\", Namespace:\"default\", Name:\"claim1\", UID:\"fe9d8199-5eae-11e9-ba95-001a4a160172\", APIVersion:\"v1\", ResourceVersion:\"919428\", FieldPath:\"\"}): type: 'Normal' reason: 'Provisioning' External provisioner is provisioning volume for claim \"default/claim1\" I0414 12:15:35.895596 1 provision.go:132] successfully created rbd image \"kubernetes-dynamic-pvc-00ab7b91-5eaf-11e9-a9ca-6e9439dbce0f\" I0414 12:15:35.895798 1 controller.go:1087] provision \"default/claim1\" class \"rbd\": volume \"pvc-fe9d8199-5eae-11e9-ba95-001a4a160172\" provisioned I0414 12:15:35.895924 1 controller.go:1101] provision \"default/claim1\" class \"rbd\": trying to save persistentvvolume \"pvc-fe9d8199-5eae-11e9-ba95-001a4a160172\" I0414 12:15:35.934205 1 controller.go:1108] provision \"default/claim1\" class \"rbd\": persistentvolume \"pvc-fe9d8199-5eae-11e9-ba95-001a4a160172\" saved I0414 12:15:35.934420 1 controller.go:1149] provision \"default/claim1\" class \"rbd\": succeeded I0414 12:15:35.935026 1 event.go:221] Event(v1.ObjectReference{Kind:\"PersistentVolumeClaim\", Namespace:\"default\", Name:\"claim1\", UID:\"fe9d8199-5eae-11e9-ba95-001a4a160172\", APIVersion:\"v1\", ResourceVersion:\"919428\", FieldPath:\"\"}): type: 'Normal' reason: 'ProvisioningSucceeded' Successfully provisioned volume pvc-fe9d8199-5eae-11e9-ba95-001a4a160172 I0415 05:57:32.016818 1 controller.go:987] provision \"default/rbd-pvc\" class \"rbd\": started I0415 05:57:32.037901 1 event.go:221] Event(v1.ObjectReference{Kind:\"PersistentVolumeClaim\", Namespace:\"default\", Name:\"rbd-pvc\", UID:\"5b571f95-5f43-11e9-ba95-001a4a160172\", APIVersion:\"v1\", ResourceVersion:\"1081791\", FieldPath:\"\"}): type: 'Normal' reason: 'Provisioning' External provisioner is provisioning volume for claim \"default/rbd-pvc\" I0415 05:57:33.772819 1 provision.go:132] successfully created rbd image \"kubernetes-dynamic-pvc-5be57bb6-5f43-11e9-a9ca-6e9439dbce0f\" I0415 05:57:33.773007 1 controller.go:1087] provision \"default/rbd-pvc\" class \"rbd\": volume \"pvc-5b571f95-5f43-11e9-ba95-001a4a160172\" provisioned I0415 05:57:33.773112 1 controller.go:1101] provision \"default/rbd-pvc\" class \"rbd\": trying to save persistentvvolume \"pvc-5b571f95-5f43-11e9-ba95-001a4a160172\" I0415 05:57:33.793499 1 controller.go:1108] provision \"default/rbd-pvc\" class \"rbd\": persistentvolume \"pvc-5b571f95-5f43-11e9-ba95-001a4a160172\" saved I0415 05:57:33.793633 1 controller.go:1149] provision \"default/rbd-pvc\" class \"rbd\": succeeded I0415 05:57:33.793801 1 controller.go:987] provision \"default/rbd-pvc\" class \"rbd\": started I0415 05:57:33.794971 1 event.go:221] Event(v1.ObjectReference{Kind:\"PersistentVolumeClaim\", Namespace:\"default\", Name:\"rbd-pvc\", UID:\"5b571f95-5f43-11e9-ba95-001a4a160172\", APIVersion:\"v1\", ResourceVersion:\"1081791\", FieldPath:\"\"}): type: 'Normal' reason: 'ProvisioningSucceeded' Successfully provisioned volume pvc-5b571f95-5f43-11e9-ba95-001a4a160172 I0415 05:57:33.826515 1 controller.go:996] provision \"default/rbd-pvc\" class \"rbd\": persistentvolume \"pvc-5b571f95-5f43-11e9-ba95-001a4a160172\" already exists, skipping  참조: rbd-provisioner docker log  Pod 에 PVC를 yaml 추가하여 Pod 생성 할때, PV를 요청하고 StorageClass 를 이용해서 동적으로 Volume을 할당 받았습니다.\n아래는 Pod 에 PVC를 추가한 yaml 구문 Template 입니다.\n[root@m01 ceph-rbd]# cat test-pod.yaml kind: Pod apiVersion: v1 metadata:  name: test-pod spec:  containers:  - name: test-pod  image: gcr.io/google_containers/busybox:1.24  command:  - \"/bin/sh\"  args:  - \"-c\"  - \"touch /mnt/SUCCESS \u0026\u0026 exit 0 || exit 1\"  volumeMounts:  - name: pvc  mountPath: \"/mnt\"  restartPolicy: \"Never\"  volumes:  - name: pvc  persistentVolumeClaim:  claimName: claim1 지금까지 포스팅에서 소개된 Volume 은 Kubernetes 에서 제공되는 일부 입니다.\n다양한 Volume 을 제공하고 있으며, 상세 내용은 첨부된 문서 참고하시고 운영하시는 환경에 맞게 사용하면 됩니다.\n감사합니다.\n참고 문서  - ceph rbd 관련\n RBD Volume Provisioner for Kubernetes 1.5+ RBD Volume Provisioner On Kubernetes Depolyment Example Ceph rbd  - Kubernetes 문서\n PV 관련 Types of Volumes PV Access Mode 관련 PV Reclaim Policy Example PVC  - Example yaml\n chhanz Github  ",
+  "wordCount" : "2010",
+  "inLanguage": "en",
+  "datePublished": "2019-04-15T00:00:00Z",
+  "dateModified": "2019-04-15T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "chhanz"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://chhanz88.github.io/post/2019-04-15-kubernetes-chapter-2-network-volume/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "chhanz \n기술 블로그\n",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://chhanz88.github.io/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://chhanz88.github.io" accesskey="h" title="chhanz 
+기술 블로그
+ (Alt + H)">chhanz 
+기술 블로그
+</a>
+            <span class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </span>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title">
+      [Kubernetes] Kubernetes Volume #2
+    </h1>
+    <div class="post-description">
+      Network Volume - nfs / cephfs / ceph rbd
+    </div>
+    <div class="post-meta"><span title='2019-04-15 00:00:00 +0000 UTC'>April 15, 2019</span>&nbsp;·&nbsp;chhanz
+
+</div>
+  </header> 
+  <div class="post-content"><hr>
+<p>이번 포스팅은 Kubernetes Korea Group의 Kubernetes Architecture Study 모임에서 스터디 후, 발표된 내용입니다.<br>
+Link : <a href="https://github.com/grepsean/k8skr-study-architecture">k8skr-study-architecture Github</a></p>
+<hr>
+<h1 id="kubernetes-volume-2">Kubernetes Volume #2<a hidden class="anchor" aria-hidden="true" href="#kubernetes-volume-2">#</a></h1>
+<hr>
+<p>저번 포스팅 <a href="https://chhanz.github.io/kubernetes/2019/04/12/kubernetes-chapter-1-volume/">Kubernetes Volume #1</a> 에서는 Local Volume 에 관련된 emptyDir / hostPath / gitRepo 에 대해 설명드렸습니다.</p>
+<p>이어서 이번 포스팅에서는 Network Volume 으로 사용될 nfs / cephfs / ceph rbd 를 예제와 함께 알아보도록 하겠습니다.</p>
+<h1 id="persistent-volume-와-persistent-volume-claim">Persistent Volume 와 Persistent Volume Claim<a hidden class="anchor" aria-hidden="true" href="#persistent-volume-와-persistent-volume-claim">#</a></h1>
+<hr>
+<p>Persistent Volume 와 Persistent VolumeClaim 가 있는데,</p>
+<blockquote>
+<p><strong>Persistent Volume</strong>(이하 PV) 는 Kubernetes 에서 관리되는 저장소로 Pod 과는 다른 수명 주기로 관리됩니다.<br>
+Pod 이 재실행 되더라도, PV의 데이터는 정책에 따라 <strong>유지/삭제</strong>가 됩니다.</p>
+</blockquote>
+<blockquote>
+<p><strong>Persistent Volume Claim</strong>(이하 PVC) 는 PV를 추상화하여 개발자가 손쉽게 PV를 사용 가능하게 만들어주는 기능입니다.<br>
+개발자는 사용에 필요한 Volume의 크기, Volume의 정책을 선택하고 요청만 하면 됩니다.<br>
+운영자는 개발자의 요청에 맞게 PV 를 생성하게 되고, PVC는 해당 PV를 가져가게 됩니다.</p>
+</blockquote>
+<p><img loading="lazy" src="/assets/images/post/2019-04-15-kubernetes-volume/image1.png" alt=""  />
+</p>
+<p>이와 같은 방식을 <strong>Static Provisioning</strong> 이라 합니다.<br>
+예제를 통해 Static Provisioning을 확인 해보겠습니다.</p>
+<h1 id="static-provisioning"><strong>Static Provisioning</strong><a hidden class="anchor" aria-hidden="true" href="#static-provisioning">#</a></h1>
+<hr>
+<h2 id="nfs"><strong>NFS</strong><a hidden class="anchor" aria-hidden="true" href="#nfs">#</a></h2>
+<p>NFS 서버를 PV로 사용하는 방식입니다.<br>
+예제에 활용될 yaml 파일 내용은 아래와 같습니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>[<span style="color:#ae81ff">root@m01 pod-example]# cat nfs-pod.yml</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Pod</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">nfs-nginx</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">containers</span>:
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">nginx</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">nginx</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">volumeMounts</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">nfsvol</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">mountPath</span>: <span style="color:#ae81ff">/usr/share/nginx/html</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">volumes</span>:
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">name </span>: <span style="color:#ae81ff">nfsvol</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">nfs</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">path</span>: <span style="color:#ae81ff">/data/nfs-ngnix</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">server</span>: <span style="color:#ae81ff">192.168.13.10</span>
+</span></span></code></pre></div><p>위 yaml 파일을 이용해 Pod 을 생성하면</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@m01 pod-example<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl describe po nfs-nginx</span>
+</span></span><span style="display:flex;"><span>Name:               nfs-nginx
+</span></span><span style="display:flex;"><span>Namespace:          default
+</span></span><span style="display:flex;"><span>Priority:           <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>PriorityClassName:  &lt;none&gt;
+</span></span><span style="display:flex;"><span>Node:               w03/192.168.13.16
+</span></span><span style="display:flex;"><span>Start Time:         Sun, <span style="color:#ae81ff">14</span> Apr <span style="color:#ae81ff">2019</span> 13:44:52 +0900
+</span></span><span style="display:flex;"><span>Labels:             &lt;none&gt;
+</span></span><span style="display:flex;"><span>Annotations:        &lt;none&gt;
+</span></span><span style="display:flex;"><span>Status:             Running
+</span></span><span style="display:flex;"><span>IP:                 10.233.89.5
+</span></span><span style="display:flex;"><span>Containers:
+</span></span><span style="display:flex;"><span>  nginx:
+</span></span><span style="display:flex;"><span>    Container ID:   docker://20fa842803535803e1c0c48c204cffe1d464f9f96e3fcf4d7eed11c0bb8aeed0
+</span></span><span style="display:flex;"><span>    Image:          nginx
+</span></span><span style="display:flex;"><span>    Image ID:       docker-pullable://nginx@sha256:50174b19828157e94f8273e3991026dc7854ec7dd2bbb33e7d3bd91f0a4b333d
+</span></span><span style="display:flex;"><span>    Port:           &lt;none&gt;
+</span></span><span style="display:flex;"><span>    Host Port:      &lt;none&gt;
+</span></span><span style="display:flex;"><span>    State:          Running
+</span></span><span style="display:flex;"><span>      Started:      Sun, <span style="color:#ae81ff">14</span> Apr <span style="color:#ae81ff">2019</span> 13:45:13 +0900
+</span></span><span style="display:flex;"><span>    Ready:          True
+</span></span><span style="display:flex;"><span>    Restart Count:  <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    Environment:    &lt;none&gt;
+</span></span><span style="display:flex;"><span>    Mounts:
+</span></span><span style="display:flex;"><span>      /usr/share/nginx/html from nfsvol <span style="color:#f92672">(</span>rw<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>      /var/run/secrets/kubernetes.io/serviceaccount from default-token-9vmtn <span style="color:#f92672">(</span>ro<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Conditions:
+</span></span><span style="display:flex;"><span>  Type              Status
+</span></span><span style="display:flex;"><span>  Initialized       True
+</span></span><span style="display:flex;"><span>  Ready             True
+</span></span><span style="display:flex;"><span>  ContainersReady   True
+</span></span><span style="display:flex;"><span>  PodScheduled      True
+</span></span><span style="display:flex;"><span>Volumes:
+</span></span><span style="display:flex;"><span>  nfsvol:
+</span></span><span style="display:flex;"><span>    Type:      NFS <span style="color:#f92672">(</span>an NFS mount that lasts the lifetime of a pod<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>    Server:    192.168.13.10
+</span></span><span style="display:flex;"><span>    Path:      /data/nfs-ngnix
+</span></span><span style="display:flex;"><span>    ReadOnly:  false
+</span></span><span style="display:flex;"><span>  default-token-9vmtn:
+</span></span><span style="display:flex;"><span>    Type:        Secret <span style="color:#f92672">(</span>a volume populated by a Secret<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>    SecretName:  default-token-9vmtn
+</span></span><span style="display:flex;"><span>    Optional:    false
+</span></span><span style="display:flex;"><span>QoS Class:       BestEffort
+</span></span><span style="display:flex;"><span>Node-Selectors:  &lt;none&gt;
+</span></span><span style="display:flex;"><span>Tolerations:     node.kubernetes.io/not-ready:NoExecute <span style="color:#66d9ef">for</span> 300s
+</span></span><span style="display:flex;"><span>                 node.kubernetes.io/unreachable:NoExecute <span style="color:#66d9ef">for</span> 300s
+</span></span><span style="display:flex;"><span>Events:
+</span></span><span style="display:flex;"><span>  Type    Reason     Age   From               Message
+</span></span><span style="display:flex;"><span>  ----    ------     ----  ----               -------
+</span></span><span style="display:flex;"><span>  Normal  Scheduled  50s   default-scheduler  Successfully assigned default/nfs-nginx to w03
+</span></span><span style="display:flex;"><span>  Normal  Pulling    46s   kubelet, w03       pulling image <span style="color:#e6db74">&#34;nginx&#34;</span>
+</span></span><span style="display:flex;"><span>  Normal  Pulled     28s   kubelet, w03       Successfully pulled image <span style="color:#e6db74">&#34;nginx&#34;</span>
+</span></span><span style="display:flex;"><span>  Normal  Created    28s   kubelet, w03       Created container
+</span></span><span style="display:flex;"><span>  Normal  Started    28s   kubelet, w03       Started container
+</span></span></code></pre></div><p>nfs-nginx 라는 Pod 이 생성이 되고 위와 같이 <strong>nfsvol</strong> 이라는 Volume 이 Attach 된 것을 확인 할 수 있습니다.<br>
+nginx 서비스가 연결된 Volume 을 통해 서비스가 되는지 확인해봅니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@m01 pod-example<span style="color:#f92672">]</span><span style="color:#75715e"># curl 10.233.89.5</span>
+</span></span><span style="display:flex;"><span>&lt;html&gt;
+</span></span><span style="display:flex;"><span>&lt;body&gt;
+</span></span><span style="display:flex;"><span>&lt;p&gt;NFS Index-v1&lt;/p&gt;
+</span></span><span style="display:flex;"><span>&lt;/body&gt;
+</span></span><span style="display:flex;"><span>&lt;/html&gt;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@m01 pod-example<span style="color:#f92672">]</span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Pod 내부에 접근해서 확인</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@m01 pod-example<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl exec -ti nfs-nginx /bin/bash</span>
+</span></span><span style="display:flex;"><span>root@nfs-nginx:/#
+</span></span><span style="display:flex;"><span>root@nfs-nginx:/# cd /usr/share/nginx/html/
+</span></span><span style="display:flex;"><span>root@nfs-nginx:/usr/share/nginx/html# cat index.html
+</span></span><span style="display:flex;"><span>&lt;html&gt;
+</span></span><span style="display:flex;"><span>&lt;body&gt;
+</span></span><span style="display:flex;"><span>&lt;p&gt;NFS Index-v1&lt;/p&gt;
+</span></span><span style="display:flex;"><span>&lt;/body&gt;
+</span></span><span style="display:flex;"><span>&lt;/html&gt;
+</span></span><span style="display:flex;"><span>root@nfs-nginx:/usr/share/nginx/html#
+</span></span></code></pre></div><p><strong>NFS Index-v1</strong> 라는 index.html 을 가지고 있는 Volume 입니다.<br>
+NFS 서버에 직접 접근해서 index.html 파일을 수정해보겠습니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@kube-depoly nfs-ngnix<span style="color:#f92672">]</span><span style="color:#75715e"># pwd</span>
+</span></span><span style="display:flex;"><span>/data/nfs-ngnix
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@kube-depoly nfs-ngnix<span style="color:#f92672">]</span><span style="color:#75715e"># cat index.html</span>
+</span></span><span style="display:flex;"><span>&lt;html&gt;
+</span></span><span style="display:flex;"><span>&lt;body&gt;
+</span></span><span style="display:flex;"><span>&lt;p&gt;NFS Index-v1&lt;/p&gt;
+</span></span><span style="display:flex;"><span>&lt;/body&gt;
+</span></span><span style="display:flex;"><span>&lt;/html&gt;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@kube-depoly nfs-ngnix<span style="color:#f92672">]</span><span style="color:#75715e"># vi index.html        // index.html 수정</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@kube-depoly nfs-ngnix<span style="color:#f92672">]</span><span style="color:#75715e"># cat index.html</span>
+</span></span><span style="display:flex;"><span>&lt;html&gt;
+</span></span><span style="display:flex;"><span>&lt;body&gt;
+</span></span><span style="display:flex;"><span>&lt;p&gt;NFS Index-v2&lt;/p&gt;
+</span></span><span style="display:flex;"><span>&lt;/body&gt;
+</span></span><span style="display:flex;"><span>&lt;/html&gt;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@kube-depoly nfs-ngnix<span style="color:#f92672">]</span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 적용 확인</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@m01 pod-example<span style="color:#f92672">]</span><span style="color:#75715e"># curl 10.233.89.5</span>
+</span></span><span style="display:flex;"><span>&lt;html&gt;
+</span></span><span style="display:flex;"><span>&lt;body&gt;
+</span></span><span style="display:flex;"><span>&lt;p&gt;NFS Index-v2&lt;/p&gt;
+</span></span><span style="display:flex;"><span>&lt;/body&gt;
+</span></span><span style="display:flex;"><span>&lt;/html&gt;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@m01 pod-example<span style="color:#f92672">]</span><span style="color:#75715e">#</span>
+</span></span></code></pre></div><p>이와 같이 Pod 에 NFS 서버가 연결 되어 있는 것을 확인 할 수 있었습니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># NFS 로 Volume Attach 되어 있음</span>
+</span></span><span style="display:flex;"><span>root@nfs-nginx:/usr/share/nginx/html# mount | grep nfs
+</span></span><span style="display:flex;"><span>192.168.13.10:/data/nfs-ngnix on /usr/share/nginx/html type nfs4 <span style="color:#f92672">(</span>rw,relatime,vers<span style="color:#f92672">=</span>4.1,rsize<span style="color:#f92672">=</span>262144,wsize<span style="color:#f92672">=</span>262144,namlen<span style="color:#f92672">=</span>255,hard,proto<span style="color:#f92672">=</span>tcp,timeo<span style="color:#f92672">=</span>600,retrans<span style="color:#f92672">=</span>2,sec<span style="color:#f92672">=</span>sys,clientaddr<span style="color:#f92672">=</span>192.168.13.15,local_lock<span style="color:#f92672">=</span>none,addr<span style="color:#f92672">=</span>192.168.13.10<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>root@nfs-nginx:/usr/share/nginx/html#
+</span></span></code></pre></div><h2 id="cephfs"><strong>cephfs</strong><a hidden class="anchor" aria-hidden="true" href="#cephfs">#</a></h2>
+<p>Software Defined Storage 인 ceph 를 이용하는 방식입니다.</p>
+<blockquote>
+<p>Worker 노드에서 cephfs 를 사용하기 위해 ceph-common 패키지를 설치합니다.</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># yum -y install epel-release</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># rpm -Uvh https://download.ceph.com/rpm-luminous/el7/noarch/ceph-release-1-0.el7.noarch.rpm</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># yum -y install ceph-common</span>
+</span></span></code></pre></div><p>cephfs 를 사용하기 위해서는 Key 가 필요로 한데, 아래와 같은 방식으로 Key 값을 수집하고 Kubernete Secret 에 등록합니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@s01 yum.repos.d<span style="color:#f92672">]</span><span style="color:#75715e"># ceph auth get client.admin</span>
+</span></span><span style="display:flex;"><span>exported keyring <span style="color:#66d9ef">for</span> client.admin
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>client.admin<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>    key <span style="color:#f92672">=</span> AQC6s6Vc83jwKBAAtckE6yz3eTM9lWwK60QNYw<span style="color:#f92672">==</span>
+</span></span><span style="display:flex;"><span>    caps mds <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;allow *&#34;</span>
+</span></span><span style="display:flex;"><span>    caps mgr <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;allow *&#34;</span>
+</span></span><span style="display:flex;"><span>    caps mon <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;allow *&#34;</span>
+</span></span><span style="display:flex;"><span>    caps osd <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;allow *&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@s01 yum.repos.d<span style="color:#f92672">]</span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@s01 ceph<span style="color:#f92672">]</span><span style="color:#75715e"># ceph-authtool -p ceph.client.admin.keyring</span>
+</span></span><span style="display:flex;"><span>AQC6s6Vc83jwKBAAtckE6yz3eTM9lWwK60QNYw<span style="color:#f92672">==</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@s01 ceph<span style="color:#f92672">]</span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Secret 생성</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@m01 cephfs<span style="color:#f92672">]</span><span style="color:#75715e"># cat ceph-secret.yaml</span>
+</span></span><span style="display:flex;"><span>apiVersion: v1
+</span></span><span style="display:flex;"><span>kind: Secret
+</span></span><span style="display:flex;"><span>metadata:
+</span></span><span style="display:flex;"><span>  name: ceph-secret
+</span></span><span style="display:flex;"><span>data:
+</span></span><span style="display:flex;"><span>  key: QVFDNnM2VmM4M2p3S0JBQXRja0U2eXozZVRNOWxXd0s2MFFOWXc9PQ<span style="color:#f92672">==</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@m01 cephfs<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl create -f ceph-secret.yaml</span>
+</span></span><span style="display:flex;"><span>secret/ceph-secret created
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@m01 cephfs<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl get secret ceph-secret</span>
+</span></span><span style="display:flex;"><span>NAME          TYPE     DATA   AGE
+</span></span><span style="display:flex;"><span>ceph-secret   Opaque   <span style="color:#ae81ff">1</span>      23s
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@m01 cephfs<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl get secret ceph-secret -o yaml</span>
+</span></span><span style="display:flex;"><span>apiVersion: v1
+</span></span><span style="display:flex;"><span>data:
+</span></span><span style="display:flex;"><span>  key: QVFDNnM2VmM4M2p3S0JBQXRja0U2eXozZVRNOWxXd0s2MFFOWXc9PQ<span style="color:#f92672">==</span>
+</span></span><span style="display:flex;"><span>kind: Secret
+</span></span><span style="display:flex;"><span>metadata:
+</span></span><span style="display:flex;"><span>  creationTimestamp: <span style="color:#e6db74">&#34;2019-04-14T06:13:44Z&#34;</span>
+</span></span><span style="display:flex;"><span>  name: ceph-secret
+</span></span><span style="display:flex;"><span>  namespace: default
+</span></span><span style="display:flex;"><span>  resourceVersion: <span style="color:#e6db74">&#34;873772&#34;</span>
+</span></span><span style="display:flex;"><span>  selfLink: /api/v1/namespaces/default/secrets/ceph-secret
+</span></span><span style="display:flex;"><span>  uid: 7515ad43-5e7c-11e9-ba95-001a4a160172
+</span></span><span style="display:flex;"><span>type: Opaque
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@m01 cephfs<span style="color:#f92672">]</span><span style="color:#75715e">#</span>
+</span></span></code></pre></div><p>Pod 에 cephfs Volume 을 연결합니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>[<span style="color:#ae81ff">root@m01 cephfs]# cat cephfs-with-secret.yaml</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Pod</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">cephfs-httpd</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">containers</span>:
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">cephfs-httpd</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">httpd</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">volumeMounts</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">mountPath</span>: <span style="color:#ae81ff">/usr/local/apache2/htdocs</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">name</span>: <span style="color:#ae81ff">cephfs</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">volumes</span>:
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">cephfs</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">cephfs</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">monitors</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">192.168.13.6</span>:<span style="color:#ae81ff">6789</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">192.168.13.7</span>:<span style="color:#ae81ff">6789</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">192.168.13.8</span>:<span style="color:#ae81ff">6789</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">user</span>: <span style="color:#ae81ff">admin</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">path</span>: <span style="color:#ae81ff">/httpd-index</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">secretRef</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">name</span>: <span style="color:#ae81ff">ceph-secret</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">readOnly</span>: <span style="color:#66d9ef">false</span>
+</span></span></code></pre></div><p>cephfs 의 /httpd-index 경로에는 index.html 이 존재합니다.<br>
+Pod 을 생성합니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@m01 cephfs<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl create -f cephfs-with-secret.yaml</span>
+</span></span><span style="display:flex;"><span>pod/cephfs-httpd created
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@m01 cephfs<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl get po</span>
+</span></span><span style="display:flex;"><span>NAME                              READY   STATUS    RESTARTS   AGE
+</span></span><span style="display:flex;"><span>cephfs-httpd                      1/1     Running   <span style="color:#ae81ff">0</span>          24s
+</span></span><span style="display:flex;"><span>load-generator-557649ddcd-jq987   1/1     Running   <span style="color:#ae81ff">1</span>          4d20h
+</span></span><span style="display:flex;"><span>php-apache-9bd5c887f-p6lrq        1/1     Running   <span style="color:#ae81ff">0</span>          4d20h
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@m01 cephfs<span style="color:#f92672">]</span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@m01 cephfs<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl describe po cephfs-httpd</span>
+</span></span><span style="display:flex;"><span>Name:               cephfs-httpd
+</span></span><span style="display:flex;"><span>Namespace:          default
+</span></span><span style="display:flex;"><span>Priority:           <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>PriorityClassName:  &lt;none&gt;
+</span></span><span style="display:flex;"><span>Node:               w03/192.168.13.16
+</span></span><span style="display:flex;"><span>Start Time:         Sun, <span style="color:#ae81ff">14</span> Apr <span style="color:#ae81ff">2019</span> 15:16:48 +0900
+</span></span><span style="display:flex;"><span>Labels:             &lt;none&gt;
+</span></span><span style="display:flex;"><span>Annotations:        &lt;none&gt;
+</span></span><span style="display:flex;"><span>Status:             Running
+</span></span><span style="display:flex;"><span>IP:                 10.233.89.6
+</span></span><span style="display:flex;"><span>Containers:
+</span></span><span style="display:flex;"><span>  cephfs-httpd:
+</span></span><span style="display:flex;"><span>    Container ID:   docker://71e17fb3708a68448fdded4a20c81af63716a1146156dc5a5b4b8145a290f3dc
+</span></span><span style="display:flex;"><span>    Image:          httpd
+</span></span><span style="display:flex;"><span>    Image ID:       docker-pullable://httpd@sha256:b4096b744d92d1825a36b3ace61ef4caa2ba57d0307b985cace4621139c285f7
+</span></span><span style="display:flex;"><span>    Port:           &lt;none&gt;
+</span></span><span style="display:flex;"><span>    Host Port:      &lt;none&gt;
+</span></span><span style="display:flex;"><span>    State:          Running
+</span></span><span style="display:flex;"><span>      Started:      Sun, <span style="color:#ae81ff">14</span> Apr <span style="color:#ae81ff">2019</span> 15:17:04 +0900
+</span></span><span style="display:flex;"><span>    Ready:          True
+</span></span><span style="display:flex;"><span>    Restart Count:  <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    Environment:    &lt;none&gt;
+</span></span><span style="display:flex;"><span>    Mounts:
+</span></span><span style="display:flex;"><span>      /usr/local/apache2/htdocs from cephfs <span style="color:#f92672">(</span>rw<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>      /var/run/secrets/kubernetes.io/serviceaccount from default-token-9vmtn <span style="color:#f92672">(</span>ro<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Conditions:
+</span></span><span style="display:flex;"><span>  Type              Status
+</span></span><span style="display:flex;"><span>  Initialized       True
+</span></span><span style="display:flex;"><span>  Ready             True
+</span></span><span style="display:flex;"><span>  ContainersReady   True
+</span></span><span style="display:flex;"><span>  PodScheduled      True
+</span></span><span style="display:flex;"><span>Volumes:
+</span></span><span style="display:flex;"><span>  cephfs:
+</span></span><span style="display:flex;"><span>    Type:        CephFS <span style="color:#f92672">(</span>a CephFS mount on the host that shares a pods lifetime<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>    Monitors:    <span style="color:#f92672">[</span>192.168.13.6:6789 192.168.13.7:6789 192.168.13.8:6789<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>    Path:        /httpd-index
+</span></span><span style="display:flex;"><span>    User:        admin
+</span></span><span style="display:flex;"><span>    SecretFile:
+</span></span><span style="display:flex;"><span>    SecretRef:   &amp;LocalObjectReference<span style="color:#f92672">{</span>Name:ceph-secret,<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    ReadOnly:    false
+</span></span><span style="display:flex;"><span>  default-token-9vmtn:
+</span></span><span style="display:flex;"><span>    Type:        Secret <span style="color:#f92672">(</span>a volume populated by a Secret<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>    SecretName:  default-token-9vmtn
+</span></span><span style="display:flex;"><span>    Optional:    false
+</span></span><span style="display:flex;"><span>QoS Class:       BestEffort
+</span></span><span style="display:flex;"><span>Node-Selectors:  &lt;none&gt;
+</span></span><span style="display:flex;"><span>Tolerations:     node.kubernetes.io/not-ready:NoExecute <span style="color:#66d9ef">for</span> 300s
+</span></span><span style="display:flex;"><span>                 node.kubernetes.io/unreachable:NoExecute <span style="color:#66d9ef">for</span> 300s
+</span></span><span style="display:flex;"><span>Events:
+</span></span><span style="display:flex;"><span>  Type    Reason     Age   From               Message
+</span></span><span style="display:flex;"><span>  ----    ------     ----  ----               -------
+</span></span><span style="display:flex;"><span>  Normal  Scheduled  36s   default-scheduler  Successfully assigned default/cephfs-httpd to w03
+</span></span><span style="display:flex;"><span>  Normal  Pulling    33s   kubelet, w03       pulling image <span style="color:#e6db74">&#34;httpd&#34;</span>
+</span></span><span style="display:flex;"><span>  Normal  Pulled     21s   kubelet, w03       Successfully pulled image <span style="color:#e6db74">&#34;httpd&#34;</span>
+</span></span><span style="display:flex;"><span>  Normal  Created    20s   kubelet, w03       Created container
+</span></span><span style="display:flex;"><span>  Normal  Started    20s   kubelet, w03       Started container
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@m01 cephfs<span style="color:#f92672">]</span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Pod 테스트</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@m01 cephfs<span style="color:#f92672">]</span><span style="color:#75715e"># curl 10.233.89.6</span>
+</span></span><span style="display:flex;"><span>cephfs Index - v1
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@m01 cephfs<span style="color:#f92672">]</span><span style="color:#75715e">#</span>
+</span></span></code></pre></div><p>cephfs는 NFS 와 매우 유사합니다. 그로 인해 NFS와 동일하게 PV에 직접 접근해서 파일 내용을 수정하고, Volume Attach 내용을 확인 할 수 있습니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># Mount 확인 - Pod 이 작동중인 Worker 노드</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@w03 ~<span style="color:#f92672">]</span><span style="color:#75715e"># mount | grep ceph</span>
+</span></span><span style="display:flex;"><span>192.168.13.6:6789,192.168.13.7:6789,192.168.13.8:6789:/httpd-index on /var/lib/kubelet/pods/e2b5c688-5e7c-11e9-ba95-001a4a160172/volumes/kubernetes.io~cephfs/cephfs type ceph <span style="color:#f92672">(</span>rw,relatime,name<span style="color:#f92672">=</span>admin,secret<span style="color:#f92672">=</span>&lt;hidden&gt;,acl,wsize<span style="color:#f92672">=</span>16777216<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@w03 ~<span style="color:#f92672">]</span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@w03 ~<span style="color:#f92672">]</span><span style="color:#75715e"># cd /var/lib/kubelet/pods/e2b5c688-5e7c-11e9-ba95-001a4a160172/volumes/kubernetes.io~cephfs/cephfs</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@w03 cephfs<span style="color:#f92672">]</span><span style="color:#75715e"># ls -la</span>
+</span></span><span style="display:flex;"><span>합계 <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>drwxr-xr-x <span style="color:#ae81ff">1</span> root root  <span style="color:#ae81ff">1</span>  4월 <span style="color:#ae81ff">14</span> 15:05 .
+</span></span><span style="display:flex;"><span>drwxr-x--- <span style="color:#ae81ff">3</span> root root <span style="color:#ae81ff">20</span>  4월 <span style="color:#ae81ff">14</span> 15:16 ..
+</span></span><span style="display:flex;"><span>-rw-r--r-- <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">18</span>  4월 <span style="color:#ae81ff">14</span> 15:05 index.html
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@w03 cephfs<span style="color:#f92672">]</span><span style="color:#75715e"># cat index.html</span>
+</span></span><span style="display:flex;"><span>cephfs Index - v1
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@w03 cephfs<span style="color:#f92672">]</span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Cephfs 에 접근해서 직접 파일 수정</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@kube-depoly httpd-index<span style="color:#f92672">]</span><span style="color:#75715e"># pwd</span>
+</span></span><span style="display:flex;"><span>/cephfs/httpd-index
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@kube-depoly httpd-index<span style="color:#f92672">]</span><span style="color:#75715e"># vi index.html</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@kube-depoly httpd-index<span style="color:#f92672">]</span><span style="color:#75715e"># cat index.html</span>
+</span></span><span style="display:flex;"><span>cephfs Index - v2
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@kube-depoly httpd-index<span style="color:#f92672">]</span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@m01 cephfs<span style="color:#f92672">]</span><span style="color:#75715e"># curl 10.233.89.6</span>
+</span></span><span style="display:flex;"><span>cephfs Index - v2
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@m01 cephfs<span style="color:#f92672">]</span><span style="color:#75715e">#</span>
+</span></span></code></pre></div><p>지금까지 Static Provisioning 관련 해서 확인 해보았습니다.</p>
+<p>개발자가 PVC를 통해 시스템 관리자에게 PV를 요구하는 과정을 통해 PV를 할당 받고 사용이 가능한데 이 과정을 자동화를 하게 되면 Dynamic Provisioning 이라고 합니다.</p>
+<h1 id="dynamic-provisioning"><strong>Dynamic Provisioning</strong><a hidden class="anchor" aria-hidden="true" href="#dynamic-provisioning">#</a></h1>
+<hr>
+<h2 id="ceph-rbd"><strong>ceph rbd</strong><a hidden class="anchor" aria-hidden="true" href="#ceph-rbd">#</a></h2>
+<p>Dynamic Provisioning는 PVC를 통해 요청하는 PV대해 동적으로 생성을 해주는 제공 방식을 말합니다.<br>
+개발자는 StorageClass 를 통해 필요한 Storage Type을 지정하여 동적으로 할당을 받을 수 있습니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># Secret 생성 - ceph Login을 위한 Key</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@m01 ceph-rbd<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl create -f ceph-admin-secret.yml</span>
+</span></span><span style="display:flex;"><span>secret/ceph-admin-secret created
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@m01 ceph-rbd<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl create -f ceph-secret.yml</span>
+</span></span><span style="display:flex;"><span>secret/ceph-secret created
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#75715e"># StorageClass 생성</span>
+</span></span><span style="display:flex;"><span>[<span style="color:#ae81ff">root@m01 ceph-rbd]# cat class.yaml</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">StorageClass</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">storage.k8s.io/v1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">rbd</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">provisioner</span>: <span style="color:#ae81ff">ceph.com/rbd</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">parameters</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">monitors</span>: <span style="color:#ae81ff">192.168.13.6</span>:<span style="color:#ae81ff">6789</span>,<span style="color:#ae81ff">192.168.13.7</span>:<span style="color:#ae81ff">6789</span>,<span style="color:#ae81ff">192.168.13.8</span>:<span style="color:#ae81ff">6789</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">pool</span>: <span style="color:#ae81ff">kube</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">adminId</span>: <span style="color:#ae81ff">admin</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">adminSecretNamespace</span>: <span style="color:#ae81ff">kube-system</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">adminSecretName</span>: <span style="color:#ae81ff">ceph-admin-secret</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">userId</span>: <span style="color:#ae81ff">kube</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">userSecretNamespace</span>: <span style="color:#ae81ff">kube-system</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">userSecretName</span>: <span style="color:#ae81ff">ceph-secret</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">imageFormat</span>: <span style="color:#e6db74">&#34;2&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">imageFeatures</span>: <span style="color:#ae81ff">layering</span>
+</span></span><span style="display:flex;"><span>[<span style="color:#ae81ff">root@m01 ceph-rbd]# kubectl get sc</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">NAME   PROVISIONER    AGE</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">rbd    ceph.com/rbd   17h</span>
+</span></span><span style="display:flex;"><span>[<span style="color:#ae81ff">root@m01 ceph-rbd]#</span>
+</span></span></code></pre></div><p>StorageClass yaml 파일을 보면 <strong>provisioner: ceph.com/rbd</strong> 항목이 있습니다.</p>
+<blockquote>
+<p>위와 같이 ceph rbd 를 제공해줄 provisioner 가 필요합니다.<br>
+provisioner 상세 배포 방식은 <a href="https://github.com/kubernetes-incubator/external-storage/blob/master/ceph/rbd/deploy/README.md">ceph-rbd-depoly</a>
+문서를 참조합니다.</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># Pod </span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@m01 ceph-rbd<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl get po -n kube-system | grep rbd</span>
+</span></span><span style="display:flex;"><span>rbd-provisioner-67b4857bcd-7ctlz           1/1     Running   <span style="color:#ae81ff">0</span>          17h
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Pod 상세 내역</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@m01 ceph-rbd<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl describe po rbd-provisioner-67b4857bcd-7ctlz -n kube-system</span>
+</span></span><span style="display:flex;"><span>Name:               rbd-provisioner-67b4857bcd-7ctlz
+</span></span><span style="display:flex;"><span>Namespace:          kube-system
+</span></span><span style="display:flex;"><span>Priority:           <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>PriorityClassName:  &lt;none&gt;
+</span></span><span style="display:flex;"><span>Node:               w02/192.168.13.15
+</span></span><span style="display:flex;"><span>Start Time:         Sun, <span style="color:#ae81ff">14</span> Apr <span style="color:#ae81ff">2019</span> 21:13:49 +0900
+</span></span><span style="display:flex;"><span>Labels:             app<span style="color:#f92672">=</span>rbd-provisioner
+</span></span><span style="display:flex;"><span>                    pod-template-hash<span style="color:#f92672">=</span>67b4857bcd
+</span></span><span style="display:flex;"><span>Annotations:        &lt;none&gt;
+</span></span><span style="display:flex;"><span>Status:             Running
+</span></span><span style="display:flex;"><span>IP:                 10.233.96.9
+</span></span><span style="display:flex;"><span>Controlled By:      ReplicaSet/rbd-provisioner-67b4857bcd
+</span></span><span style="display:flex;"><span>Containers:
+</span></span><span style="display:flex;"><span>  rbd-provisioner:
+</span></span><span style="display:flex;"><span>    Container ID:   docker://8f25dca0c870685dc0140294787124e288793243ed6120921d278c701b6c7039
+</span></span><span style="display:flex;"><span>    Image:          quay.io/external_storage/rbd-provisioner:latest
+</span></span><span style="display:flex;"><span>    Image ID:       docker-pullable://quay.io/external_storage/rbd-provisioner@sha256:94fd36b8625141b62ff1addfa914d45f7b39619e55891bad0294263ecd2ce09a
+</span></span><span style="display:flex;"><span>    Port:           &lt;none&gt;
+</span></span><span style="display:flex;"><span>    Host Port:      &lt;none&gt;
+</span></span><span style="display:flex;"><span>    State:          Running
+</span></span><span style="display:flex;"><span>      Started:      Sun, <span style="color:#ae81ff">14</span> Apr <span style="color:#ae81ff">2019</span> 21:13:54 +0900
+</span></span><span style="display:flex;"><span>    Ready:          True
+</span></span><span style="display:flex;"><span>    Restart Count:  <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    Environment:
+</span></span><span style="display:flex;"><span>      PROVISIONER_NAME:  ceph.com/rbd
+</span></span><span style="display:flex;"><span>    Mounts:
+</span></span><span style="display:flex;"><span>      /var/run/secrets/kubernetes.io/serviceaccount from rbd-provisioner-token-79f4c <span style="color:#f92672">(</span>ro<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Conditions:
+</span></span><span style="display:flex;"><span>  Type              Status
+</span></span><span style="display:flex;"><span>  Initialized       True
+</span></span><span style="display:flex;"><span>  Ready             True
+</span></span><span style="display:flex;"><span>  ContainersReady   True
+</span></span><span style="display:flex;"><span>  PodScheduled      True
+</span></span><span style="display:flex;"><span>Volumes:
+</span></span><span style="display:flex;"><span>  rbd-provisioner-token-79f4c:
+</span></span><span style="display:flex;"><span>    Type:        Secret <span style="color:#f92672">(</span>a volume populated by a Secret<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>    SecretName:  rbd-provisioner-token-79f4c
+</span></span><span style="display:flex;"><span>    Optional:    false
+</span></span><span style="display:flex;"><span>QoS Class:       BestEffort
+</span></span><span style="display:flex;"><span>Node-Selectors:  &lt;none&gt;
+</span></span><span style="display:flex;"><span>Tolerations:     node.kubernetes.io/not-ready:NoExecute <span style="color:#66d9ef">for</span> 300s
+</span></span><span style="display:flex;"><span>                 node.kubernetes.io/unreachable:NoExecute <span style="color:#66d9ef">for</span> 300s
+</span></span><span style="display:flex;"><span>Events:          &lt;none&gt;
+</span></span></code></pre></div><p>PVC 를 통해 rbd PV를 요청합니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>[<span style="color:#ae81ff">root@m01 ceph-rbd]# cat claim.yaml</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">PersistentVolumeClaim</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">rbd-pvc</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">accessModes</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">ReadWriteOnce</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">storageClassName</span>: <span style="color:#ae81ff">rbd</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">resources</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">requests</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">storage</span>: <span style="color:#ae81ff">2Gi </span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># PVC 생성</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@m01 ceph-rbd<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl create -f claim.yaml</span>
+</span></span><span style="display:flex;"><span>persistentvolumeclaim/rbd-pvc created
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># PVC 확인</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@m01 ceph-rbd<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl get pvc</span>
+</span></span><span style="display:flex;"><span>NAME            STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+</span></span><span style="display:flex;"><span>claim1          Bound    pvc-fe9d8199-5eae-11e9-ba95-001a4a160172   1Gi        RWO            rbd            17h
+</span></span><span style="display:flex;"><span>nginx-vol-pvc   Bound    nginx-pv                                   3Gi        RWX                           17h
+</span></span><span style="display:flex;"><span>rbd-pvc         Bound    pvc-5b571f95-5f43-11e9-ba95-001a4a160172   2Gi        RWO            rbd            3s
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># PV 연결 확인</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@m01 ceph-rbd<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl get pv</span>
+</span></span><span style="display:flex;"><span>NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                   STORAGECLASS   REASON   AGE
+</span></span><span style="display:flex;"><span>nginx-pv                                   3Gi        RWX            Retain           Bound    default/nginx-vol-pvc                           17h
+</span></span><span style="display:flex;"><span>pvc-5b571f95-5f43-11e9-ba95-001a4a160172   2Gi        RWO            Delete           Bound    default/rbd-pvc         rbd                     5s
+</span></span><span style="display:flex;"><span>pvc-fe9d8199-5eae-11e9-ba95-001a4a160172   1Gi        RWO            Delete           Bound    default/claim1          rbd                     17h
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@m01 ceph-rbd<span style="color:#f92672">]</span><span style="color:#75715e">#</span>
+</span></span></code></pre></div><p>위와 같이 PVC 를 요청하자 바로 PV가 ceph rbd 형식으로 생성이 되고 Attach 된 것을 확인 할 수 있었습니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@m01 ceph-rbd<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl logs -f rbd-provisioner-67b4857bcd-7ctlz -n kube-system</span>
+</span></span><span style="display:flex;"><span>I0414 12:13:54.944458       <span style="color:#ae81ff">1</span> main.go:85<span style="color:#f92672">]</span> Creating RBD provisioner ceph.com/rbd with identity: ceph.com/rbd
+</span></span><span style="display:flex;"><span>I0414 12:13:54.949989       <span style="color:#ae81ff">1</span> leaderelection.go:185<span style="color:#f92672">]</span> attempting to acquire leader lease  kube-system/ceph.com-rbd...
+</span></span><span style="display:flex;"><span>I0414 12:13:55.001529       <span style="color:#ae81ff">1</span> leaderelection.go:194<span style="color:#f92672">]</span> successfully acquired lease kube-system/ceph.com-rbd
+</span></span><span style="display:flex;"><span>I0414 12:13:55.001754       <span style="color:#ae81ff">1</span> event.go:221<span style="color:#f92672">]</span> Event<span style="color:#f92672">(</span>v1.ObjectReference<span style="color:#f92672">{</span>Kind:<span style="color:#e6db74">&#34;Endpoints&#34;</span>, Namespace:<span style="color:#e6db74">&#34;kube-system&#34;</span>, Name:<span style="color:#e6db74">&#34;ceph.com-rbd&#34;</span>, UID:<span style="color:#e6db74">&#34;c5bb0c91-5eae-11e9-b387-001a4a160174&#34;</span>, APIVersion:<span style="color:#e6db74">&#34;v1&#34;</span>, ResourceVersion:<span style="color:#e6db74">&#34;919145&#34;</span>, FieldPath:<span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">})</span>: type: <span style="color:#e6db74">&#39;Normal&#39;</span> reason: <span style="color:#e6db74">&#39;LeaderElection&#39;</span> rbd-provisioner-67b4857bcd-7ctlz_c5ecdcd7-5eae-11e9-a9ca-6e9439dbce0f became leader
+</span></span><span style="display:flex;"><span>I0414 12:13:55.001901       <span style="color:#ae81ff">1</span> controller.go:631<span style="color:#f92672">]</span> Starting provisioner controller ceph.com/rbd_rbd-provisioner-67b4857bcd-7ctlz_c5ecdcd7-5eae-11e9-a9ca-6e9439dbce0f!
+</span></span><span style="display:flex;"><span>I0414 12:13:55.102448       <span style="color:#ae81ff">1</span> controller.go:680<span style="color:#f92672">]</span> Started provisioner controller ceph.com/rbd_rbd-provisioner-67b4857bcd-7ctlz_c5ecdcd7-5eae-11e9-a9ca-6e9439dbce0f!
+</span></span><span style="display:flex;"><span>I0414 12:15:33.439001       <span style="color:#ae81ff">1</span> controller.go:987<span style="color:#f92672">]</span> provision <span style="color:#e6db74">&#34;default/claim1&#34;</span> class <span style="color:#e6db74">&#34;rbd&#34;</span>: started
+</span></span><span style="display:flex;"><span>I0414 12:15:33.455112       <span style="color:#ae81ff">1</span> event.go:221<span style="color:#f92672">]</span> Event<span style="color:#f92672">(</span>v1.ObjectReference<span style="color:#f92672">{</span>Kind:<span style="color:#e6db74">&#34;PersistentVolumeClaim&#34;</span>, Namespace:<span style="color:#e6db74">&#34;default&#34;</span>, Name:<span style="color:#e6db74">&#34;claim1&#34;</span>, UID:<span style="color:#e6db74">&#34;fe9d8199-5eae-11e9-ba95-001a4a160172&#34;</span>, APIVersion:<span style="color:#e6db74">&#34;v1&#34;</span>, ResourceVersion:<span style="color:#e6db74">&#34;919428&#34;</span>, FieldPath:<span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">})</span>: type: <span style="color:#e6db74">&#39;Normal&#39;</span> reason: <span style="color:#e6db74">&#39;Provisioning&#39;</span> External provisioner is provisioning volume <span style="color:#66d9ef">for</span> claim <span style="color:#e6db74">&#34;default/claim1&#34;</span>
+</span></span><span style="display:flex;"><span>I0414 12:15:35.895596       <span style="color:#ae81ff">1</span> provision.go:132<span style="color:#f92672">]</span> successfully created rbd image <span style="color:#e6db74">&#34;kubernetes-dynamic-pvc-00ab7b91-5eaf-11e9-a9ca-6e9439dbce0f&#34;</span>
+</span></span><span style="display:flex;"><span>I0414 12:15:35.895798       <span style="color:#ae81ff">1</span> controller.go:1087<span style="color:#f92672">]</span> provision <span style="color:#e6db74">&#34;default/claim1&#34;</span> class <span style="color:#e6db74">&#34;rbd&#34;</span>: volume <span style="color:#e6db74">&#34;pvc-fe9d8199-5eae-11e9-ba95-001a4a160172&#34;</span> provisioned
+</span></span><span style="display:flex;"><span>I0414 12:15:35.895924       <span style="color:#ae81ff">1</span> controller.go:1101<span style="color:#f92672">]</span> provision <span style="color:#e6db74">&#34;default/claim1&#34;</span> class <span style="color:#e6db74">&#34;rbd&#34;</span>: trying to save persistentvvolume <span style="color:#e6db74">&#34;pvc-fe9d8199-5eae-11e9-ba95-001a4a160172&#34;</span>
+</span></span><span style="display:flex;"><span>I0414 12:15:35.934205       <span style="color:#ae81ff">1</span> controller.go:1108<span style="color:#f92672">]</span> provision <span style="color:#e6db74">&#34;default/claim1&#34;</span> class <span style="color:#e6db74">&#34;rbd&#34;</span>: persistentvolume <span style="color:#e6db74">&#34;pvc-fe9d8199-5eae-11e9-ba95-001a4a160172&#34;</span> saved
+</span></span><span style="display:flex;"><span>I0414 12:15:35.934420       <span style="color:#ae81ff">1</span> controller.go:1149<span style="color:#f92672">]</span> provision <span style="color:#e6db74">&#34;default/claim1&#34;</span> class <span style="color:#e6db74">&#34;rbd&#34;</span>: succeeded
+</span></span><span style="display:flex;"><span>I0414 12:15:35.935026       <span style="color:#ae81ff">1</span> event.go:221<span style="color:#f92672">]</span> Event<span style="color:#f92672">(</span>v1.ObjectReference<span style="color:#f92672">{</span>Kind:<span style="color:#e6db74">&#34;PersistentVolumeClaim&#34;</span>, Namespace:<span style="color:#e6db74">&#34;default&#34;</span>, Name:<span style="color:#e6db74">&#34;claim1&#34;</span>, UID:<span style="color:#e6db74">&#34;fe9d8199-5eae-11e9-ba95-001a4a160172&#34;</span>, APIVersion:<span style="color:#e6db74">&#34;v1&#34;</span>, ResourceVersion:<span style="color:#e6db74">&#34;919428&#34;</span>, FieldPath:<span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">})</span>: type: <span style="color:#e6db74">&#39;Normal&#39;</span> reason: <span style="color:#e6db74">&#39;ProvisioningSucceeded&#39;</span> Successfully provisioned volume pvc-fe9d8199-5eae-11e9-ba95-001a4a160172
+</span></span><span style="display:flex;"><span>I0415 05:57:32.016818       <span style="color:#ae81ff">1</span> controller.go:987<span style="color:#f92672">]</span> provision <span style="color:#e6db74">&#34;default/rbd-pvc&#34;</span> class <span style="color:#e6db74">&#34;rbd&#34;</span>: started
+</span></span><span style="display:flex;"><span>I0415 05:57:32.037901       <span style="color:#ae81ff">1</span> event.go:221<span style="color:#f92672">]</span> Event<span style="color:#f92672">(</span>v1.ObjectReference<span style="color:#f92672">{</span>Kind:<span style="color:#e6db74">&#34;PersistentVolumeClaim&#34;</span>, Namespace:<span style="color:#e6db74">&#34;default&#34;</span>, Name:<span style="color:#e6db74">&#34;rbd-pvc&#34;</span>, UID:<span style="color:#e6db74">&#34;5b571f95-5f43-11e9-ba95-001a4a160172&#34;</span>, APIVersion:<span style="color:#e6db74">&#34;v1&#34;</span>, ResourceVersion:<span style="color:#e6db74">&#34;1081791&#34;</span>, FieldPath:<span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">})</span>: type: <span style="color:#e6db74">&#39;Normal&#39;</span> reason: <span style="color:#e6db74">&#39;Provisioning&#39;</span> External provisioner is provisioning volume <span style="color:#66d9ef">for</span> claim <span style="color:#e6db74">&#34;default/rbd-pvc&#34;</span>
+</span></span><span style="display:flex;"><span>I0415 05:57:33.772819       <span style="color:#ae81ff">1</span> provision.go:132<span style="color:#f92672">]</span> successfully created rbd image <span style="color:#e6db74">&#34;kubernetes-dynamic-pvc-5be57bb6-5f43-11e9-a9ca-6e9439dbce0f&#34;</span>
+</span></span><span style="display:flex;"><span>I0415 05:57:33.773007       <span style="color:#ae81ff">1</span> controller.go:1087<span style="color:#f92672">]</span> provision <span style="color:#e6db74">&#34;default/rbd-pvc&#34;</span> class <span style="color:#e6db74">&#34;rbd&#34;</span>: volume <span style="color:#e6db74">&#34;pvc-5b571f95-5f43-11e9-ba95-001a4a160172&#34;</span> provisioned
+</span></span><span style="display:flex;"><span>I0415 05:57:33.773112       <span style="color:#ae81ff">1</span> controller.go:1101<span style="color:#f92672">]</span> provision <span style="color:#e6db74">&#34;default/rbd-pvc&#34;</span> class <span style="color:#e6db74">&#34;rbd&#34;</span>: trying to save persistentvvolume <span style="color:#e6db74">&#34;pvc-5b571f95-5f43-11e9-ba95-001a4a160172&#34;</span>
+</span></span><span style="display:flex;"><span>I0415 05:57:33.793499       <span style="color:#ae81ff">1</span> controller.go:1108<span style="color:#f92672">]</span> provision <span style="color:#e6db74">&#34;default/rbd-pvc&#34;</span> class <span style="color:#e6db74">&#34;rbd&#34;</span>: persistentvolume <span style="color:#e6db74">&#34;pvc-5b571f95-5f43-11e9-ba95-001a4a160172&#34;</span> saved
+</span></span><span style="display:flex;"><span>I0415 05:57:33.793633       <span style="color:#ae81ff">1</span> controller.go:1149<span style="color:#f92672">]</span> provision <span style="color:#e6db74">&#34;default/rbd-pvc&#34;</span> class <span style="color:#e6db74">&#34;rbd&#34;</span>: succeeded
+</span></span><span style="display:flex;"><span>I0415 05:57:33.793801       <span style="color:#ae81ff">1</span> controller.go:987<span style="color:#f92672">]</span> provision <span style="color:#e6db74">&#34;default/rbd-pvc&#34;</span> class <span style="color:#e6db74">&#34;rbd&#34;</span>: started
+</span></span><span style="display:flex;"><span>I0415 05:57:33.794971       <span style="color:#ae81ff">1</span> event.go:221<span style="color:#f92672">]</span> Event<span style="color:#f92672">(</span>v1.ObjectReference<span style="color:#f92672">{</span>Kind:<span style="color:#e6db74">&#34;PersistentVolumeClaim&#34;</span>, Namespace:<span style="color:#e6db74">&#34;default&#34;</span>, Name:<span style="color:#e6db74">&#34;rbd-pvc&#34;</span>, UID:<span style="color:#e6db74">&#34;5b571f95-5f43-11e9-ba95-001a4a160172&#34;</span>, APIVersion:<span style="color:#e6db74">&#34;v1&#34;</span>, ResourceVersion:<span style="color:#e6db74">&#34;1081791&#34;</span>, FieldPath:<span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">})</span>: type: <span style="color:#e6db74">&#39;Normal&#39;</span> reason: <span style="color:#e6db74">&#39;ProvisioningSucceeded&#39;</span> Successfully provisioned volume pvc-5b571f95-5f43-11e9-ba95-001a4a160172
+</span></span><span style="display:flex;"><span>I0415 05:57:33.826515       <span style="color:#ae81ff">1</span> controller.go:996<span style="color:#f92672">]</span> provision <span style="color:#e6db74">&#34;default/rbd-pvc&#34;</span> class <span style="color:#e6db74">&#34;rbd&#34;</span>: persistentvolume <span style="color:#e6db74">&#34;pvc-5b571f95-5f43-11e9-ba95-001a4a160172&#34;</span> already exists, skipping
+</span></span></code></pre></div><ul>
+<li>참조: rbd-provisioner docker log</li>
+</ul>
+<p>Pod 에 PVC를 yaml 추가하여 Pod 생성 할때, PV를 요청하고 StorageClass 를 이용해서 동적으로 Volume을 할당 받았습니다.<br>
+아래는 Pod 에 PVC를 추가한 yaml 구문 Template 입니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>[<span style="color:#ae81ff">root@m01 ceph-rbd]# cat test-pod.yaml</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Pod</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">test-pod</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">containers</span>:
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">test-pod</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">gcr.io/google_containers/busybox:1.24</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">command</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#e6db74">&#34;/bin/sh&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">args</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#e6db74">&#34;-c&#34;</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#e6db74">&#34;touch /mnt/SUCCESS &amp;&amp; exit 0 || exit 1&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">volumeMounts</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">pvc</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">mountPath</span>: <span style="color:#e6db74">&#34;/mnt&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">restartPolicy</span>: <span style="color:#e6db74">&#34;Never&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">volumes</span>:
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">pvc</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">persistentVolumeClaim</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">claimName</span>: <span style="color:#ae81ff">claim1</span>
+</span></span></code></pre></div><p>지금까지 포스팅에서 소개된 Volume 은 Kubernetes 에서 제공되는 일부 입니다.<br>
+다양한 Volume 을 제공하고 있으며, 상세 내용은 첨부된 문서 참고하시고 운영하시는 환경에 맞게 사용하면 됩니다.<br>
+감사합니다.</p>
+<h1 id="참고-문서">참고 문서<a hidden class="anchor" aria-hidden="true" href="#참고-문서">#</a></h1>
+<hr>
+<p><strong>- ceph rbd 관련</strong></p>
+<ul>
+<li><a href="https://github.com/kubernetes-incubator/external-storage/tree/master/ceph/rbd">RBD Volume Provisioner for Kubernetes 1.5+</a></li>
+<li><a href="https://github.com/kubernetes-incubator/external-storage/blob/master/ceph/rbd/deploy/README.md">RBD Volume Provisioner On Kubernetes Depolyment</a></li>
+<li><a href="https://docs.openshift.com/container-platform/3.5/install_config/storage_examples/ceph_example.html">Example Ceph rbd</a></li>
+</ul>
+<p><strong>- Kubernetes 문서</strong></p>
+<ul>
+<li><a href="https://kubernetes.io/docs/concepts/storage/persistent-volumes/">PV 관련</a></li>
+<li><a href="https://kubernetes.io/docs/concepts/storage/volumes/#types-of-volumes">Types of Volumes</a></li>
+<li><a href="https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes">PV Access Mode 관련</a></li>
+<li><a href="https://kubernetes.io/docs/concepts/storage/persistent-volumes/#reclaim-policy">PV Reclaim Policy</a></li>
+<li><a href="https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/">Example PVC</a></li>
+</ul>
+<p><strong>- Example yaml</strong></p>
+<ul>
+<li><a href="https://github.com/chhanz/k8s-study-example">chhanz Github</a></li>
+</ul>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://chhanz88.github.io/tags/kubernetes/">kubernetes</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2022 <a href="https://chhanz88.github.io">chhanz 
+기술 블로그
+</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://git.io/hugopapermod" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

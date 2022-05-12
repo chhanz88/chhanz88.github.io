@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>kubernetes on chhanz 
+기술 블로그
+</title>
+    <link>https://chhanz88.github.io/tags/kubernetes/</link>
+    <description>Recent content in kubernetes on chhanz 
+기술 블로그
+</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 01 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://chhanz88.github.io/tags/kubernetes/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[Kubernetes] Kustomize </title>
+      <link>https://chhanz88.github.io/post/2021-12-01-kustomize/</link>
+      <pubDate>Wed, 01 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://chhanz88.github.io/post/2021-12-01-kustomize/</guid>
+      <description>목차  Kustomize 란? Kustomize 설치 Completion 설정 Kustomize 기본  Kustomize build Run kustomize resources 추가 patch prefix/label secretGenerator 이용 overlay 적용   참고 자료  Kustomize 란? Kustomize는 쿠버네티스 구성을 사용자 정의화하는 도구이다. 이는 애플리케이션 구성 파일을 관리하기 위해 다음 기능들을 가진다.
+ 다른 소스에서 리소스 생성 리소스에 대한 교차 편집 필드 설정 리소스 집합을 구성하고 사용자 정의
+(https://kubernetes.io/ko/docs/tasks/manage-kubernetes-objects/kustomization/#kustomize-%EA%B0%9C%EC%9A%94 발췌)  개인적으론 Helm 보다 Kustomize 가 사용하기 좋았다.</description>
+    </item>
+    
+    <item>
+      <title>[Kubernetes] HTTPS ingress 적용 (use prometheus)</title>
+      <link>https://chhanz88.github.io/post/2021-11-08-kube-tls-edge/</link>
+      <pubDate>Mon, 08 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://chhanz88.github.io/post/2021-11-08-kube-tls-edge/</guid>
+      <description>HTTPS ingress 적용 이전에 배포한 kube-prometheus 의 ingress 를 TLS 적용하여 HTTPS 로 서비스 해보도록 하겠습니다.
+TLS 방식 Kubernetes 에서 사용이 가능한 TLS 방식은 아래와 같습니다.
+아래 내용은 OpenShift 기준으로 작성된 내용이지만 이해하기 좋아서 첨부합니다.
+  Clear 방식 (clear to clear) : 일반적인 HTTP 서비스 Edge 방식 (TLS to clear) : client 와 ingress 구간을 TLS 암호화하는 방식 Re-encrypt 방식 (TLS1 to TLS2) : ingress 기점으로 TLS 암호화를 다르게 하는 방식(두번의 TLS 암호화) Pass-Through 방식 (TLS1 to TLS1) : Application 단에서 TLS 암호화 처리하는 방식   TLS 적용 위의 설명된 방식중 Edge 방식을 적용 해보도록 하겠습니다.</description>
+    </item>
+    
+    <item>
+      <title>[Kubernetes] kube-prometheus 배포 (use storageclass)</title>
+      <link>https://chhanz88.github.io/post/2021-09-30-deploy-kube-prometheus/</link>
+      <pubDate>Thu, 30 Sep 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://chhanz88.github.io/post/2021-09-30-deploy-kube-prometheus/</guid>
+      <description>kube-prometheus 배포 Kubernetes cluster 를 모니터링 하기 위해 Prometheus 를 구성하고 사용하려고 한다.
+Prometheus 에는 다양한 배포 방법이 있으나 이번 글에선 kube-prometheus 를 이용하여 Kubernetes Cluster 에 배포 해보도록 한다.
+Kubernetes Cluster 정보 사용된 Kubernetes Cluster 환경은 아래와 같습니다.
+root@node1:~# kubectl get nodes -o wide NAME STATUS ROLES AGE VERSION INTERNAL-IP EXTERNAL-IP OS-IMAGE KERNEL-VERSION CONTAINER-RUNTIME node1 Ready control-plane,master 41d v1.20.7 192.168.200.26 &amp;lt;none&amp;gt; Ubuntu 20.04.2 LTS 5.4.0-80-generic cri-o://1.20.3 node2 Ready control-plane,master 41d v1.</description>
+    </item>
+    
+    <item>
+      <title>[Kubernetes] Update App (Rolling Update / Rollback)</title>
+      <link>https://chhanz88.github.io/post/2020-09-28-update-app/</link>
+      <pubDate>Mon, 28 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://chhanz88.github.io/post/2020-09-28-update-app/</guid>
+      <description> </description>
+    </item>
+    
+    <item>
+      <title>[Kubernetes] Scale App (kubectl scale)</title>
+      <link>https://chhanz88.github.io/post/2020-09-27-scale-app/</link>
+      <pubDate>Sun, 27 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://chhanz88.github.io/post/2020-09-27-scale-app/</guid>
+      <description> </description>
+    </item>
+    
+    <item>
+      <title>[Kubernetes] Expose App (Service 생성)</title>
+      <link>https://chhanz88.github.io/post/2020-09-25-expose-app/</link>
+      <pubDate>Fri, 25 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://chhanz88.github.io/post/2020-09-25-expose-app/</guid>
+      <description> </description>
+    </item>
+    
+    <item>
+      <title>[Kubernetes] App 확인 (Pod 확인)</title>
+      <link>https://chhanz88.github.io/post/2020-09-24-check-the-app/</link>
+      <pubDate>Thu, 24 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://chhanz88.github.io/post/2020-09-24-check-the-app/</guid>
+      <description> </description>
+    </item>
+    
+    <item>
+      <title>[Kubernetes] Node 상태 확인</title>
+      <link>https://chhanz88.github.io/post/2020-09-24-check-the-node/</link>
+      <pubDate>Thu, 24 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://chhanz88.github.io/post/2020-09-24-check-the-node/</guid>
+      <description> </description>
+    </item>
+    
+    <item>
+      <title>[Kubernetes] Deployment 생성</title>
+      <link>https://chhanz88.github.io/post/2020-09-23-create-deployment/</link>
+      <pubDate>Wed, 23 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://chhanz88.github.io/post/2020-09-23-create-deployment/</guid>
+      <description> </description>
+    </item>
+    
+    <item>
+      <title>[Kubernetes] Ansible 으로 k3s 배포하기 (on VMware)</title>
+      <link>https://chhanz88.github.io/post/2020-09-05-fast-k3s-use-ansible/</link>
+      <pubDate>Sat, 05 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://chhanz88.github.io/post/2020-09-05-fast-k3s-use-ansible/</guid>
+      <description> </description>
+    </item>
+    
+    <item>
+      <title>[OpenShift 4.4] CodeReady Workspaces 를 이용하여 통합 개발 환경(IDE) 구현</title>
+      <link>https://chhanz88.github.io/post/2020-07-01-ocp-codeready/</link>
+      <pubDate>Wed, 01 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://chhanz88.github.io/post/2020-07-01-ocp-codeready/</guid>
+      <description> </description>
+    </item>
+    
+    <item>
+      <title>[OpenShift 4.4] Deploying Applications From Template</title>
+      <link>https://chhanz88.github.io/post/2020-06-24-ocp4-template/</link>
+      <pubDate>Wed, 24 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://chhanz88.github.io/post/2020-06-24-ocp4-template/</guid>
+      <description> </description>
+    </item>
+    
+    <item>
+      <title>[OpenShift 4.4] Deploying Applications From Source</title>
+      <link>https://chhanz88.github.io/post/2020-06-22-ocp4-deploy-source/</link>
+      <pubDate>Mon, 22 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://chhanz88.github.io/post/2020-06-22-ocp4-deploy-source/</guid>
+      <description> </description>
+    </item>
+    
+    <item>
+      <title>[OpenShift 4.4] Deploying Applications From Images</title>
+      <link>https://chhanz88.github.io/post/2020-06-18-ocp4-deploy-image/</link>
+      <pubDate>Thu, 18 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://chhanz88.github.io/post/2020-06-18-ocp4-deploy-image/</guid>
+      <description> </description>
+    </item>
+    
+    <item>
+      <title>[Container] Container &amp; Orchestration 교육 자료 </title>
+      <link>https://chhanz88.github.io/post/2020-05-21-container-hands-on/</link>
+      <pubDate>Thu, 21 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://chhanz88.github.io/post/2020-05-21-container-hands-on/</guid>
+      <description> </description>
+    </item>
+    
+    <item>
+      <title>[Kubernetes] IBM Cloud Kubernetes Service 를 Free Tier 로 사용해보자!</title>
+      <link>https://chhanz88.github.io/post/2020-01-27-create-cluster-ibm-kubernetes-service/</link>
+      <pubDate>Mon, 27 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://chhanz88.github.io/post/2020-01-27-create-cluster-ibm-kubernetes-service/</guid>
+      <description> </description>
+    </item>
+    
+    <item>
+      <title>[Kubernetes] CKA(Certified Kubernetes Administrator) 시험 합격 후기</title>
+      <link>https://chhanz88.github.io/post/2019-09-30-cka-exam-review/</link>
+      <pubDate>Mon, 30 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://chhanz88.github.io/post/2019-09-30-cka-exam-review/</guid>
+      <description> </description>
+    </item>
+    
+    <item>
+      <title>[Kubernetes] kubeadm 을 이용한 Kubernetes 설치</title>
+      <link>https://chhanz88.github.io/post/2019-09-04-kubernetes-install-1_15_3/</link>
+      <pubDate>Wed, 04 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://chhanz88.github.io/post/2019-09-04-kubernetes-install-1_15_3/</guid>
+      <description> </description>
+    </item>
+    
+    <item>
+      <title>[Kubernetes] Kubernetes Volume #2</title>
+      <link>https://chhanz88.github.io/post/2019-04-15-kubernetes-chapter-2-network-volume/</link>
+      <pubDate>Mon, 15 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://chhanz88.github.io/post/2019-04-15-kubernetes-chapter-2-network-volume/</guid>
+      <description>Network Volume - nfs / cephfs / ceph rbd</description>
+    </item>
+    
+    <item>
+      <title>[Kubernetes] Kubernetes Volume #1</title>
+      <link>https://chhanz88.github.io/post/2019-04-12-kubernetes-chapter-1-volume/</link>
+      <pubDate>Fri, 12 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://chhanz88.github.io/post/2019-04-12-kubernetes-chapter-1-volume/</guid>
+      <description>emptyDir / hostPath / gitRepo</description>
+    </item>
+    
+    <item>
+      <title>[Kubernetes] Kubernetes HPA 테스트</title>
+      <link>https://chhanz88.github.io/post/2019-04-09-kubernetes-hpa-example/</link>
+      <pubDate>Tue, 09 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://chhanz88.github.io/post/2019-04-09-kubernetes-hpa-example/</guid>
+      <description>Auto-Scale 기능 테스트</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>[Linux] CentOS 7 네트워크 Bonding 구성 | chhanz 
+기술 블로그
+</title>
+<meta name="keywords" content="linux">
+<meta name="description" content=" ">
+<meta name="author" content="chhanz">
+<link rel="canonical" href="https://chhanz88.github.io/post/2018-03-02-linux-create-bond-device/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.ec8da366ca2fb647537ccb7a8f6fa5b4e9cd3c7a0d3171dd2d3baad1e49c8bfc.css" integrity="sha256-7I2jZsovtkdTfMt6j2&#43;ltOnNPHoNMXHdLTuq0eSci/w=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.min.4dcb3c4f38462f66c6b6137227726f5543cb934cca9788f041c087e374491df2.js" integrity="sha256-Tcs8TzhGL2bGthNyJ3JvVUPLk0zKl4jwQcCH43RJHfI="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://chhanz88.github.io/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://chhanz88.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://chhanz88.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://chhanz88.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://chhanz88.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="[Linux] CentOS 7 네트워크 Bonding 구성" />
+<meta property="og:description" content=" " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://chhanz88.github.io/post/2018-03-02-linux-create-bond-device/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2018-03-02T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2018-03-02T00:00:00&#43;00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[Linux] CentOS 7 네트워크 Bonding 구성"/>
+<meta name="twitter:description" content=" "/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Posts",
+      "item": "https://chhanz88.github.io/post/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "[Linux] CentOS 7 네트워크 Bonding 구성",
+      "item": "https://chhanz88.github.io/post/2018-03-02-linux-create-bond-device/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "[Linux] CentOS 7 네트워크 Bonding 구성",
+  "name": "[Linux] CentOS 7 네트워크 Bonding 구성",
+  "description": " ",
+  "keywords": [
+    "linux"
+  ],
+  "articleBody": "[Linux] CentOS 7 네트워크 Bonding 구성  CentOS 7 에서 bonding 구성을 위해서는 아래와 같은 절차가 필요합니다.\n CentOS 7 에서는 bonding 모듈이 기본적으로 로드가 되어 있지 않습니다. 아래 명령을 통해 boning 모듈을 로드합니다.  # modprobe --first-time bonding Bond Interface 생성 Bond Interface 생성을 하기위해서는 /etc/sysconfig/network-scripts/ 의 ifcfg-bond0 파일을 생성해야됩니다.  # cat /etc/sysconfig/network-scripts/ifcfg-bond0 DEVICE=bond0 NAME=bond0 TYPE=Bond IPADDR=10.0.0.1 NETMASK=255.255.255.0 ONBOOT=yes BOOTPROTO=none BONDING_OPTS=\"mode=1 miimon=100\" SLAVE Interface 생성 bond Interface 의 SLAVE Interface 파일을 생성합니다.\n/etc/sysconfig/network-scripts/ 의 ifcfg-eth1 과 ifcfg-eth2 를 수정합니다.  # cat ifcfg-eth1 DEVICE=eth1 NAME=eth1 TYPE=Ethernet BOOTPROTO=none ONBOOT=yes MASTER=bond0 SLAVE=yes # cat ifcfg-eth2 DEVICE=eth2 NAME=eth2 TYPE=Ethernet BOOTPROTO=none ONBOOT=yes MASTER=bond0 SLAVE=yes NetworkManager disable \u0026\u0026 network restart network 재시작을 합니다.  # systemctl disable NetworkManager # systemctl stop NetworkManager # systemctl restart network # ip a 1: lo:  mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000 link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00 inet 127.0.0.1/8 scope host lo valid_lft forever preferred_lft forever inet6 ::1/128 scope host valid_lft forever preferred_lft forever 2: eth0:  mtu 1500 qdisc pfifo_fast state UP group default qlen 1000 link/ether 00:2a:4a:16:01:5b brd ff:ff:ff:ff:ff:ff inet 192.168.13.63/16 brd 192.168.255.255 scope global eth0 valid_lft forever preferred_lft forever inet6 fe80::22a:4aff:fe16:15b/64 scope link valid_lft forever preferred_lft forever 3: eth1:  mtu 1500 qdisc pfifo_fast master bond0 state UP group default qlen 1000 link/ether 00:2a:4a:16:01:63 brd ff:ff:ff:ff:ff:ff 4: eth2:  mtu 1500 qdisc pfifo_fast master bond0 state UP group default qlen 1000 link/ether 00:2a:4a:16:01:63 brd ff:ff:ff:ff:ff:ff 5: bond0:  mtu 1500 qdisc noqueue state UP group default qlen 1000 link/ether 00:2a:4a:16:01:63 brd ff:ff:ff:ff:ff:ff inet 10.0.0.1/24 brd 10.0.0.255 scope global bond0 valid_lft forever preferred_lft forever inet6 fe80::22a:4aff:fe16:163/64 scope link valid_lft forever preferred_lft forever 위와 같이 bonding 구성이 된것을 확인 할 수 있습니다.\n참고자료  bonding Option : https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/networking_guide/sec-using_channel_bonding\n",
+  "wordCount" : "278",
+  "inLanguage": "en",
+  "datePublished": "2018-03-02T00:00:00Z",
+  "dateModified": "2018-03-02T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "chhanz"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://chhanz88.github.io/post/2018-03-02-linux-create-bond-device/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "chhanz \n기술 블로그\n",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://chhanz88.github.io/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://chhanz88.github.io" accesskey="h" title="chhanz 
+기술 블로그
+ (Alt + H)">chhanz 
+기술 블로그
+</a>
+            <span class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </span>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title">
+      [Linux] CentOS 7 네트워크 Bonding 구성
+    </h1>
+    <div class="post-description">
+       
+    </div>
+    <div class="post-meta"><span title='2018-03-02 00:00:00 +0000 UTC'>March 2, 2018</span>&nbsp;·&nbsp;chhanz
+
+</div>
+  </header> 
+  <div class="post-content"><h1 id="linux-centos-7-네트워크-bonding-구성">[Linux] CentOS 7 네트워크 Bonding 구성<a hidden class="anchor" aria-hidden="true" href="#linux-centos-7-네트워크-bonding-구성">#</a></h1>
+<hr>
+<p>CentOS 7 에서 bonding 구성을 위해서는 아래와 같은 절차가 필요합니다.</p>
+<ol>
+<li>CentOS 7 에서는 bonding 모듈이 기본적으로 로드가 되어 있지 않습니다. 아래 명령을 통해 boning 모듈을 로드합니다.</li>
+</ol>
+<pre tabindex="0"><code># modprobe --first-time bonding
+</code></pre><ol start="2">
+<li>Bond Interface 생성
+Bond Interface 생성을 하기위해서는 /etc/sysconfig/network-scripts/ 의 <em>ifcfg-bond0</em> 파일을 생성해야됩니다.</li>
+</ol>
+<pre tabindex="0"><code># cat  /etc/sysconfig/network-scripts/ifcfg-bond0
+DEVICE=bond0
+NAME=bond0
+TYPE=Bond
+IPADDR=10.0.0.1
+NETMASK=255.255.255.0
+ONBOOT=yes
+BOOTPROTO=none
+BONDING_OPTS=&#34;mode=1 miimon=100&#34;
+</code></pre><ol start="3">
+<li>SLAVE Interface 생성
+bond Interface 의 SLAVE Interface 파일을 생성합니다.<br>
+/etc/sysconfig/network-scripts/ 의 <em>ifcfg-eth1</em> 과 <em>ifcfg-eth2</em> 를 수정합니다.</li>
+</ol>
+<pre tabindex="0"><code># cat ifcfg-eth1
+DEVICE=eth1
+NAME=eth1
+TYPE=Ethernet
+BOOTPROTO=none
+ONBOOT=yes
+MASTER=bond0
+SLAVE=yes
+# cat ifcfg-eth2
+DEVICE=eth2
+NAME=eth2
+TYPE=Ethernet
+BOOTPROTO=none
+ONBOOT=yes
+MASTER=bond0
+SLAVE=yes
+</code></pre><ol start="4">
+<li>NetworkManager disable &amp;&amp; network restart
+network 재시작을 합니다.</li>
+</ol>
+<pre tabindex="0"><code># systemctl disable NetworkManager
+# systemctl stop NetworkManager
+# systemctl restart network
+# ip a
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host
+       valid_lft forever preferred_lft forever
+2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 00:2a:4a:16:01:5b brd ff:ff:ff:ff:ff:ff
+    inet 192.168.13.63/16 brd 192.168.255.255 scope global eth0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::22a:4aff:fe16:15b/64 scope link
+       valid_lft forever preferred_lft forever
+3: eth1: &lt;BROADCAST,MULTICAST,SLAVE,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast master bond0 state UP group default qlen 1000
+    link/ether 00:2a:4a:16:01:63 brd ff:ff:ff:ff:ff:ff
+4: eth2: &lt;BROADCAST,MULTICAST,SLAVE,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast master bond0 state UP group default qlen 1000
+    link/ether 00:2a:4a:16:01:63 brd ff:ff:ff:ff:ff:ff
+5: bond0: &lt;BROADCAST,MULTICAST,MASTER,UP,LOWER_UP&gt; mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether 00:2a:4a:16:01:63 brd ff:ff:ff:ff:ff:ff
+    inet 10.0.0.1/24 brd 10.0.0.255 scope global bond0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::22a:4aff:fe16:163/64 scope link
+       valid_lft forever preferred_lft forever
+</code></pre><p>위와 같이 bonding 구성이 된것을 확인 할 수 있습니다.</p>
+<h1 id="참고자료">참고자료<a hidden class="anchor" aria-hidden="true" href="#참고자료">#</a></h1>
+<hr>
+<p>bonding Option : <a href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/networking_guide/sec-using_channel_bonding">https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/networking_guide/sec-using_channel_bonding</a></p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://chhanz88.github.io/tags/linux/">linux</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2022 <a href="https://chhanz88.github.io">chhanz 
+기술 블로그
+</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://git.io/hugopapermod" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

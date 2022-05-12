@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>[OpenStack] [Preview] OpenStack Dashboard - Skyline | chhanz 
+기술 블로그
+</title>
+<meta name="keywords" content="openstack">
+<meta name="description" content="흥미 최근 OpenStack 커뮤니티 그룹에서 올라온 글을 보고 기존에 Horizon 의 약한 부분에 대해 매우 아쉬움을 가지고 있던 저는 매우 흥미를 느끼며 이 포스팅을 작성하게 되었습니다.
+Preview 이 흥미로운 Project 는 Skyline 이라는 이름의 새로운 OpenStack Dashboard Project 입니다.
+(https://wiki.openstack.org/wiki/Skyline#Description)
+Install 테스트에 활용된 OpenStack 환경은 아래와 같습니다.
+* OpenStack wallaby (all-in-one version) [deploy tool `kolla-ansible`] * ubuntu 20.04 Skyline 에서 사용될 User 를 생성합니다.
+(osp) root@u-node-1:/etc/kolla# openstack user create --domain default --password-prompt skyline User Password: Repeat User Password: &#43;---------------------&#43;----------------------------------&#43; | Field | Value | &#43;---------------------&#43;----------------------------------&#43; | domain_id | default | | enabled | True | | id | 1bd73a672fa343569fa4d771eb3f0d23 | | name | skyline | | options | {} | | password_expires_at | None | &#43;---------------------&#43;----------------------------------&#43; Service 프로젝트에 skyline 계정 Admin role 을 추가합니다.">
+<meta name="author" content="chhanz">
+<link rel="canonical" href="https://chhanz88.github.io/post/2022-01-17-openstack-dashboard-skyline/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.ec8da366ca2fb647537ccb7a8f6fa5b4e9cd3c7a0d3171dd2d3baad1e49c8bfc.css" integrity="sha256-7I2jZsovtkdTfMt6j2&#43;ltOnNPHoNMXHdLTuq0eSci/w=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.min.4dcb3c4f38462f66c6b6137227726f5543cb934cca9788f041c087e374491df2.js" integrity="sha256-Tcs8TzhGL2bGthNyJ3JvVUPLk0zKl4jwQcCH43RJHfI="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://chhanz88.github.io/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://chhanz88.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://chhanz88.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://chhanz88.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://chhanz88.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="[OpenStack] [Preview] OpenStack Dashboard - Skyline" />
+<meta property="og:description" content="흥미 최근 OpenStack 커뮤니티 그룹에서 올라온 글을 보고 기존에 Horizon 의 약한 부분에 대해 매우 아쉬움을 가지고 있던 저는 매우 흥미를 느끼며 이 포스팅을 작성하게 되었습니다.
+Preview 이 흥미로운 Project 는 Skyline 이라는 이름의 새로운 OpenStack Dashboard Project 입니다.
+(https://wiki.openstack.org/wiki/Skyline#Description)
+Install 테스트에 활용된 OpenStack 환경은 아래와 같습니다.
+* OpenStack wallaby (all-in-one version) [deploy tool `kolla-ansible`] * ubuntu 20.04 Skyline 에서 사용될 User 를 생성합니다.
+(osp) root@u-node-1:/etc/kolla# openstack user create --domain default --password-prompt skyline User Password: Repeat User Password: &#43;---------------------&#43;----------------------------------&#43; | Field | Value | &#43;---------------------&#43;----------------------------------&#43; | domain_id | default | | enabled | True | | id | 1bd73a672fa343569fa4d771eb3f0d23 | | name | skyline | | options | {} | | password_expires_at | None | &#43;---------------------&#43;----------------------------------&#43; Service 프로젝트에 skyline 계정 Admin role 을 추가합니다." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://chhanz88.github.io/post/2022-01-17-openstack-dashboard-skyline/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2022-01-17T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2022-01-17T00:00:00&#43;00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[OpenStack] [Preview] OpenStack Dashboard - Skyline"/>
+<meta name="twitter:description" content="흥미 최근 OpenStack 커뮤니티 그룹에서 올라온 글을 보고 기존에 Horizon 의 약한 부분에 대해 매우 아쉬움을 가지고 있던 저는 매우 흥미를 느끼며 이 포스팅을 작성하게 되었습니다.
+Preview 이 흥미로운 Project 는 Skyline 이라는 이름의 새로운 OpenStack Dashboard Project 입니다.
+(https://wiki.openstack.org/wiki/Skyline#Description)
+Install 테스트에 활용된 OpenStack 환경은 아래와 같습니다.
+* OpenStack wallaby (all-in-one version) [deploy tool `kolla-ansible`] * ubuntu 20.04 Skyline 에서 사용될 User 를 생성합니다.
+(osp) root@u-node-1:/etc/kolla# openstack user create --domain default --password-prompt skyline User Password: Repeat User Password: &#43;---------------------&#43;----------------------------------&#43; | Field | Value | &#43;---------------------&#43;----------------------------------&#43; | domain_id | default | | enabled | True | | id | 1bd73a672fa343569fa4d771eb3f0d23 | | name | skyline | | options | {} | | password_expires_at | None | &#43;---------------------&#43;----------------------------------&#43; Service 프로젝트에 skyline 계정 Admin role 을 추가합니다."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Posts",
+      "item": "https://chhanz88.github.io/post/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "[OpenStack] [Preview] OpenStack Dashboard - Skyline",
+      "item": "https://chhanz88.github.io/post/2022-01-17-openstack-dashboard-skyline/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "[OpenStack] [Preview] OpenStack Dashboard - Skyline",
+  "name": "[OpenStack] [Preview] OpenStack Dashboard - Skyline",
+  "description": "흥미 최근 OpenStack 커뮤니티 그룹에서 올라온 글을 보고 기존에 Horizon 의 약한 부분에 대해 매우 아쉬움을 가지고 있던 저는 매우 흥미를 느끼며 이 포스팅을 작성하게 되었습니다.\nPreview 이 흥미로운 Project 는 Skyline 이라는 이름의 새로운 OpenStack Dashboard Project 입니다.\n(https://wiki.openstack.org/wiki/Skyline#Description)\nInstall 테스트에 활용된 OpenStack 환경은 아래와 같습니다.\n* OpenStack wallaby (all-in-one version) [deploy tool `kolla-ansible`] * ubuntu 20.04 Skyline 에서 사용될 User 를 생성합니다.\n(osp) root@u-node-1:/etc/kolla# openstack user create --domain default --password-prompt skyline User Password: Repeat User Password: +---------------------+----------------------------------+ | Field | Value | +---------------------+----------------------------------+ | domain_id | default | | enabled | True | | id | 1bd73a672fa343569fa4d771eb3f0d23 | | name | skyline | | options | {} | | password_expires_at | None | +---------------------+----------------------------------+ Service 프로젝트에 skyline 계정 Admin role 을 추가합니다.",
+  "keywords": [
+    "openstack"
+  ],
+  "articleBody": "흥미 최근 OpenStack 커뮤니티 그룹에서 올라온 글을 보고 기존에 Horizon 의 약한 부분에 대해 매우 아쉬움을 가지고 있던 저는 매우 흥미를 느끼며 이 포스팅을 작성하게 되었습니다.\nPreview 이 흥미로운 Project 는 Skyline 이라는 이름의 새로운 OpenStack Dashboard Project 입니다.\n(https://wiki.openstack.org/wiki/Skyline#Description)\nInstall 테스트에 활용된 OpenStack 환경은 아래와 같습니다.\n* OpenStack wallaby (all-in-one version) [deploy tool `kolla-ansible`] * ubuntu 20.04 Skyline 에서 사용될 User 를 생성합니다.\n(osp) root@u-node-1:/etc/kolla# openstack user create --domain default --password-prompt skyline User Password: Repeat User Password: +---------------------+----------------------------------+ | Field | Value | +---------------------+----------------------------------+ | domain_id | default | | enabled | True | | id | 1bd73a672fa343569fa4d771eb3f0d23 | | name | skyline | | options | {} | | password_expires_at | None | +---------------------+----------------------------------+ Service 프로젝트에 skyline 계정 Admin role 을 추가합니다.\n(osp) root@u-node-1:/etc/kolla# openstack role add --project service --user skyline admin Database 생성 테스트 환경이므로 OpenStack 내부의 mariadb 를 활용합니다.\n(운영 환경에 적용할 경우, 별도의 DB 를 사용하는 것이 좋을 것으로 보입니다.)\nkolla-ansible 배포에서 사용된 database password 를 확인합니다.\n(osp) root@u-node-1:/etc/kolla# cat passwords.yml | grep data ... database_password: R25MrFQko4WhQ8NeTbBZVU36h12v2SREVOrR0fAp ... database 생성 및 권한 부여를 합니다.\n(osp) root@u-node-1:/etc/kolla# mysql -u root -h 10.10.10.11 -p Enter password: {{ database_password }} Welcome to the MariaDB monitor. Commands end with ; or \\g. Your MariaDB connection id is 1975 Server version: 10.3.31-MariaDB-1:10.3.31+maria~focal-log mariadb.org binary distribution  Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.  Type 'help;' or '\\h' for help. Type '\\c' to clear the current input statement.  MariaDB [(none)] CREATE DATABASE IF NOT EXISTS skyline DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci; Query OK, 1 row affected (0.013 sec)  MariaDB [(none)] GRANT ALL PRIVILEGES ON skyline.* TO 'skyline'@'localhost' IDENTIFIED BY 'MySkylineDBPassword'; Query OK, 0 rows affected (0.010 sec)  MariaDB [(none)] GRANT ALL PRIVILEGES ON skyline.* TO 'skyline'@'%' IDENTIFIED BY 'MySkylineDBPassword'; Query OK, 0 rows affected (0.014 sec)  MariaDB [(none)] Skyline 배포 Source 를 Clone 합니다.\n(osp) root@u-node-1:/etc/kolla# cd /root (osp) root@u-node-1:~# git clone https://opendev.org/skyline/skyline-apiserver Cloning into 'skyline-apiserver'... remote: Enumerating objects: 277, done. remote: Counting objects: 100% (277/277), done. remote: Compressing objects: 100% (137/137), done. remote: Total 877 (delta 221), reused 140 (delta 140), pack-reused 600 Receiving objects: 100% (877/877), 595.88 KiB | 1.02 MiB/s, done. Resolving deltas: 100% (497/497), done. Default config file 을 /etc/skyline/skyline.yaml 로 추가하고 설정을 수정합니다.\n(osp) root@u-node-1:~# mkdir /etc/skyline (osp) root@u-node-1:~# cp skyline-apiserver/etc/skyline.yaml.sample /etc/skyline/skyline.yaml default:  access_token_expire: 3600  access_token_renew: 1800  cors_allow_origins: []  database_url: mysql://skyline:MySkylineDBPassword@10.10.10.11:3306/skyline  debug: false  log_dir: ./log  secret_key: aCtmgbcUqYUy_HNVg5BDXCaeJgJQzHJXwqbXr0Nmb2o  session_name: session developer:  show_raw_sql: false openstack:  base_domains:  - heat_user_domain  base_roles:  - keystone_system_admin  - keystone_system_reader  - keystone_project_admin  - keystone_project_member  - keystone_project_reader  - nova_system_admin  - nova_system_reader  - nova_project_admin  - nova_project_member  - nova_project_reader  - cinder_system_admin  - cinder_system_reader  - cinder_project_admin  - cinder_project_member  - cinder_project_reader  - glance_system_admin  - glance_system_reader  - glance_project_admin  - glance_project_member  - glance_project_reader  - neutron_system_admin  - neutron_system_reader  - neutron_project_admin  - neutron_project_member  - neutron_project_reader  - heat_system_admin  - heat_system_reader  - heat_project_admin  - heat_project_member  - heat_project_reader  - placement_system_admin  - placement_system_reader  - panko_system_admin  - panko_system_reader  - panko_project_admin  - panko_project_member  - panko_project_reader  - ironic_system_admin  - ironic_system_reader  - octavia_system_admin  - octavia_system_reader  - octavia_project_admin  - octavia_project_member  - octavia_project_reader  default_region: RegionOne  extension_mapping:  fwaas_v2: neutron_firewall  vpnaas: neutron_vpn  interface_type: public  keystone_url: http://10.10.10.250:5000/v3/  nginx_prefix: /api/openstack  reclaim_instance_interval: 604800  service_mapping:  compute: nova  identity: keystone  image: glance  network: neutron  orchestration: heat  placement: placement  volumev3: cinder  system_admin_roles:  - admin  - system_admin  system_project: service  system_project_domain: Default  system_reader_roles:  - system_reader  system_user_domain: Default  system_user_name: skyline  system_user_password: {{ password }} setting:  base_settings:  - flavor_families  - gpu_models  - usb_models  flavor_families:  - architecture: x86_architecture  categories:  - name: general_purpose  properties: []  - name: compute_optimized  properties: []  - name: memory_optimized  properties: []  - name: high_clock_speed  properties: []  - architecture: heterogeneous_computing  categories:  - name: compute_optimized_type_with_gpu  properties: []  - name: visualization_compute_optimized_type_with_gpu  properties: []  gpu_models:  - nvidia_t4  usb_models:  - usb_c Bootstrap 을 진행합니다.\n(osp) root@u-node-1:~/skyline-apiserver/container# docker run -d --name skyline_bootstrap -e KOLLA_BOOTSTRAP=\"\" -v /etc/skyline/skyline.yaml:/etc/skyline/skyline.yaml --net=host 99cloud/skyline:latest 614a74d2204441cfb42266cefe17eb06eb96a4234fd03b1a7e2ddaf64140ab98  (osp) root@u-node-1:~/skyline-apiserver/container# docker logs skyline_bootstrap + echo '/usr/local/bin/gunicorn -c /etc/skyline/gunicorn.py skyline_apiserver.main:app' + mapfile -t CMD ++ xargs -n 1 ++ tail /run_command + [[ -n 0 ]] + cd /skyline/libs/skyline-apiserver/ + make db_sync poetry run alembic upgrade head Skipping virtualenv creation, as specified in config file. + exit 0 위 과정은 생성한 Database 를 초기화 하는 과정으로 보입니다.\nbootstrap 컨테이너를 제거하고 skyline main application 을 배포합니다.\n(osp) root@u-node-1:~/skyline-apiserver/container# docker rm -f skyline_bootstrap skyline_bootstrap  (osp) root@u-node-1:~/skyline-apiserver/container# docker run -d --name skyline --restart=always -v /etc/skyline/skyline.yaml:/etc/skyline/skyline.yaml --net=host 99cloud/skyline:latest 8cde23649596ef629558889a0c7b6700b5528da63160154292bcfab17bb24f9b  (osp) root@u-node-1:~/skyline-apiserver/container# docker ps -a CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES 8cde23649596 99cloud/skyline:latest  (osp) root@u-node-1:~/skyline-apiserver/container# docker logs -f skyline ... + echo 'Running command: /usr/local/bin/gunicorn -c /etc/skyline/gunicorn.py skyline_apiserver.main:app' + exec /usr/local/bin/gunicorn -c /etc/skyline/gunicorn.py skyline_apiserver.main:app + echo '/usr/local/bin/gunicorn -c /etc/skyline/gunicorn.py skyline_apiserver.main:app' + mapfile -t CMD ++ tail /run_command ++ xargs -n 1 + [[ -n '' ]] + nginx-generator -o /etc/nginx/nginx.conf + nginx + echo 'Running command: /usr/local/bin/gunicorn -c /etc/skyline/gunicorn.py skyline_apiserver.main:app' + exec /usr/local/bin/gunicorn -c /etc/skyline/gunicorn.py skyline_apiserver.main:app Running command: /usr/local/bin/gunicorn -c /etc/skyline/gunicorn.py skyline_apiserver.main:app 정상적으로 Application 이 작동하면 https://XXXXXXXXXXXXXXXXXXXX:8080 으로 접근이 가능합니다.\nPreview   Login page : region 별로 domain 을 지정 할 수 있도록 되어있습니다. multi region 을 관리하는데 편리함을 위해 만들어진 것으로 보입니다.\n(초기 설치 이후, 중국어로 콘솔이 나와서 매우 당황했으나 언어를 English 로 변경하면 사용하는데 문제가 없었다.)\n  Overview page : 프로젝트 Quota 현황을 볼 수 있습니다.\n  Instance page : Instance 상세 현황을 볼 수 있습니다.\n(Instance 현황은 error 지만 Dashboard 의 화면 구성을 보는데 목적으로 추가하였습니다.)\n  개인적 의견  장점  Horizon 보다 빠른 속도 깔끔하고 정리된 느낌   단점  아직 정보가 부족함    총평 : 기존의 Horizon 보다 사용하기 편리했고 빠른 성능으로 인해 불편함을 느끼지 못함. 매우 기대되는 Project 이다!!\n참고 문서  https://opendev.org/skyline/skyline-apiserver https://satishdotpatel.github.io/openstack-skyline-dashborad/  ",
+  "wordCount" : "911",
+  "inLanguage": "en",
+  "datePublished": "2022-01-17T00:00:00Z",
+  "dateModified": "2022-01-17T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "chhanz"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://chhanz88.github.io/post/2022-01-17-openstack-dashboard-skyline/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "chhanz \n기술 블로그\n",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://chhanz88.github.io/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://chhanz88.github.io" accesskey="h" title="chhanz 
+기술 블로그
+ (Alt + H)">chhanz 
+기술 블로그
+</a>
+            <span class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </span>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title">
+      [OpenStack] [Preview] OpenStack Dashboard - Skyline
+    </h1>
+    <div class="post-meta"><span title='2022-01-17 00:00:00 +0000 UTC'>January 17, 2022</span>&nbsp;·&nbsp;chhanz
+
+</div>
+  </header> 
+  <div class="post-content"><h1 id="흥미">흥미<a hidden class="anchor" aria-hidden="true" href="#흥미">#</a></h1>
+<p>최근 OpenStack 커뮤니티 그룹에서 올라온 글을 보고 기존에 Horizon 의 약한 부분에 대해 매우 아쉬움을 가지고 있던 저는 매우 흥미를 느끼며 이 포스팅을 작성하게 되었습니다.</p>
+<!-- raw HTML omitted -->
+<h1 id="preview">Preview<a hidden class="anchor" aria-hidden="true" href="#preview">#</a></h1>
+<p>이 흥미로운 Project 는 Skyline 이라는 이름의 새로운 OpenStack Dashboard Project 입니다.<br>
+<a href="https://wiki.openstack.org/wiki/Skyline#Description">(https://wiki.openstack.org/wiki/Skyline#Description)</a></p>
+<h1 id="install">Install<a hidden class="anchor" aria-hidden="true" href="#install">#</a></h1>
+<p>테스트에 활용된 OpenStack 환경은 아래와 같습니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>* OpenStack wallaby (all-in-one version) [deploy tool `kolla-ansible`]
+</span></span><span style="display:flex;"><span>* ubuntu 20.04
+</span></span></code></pre></div><p>Skyline 에서 사용될 User 를 생성합니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">(</span>osp<span style="color:#f92672">)</span> root@u-node-1:/etc/kolla# openstack user create --domain default --password-prompt skyline
+</span></span><span style="display:flex;"><span>User Password:
+</span></span><span style="display:flex;"><span>Repeat User Password:
+</span></span><span style="display:flex;"><span>+---------------------+----------------------------------+
+</span></span><span style="display:flex;"><span>| Field               | Value                            |
+</span></span><span style="display:flex;"><span>+---------------------+----------------------------------+
+</span></span><span style="display:flex;"><span>| domain_id           | default                          |
+</span></span><span style="display:flex;"><span>| enabled             | True                             |
+</span></span><span style="display:flex;"><span>| id                  | 1bd73a672fa343569fa4d771eb3f0d23 |
+</span></span><span style="display:flex;"><span>| name                | skyline                          |
+</span></span><span style="display:flex;"><span>| options             | <span style="color:#f92672">{}</span>                               |
+</span></span><span style="display:flex;"><span>| password_expires_at | None                             |
+</span></span><span style="display:flex;"><span>+---------------------+----------------------------------+
+</span></span></code></pre></div><p>Service 프로젝트에 skyline 계정 Admin role 을 추가합니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">(</span>osp<span style="color:#f92672">)</span> root@u-node-1:/etc/kolla# openstack role add --project service --user skyline admin
+</span></span></code></pre></div><h3 id="database-생성">Database 생성<a hidden class="anchor" aria-hidden="true" href="#database-생성">#</a></h3>
+<p>테스트 환경이므로 OpenStack 내부의 mariadb 를 활용합니다.<br>
+(운영 환경에 적용할 경우, 별도의 DB 를 사용하는 것이 좋을 것으로 보입니다.)</p>
+<p>kolla-ansible 배포에서 사용된 database <code>password</code> 를 확인합니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">(</span>osp<span style="color:#f92672">)</span> root@u-node-1:/etc/kolla# cat passwords.yml | grep data
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>database_password: R25MrFQko4WhQ8NeTbBZVU36h12v2SREVOrR0fAp
+</span></span><span style="display:flex;"><span>...
+</span></span></code></pre></div><p>database 생성 및 권한 부여를 합니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">(</span>osp<span style="color:#f92672">)</span> root@u-node-1:/etc/kolla# mysql -u root -h 10.10.10.11 -p
+</span></span><span style="display:flex;"><span>Enter password: <span style="color:#f92672">{{</span> database_password <span style="color:#f92672">}}</span>
+</span></span><span style="display:flex;"><span>Welcome to the MariaDB monitor.  Commands end with ; or <span style="color:#ae81ff">\g</span>.
+</span></span><span style="display:flex;"><span>Your MariaDB connection id is <span style="color:#ae81ff">1975</span>
+</span></span><span style="display:flex;"><span>Server version: 10.3.31-MariaDB-1:10.3.31+maria~focal-log mariadb.org binary distribution
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>Copyright <span style="color:#f92672">(</span>c<span style="color:#f92672">)</span> 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>Type <span style="color:#e6db74">&#39;help;&#39;</span> or <span style="color:#e6db74">&#39;\h&#39;</span> <span style="color:#66d9ef">for</span> help. Type <span style="color:#e6db74">&#39;\c&#39;</span> to clear the current input statement.
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>MariaDB <span style="color:#f92672">[(</span>none<span style="color:#f92672">)]</span>&gt; CREATE DATABASE IF NOT EXISTS skyline DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
+</span></span><span style="display:flex;"><span>Query OK, <span style="color:#ae81ff">1</span> row affected <span style="color:#f92672">(</span>0.013 sec<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>MariaDB <span style="color:#f92672">[(</span>none<span style="color:#f92672">)]</span>&gt; GRANT ALL PRIVILEGES ON skyline.* TO <span style="color:#e6db74">&#39;skyline&#39;</span>@<span style="color:#e6db74">&#39;localhost&#39;</span> IDENTIFIED BY <span style="color:#e6db74">&#39;MySkylineDBPassword&#39;</span>;
+</span></span><span style="display:flex;"><span>Query OK, <span style="color:#ae81ff">0</span> rows affected <span style="color:#f92672">(</span>0.010 sec<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>MariaDB <span style="color:#f92672">[(</span>none<span style="color:#f92672">)]</span>&gt; GRANT ALL PRIVILEGES ON skyline.* TO <span style="color:#e6db74">&#39;skyline&#39;</span>@<span style="color:#e6db74">&#39;%&#39;</span>  IDENTIFIED BY <span style="color:#e6db74">&#39;MySkylineDBPassword&#39;</span>;
+</span></span><span style="display:flex;"><span>Query OK, <span style="color:#ae81ff">0</span> rows affected <span style="color:#f92672">(</span>0.014 sec<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>MariaDB <span style="color:#f92672">[(</span>none<span style="color:#f92672">)]</span>&gt;
+</span></span></code></pre></div><h3 id="skyline-배포">Skyline 배포<a hidden class="anchor" aria-hidden="true" href="#skyline-배포">#</a></h3>
+<p>Source 를 Clone 합니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">(</span>osp<span style="color:#f92672">)</span> root@u-node-1:/etc/kolla# cd /root
+</span></span><span style="display:flex;"><span><span style="color:#f92672">(</span>osp<span style="color:#f92672">)</span> root@u-node-1:~# git clone https://opendev.org/skyline/skyline-apiserver
+</span></span><span style="display:flex;"><span>Cloning into <span style="color:#e6db74">&#39;skyline-apiserver&#39;</span>...
+</span></span><span style="display:flex;"><span>remote: Enumerating objects: 277, <span style="color:#66d9ef">done</span>.
+</span></span><span style="display:flex;"><span>remote: Counting objects: 100% <span style="color:#f92672">(</span>277/277<span style="color:#f92672">)</span>, <span style="color:#66d9ef">done</span>.
+</span></span><span style="display:flex;"><span>remote: Compressing objects: 100% <span style="color:#f92672">(</span>137/137<span style="color:#f92672">)</span>, <span style="color:#66d9ef">done</span>.
+</span></span><span style="display:flex;"><span>remote: Total <span style="color:#ae81ff">877</span> <span style="color:#f92672">(</span>delta 221<span style="color:#f92672">)</span>, reused <span style="color:#ae81ff">140</span> <span style="color:#f92672">(</span>delta 140<span style="color:#f92672">)</span>, pack-reused <span style="color:#ae81ff">600</span>
+</span></span><span style="display:flex;"><span>Receiving objects: 100% <span style="color:#f92672">(</span>877/877<span style="color:#f92672">)</span>, 595.88 KiB | 1.02 MiB/s, <span style="color:#66d9ef">done</span>.
+</span></span><span style="display:flex;"><span>Resolving deltas: 100% <span style="color:#f92672">(</span>497/497<span style="color:#f92672">)</span>, <span style="color:#66d9ef">done</span>.
+</span></span></code></pre></div><p>Default config file 을 <code>/etc/skyline/skyline.yaml</code> 로 추가하고 설정을 수정합니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">(</span>osp<span style="color:#f92672">)</span> root@u-node-1:~# mkdir /etc/skyline
+</span></span><span style="display:flex;"><span><span style="color:#f92672">(</span>osp<span style="color:#f92672">)</span> root@u-node-1:~# cp skyline-apiserver/etc/skyline.yaml.sample /etc/skyline/skyline.yaml
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>default:
+</span></span><span style="display:flex;"><span>  access_token_expire: 3600
+</span></span><span style="display:flex;"><span>  access_token_renew: 1800
+</span></span><span style="display:flex;"><span>  cors_allow_origins: []
+</span></span><span style="display:flex;"><span>  database_url: mysql://skyline:MySkylineDBPassword@10.10.10.11:3306/skyline         &lt;&lt; 접근이 가능한 database_url 수정 필요 (기존 localhost)
+</span></span><span style="display:flex;"><span>  debug: false
+</span></span><span style="display:flex;"><span>  log_dir: ./log
+</span></span><span style="display:flex;"><span>  secret_key: aCtmgbcUqYUy_HNVg5BDXCaeJgJQzHJXwqbXr0Nmb2o
+</span></span><span style="display:flex;"><span>  session_name: session
+</span></span><span style="display:flex;"><span>developer:
+</span></span><span style="display:flex;"><span>  show_raw_sql: false
+</span></span><span style="display:flex;"><span>openstack:
+</span></span><span style="display:flex;"><span>  base_domains:
+</span></span><span style="display:flex;"><span>  - heat_user_domain
+</span></span><span style="display:flex;"><span>  base_roles:
+</span></span><span style="display:flex;"><span>  - keystone_system_admin
+</span></span><span style="display:flex;"><span>  - keystone_system_reader
+</span></span><span style="display:flex;"><span>  - keystone_project_admin
+</span></span><span style="display:flex;"><span>  - keystone_project_member
+</span></span><span style="display:flex;"><span>  - keystone_project_reader
+</span></span><span style="display:flex;"><span>  - nova_system_admin
+</span></span><span style="display:flex;"><span>  - nova_system_reader
+</span></span><span style="display:flex;"><span>  - nova_project_admin
+</span></span><span style="display:flex;"><span>  - nova_project_member
+</span></span><span style="display:flex;"><span>  - nova_project_reader
+</span></span><span style="display:flex;"><span>  - cinder_system_admin
+</span></span><span style="display:flex;"><span>  - cinder_system_reader
+</span></span><span style="display:flex;"><span>  - cinder_project_admin
+</span></span><span style="display:flex;"><span>  - cinder_project_member
+</span></span><span style="display:flex;"><span>  - cinder_project_reader
+</span></span><span style="display:flex;"><span>  - glance_system_admin
+</span></span><span style="display:flex;"><span>  - glance_system_reader
+</span></span><span style="display:flex;"><span>  - glance_project_admin
+</span></span><span style="display:flex;"><span>  - glance_project_member
+</span></span><span style="display:flex;"><span>  - glance_project_reader
+</span></span><span style="display:flex;"><span>  - neutron_system_admin
+</span></span><span style="display:flex;"><span>  - neutron_system_reader
+</span></span><span style="display:flex;"><span>  - neutron_project_admin
+</span></span><span style="display:flex;"><span>  - neutron_project_member
+</span></span><span style="display:flex;"><span>  - neutron_project_reader
+</span></span><span style="display:flex;"><span>  - heat_system_admin
+</span></span><span style="display:flex;"><span>  - heat_system_reader
+</span></span><span style="display:flex;"><span>  - heat_project_admin
+</span></span><span style="display:flex;"><span>  - heat_project_member
+</span></span><span style="display:flex;"><span>  - heat_project_reader
+</span></span><span style="display:flex;"><span>  - placement_system_admin
+</span></span><span style="display:flex;"><span>  - placement_system_reader
+</span></span><span style="display:flex;"><span>  - panko_system_admin
+</span></span><span style="display:flex;"><span>  - panko_system_reader
+</span></span><span style="display:flex;"><span>  - panko_project_admin
+</span></span><span style="display:flex;"><span>  - panko_project_member
+</span></span><span style="display:flex;"><span>  - panko_project_reader
+</span></span><span style="display:flex;"><span>  - ironic_system_admin
+</span></span><span style="display:flex;"><span>  - ironic_system_reader
+</span></span><span style="display:flex;"><span>  - octavia_system_admin
+</span></span><span style="display:flex;"><span>  - octavia_system_reader
+</span></span><span style="display:flex;"><span>  - octavia_project_admin
+</span></span><span style="display:flex;"><span>  - octavia_project_member
+</span></span><span style="display:flex;"><span>  - octavia_project_reader
+</span></span><span style="display:flex;"><span>  default_region: RegionOne
+</span></span><span style="display:flex;"><span>  extension_mapping:
+</span></span><span style="display:flex;"><span>    fwaas_v2: neutron_firewall
+</span></span><span style="display:flex;"><span>    vpnaas: neutron_vpn
+</span></span><span style="display:flex;"><span>  interface_type: public
+</span></span><span style="display:flex;"><span>  keystone_url: http://10.10.10.250:5000/v3/                          &lt;&lt; openstack keystone_url 로 변경
+</span></span><span style="display:flex;"><span>  nginx_prefix: /api/openstack
+</span></span><span style="display:flex;"><span>  reclaim_instance_interval: 604800
+</span></span><span style="display:flex;"><span>  service_mapping:
+</span></span><span style="display:flex;"><span>    compute: nova
+</span></span><span style="display:flex;"><span>    identity: keystone
+</span></span><span style="display:flex;"><span>    image: glance
+</span></span><span style="display:flex;"><span>    network: neutron
+</span></span><span style="display:flex;"><span>    orchestration: heat
+</span></span><span style="display:flex;"><span>    placement: placement
+</span></span><span style="display:flex;"><span>    volumev3: cinder
+</span></span><span style="display:flex;"><span>  system_admin_roles:
+</span></span><span style="display:flex;"><span>  - admin
+</span></span><span style="display:flex;"><span>  - system_admin
+</span></span><span style="display:flex;"><span>  system_project: service
+</span></span><span style="display:flex;"><span>  system_project_domain: Default
+</span></span><span style="display:flex;"><span>  system_reader_roles:
+</span></span><span style="display:flex;"><span>  - system_reader
+</span></span><span style="display:flex;"><span>  system_user_domain: Default
+</span></span><span style="display:flex;"><span>  system_user_name: skyline
+</span></span><span style="display:flex;"><span>  system_user_password: {{ password }}                                  &lt;&lt; skyline user 생성할때 입력한 password
+</span></span><span style="display:flex;"><span>setting:
+</span></span><span style="display:flex;"><span>  base_settings:
+</span></span><span style="display:flex;"><span>  - flavor_families
+</span></span><span style="display:flex;"><span>  - gpu_models
+</span></span><span style="display:flex;"><span>  - usb_models
+</span></span><span style="display:flex;"><span>  flavor_families:
+</span></span><span style="display:flex;"><span>  - architecture: x86_architecture
+</span></span><span style="display:flex;"><span>    categories:
+</span></span><span style="display:flex;"><span>    - name: general_purpose
+</span></span><span style="display:flex;"><span>      properties: []
+</span></span><span style="display:flex;"><span>    - name: compute_optimized
+</span></span><span style="display:flex;"><span>      properties: []
+</span></span><span style="display:flex;"><span>    - name: memory_optimized
+</span></span><span style="display:flex;"><span>      properties: []
+</span></span><span style="display:flex;"><span>    - name: high_clock_speed
+</span></span><span style="display:flex;"><span>      properties: []
+</span></span><span style="display:flex;"><span>  - architecture: heterogeneous_computing
+</span></span><span style="display:flex;"><span>    categories:
+</span></span><span style="display:flex;"><span>    - name: compute_optimized_type_with_gpu
+</span></span><span style="display:flex;"><span>      properties: []
+</span></span><span style="display:flex;"><span>    - name: visualization_compute_optimized_type_with_gpu
+</span></span><span style="display:flex;"><span>      properties: []
+</span></span><span style="display:flex;"><span>  gpu_models:
+</span></span><span style="display:flex;"><span>  - nvidia_t4
+</span></span><span style="display:flex;"><span>  usb_models:
+</span></span><span style="display:flex;"><span>  - usb_c
+</span></span></code></pre></div><p>Bootstrap 을 진행합니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">(</span>osp<span style="color:#f92672">)</span> root@u-node-1:~/skyline-apiserver/container# docker run -d --name skyline_bootstrap -e KOLLA_BOOTSTRAP<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span> -v /etc/skyline/skyline.yaml:/etc/skyline/skyline.yaml --net<span style="color:#f92672">=</span>host 99cloud/skyline:latest
+</span></span><span style="display:flex;"><span>614a74d2204441cfb42266cefe17eb06eb96a4234fd03b1a7e2ddaf64140ab98
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">(</span>osp<span style="color:#f92672">)</span> root@u-node-1:~/skyline-apiserver/container# docker logs skyline_bootstrap
+</span></span><span style="display:flex;"><span>+ echo <span style="color:#e6db74">&#39;/usr/local/bin/gunicorn -c /etc/skyline/gunicorn.py skyline_apiserver.main:app&#39;</span>
+</span></span><span style="display:flex;"><span>+ mapfile -t CMD
+</span></span><span style="display:flex;"><span>++ xargs -n <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>++ tail /run_command
+</span></span><span style="display:flex;"><span>+ <span style="color:#f92672">[[</span> -n <span style="color:#ae81ff">0</span> <span style="color:#f92672">]]</span>
+</span></span><span style="display:flex;"><span>+ cd /skyline/libs/skyline-apiserver/
+</span></span><span style="display:flex;"><span>+ make db_sync
+</span></span><span style="display:flex;"><span>poetry run alembic upgrade head
+</span></span><span style="display:flex;"><span>Skipping virtualenv creation, as specified in config file.
+</span></span><span style="display:flex;"><span>+ exit <span style="color:#ae81ff">0</span>
+</span></span></code></pre></div><p>위 과정은 생성한 Database 를 초기화 하는 과정으로 보입니다.</p>
+<p>bootstrap 컨테이너를 제거하고 skyline main application 을 배포합니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">(</span>osp<span style="color:#f92672">)</span> root@u-node-1:~/skyline-apiserver/container# docker rm -f skyline_bootstrap
+</span></span><span style="display:flex;"><span>skyline_bootstrap
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">(</span>osp<span style="color:#f92672">)</span> root@u-node-1:~/skyline-apiserver/container# docker run -d --name skyline --restart<span style="color:#f92672">=</span>always -v /etc/skyline/skyline.yaml:/etc/skyline/skyline.yaml --net<span style="color:#f92672">=</span>host 99cloud/skyline:latest
+</span></span><span style="display:flex;"><span>8cde23649596ef629558889a0c7b6700b5528da63160154292bcfab17bb24f9b
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">(</span>osp<span style="color:#f92672">)</span> root@u-node-1:~/skyline-apiserver/container# docker ps -a
+</span></span><span style="display:flex;"><span>CONTAINER ID   IMAGE                                                                    COMMAND                  CREATED          STATUS                    PORTS     NAMES
+</span></span><span style="display:flex;"><span>8cde23649596   99cloud/skyline:latest     
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">(</span>osp<span style="color:#f92672">)</span> root@u-node-1:~/skyline-apiserver/container# docker logs -f skyline
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>+ echo <span style="color:#e6db74">&#39;Running command: /usr/local/bin/gunicorn -c /etc/skyline/gunicorn.py skyline_apiserver.main:app&#39;</span>
+</span></span><span style="display:flex;"><span>+ exec /usr/local/bin/gunicorn -c /etc/skyline/gunicorn.py skyline_apiserver.main:app
+</span></span><span style="display:flex;"><span>+ echo <span style="color:#e6db74">&#39;/usr/local/bin/gunicorn -c /etc/skyline/gunicorn.py skyline_apiserver.main:app&#39;</span>
+</span></span><span style="display:flex;"><span>+ mapfile -t CMD
+</span></span><span style="display:flex;"><span>++ tail /run_command
+</span></span><span style="display:flex;"><span>++ xargs -n <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>+ <span style="color:#f92672">[[</span> -n <span style="color:#e6db74">&#39;&#39;</span> <span style="color:#f92672">]]</span>
+</span></span><span style="display:flex;"><span>+ nginx-generator -o /etc/nginx/nginx.conf
+</span></span><span style="display:flex;"><span>+ nginx
+</span></span><span style="display:flex;"><span>+ echo <span style="color:#e6db74">&#39;Running command: /usr/local/bin/gunicorn -c /etc/skyline/gunicorn.py skyline_apiserver.main:app&#39;</span>
+</span></span><span style="display:flex;"><span>+ exec /usr/local/bin/gunicorn -c /etc/skyline/gunicorn.py skyline_apiserver.main:app
+</span></span><span style="display:flex;"><span>Running command: /usr/local/bin/gunicorn -c /etc/skyline/gunicorn.py skyline_apiserver.main:app
+</span></span></code></pre></div><p>정상적으로 Application 이 작동하면 <code>https://XXXXXXXXXXXXXXXXXXXX:8080</code> 으로 접근이 가능합니다.</p>
+<h1 id="preview-1">Preview<a hidden class="anchor" aria-hidden="true" href="#preview-1">#</a></h1>
+<ul>
+<li>
+<p>Login page : region 별로 domain 을 지정 할 수 있도록 되어있습니다. multi region 을 관리하는데 편리함을 위해 만들어진 것으로 보입니다.<br>
+(초기 설치 이후, 중국어로 콘솔이 나와서 매우 당황했으나 언어를 English 로 변경하면 사용하는데 문제가 없었다.)</p>
+<!-- raw HTML omitted -->
+</li>
+<li>
+<p>Overview page : 프로젝트 Quota 현황을 볼 수 있습니다.</p>
+<!-- raw HTML omitted -->
+</li>
+<li>
+<p>Instance page : Instance 상세 현황을 볼 수 있습니다.<br>
+(Instance 현황은 <code>error</code> 지만 Dashboard 의 화면 구성을 보는데 목적으로 추가하였습니다.)</p>
+<!-- raw HTML omitted -->
+</li>
+</ul>
+<h1 id="개인적-의견">개인적 의견<a hidden class="anchor" aria-hidden="true" href="#개인적-의견">#</a></h1>
+<ul>
+<li>장점
+<ul>
+<li>Horizon 보다 빠른 속도</li>
+<li>깔끔하고 정리된 느낌</li>
+</ul>
+</li>
+<li>단점
+<ul>
+<li>아직 정보가 부족함</li>
+</ul>
+</li>
+</ul>
+<p><em><strong>총평 : 기존의 Horizon 보다 사용하기 편리했고 빠른 성능으로 인해 불편함을 느끼지 못함. 매우 기대되는 Project 이다!!</strong></em></p>
+<h1 id="참고-문서">참고 문서<a hidden class="anchor" aria-hidden="true" href="#참고-문서">#</a></h1>
+<ul>
+<li><a href="https://opendev.org/skyline/skyline-apiserver">https://opendev.org/skyline/skyline-apiserver</a></li>
+<li><a href="https://satishdotpatel.github.io/openstack-skyline-dashborad/">https://satishdotpatel.github.io/openstack-skyline-dashborad/</a></li>
+</ul>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://chhanz88.github.io/tags/openstack/">openstack</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2022 <a href="https://chhanz88.github.io">chhanz 
+기술 블로그
+</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://git.io/hugopapermod" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>
