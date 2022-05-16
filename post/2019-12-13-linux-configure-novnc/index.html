@@ -95,7 +95,7 @@
   "keywords": [
     "linux"
   ],
-  "articleBody": "noVNC 구성 noVNC 란? noVNC는 HTML VNC 클라이언트 프로그램입니다.\nnoVNC 구성  install requirement package  $ yum -y groupinstall \"GNOME Desktop\" $ yum -y install epel-release  install noVNC package  $ yum -y install novnc python-websockify numpy tigervnc-server  start service vncserver  $ vncserver :1 vncserver 가 시작되면 vnc 접속용 password 입력을 요구합니다. 해당 password 는 noVNC 에 접근 할 때 필요한 password 입니다.\n start service websockify  $ websockify -D --web=/usr/share/novnc/ 6080 localhost:5901 위와 같이 명령을 수행하면 6080 포트로 noVNC 서비스가 작동합니다.\nnoVNC 이용 noVNC 가 설치된 서버의 아이피로 접속합니다.\n ex) http://192.168.100.100:6080\n 아래와 같이 접속이 되며 vnc password 를 입력을 요청합니다.\n vnc password 를 입력하면 아래와 같이 VNC Viewer 클라이언트 프로그램 없이 웹브라우저를 통해 VNC 접속이 가능합니다.\n 참고 자료  noVNC : https://github.com/novnc/noVNC  ",
+  "articleBody": "noVNC 구성 noVNC 란? noVNC는 HTML VNC 클라이언트 프로그램입니다.\nnoVNC 구성  install requirement package  $ yum -y groupinstall \"GNOME Desktop\" $ yum -y install epel-release  install noVNC package  $ yum -y install novnc python-websockify numpy tigervnc-server  start service vncserver  $ vncserver :1 vncserver 가 시작되면 vnc 접속용 password 입력을 요구합니다. 해당 password 는 noVNC 에 접근 할 때 필요한 password 입니다.\n start service websockify  $ websockify -D --web=/usr/share/novnc/ 6080 localhost:5901 위와 같이 명령을 수행하면 6080 포트로 noVNC 서비스가 작동합니다.\nnoVNC 이용 noVNC 가 설치된 서버의 아이피로 접속합니다.\n ex) http://192.168.100.100:6080\n 아래와 같이 접속이 되며 vnc password 를 입력을 요청합니다.\nvnc password 를 입력하면 아래와 같이 VNC Viewer 클라이언트 프로그램 없이 웹브라우저를 통해 VNC 접속이 가능합니다.\n참고 자료  noVNC : https://github.com/novnc/noVNC  ",
   "wordCount" : "119",
   "inLanguage": "en",
   "datePublished": "2019-12-13T00:00:00Z",
@@ -230,9 +230,9 @@
 <p><em><strong>ex) http://192.168.100.100:6080</strong></em></p>
 </blockquote>
 <p>아래와 같이 접속이 되며 <code>vnc password</code> 를 입력을 요청합니다.</p>
-<center><img src="/assets/images/post/2019-12-13-novnc/image1.png" style="max-width: 95%; height: auto;"></center>   
+<!-- raw HTML omitted -->
 <p><code>vnc password</code> 를 입력하면 아래와 같이 <code>VNC Viewer</code> 클라이언트 프로그램 없이 웹브라우저를 통해 <code>VNC</code> 접속이 가능합니다.</p>
-<center><img src="/assets/images/post/2019-12-13-novnc/image2.png" style="max-width: 90%; height: auto;"></center>   
+<!-- raw HTML omitted -->
 <h1 id="참고-자료">참고 자료<a hidden class="anchor" aria-hidden="true" href="#참고-자료">#</a></h1>
 <ul>
 <li>noVNC : <a href="https://github.com/novnc/noVNC">https://github.com/novnc/noVNC</a></li>

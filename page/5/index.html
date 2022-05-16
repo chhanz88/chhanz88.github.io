@@ -266,7 +266,7 @@ PHP WebApp 배포  Web Console 로 developer 계정으로 로그인합니다.
 자료 사용시 출처 부탁 드려요.
  목차  Deploying Applications From Images Deploying Applications From Source Deploying Applications From Template  Deploying Applications From Images 이번 Lab 은 Container Image 로 생성된 App 을 배포 하도록 하겠습니다.
 Django WebApp 배포  Web Console 로 developer 계정으로 로그인합니다.
- * 새로운 Project 를 생성합니다. * [`openshiftkatacoda/blog-django-py`](https://github.com/openshift-katacoda/blog-django-py) Django WebApp 를 배포합니다. * Copy to Paste : `openshiftkatacoda/blog-django-py` 배포 완료!...</p>
+ CLI 로 배포 $ oc login -u developer $ oc project django-project $ oc new-app openshiftkatacoda/blog-django-py --name blog-from-image $ oc expose svc/blog-from-image  $ oc get all NAME READY STATUS RESTARTS AGE pod/blog-django-py-6b787ccc9f-hl7tk 1/1 Running 0 16m pod/blog-from-image-1-74snj 1/1 Running 0 41s pod/blog-from-image-1-deploy 0/1 Completed 0 45s  NAME DESIRED CURRENT READY AGE replicationcontroller/blog-from-image-1 1 1 1 45s  NAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGE service/blog-django-py ClusterIP 172....</p>
   </div>
   <footer class="entry-footer"><span title='2020-06-18 00:00:00 +0000 UTC'>June 18, 2020</span>&nbsp;·&nbsp;chhanz</footer>
   <a class="entry-link" aria-label="post link to [OpenShift 4.4] Deploying Applications From Images" href="https://chhanz88.github.io/post/post/2020-06-18-ocp4-deploy-image/"></a>
@@ -295,8 +295,9 @@ Disable SELinux, Firewalld
   </header>
   <div class="entry-content">
     <p>Red Hat Ansible Tower Bundle 설치(v3.6.3) Ansible Tower 설치 준비 Ansible Tower 설치를 위해 아래와 같이 Repository 를 Enable 합니다.
-$ subscription-manager repos --enable=rhel-7-server-rpms $ subscription-manager repos --enable=rhel-7-server-ansible-2.9-rpms $ subscription-manager repos --enable=rhel-server-rhscl-7-rpms 위와 같이 Red Hat Ansible Tower Download Center 에서 `Ansible Tower 3.6.3 Setup Bundle` 을 Download 합니다. Download 된 Bundle 을 설치할 시스템에 Upload 하고 아래와 같이 진행니다.
-[root@fastvm-r77-99 ~]# tar xzvf ansible-tower-setup-bundle-3.6.3-1.tar.gz  [root@fastvm-r77-99 ~]# cd ansible-tower-setup-bundle-3.6.3-1 Ansible Tower 설치 inventory 수정 아래와 같이 Ansible Tower 에서 사용될 Password 를 지정합니다....</p>
+$ subscription-manager repos --enable=rhel-7-server-rpms $ subscription-manager repos --enable=rhel-7-server-ansible-2.9-rpms $ subscription-manager repos --enable=rhel-server-rhscl-7-rpms Download 된 Bundle 을 설치할 시스템에 Upload 하고 아래와 같이 진행니다.
+[root@fastvm-r77-99 ~]# tar xzvf ansible-tower-setup-bundle-3.6.3-1.tar.gz  [root@fastvm-r77-99 ~]# cd ansible-tower-setup-bundle-3.6.3-1 Ansible Tower 설치 inventory 수정 아래와 같이 Ansible Tower 에서 사용될 Password 를 지정합니다.
+$ vi inventory  ....</p>
   </div>
   <footer class="entry-footer"><span title='2020-05-12 00:00:00 +0000 UTC'>May 12, 2020</span>&nbsp;·&nbsp;chhanz</footer>
   <a class="entry-link" aria-label="post link to [Ansible] Red Hat Ansible Tower Bundle 설치(v3.6.3)" href="https://chhanz88.github.io/post/post/2020-05-12-install-ansible-tower/"></a>

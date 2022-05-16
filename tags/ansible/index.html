@@ -174,8 +174,9 @@ Playbook 사용법 Clone Playbook 아래와 같이 Playbook 을 Clone 진행합�
   </header>
   <div class="entry-content">
     <p>Red Hat Ansible Tower Bundle 설치(v3.6.3) Ansible Tower 설치 준비 Ansible Tower 설치를 위해 아래와 같이 Repository 를 Enable 합니다.
-$ subscription-manager repos --enable=rhel-7-server-rpms $ subscription-manager repos --enable=rhel-7-server-ansible-2.9-rpms $ subscription-manager repos --enable=rhel-server-rhscl-7-rpms 위와 같이 Red Hat Ansible Tower Download Center 에서 `Ansible Tower 3.6.3 Setup Bundle` 을 Download 합니다. Download 된 Bundle 을 설치할 시스템에 Upload 하고 아래와 같이 진행니다.
-[root@fastvm-r77-99 ~]# tar xzvf ansible-tower-setup-bundle-3.6.3-1.tar.gz  [root@fastvm-r77-99 ~]# cd ansible-tower-setup-bundle-3.6.3-1 Ansible Tower 설치 inventory 수정 아래와 같이 Ansible Tower 에서 사용될 Password 를 지정합니다....</p>
+$ subscription-manager repos --enable=rhel-7-server-rpms $ subscription-manager repos --enable=rhel-7-server-ansible-2.9-rpms $ subscription-manager repos --enable=rhel-server-rhscl-7-rpms Download 된 Bundle 을 설치할 시스템에 Upload 하고 아래와 같이 진행니다.
+[root@fastvm-r77-99 ~]# tar xzvf ansible-tower-setup-bundle-3.6.3-1.tar.gz  [root@fastvm-r77-99 ~]# cd ansible-tower-setup-bundle-3.6.3-1 Ansible Tower 설치 inventory 수정 아래와 같이 Ansible Tower 에서 사용될 Password 를 지정합니다.
+$ vi inventory  ....</p>
   </div>
   <footer class="entry-footer"><span title='2020-05-12 00:00:00 +0000 UTC'>May 12, 2020</span>&nbsp;·&nbsp;chhanz</footer>
   <a class="entry-link" aria-label="post link to [Ansible] Red Hat Ansible Tower Bundle 설치(v3.6.3)" href="https://chhanz88.github.io/post/post/2020-05-12-install-ansible-tower/"></a>

@@ -244,9 +244,10 @@ Ubuntu 는 설치가 되면 systemd-timesyncd 라는 daemon 이 기본적으로 
     </h2>
   </header>
   <div class="entry-content">
-    <p>VirtualBMC 를 이용한 IPMI node 생성  해당 문서는 Libvirt(KVM) 환경에서 각 VM 을 관리하는 IPMI Node 를 생성하는 방법에 대해 설명하고 있습니다. IPMI Node 설정 SSH Key 배포 SSH 를 이용하여 KVM 에 접근 및 통제를 하기 위해 SSH KEY Password 배포를 진행합니다.
+    <p>VirtualBMC 를 이용한 IPMI node 생성 IPMI Node 설정 SSH Key 배포 SSH 를 이용하여 KVM 에 접근 및 통제를 하기 위해 SSH KEY Password 배포를 진행합니다.
 [root@ipmi-node ~]# ssh-copy-id root@kvm Python-pip 설치 아래와 같은 방법으로 pip 을 설치합니다.
-[root@ipmi-node ~]# yum -y install python3 python3-pip  [root@ipmi-node ~]# pip3 install -U pip VirtualBMC 설치 아래와 같은 방법으로 vBMC 를 설치합니다....</p>
+[root@ipmi-node ~]# yum -y install python3 python3-pip  [root@ipmi-node ~]# pip3 install -U pip VirtualBMC 설치 아래와 같은 방법으로 vBMC 를 설치합니다.
+[root@ipmi-node ~]# pip3 install virtualbmc 설치 과정 중, 아래와 같은 Error 가 발생되면 추가 Package 를 설치합니다....</p>
   </div>
   <footer class="entry-footer"><span title='2022-04-14 00:00:00 +0000 UTC'>April 14, 2022</span>&nbsp;·&nbsp;chhanz</footer>
   <a class="entry-link" aria-label="post link to [Linux] VirtualBMC 를 이용한 IPMI node 생성" href="https://chhanz88.github.io/post/post/2022-04-14-vbmcd-ipminode/"></a>
@@ -275,7 +276,10 @@ $ ipmitool lan print [&lt;channel num&gt;] Set in Progress : Set Complete Auth T
     </h2>
   </header>
   <div class="entry-content">
-    <p>목차  Njmon 란? Architecture Telegraf config Njmon config  Prometheus config Grafana Dashboard 참고 자료  Njmon 이란?  `njmon` 는 `nmon` 과 비슷하지만 더 많은 성능 및 구성 데이터를 수집하고 JSON 형식으로 출력하고 해당 데이터를 데이터베이스(if. InfluxDB, Prometheus)에 입력하는 기능을 수행합니다. 주로 `nmon` 에 익숙하여 다른 Metric 을 사용하기 힘들거나, Exporter 를 설치하는데 어려움이 있는 CASE 에서 사용하기 좋은 Tool 일 것 같습니다. Architecture  위와 같은 구조로 `njmon` 데이터를 수집 받고 `Telegarf` 가 마치 `Node Exporter` 처럼 Metric 을 `Prometheus` 로 전달하는 구조로 구성합니다....</p>
+    <p>목차  Njmon 란? Architecture Telegraf config Njmon config  Prometheus config Grafana Dashboard 참고 자료  Njmon 이란? Architecture Telegraf config 이번 글에서 사용한 테스트 시스템은 Rocky Linux 8 이며 아래 문서를 참고 하여 Telegraf 를 구성하였습니다.
+(https://docs.influxdata.com/telegraf/v1.21/introduction/installation/?t=RedHat&#43;%26amp%3B&#43;CentOS)
+아래와 같이 Repository 를 추가합니다.
+cat &lt;&lt;EOF | sudo tee /etc/yum.repos.d/influxdb.repo [influxdb] name = InfluxDB Repository - RHEL \$releasever baseurl = https://repos.influxdata.com/rhel/\$releasever/\$basearch/stable enabled = 1 gpgcheck = 1 gpgkey = https://repos.influxdata.com/influxdb.key EOF dnf 를 통해 Package 를 설치합니다....</p>
   </div>
   <footer class="entry-footer"><span title='2022-02-18 00:00:00 +0000 UTC'>February 18, 2022</span>&nbsp;·&nbsp;chhanz</footer>
   <a class="entry-link" aria-label="post link to [Linux] njmon with Prometheus" href="https://chhanz88.github.io/post/post/2022-02-18-njmon-telegraf-grafana/"></a>

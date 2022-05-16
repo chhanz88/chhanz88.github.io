@@ -158,10 +158,11 @@
   </header>
   <div class="entry-content">
     <p>흥미 최근 OpenStack 커뮤니티 그룹에서 올라온 글을 보고 기존에 Horizon 의 약한 부분에 대해 매우 아쉬움을 가지고 있던 저는 매우 흥미를 느끼며 이 포스팅을 작성하게 되었습니다.
- * 흥미로운 소식 : [https://www.facebook.com/photo/?fbid=10166019386805577&amp;set=gm.5334637036550404](https://www.facebook.com/photo/?fbid=10166019386805577&amp;set=gm.5334637036550404) Preview 이 흥미로운 Project 는 Skyline 이라는 이름의 새로운 OpenStack Dashboard Project 입니다.
+Preview 이 흥미로운 Project 는 Skyline 이라는 이름의 새로운 OpenStack Dashboard Project 입니다.
 (https://wiki.openstack.org/wiki/Skyline#Description)
 Install 테스트에 활용된 OpenStack 환경은 아래와 같습니다.
-* OpenStack wallaby (all-in-one version) [deploy tool `kolla-ansible`] * ubuntu 20.04 Skyline 에서 사용될 User 를 생성합니다....</p>
+* OpenStack wallaby (all-in-one version) [deploy tool `kolla-ansible`] * ubuntu 20.04 Skyline 에서 사용될 User 를 생성합니다.
+(osp) root@u-node-1:/etc/kolla# openstack user create --domain default --password-prompt skyline User Password: Repeat User Password: &#43;---------------------&#43;----------------------------------&#43; | Field | Value | &#43;---------------------&#43;----------------------------------&#43; | domain_id | default | | enabled | True | | id | 1bd73a672fa343569fa4d771eb3f0d23 | | name | skyline | | options | {} | | password_expires_at | None | &#43;---------------------&#43;----------------------------------&#43; Service 프로젝트에 skyline 계정 Admin role 을 추가합니다....</p>
   </div>
   <footer class="entry-footer"><span title='2022-01-17 00:00:00 +0000 UTC'>January 17, 2022</span>&nbsp;·&nbsp;chhanz</footer>
   <a class="entry-link" aria-label="post link to [OpenStack] [Preview] OpenStack Dashboard - Skyline" href="https://chhanz88.github.io/post/post/2022-01-17-openstack-dashboard-skyline/"></a>
@@ -190,7 +191,7 @@ Install 테스트에 활용된 OpenStack 환경은 아래와 같습니다.
     <p>HTTPS ingress 적용 이전에 배포한 kube-prometheus 의 ingress 를 TLS 적용하여 HTTPS 로 서비스 해보도록 하겠습니다.
 TLS 방식 Kubernetes 에서 사용이 가능한 TLS 방식은 아래와 같습니다.
 아래 내용은 OpenShift 기준으로 작성된 내용이지만 이해하기 좋아서 첨부합니다.
- 이미지의 Router 는 Kubernetes 의 Ingress 와 동일하다고 보면 됩니다.   Clear 방식 (clear to clear) : 일반적인 HTTP 서비스 Edge 방식 (TLS to clear) : client 와 ingress 구간을 TLS 암호화하는 방식 Re-encrypt 방식 (TLS1 to TLS2) : ingress 기점으로 TLS 암호화를 다르게 하는 방식(두번의 TLS 암호화) Pass-Through 방식 (TLS1 to TLS1) : Application 단에서 TLS 암호화 처리하는 방식   TLS 적용 위의 설명된 방식중 Edge 방식을 적용 해보도록 하겠습니다....</p>
+  Clear 방식 (clear to clear) : 일반적인 HTTP 서비스 Edge 방식 (TLS to clear) : client 와 ingress 구간을 TLS 암호화하는 방식 Re-encrypt 방식 (TLS1 to TLS2) : ingress 기점으로 TLS 암호화를 다르게 하는 방식(두번의 TLS 암호화) Pass-Through 방식 (TLS1 to TLS1) : Application 단에서 TLS 암호화 처리하는 방식   TLS 적용 위의 설명된 방식중 Edge 방식을 적용 해보도록 하겠습니다....</p>
   </div>
   <footer class="entry-footer"><span title='2021-11-08 00:00:00 +0000 UTC'>November 8, 2021</span>&nbsp;·&nbsp;chhanz</footer>
   <a class="entry-link" aria-label="post link to [Kubernetes] HTTPS ingress 적용 (use prometheus)" href="https://chhanz88.github.io/post/post/2021-11-08-kube-tls-edge/"></a>

@@ -16,10 +16,11 @@
       
       <guid>https://chhanz88.github.io/post/post/2022-01-17-openstack-dashboard-skyline/</guid>
       <description>흥미 최근 OpenStack 커뮤니티 그룹에서 올라온 글을 보고 기존에 Horizon 의 약한 부분에 대해 매우 아쉬움을 가지고 있던 저는 매우 흥미를 느끼며 이 포스팅을 작성하게 되었습니다.
- * 흥미로운 소식 : [https://www.facebook.com/photo/?fbid=10166019386805577&amp;set=gm.5334637036550404](https://www.facebook.com/photo/?fbid=10166019386805577&amp;set=gm.5334637036550404) Preview 이 흥미로운 Project 는 Skyline 이라는 이름의 새로운 OpenStack Dashboard Project 입니다.
+Preview 이 흥미로운 Project 는 Skyline 이라는 이름의 새로운 OpenStack Dashboard Project 입니다.
 (https://wiki.openstack.org/wiki/Skyline#Description)
 Install 테스트에 활용된 OpenStack 환경은 아래와 같습니다.
-* OpenStack wallaby (all-in-one version) [deploy tool `kolla-ansible`] * ubuntu 20.04 Skyline 에서 사용될 User 를 생성합니다.</description>
+* OpenStack wallaby (all-in-one version) [deploy tool `kolla-ansible`] * ubuntu 20.04 Skyline 에서 사용될 User 를 생성합니다.
+(osp) root@u-node-1:/etc/kolla# openstack user create --domain default --password-prompt skyline User Password: Repeat User Password: +---------------------+----------------------------------+ | Field | Value | +---------------------+----------------------------------+ | domain_id | default | | enabled | True | | id | 1bd73a672fa343569fa4d771eb3f0d23 | | name | skyline | | options | {} | | password_expires_at | None | +---------------------+----------------------------------+ Service 프로젝트에 skyline 계정 Admin role 을 추가합니다.</description>
     </item>
     
     <item>
