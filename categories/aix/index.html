@@ -185,7 +185,7 @@ Script 내용  #! /bin/ksh # Make by. chhan  DATEC=$(date &#43;%Y%m%d-%H%M) IdCh
     <p>Could not load program: Cannot run a 64-bit program until the 64-bit environment has been configured. aix maintenance mode 로 부팅 진행 후, shell 환경에서 아래와 같이 Error 가 발생하면서
 일부 명령어들이 정상 작동 하지 않습니다.
 cf. Booting AIX into Maintenance Mode
-Error 내용 # ls  Could not load program ls: Cannot run a 64-bit program until the 64-bit  environment has been configured. See the system administrator. 해결 방법 # /etc/methods/cfg64 해결 이후 # ls  test....</p>
+Error 내용 # ls Could not load program ls: Cannot run a 64-bit program until the 64-bit environment has been configured. See the system administrator. 해결 방법 # /etc/methods/cfg64 해결 이후 # ls test....</p>
   </div>
   <footer class="entry-footer"><span title='2017-01-16 00:00:00 +0000 UTC'>January 16, 2017</span>&nbsp;·&nbsp;chhanz</footer>
   <a class="entry-link" aria-label="post link to [AIX] Could not load program: Cannot run a 64-bit program until the 64-bit environment has been configured." href="https://chhanz88.github.io/post/post/2017-01-16-aixerrorcfg64/"></a>
@@ -199,7 +199,7 @@ Error 내용 # ls  Could not load program ls: Cannot run a 64-bit program until 
   <div class="entry-content">
     <p>[AIX] RDX Device Backup Guide  AIX RDX Device Backup Guide 입니다.
 (RDX 를 이용한 백업 방법입니다.)
-2016년 프로젝트 참여하면서 작성한 가이드입니다.
+   [AIX] RDX Device Backup Guide  from CheolHee Han   2016년 프로젝트 참여하면서 작성한 가이드입니다.
  작성일 : 2016.02.15 배포일 : 2019.01.11  </p>
   </div>
   <footer class="entry-footer"><span title='2016-02-15 00:00:00 +0000 UTC'>February 15, 2016</span>&nbsp;·&nbsp;chhanz</footer>
@@ -214,7 +214,7 @@ Error 내용 # ls  Could not load program ls: Cannot run a 64-bit program until 
   <div class="entry-content">
     <p>Force remove cluster - PowerHA 7.1  HACMP 7.1 에서 CAAVG 가 삭제가 안되면서, Cluster 를 제거 할 수 없는 경우가 있습니다.
 해당 이슈가 발생 할 경우, 아래와 같이 진행 하면 됩니다.
-# lspv | grep caavg hdiskpower426 000000000r508909 caavg_private active  There is caavg so customer failed to create new HA cluster. To remove CAA cluster, run below command at both nodes.  # export CAA_FORCE_ENABLED=1; rmcluster -fr hdiskpower426 &lt;&lt;== hdisk no....</p>
+# lspv | grep caavg hdiskpower426 000000000r508909 caavg_private active There is caavg so customer failed to create new HA cluster. To remove CAA cluster, run below command at both nodes. # export CAA_FORCE_ENABLED=1; rmcluster -fr hdiskpower426 &lt;&lt;== hdisk no....</p>
   </div>
   <footer class="entry-footer"><span title='2014-07-25 00:00:00 +0000 UTC'>July 25, 2014</span>&nbsp;·&nbsp;chhanz</footer>
   <a class="entry-link" aria-label="post link to [HACMP71] Force remove cluster" href="https://chhanz88.github.io/post/post/2014-07-25-hacmpforceremove/"></a>
@@ -227,7 +227,7 @@ Error 내용 # ls  Could not load program ls: Cannot run a 64-bit program until 
   </header>
   <div class="entry-content">
     <p>LVM 이란?  사원 시절 작성한 문서입니다.
-  작성일 : 2014.01.12 배포일 : 2019.01.10  </p>
+   AIX - LVM 이란?  from CheolHee Han     작성일 : 2014.01.12 배포일 : 2019.01.10  </p>
   </div>
   <footer class="entry-footer"><span title='2014-01-12 00:00:00 +0000 UTC'>January 12, 2014</span>&nbsp;·&nbsp;chhanz</footer>
   <a class="entry-link" aria-label="post link to [AIX] LVM 이란?" href="https://chhanz88.github.io/post/post/2014-01-12-aix-lvm-informarion/"></a>
@@ -256,7 +256,7 @@ JFS vs JFS2     Function JFS2 JFS     Fragments/Block Size 512~4096 Block Size 5
     <p>Mirror VG, 한개의 PV 로 alt_disk_install 하는 방법  Mirror 된 VG 를 alt_disk_install 을 진행하면 target PV 는 2EA 가 필요합니다.
 따라서 Mirror 된 VG 는 한개의 target PV 에 하기 위해서는 -i 옵션을 사용합니다.
 image.data 수정  -i 옵션에 사용될 image.data 를 수정합니다.
-# lspv hdisk0 000aaaa120011111 rootvg active hdisk1 000aaaa120222222 rootvg active hdisk2 none None  # vi /image.data  ## lv_data의 항목중 * LV_SOURCE_DISK_LIST= hdisk0 hdisk1 -&gt; hdisk0로 변경 * COPIES= 2 -&gt; 1로 변경 * PP= 2 -&gt; 1로 변경 위와 같이 Source PV 하나를 제거하고, LV의 COPY 수량, LV 용량을 수정합니다....</p>
+# lspv hdisk0 000aaaa120011111 rootvg active hdisk1 000aaaa120222222 rootvg active hdisk2 none None # vi /image.data ## lv_data의 항목중 * LV_SOURCE_DISK_LIST= hdisk0 hdisk1 -&gt; hdisk0로 변경 * COPIES= 2 -&gt; 1로 변경 * PP= 2 -&gt; 1로 변경 위와 같이 Source PV 하나를 제거하고, LV의 COPY 수량, LV 용량을 수정합니다....</p>
   </div>
   <footer class="entry-footer"><span title='2012-09-06 00:00:00 +0000 UTC'>September 6, 2012</span>&nbsp;·&nbsp;chhanz</footer>
   <a class="entry-link" aria-label="post link to [AIX] Mirror 상태인 VG, alt_disk_install 하는 법" href="https://chhanz88.github.io/post/post/2012-09-06-aixmirroraltdisk/"></a>

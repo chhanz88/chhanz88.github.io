@@ -143,7 +143,7 @@
   <div class="entry-content">
     <p>Force remove cluster - PowerHA 7.1  HACMP 7.1 에서 CAAVG 가 삭제가 안되면서, Cluster 를 제거 할 수 없는 경우가 있습니다.
 해당 이슈가 발생 할 경우, 아래와 같이 진행 하면 됩니다.
-# lspv | grep caavg hdiskpower426 000000000r508909 caavg_private active  There is caavg so customer failed to create new HA cluster. To remove CAA cluster, run below command at both nodes.  # export CAA_FORCE_ENABLED=1; rmcluster -fr hdiskpower426 &lt;&lt;== hdisk no....</p>
+# lspv | grep caavg hdiskpower426 000000000r508909 caavg_private active There is caavg so customer failed to create new HA cluster. To remove CAA cluster, run below command at both nodes. # export CAA_FORCE_ENABLED=1; rmcluster -fr hdiskpower426 &lt;&lt;== hdisk no....</p>
   </div>
   <footer class="entry-footer"><span title='2014-07-25 00:00:00 +0000 UTC'>July 25, 2014</span>&nbsp;·&nbsp;chhanz</footer>
   <a class="entry-link" aria-label="post link to [HACMP71] Force remove cluster" href="https://chhanz88.github.io/post/post/2014-07-25-hacmpforceremove/"></a>

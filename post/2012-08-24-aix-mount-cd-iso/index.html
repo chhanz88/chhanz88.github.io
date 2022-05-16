@@ -200,10 +200,10 @@
   <div class="post-content"><h1 id="aix-mount-cddvd--iso-image">[AIX] Mount CD/DVD &amp; ISO Image<a hidden class="anchor" aria-hidden="true" href="#aix-mount-cddvd--iso-image">#</a></h1>
 <hr>
 <h2 id="cd-혹은-dvd-를-cli-command-로-mount-">CD 혹은 DVD 를 CLI Command 로 Mount :<a hidden class="anchor" aria-hidden="true" href="#cd-혹은-dvd-를-cli-command-로-mount-">#</a></h2>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># mount -V cdrfs -o ro /dev/cd0 /mnt
-</span></span></code></pre></div><h2 id="iso-image-를-cli-command-로-mount-">ISO Image 를 CLI Command 로 Mount :<a hidden class="anchor" aria-hidden="true" href="#iso-image-를-cli-command-로-mount-">#</a></h2>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># loopmount -i aix-6100-09-02-icd.iso -o &#34;-V cdrfs -o ro&#34; -m /mnt
-</span></span></code></pre></div>
+<pre tabindex="0"><code># mount -V cdrfs -o ro /dev/cd0 /mnt
+</code></pre><h2 id="iso-image-를-cli-command-로-mount-">ISO Image 를 CLI Command 로 Mount :<a hidden class="anchor" aria-hidden="true" href="#iso-image-를-cli-command-로-mount-">#</a></h2>
+<pre tabindex="0"><code># loopmount -i aix-6100-09-02-icd.iso -o &#34;-V cdrfs -o ro&#34; -m /mnt
+</code></pre>
 
   </div>
 

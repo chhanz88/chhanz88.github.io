@@ -205,10 +205,10 @@
 <p>주로 AIX 에서는 diag 를 통해 hdisk format 을 진행하고 데이터 삭제 검증을 합니다.<br>
 하지만 동시에 여러개의 hdisk 를 format 을 진행 할 수는 없습니다.</p>
 <p>아래와 같이 명령어를 이용하면 동시에 hdisk format 이 가능합니다.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>/usr/lpp/diagnostics/bin/uformat -d hdisk1 -c -o format
-</span></span></code></pre></div><h1 id="동시에-여러-hdisk-format-진행-하는-command">동시에 여러 hdisk format 진행 하는 Command<a hidden class="anchor" aria-hidden="true" href="#동시에-여러-hdisk-format-진행-하는-command">#</a></h1>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>lspv | grep None | awk &#39;{print &#34;/usr/lpp/diagnostics/bin/uformat -d &#34;$1&#34; -c -o format &amp;&#34;}&#39; | sh -x
-</span></span></code></pre></div>
+<pre tabindex="0"><code>/usr/lpp/diagnostics/bin/uformat -d hdisk1 -c -o format
+</code></pre><h1 id="동시에-여러-hdisk-format-진행-하는-command">동시에 여러 hdisk format 진행 하는 Command<a hidden class="anchor" aria-hidden="true" href="#동시에-여러-hdisk-format-진행-하는-command">#</a></h1>
+<pre tabindex="0"><code>lspv | grep None | awk &#39;{print &#34;/usr/lpp/diagnostics/bin/uformat -d &#34;$1&#34; -c -o format &amp;&#34;}&#39; | sh -x
+</code></pre>
 
   </div>
 

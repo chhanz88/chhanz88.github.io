@@ -143,7 +143,7 @@
   <div class="entry-content">
     <p>[Linux][RHEL/CentOS] systemd 에 Service 등록  Systemd 에 사용자가 자주 사용하는 Service 를 등록하고 Systemd 를 통해 관리 할 수 있습니다.
 아래는 Systemd 에 등록할 Service Script 입니다.
-Systemd test 용 Script  #!/bin/bash  echo -e &#34; Start Systemd Test &#34; | logger -t Testsystemd  while : do 	echo -e &#34;Running systemd&#34; 	sleep 30 done systemd 에 Service 등록  systemd 에 서비스를 등록하기 위해 아래 경로에 아래와 같이 설정을 합니다....</p>
+Systemd test 용 Script  #!/bin/bash echo -e &#34; Start Systemd Test &#34; | logger -t Testsystemd while : do echo -e &#34;Running systemd&#34; sleep 30 done systemd 에 Service 등록  systemd 에 서비스를 등록하기 위해 아래 경로에 아래와 같이 설정을 합니다....</p>
   </div>
   <footer class="entry-footer"><span title='2019-01-18 00:00:00 +0000 UTC'>January 18, 2019</span>&nbsp;·&nbsp;chhanz</footer>
   <a class="entry-link" aria-label="post link to [Linux] systemd 에 Service 등록" href="https://chhanz88.github.io/post/post/2019-01-18-linux-how-to-create-custom-systemd-service/"></a>
@@ -200,7 +200,7 @@ Kernel Entry 확인  GRUB Menu 에서 Kernel Entry 가 어떻게 나올지 확�
   <div class="entry-content">
     <p>RHEL / CentOS 7 Bonding Currently Active Slave 변경  Bonding(본딩) 는 이중화 구성을 통한 빠른 장애 대응 및 네트워크 대역폭 증가에 매우 유용합니다.
 아래 절차는 본딩 인터페이스를 중단하지 않고, Slave 인터페이스로 전환하는 방법을 설명하려고 합니다.
-# cat /proc/net/bonding/bond0 Ethernet Channel Bonding Driver: v3.7.1 (April 27, 2011)  Bonding Mode: fault-tolerance (active-backup) Primary Slave: None Currently Active Slave: eth1 MII Status: up MII Polling Interval (ms): 100 Up Delay (ms): 0 Down Delay (ms): 0  Slave Interface: eth1 MII Status: up Speed: 1000 Mbps Duplex: full Link Failure Count: 0 Permanent HW addr: 00:2a:4a:16:01:63 Slave queue ID: 0  Slave Interface: eth2 MII Status: up Speed: 1000 Mbps Duplex: full Link Failure Count: 0 Permanent HW addr: 00:2a:4a:16:01:64 Slave queue ID: 0 위와 같이 본딩 구성이 되어 있습니다....</p>
+# cat /proc/net/bonding/bond0 Ethernet Channel Bonding Driver: v3.7.1 (April 27, 2011) Bonding Mode: fault-tolerance (active-backup) Primary Slave: None Currently Active Slave: eth1 MII Status: up MII Polling Interval (ms): 100 Up Delay (ms): 0 Down Delay (ms): 0 Slave Interface: eth1 MII Status: up Speed: 1000 Mbps Duplex: full Link Failure Count: 0 Permanent HW addr: 00:2a:4a:16:01:63 Slave queue ID: 0 Slave Interface: eth2 MII Status: up Speed: 1000 Mbps Duplex: full Link Failure Count: 0 Permanent HW addr: 00:2a:4a:16:01:64 Slave queue ID: 0 위와 같이 본딩 구성이 되어 있습니다....</p>
   </div>
   <footer class="entry-footer"><span title='2018-08-16 00:00:00 +0000 UTC'>August 16, 2018</span>&nbsp;·&nbsp;chhanz</footer>
   <a class="entry-link" aria-label="post link to [Linux] Bonding Network Currently Active Slave 변경" href="https://chhanz88.github.io/post/post/2018-08-16-linux-change-slave-bond-device/"></a>
@@ -213,7 +213,7 @@ Kernel Entry 확인  GRUB Menu 에서 Kernel Entry 가 어떻게 나올지 확�
   </header>
   <div class="entry-content">
     <p>[PowerKVM] PowerKVM Install Guide  IBM PowerKVM Install Guide 입니다.
- 작성일 : 2018.08.01 배포일 : 2019.01.14  </p>
+   IBM PowerKVM Install Guide  from CheolHee Han   작성일 : 2018.08.01 배포일 : 2019.01.14  </p>
   </div>
   <footer class="entry-footer"><span title='2018-08-01 00:00:00 +0000 UTC'>August 1, 2018</span>&nbsp;·&nbsp;chhanz</footer>
   <a class="entry-link" aria-label="post link to [PowerKVM] PowerKVM Install Guide" href="https://chhanz88.github.io/post/post/2018-08-01-linux-powerkvm-install-guide/"></a>

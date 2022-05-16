@@ -95,7 +95,7 @@
   "keywords": [
     "linux", "python"
   ],
-  "articleBody": "[Linux] CentOS 6 Python 2.7 설치  CentOS 6 의 기본 Python 버전은 v2.6 입니다.\nCentOS 의 응용프로그램들은 Python 2.6 과 호환되도록 설정되어있고, 이를 Update 를 할 경우 다수의 응용프로그램들이 문제가 발생 할 수 있습니다. 하지만 일부 시스템은 몇몇 소프트웨어를 사용하기위해, 최신 버전의 Python 을 사용하기 원합니다.\n위와 같은 일부 시스템에 최신 버전의 Python 을 설치하기 위해서는 다음과 같은 절차로 설치를 진행하면 됩니다.\nSCL Repository 연결  yum 명령을 통해 SCL Repository 를 연결합니다.\n# yum install -y centos-release-scl SCL Repository 연결 확인  Repository 가 정살적으로 연결 되었는지 확인합니다.\n# yum repolist Loading mirror speeds from cached hostfile  * base: centos.mirror.moack.net  * epel: mirror.premi.st  * extras: centos.mirror.moack.net  * updates: centos.mirror.moack.net repo id repo name status base CentOS-6 - Base 6,713 centos-sclo-rh CentOS-6 - SCLo rh 2,880 centos-sclo-sclo CentOS-6 - SCLo sclo 406 epel Extra Packages for Enterprise Linux 6 - x86_64 12,517 extras CentOS-6 - Extras 35 updates CentOS-6 - Updates 257 repolist: 22,808 Python 2.7 설치  등록한 Repository 를 통해 설치가 가능한 Python 을 확인합니다.\n# yum list python27-python.x86_64 --showd Loaded plugins: fastestmirror, refresh-packagekit, security Loading mirror speeds from cached hostfile  * base: centos.mirror.moack.net  * epel: mirror.premi.st  * extras: centos.mirror.moack.net  * updates: centos.mirror.moack.net Available Packages python27-python.x86_64 2.7.8-3.el6 centos-sclo-rh python27-python.x86_64 2.7.8-16.el6 centos-sclo-rh python27-python.x86_64 2.7.8-18.el6 centos-sclo-rh python27-python.x86_64 2.7.13-3.el6 centos-sclo-rh 원하는 특정 버전을 확인하고 설치 진행합니다.\n테스트를 위해 v2.7.8-3 로 설치하도록 하겠습니다.\n# yum install python27-python-2.7.8-3.el6 Loaded plugins: fastestmirror, refresh-packagekit, security Setting up Install Process Loading mirror speeds from cached hostfile  * base: centos.mirror.moack.net  * epel: mirror.premi.st  * extras: centos.mirror.moack.net  * updates: centos.mirror.moack.net Resolving Dependencies -- Running transaction check --- Package python27-python.x86_64 0:2.7.8-3.el6 will be installed -- Processing Dependency: python27-python-libs(x86-64) = 2.7.8-3.el6 for package: python27-python-2.7.8-3.el6.x86_64 -- Processing Dependency: python27-runtime for package: python27-python-2.7.8-3.el6.x86_64 -- Processing Dependency: libpython2.7.so.1.0()(64bit) for package: python27-python-2.7.8-3.el6.x86_64 -- Running transaction check --- Package python27-python-libs.x86_64 0:2.7.8-3.el6 will be installed --- Package python27-runtime.x86_64 0:1.1-25.el6 will be installed -- Processing Dependency: scl-utils for package: python27-runtime-1.1-25.el6.x86_64 -- Running transaction check --- Package scl-utils.x86_64 0:20120927-29.el6_9 will be installed -- Finished Dependency Resolution  Dependencies Resolved  ==================================================================================================================================  Package Arch Version Repository Size ================================================================================================================================== Installing:  python27-python x86_64 2.7.8-3.el6 centos-sclo-rh 80 k Installing for dependencies:  python27-python-libs x86_64 2.7.8-3.el6 centos-sclo-rh 5.6 M  python27-runtime x86_64 1.1-25.el6 centos-sclo-rh 1.0 M  scl-utils x86_64 20120927-29.el6_9 base 23 k  Transaction Summary ================================================================================================================================== Install 4 Package(s)  Total download size: 6.8 M Installed size: 24 M Is this ok [y/N]:  ... 중략 ...  Installed:  python27-python.x86_64 0:2.7.8-3.el6  Dependency Installed:  python27-python-libs.x86_64 0:2.7.8-3.el6 python27-runtime.x86_64 0:1.1-25.el6 scl-utils.x86_64 0:20120927-29.el6_9  Complete! 위와 같이 설치가 완료가 되면, scl Command 를 이용하여 Python 을 활성화 해야됩니다.\n// scl 설정 전 # python -V Python 2.6.6  // scl 을 이용하여 PATH 등록 # scl --list python27 # scl enable python27 bash # echo $PATH /opt/rh/python27/root/usr/bin:/usr/lib64/qt-3.3/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin  # python -V Python 2.7.8 PATH 가 등록이 되고 Python 이 최신 버전으로 Update 된 것을 볼 수 있습니다.\n.bash_profile 에 등록  Python 2.7 설치 경로에 있는 enable 파일을 .bash_profile 에 추가하여 shell 이 재시작하더라도 사용이 가능하게 설정을 할 수 있습니다.\n# vi .bash_profile  # Get the aliases and functions if [ -f ~/.bashrc ]; then  . ~/.bashrc fi  # User specific environment and startup programs  PATH=$PATH:$HOME/bin  export PATH  source /opt/rh/python27/enable 시스템 재접속 테스트 # exit logout Connection to 192.168.XX.XX closed.  ~ $ ssh root@192.168.XX.XX root@192.168.XX.XX's password: Last login: Wed Jan 9 00:00:00 2019 from 192.168.XX.XX  # python -V Python 2.7.8 위와 같이 설치가 완료되었습니다.\n",
+  "articleBody": "[Linux] CentOS 6 Python 2.7 설치  CentOS 6 의 기본 Python 버전은 v2.6 입니다.\nCentOS 의 응용프로그램들은 Python 2.6 과 호환되도록 설정되어있고, 이를 Update 를 할 경우 다수의 응용프로그램들이 문제가 발생 할 수 있습니다. 하지만 일부 시스템은 몇몇 소프트웨어를 사용하기위해, 최신 버전의 Python 을 사용하기 원합니다.\n위와 같은 일부 시스템에 최신 버전의 Python 을 설치하기 위해서는 다음과 같은 절차로 설치를 진행하면 됩니다.\nSCL Repository 연결  yum 명령을 통해 SCL Repository 를 연결합니다.\n# yum install -y centos-release-scl SCL Repository 연결 확인  Repository 가 정살적으로 연결 되었는지 확인합니다.\n# yum repolist Loading mirror speeds from cached hostfile * base: centos.mirror.moack.net * epel: mirror.premi.st * extras: centos.mirror.moack.net * updates: centos.mirror.moack.net repo id repo name status base CentOS-6 - Base 6,713 centos-sclo-rh CentOS-6 - SCLo rh 2,880 centos-sclo-sclo CentOS-6 - SCLo sclo 406 epel Extra Packages for Enterprise Linux 6 - x86_64 12,517 extras CentOS-6 - Extras 35 updates CentOS-6 - Updates 257 repolist: 22,808 Python 2.7 설치  등록한 Repository 를 통해 설치가 가능한 Python 을 확인합니다.\n# yum list python27-python.x86_64 --showd Loaded plugins: fastestmirror, refresh-packagekit, security Loading mirror speeds from cached hostfile * base: centos.mirror.moack.net * epel: mirror.premi.st * extras: centos.mirror.moack.net * updates: centos.mirror.moack.net Available Packages python27-python.x86_64 2.7.8-3.el6 centos-sclo-rh python27-python.x86_64 2.7.8-16.el6 centos-sclo-rh python27-python.x86_64 2.7.8-18.el6 centos-sclo-rh python27-python.x86_64 2.7.13-3.el6 centos-sclo-rh 원하는 특정 버전을 확인하고 설치 진행합니다.\n테스트를 위해 v2.7.8-3 로 설치하도록 하겠습니다.\n# yum install python27-python-2.7.8-3.el6 Loaded plugins: fastestmirror, refresh-packagekit, security Setting up Install Process Loading mirror speeds from cached hostfile * base: centos.mirror.moack.net * epel: mirror.premi.st * extras: centos.mirror.moack.net * updates: centos.mirror.moack.net Resolving Dependencies -- Running transaction check --- Package python27-python.x86_64 0:2.7.8-3.el6 will be installed -- Processing Dependency: python27-python-libs(x86-64) = 2.7.8-3.el6 for package: python27-python-2.7.8-3.el6.x86_64 -- Processing Dependency: python27-runtime for package: python27-python-2.7.8-3.el6.x86_64 -- Processing Dependency: libpython2.7.so.1.0()(64bit) for package: python27-python-2.7.8-3.el6.x86_64 -- Running transaction check --- Package python27-python-libs.x86_64 0:2.7.8-3.el6 will be installed --- Package python27-runtime.x86_64 0:1.1-25.el6 will be installed -- Processing Dependency: scl-utils for package: python27-runtime-1.1-25.el6.x86_64 -- Running transaction check --- Package scl-utils.x86_64 0:20120927-29.el6_9 will be installed -- Finished Dependency Resolution Dependencies Resolved ================================================================================================================================== Package Arch Version Repository Size ================================================================================================================================== Installing: python27-python x86_64 2.7.8-3.el6 centos-sclo-rh 80 k Installing for dependencies: python27-python-libs x86_64 2.7.8-3.el6 centos-sclo-rh 5.6 M python27-runtime x86_64 1.1-25.el6 centos-sclo-rh 1.0 M scl-utils x86_64 20120927-29.el6_9 base 23 k Transaction Summary ================================================================================================================================== Install 4 Package(s) Total download size: 6.8 M Installed size: 24 M Is this ok [y/N]: ... 중략 ... Installed: python27-python.x86_64 0:2.7.8-3.el6 Dependency Installed: python27-python-libs.x86_64 0:2.7.8-3.el6 python27-runtime.x86_64 0:1.1-25.el6 scl-utils.x86_64 0:20120927-29.el6_9 Complete! 위와 같이 설치가 완료가 되면, scl Command 를 이용하여 Python 을 활성화 해야됩니다.\n// scl 설정 전 # python -V Python 2.6.6 // scl 을 이용하여 PATH 등록 # scl --list python27 # scl enable python27 bash # echo $PATH /opt/rh/python27/root/usr/bin:/usr/lib64/qt-3.3/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin # python -V Python 2.7.8 PATH 가 등록이 되고 Python 이 최신 버전으로 Update 된 것을 볼 수 있습니다.\n.bash_profile 에 등록  Python 2.7 설치 경로에 있는 enable 파일을 .bash_profile 에 추가하여 shell 이 재시작하더라도 사용이 가능하게 설정을 할 수 있습니다.\n# vi .bash_profile # Get the aliases and functions if [ -f ~/.bashrc ]; then . ~/.bashrc fi # User specific environment and startup programs PATH=$PATH:$HOME/bin export PATH source /opt/rh/python27/enable 시스템 재접속 테스트 # exit logout Connection to 192.168.XX.XX closed. ~ $ ssh root@192.168.XX.XX root@192.168.XX.XX's password: Last login: Wed Jan 9 00:00:00 2019 from 192.168.XX.XX # python -V Python 2.7.8 위와 같이 설치가 완료되었습니다.\n",
   "wordCount" : "542",
   "inLanguage": "en",
   "datePublished": "2019-01-09T00:00:00Z",
@@ -209,136 +209,136 @@ CentOS 의 응용프로그램들은 <em>Python 2.6</em> 과 호환되도록 설�
 <h1 id="scl-repository-연결">SCL Repository 연결<a hidden class="anchor" aria-hidden="true" href="#scl-repository-연결">#</a></h1>
 <hr>
 <p><em>yum</em> 명령을 통해 SCL Repository 를 연결합니다.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># yum install -y centos-release-scl
-</span></span></code></pre></div><h1 id="scl-repository-연결-확인">SCL Repository 연결 확인<a hidden class="anchor" aria-hidden="true" href="#scl-repository-연결-확인">#</a></h1>
+<pre tabindex="0"><code># yum install -y centos-release-scl
+</code></pre><h1 id="scl-repository-연결-확인">SCL Repository 연결 확인<a hidden class="anchor" aria-hidden="true" href="#scl-repository-연결-확인">#</a></h1>
 <hr>
 <p>Repository 가 정살적으로 연결 되었는지 확인합니다.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># yum repolist
-</span></span><span style="display:flex;"><span>Loading mirror speeds from cached hostfile
-</span></span><span style="display:flex;"><span> * base: centos.mirror.moack.net
-</span></span><span style="display:flex;"><span> * epel: mirror.premi.st
-</span></span><span style="display:flex;"><span> * extras: centos.mirror.moack.net
-</span></span><span style="display:flex;"><span> * updates: centos.mirror.moack.net
-</span></span><span style="display:flex;"><span>repo id                                        repo name                                                                    status
-</span></span><span style="display:flex;"><span>base                                           CentOS-6 - Base                                                               6,713
-</span></span><span style="display:flex;"><span>centos-sclo-rh                                 CentOS-6 - SCLo rh                                                            2,880
-</span></span><span style="display:flex;"><span>centos-sclo-sclo                               CentOS-6 - SCLo sclo                                                            406
-</span></span><span style="display:flex;"><span>epel                                           Extra Packages for Enterprise Linux 6 - x86_64                               12,517
-</span></span><span style="display:flex;"><span>extras                                         CentOS-6 - Extras                                                                35
-</span></span><span style="display:flex;"><span>updates                                        CentOS-6 - Updates                                                              257
-</span></span><span style="display:flex;"><span>repolist: 22,808
-</span></span></code></pre></div><h1 id="python-27-설치">Python 2.7 설치<a hidden class="anchor" aria-hidden="true" href="#python-27-설치">#</a></h1>
+<pre tabindex="0"><code># yum repolist
+Loading mirror speeds from cached hostfile
+ * base: centos.mirror.moack.net
+ * epel: mirror.premi.st
+ * extras: centos.mirror.moack.net
+ * updates: centos.mirror.moack.net
+repo id                                        repo name                                                                    status
+base                                           CentOS-6 - Base                                                               6,713
+centos-sclo-rh                                 CentOS-6 - SCLo rh                                                            2,880
+centos-sclo-sclo                               CentOS-6 - SCLo sclo                                                            406
+epel                                           Extra Packages for Enterprise Linux 6 - x86_64                               12,517
+extras                                         CentOS-6 - Extras                                                                35
+updates                                        CentOS-6 - Updates                                                              257
+repolist: 22,808
+</code></pre><h1 id="python-27-설치">Python 2.7 설치<a hidden class="anchor" aria-hidden="true" href="#python-27-설치">#</a></h1>
 <hr>
 <p>등록한 Repository 를 통해 설치가 가능한 Python 을 확인합니다.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># yum list python27-python.x86_64 --showd
-</span></span><span style="display:flex;"><span>Loaded plugins: fastestmirror, refresh-packagekit, security
-</span></span><span style="display:flex;"><span>Loading mirror speeds from cached hostfile
-</span></span><span style="display:flex;"><span> * base: centos.mirror.moack.net
-</span></span><span style="display:flex;"><span> * epel: mirror.premi.st
-</span></span><span style="display:flex;"><span> * extras: centos.mirror.moack.net
-</span></span><span style="display:flex;"><span> * updates: centos.mirror.moack.net
-</span></span><span style="display:flex;"><span>Available Packages
-</span></span><span style="display:flex;"><span>python27-python.x86_64                                         2.7.8-3.el6                                          centos-sclo-rh
-</span></span><span style="display:flex;"><span>python27-python.x86_64                                         2.7.8-16.el6                                         centos-sclo-rh
-</span></span><span style="display:flex;"><span>python27-python.x86_64                                         2.7.8-18.el6                                         centos-sclo-rh
-</span></span><span style="display:flex;"><span>python27-python.x86_64                                         2.7.13-3.el6                                         centos-sclo-rh
-</span></span></code></pre></div><p>원하는 특정 버전을 확인하고 설치 진행합니다.<br>
+<pre tabindex="0"><code># yum list python27-python.x86_64 --showd
+Loaded plugins: fastestmirror, refresh-packagekit, security
+Loading mirror speeds from cached hostfile
+ * base: centos.mirror.moack.net
+ * epel: mirror.premi.st
+ * extras: centos.mirror.moack.net
+ * updates: centos.mirror.moack.net
+Available Packages
+python27-python.x86_64                                         2.7.8-3.el6                                          centos-sclo-rh
+python27-python.x86_64                                         2.7.8-16.el6                                         centos-sclo-rh
+python27-python.x86_64                                         2.7.8-18.el6                                         centos-sclo-rh
+python27-python.x86_64                                         2.7.13-3.el6                                         centos-sclo-rh
+</code></pre><p>원하는 특정 버전을 확인하고 설치 진행합니다.<br>
 테스트를 위해 v2.7.8-3 로 설치하도록 하겠습니다.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># yum install python27-python-2.7.8-3.el6
-</span></span><span style="display:flex;"><span>Loaded plugins: fastestmirror, refresh-packagekit, security
-</span></span><span style="display:flex;"><span>Setting up Install Process
-</span></span><span style="display:flex;"><span>Loading mirror speeds from cached hostfile
-</span></span><span style="display:flex;"><span> * base: centos.mirror.moack.net
-</span></span><span style="display:flex;"><span> * epel: mirror.premi.st
-</span></span><span style="display:flex;"><span> * extras: centos.mirror.moack.net
-</span></span><span style="display:flex;"><span> * updates: centos.mirror.moack.net
-</span></span><span style="display:flex;"><span>Resolving Dependencies
-</span></span><span style="display:flex;"><span>--&gt; Running transaction check
-</span></span><span style="display:flex;"><span>---&gt; Package python27-python.x86_64 0:2.7.8-3.el6 will be installed
-</span></span><span style="display:flex;"><span>--&gt; Processing Dependency: python27-python-libs(x86-64) = 2.7.8-3.el6 for package: python27-python-2.7.8-3.el6.x86_64
-</span></span><span style="display:flex;"><span>--&gt; Processing Dependency: python27-runtime for package: python27-python-2.7.8-3.el6.x86_64
-</span></span><span style="display:flex;"><span>--&gt; Processing Dependency: libpython2.7.so.1.0()(64bit) for package: python27-python-2.7.8-3.el6.x86_64
-</span></span><span style="display:flex;"><span>--&gt; Running transaction check
-</span></span><span style="display:flex;"><span>---&gt; Package python27-python-libs.x86_64 0:2.7.8-3.el6 will be installed
-</span></span><span style="display:flex;"><span>---&gt; Package python27-runtime.x86_64 0:1.1-25.el6 will be installed
-</span></span><span style="display:flex;"><span>--&gt; Processing Dependency: scl-utils for package: python27-runtime-1.1-25.el6.x86_64
-</span></span><span style="display:flex;"><span>--&gt; Running transaction check
-</span></span><span style="display:flex;"><span>---&gt; Package scl-utils.x86_64 0:20120927-29.el6_9 will be installed
-</span></span><span style="display:flex;"><span>--&gt; Finished Dependency Resolution
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>Dependencies Resolved
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>==================================================================================================================================
-</span></span><span style="display:flex;"><span> Package                             Arch                  Version                            Repository                     Size
-</span></span><span style="display:flex;"><span>==================================================================================================================================
-</span></span><span style="display:flex;"><span>Installing:
-</span></span><span style="display:flex;"><span> python27-python                     x86_64                2.7.8-3.el6                        centos-sclo-rh                 80 k
-</span></span><span style="display:flex;"><span>Installing for dependencies:
-</span></span><span style="display:flex;"><span> python27-python-libs                x86_64                2.7.8-3.el6                        centos-sclo-rh                5.6 M
-</span></span><span style="display:flex;"><span> python27-runtime                    x86_64                1.1-25.el6                         centos-sclo-rh                1.0 M
-</span></span><span style="display:flex;"><span> scl-utils                           x86_64                20120927-29.el6_9                  base                           23 k
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>Transaction Summary
-</span></span><span style="display:flex;"><span>==================================================================================================================================
-</span></span><span style="display:flex;"><span>Install       4 Package(s)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>Total download size: 6.8 M
-</span></span><span style="display:flex;"><span>Installed size: 24 M
-</span></span><span style="display:flex;"><span>Is this ok [y/N]:
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>... 중략 ...
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>Installed:
-</span></span><span style="display:flex;"><span>  python27-python.x86_64 0:2.7.8-3.el6
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>Dependency Installed:
-</span></span><span style="display:flex;"><span>  python27-python-libs.x86_64 0:2.7.8-3.el6     python27-runtime.x86_64 0:1.1-25.el6     scl-utils.x86_64 0:20120927-29.el6_9
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>Complete!
-</span></span></code></pre></div><p>위와 같이 설치가 완료가 되면, <em>scl Command</em> 를 이용하여 Python 을 활성화 해야됩니다.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>// scl 설정 전
-</span></span><span style="display:flex;"><span># python -V
-</span></span><span style="display:flex;"><span>Python 2.6.6
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>// scl 을 이용하여 PATH 등록
-</span></span><span style="display:flex;"><span># scl --list
-</span></span><span style="display:flex;"><span>python27
-</span></span><span style="display:flex;"><span># scl enable python27 bash
-</span></span><span style="display:flex;"><span># echo $PATH
-</span></span><span style="display:flex;"><span>/opt/rh/python27/root/usr/bin:/usr/lib64/qt-3.3/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span># python -V
-</span></span><span style="display:flex;"><span>Python 2.7.8
-</span></span></code></pre></div><p>PATH 가 등록이 되고 Python 이 최신 버전으로 <em>Update</em> 된 것을 볼 수 있습니다.</p>
+<pre tabindex="0"><code># yum install python27-python-2.7.8-3.el6
+Loaded plugins: fastestmirror, refresh-packagekit, security
+Setting up Install Process
+Loading mirror speeds from cached hostfile
+ * base: centos.mirror.moack.net
+ * epel: mirror.premi.st
+ * extras: centos.mirror.moack.net
+ * updates: centos.mirror.moack.net
+Resolving Dependencies
+--&gt; Running transaction check
+---&gt; Package python27-python.x86_64 0:2.7.8-3.el6 will be installed
+--&gt; Processing Dependency: python27-python-libs(x86-64) = 2.7.8-3.el6 for package: python27-python-2.7.8-3.el6.x86_64
+--&gt; Processing Dependency: python27-runtime for package: python27-python-2.7.8-3.el6.x86_64
+--&gt; Processing Dependency: libpython2.7.so.1.0()(64bit) for package: python27-python-2.7.8-3.el6.x86_64
+--&gt; Running transaction check
+---&gt; Package python27-python-libs.x86_64 0:2.7.8-3.el6 will be installed
+---&gt; Package python27-runtime.x86_64 0:1.1-25.el6 will be installed
+--&gt; Processing Dependency: scl-utils for package: python27-runtime-1.1-25.el6.x86_64
+--&gt; Running transaction check
+---&gt; Package scl-utils.x86_64 0:20120927-29.el6_9 will be installed
+--&gt; Finished Dependency Resolution
+
+Dependencies Resolved
+
+==================================================================================================================================
+ Package                             Arch                  Version                            Repository                     Size
+==================================================================================================================================
+Installing:
+ python27-python                     x86_64                2.7.8-3.el6                        centos-sclo-rh                 80 k
+Installing for dependencies:
+ python27-python-libs                x86_64                2.7.8-3.el6                        centos-sclo-rh                5.6 M
+ python27-runtime                    x86_64                1.1-25.el6                         centos-sclo-rh                1.0 M
+ scl-utils                           x86_64                20120927-29.el6_9                  base                           23 k
+
+Transaction Summary
+==================================================================================================================================
+Install       4 Package(s)
+
+Total download size: 6.8 M
+Installed size: 24 M
+Is this ok [y/N]:
+
+... 중략 ...
+
+Installed:
+  python27-python.x86_64 0:2.7.8-3.el6
+
+Dependency Installed:
+  python27-python-libs.x86_64 0:2.7.8-3.el6     python27-runtime.x86_64 0:1.1-25.el6     scl-utils.x86_64 0:20120927-29.el6_9
+
+Complete!
+</code></pre><p>위와 같이 설치가 완료가 되면, <em>scl Command</em> 를 이용하여 Python 을 활성화 해야됩니다.</p>
+<pre tabindex="0"><code>// scl 설정 전
+# python -V
+Python 2.6.6
+
+// scl 을 이용하여 PATH 등록
+# scl --list
+python27
+# scl enable python27 bash
+# echo $PATH
+/opt/rh/python27/root/usr/bin:/usr/lib64/qt-3.3/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin
+
+# python -V
+Python 2.7.8
+</code></pre><p>PATH 가 등록이 되고 Python 이 최신 버전으로 <em>Update</em> 된 것을 볼 수 있습니다.</p>
 <h1 id="bash_profile-에-등록">.bash_profile 에 등록<a hidden class="anchor" aria-hidden="true" href="#bash_profile-에-등록">#</a></h1>
 <hr>
 <p>Python 2.7 설치 경로에 있는 enable 파일을 <em>.bash_profile</em> 에 추가하여 shell 이 재시작하더라도 사용이 가능하게 설정을 할 수 있습니다.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># vi .bash_profile
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span># Get the aliases and functions
-</span></span><span style="display:flex;"><span>if [ -f ~/.bashrc ]; then
-</span></span><span style="display:flex;"><span>        . ~/.bashrc
-</span></span><span style="display:flex;"><span>fi
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span># User specific environment and startup programs
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>PATH=$PATH:$HOME/bin
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>export PATH
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>source /opt/rh/python27/enable
-</span></span></code></pre></div><h2 id="시스템-재접속-테스트">시스템 재접속 테스트<a hidden class="anchor" aria-hidden="true" href="#시스템-재접속-테스트">#</a></h2>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># exit
-</span></span><span style="display:flex;"><span>logout
-</span></span><span style="display:flex;"><span>Connection to 192.168.XX.XX closed.
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>~ $ ssh root@192.168.XX.XX
-</span></span><span style="display:flex;"><span>root@192.168.XX.XX&#39;s password:
-</span></span><span style="display:flex;"><span>Last login: Wed Jan  9 00:00:00 2019 from 192.168.XX.XX
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span># python -V
-</span></span><span style="display:flex;"><span>Python 2.7.8
-</span></span></code></pre></div><p>위와 같이 설치가 완료되었습니다.</p>
+<pre tabindex="0"><code># vi .bash_profile
+
+# Get the aliases and functions
+if [ -f ~/.bashrc ]; then
+        . ~/.bashrc
+fi
+
+# User specific environment and startup programs
+
+PATH=$PATH:$HOME/bin
+
+export PATH
+
+source /opt/rh/python27/enable
+</code></pre><h2 id="시스템-재접속-테스트">시스템 재접속 테스트<a hidden class="anchor" aria-hidden="true" href="#시스템-재접속-테스트">#</a></h2>
+<pre tabindex="0"><code># exit
+logout
+Connection to 192.168.XX.XX closed.
+
+~ $ ssh root@192.168.XX.XX
+root@192.168.XX.XX&#39;s password:
+Last login: Wed Jan  9 00:00:00 2019 from 192.168.XX.XX
+
+# python -V
+Python 2.7.8
+</code></pre><p>위와 같이 설치가 완료되었습니다.</p>
 
 
   </div>

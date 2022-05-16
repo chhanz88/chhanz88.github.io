@@ -63,7 +63,7 @@ Script 내용  #! /bin/ksh # Make by. chhan  DATEC=$(date +%Y%m%d-%H%M) IdChk=`i
       <guid>https://chhanz88.github.io/post/post/2016-02-15-aix-rdx-drive-backup-mksysb/</guid>
       <description>[AIX] RDX Device Backup Guide  AIX RDX Device Backup Guide 입니다.
 (RDX 를 이용한 백업 방법입니다.)
-2016년 프로젝트 참여하면서 작성한 가이드입니다.
+   [AIX] RDX Device Backup Guide  from CheolHee Han   2016년 프로젝트 참여하면서 작성한 가이드입니다.
  작성일 : 2016.02.15 배포일 : 2019.01.11  </description>
     </item>
     

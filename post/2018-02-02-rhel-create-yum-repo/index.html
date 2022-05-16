@@ -211,37 +211,37 @@ base yum Repository 를 만들 수 있습니다.</p>
 <ul>
 <li>ISO 파일의 경우, 시스템에 <em>Upload</em> 진행합니다.</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>// DVD
-</span></span><span style="display:flex;"><span># mount /dev/sr0 /mnt
-</span></span><span style="display:flex;"><span>// ISO
-</span></span><span style="display:flex;"><span># mount /root/rhel-server-7.5-x86_64-dvd.iso /mnt
-</span></span></code></pre></div><ol start="2">
+<pre tabindex="0"><code>// DVD
+# mount /dev/sr0 /mnt
+// ISO
+# mount /root/rhel-server-7.5-x86_64-dvd.iso /mnt
+</code></pre><ol start="2">
 <li>Local Disk 로 DVD 혹은 ISO 파일 데이터 복사</li>
 </ol>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># cp -rpH /mnt /home/repo
-</span></span><span style="display:flex;"><span># vi /etc/yum.repos.d/media.repo
-</span></span></code></pre></div><ul>
+<pre tabindex="0"><code># cp -rpH /mnt /home/repo
+# vi /etc/yum.repos.d/media.repo
+</code></pre><ul>
 <li>/etc/yum.repos.d/media.repo 내용</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>[media]
-</span></span><span style="display:flex;"><span>name=media
-</span></span><span style="display:flex;"><span>baseurl=file:///home/repo
-</span></span><span style="display:flex;"><span>enable=1
-</span></span><span style="display:flex;"><span>gpgcheck=0
-</span></span></code></pre></div><ol start="3">
+<pre tabindex="0"><code>[media]
+name=media
+baseurl=file:///home/repo
+enable=1
+gpgcheck=0
+</code></pre><ol start="3">
 <li>yum Repository 인식
 Repository 가 정상적으로 인식하는지 확인합니다.</li>
 </ol>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># yum repolist
-</span></span><span style="display:flex;"><span>Loaded plugins: product-id, search-disabled-repos, subscription-manager
-</span></span><span style="display:flex;"><span>This system is not registered with an entitlement server. You can use subscription-manager to register.
-</span></span><span style="display:flex;"><span>media                                                                                                      | 4.3 kB  00:00:00
-</span></span><span style="display:flex;"><span>(1/2): media/group_gz                                                                                      | 145 kB  00:00:00
-</span></span><span style="display:flex;"><span>(2/2): media/primary_db                                                                                    | 4.1 MB  00:00:00
-</span></span><span style="display:flex;"><span>repo id                                                        repo name                                                    status
-</span></span><span style="display:flex;"><span>media                                                          media                                                        5,099
-</span></span><span style="display:flex;"><span>repolist: 5,099
-</span></span></code></pre></div><ol start="4">
+<pre tabindex="0"><code># yum repolist
+Loaded plugins: product-id, search-disabled-repos, subscription-manager
+This system is not registered with an entitlement server. You can use subscription-manager to register.
+media                                                                                                      | 4.3 kB  00:00:00
+(1/2): media/group_gz                                                                                      | 145 kB  00:00:00
+(2/2): media/primary_db                                                                                    | 4.1 MB  00:00:00
+repo id                                                        repo name                                                    status
+media                                                          media                                                        5,099
+repolist: 5,099
+</code></pre><ol start="4">
 <li>yum Test
 yum 이 정상적으로 작동되는지 확인 합니다.</li>
 </ol>

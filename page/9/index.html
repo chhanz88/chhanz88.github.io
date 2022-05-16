@@ -184,7 +184,7 @@ FROMphp:5-apacheADD index.php /var/www/html/index.phpRUN chmod a&#43;rx index.ph
     </h2>
   </header>
   <div class="entry-content">
-    <p>[GPFS] CentOS 7 - IBM GPFS Hands on Tranining 목표 Hands-on 구성도  Hands-on 환경   OS Version : CentOS 7.3
+    <p>[GPFS] CentOS 7 - IBM GPFS Hands on Tranining 목표 Hands-on 구성도   Hands-on 환경   OS Version : CentOS 7.3
 Kernel Version : 3.10.0-514.el7.x86_64
 GPFS Version : gpfs v4.2.2-3
 OS Configuration : SSH Key Copy 완료
@@ -219,7 +219,9 @@ SSACLI 설치  Download : HP Support Link...</p>
   <div class="entry-content">
     <p>[Linux] CentOS 7 raw device 자동 생성 스크립트  고객사에서 Multipath 로 생성된 mpath device 를 raw device 로 생성하는 작업이 있었습니다.
 너무 많은 mpath device 를 raw device 로 생성을 하다보니, 오타도 발생되고 작업 환경을 콘솔에서 하다보니 불편함도 있다보니 해당 스크립트를 만들었습니다.
-Download Link  GitHubRaw Script 사용 방법 Multipath Device 의 mpath 를 기준으로 해당 DM_UUID 값을 생성하여 60-raw.rules.$DATE 파일로 생성합니다.
+Download Link  GitHub
+Raw Script
+ 사용 방법 Multipath Device 의 mpath 를 기준으로 해당 DM_UUID 값을 생성하여 60-raw.rules.$DATE 파일로 생성합니다.
  Multipath List 확인  # multipath -ll | grep mpath mpathb (3600c0ff00011e91abe3a475901000000) dm-3 HP ,P2000 G3 FC mpatha (3600c0ff00011e91a3e3b475901000000) dm-2 HP ,P2000 G3 FC 스크립트 Download  # wget https://raw....</p>
   </div>
   <footer class="entry-footer"><span title='2019-03-31 00:00:00 +0000 UTC'>March 31, 2019</span>&nbsp;·&nbsp;chhanz</footer>
@@ -263,7 +265,7 @@ Download Link  GitHubRaw Script 사용 방법 Multipath Device 의 mpath 를 기
 시스템을 운영하면서 특별히 /var/log/messages 에 별도의 메시지를 기록하기 위해서는 logger 라는 명령을 사용하면 쉽게 적용이 가능합니다.
 아래는 이번 포스팅을 위해 httpd Web 서비스가 정상인지 체크하는 간단하게 제작된 스크립트입니다.
 해당 스크립트에서 발생되는 메시지를 /var/log/messages 에 기록 하도록 하겠습니다.
-Check Web  #!/bin/bash  echo -e &#34; &#34; echo -e &#34; Service Check : httpd &#34; WEBSTAT=`systemctl status httpd | grep &#34;Active:&#34; | grep running | wc -l` echo -e &#34; &#34; if [[ &#34;$WEBSTAT&#34; -eq &#34;0&#34; ]]; then  	echo -e &#34; ########### Web Service Stop ###########&#34; 	echo -e &#34; ########### RESTART HTTPD SERVER ########### &#34; 	systemctl start httpd 	sleep 5  	echo -e &#34; ########### CHECK HTTPD SERVER ########### &#34; 	systemctl -l status httpd  fi  echo -e &#34; ########### CHECK HTTPD SERVER ########### &#34; echo -e &#34; * * * * Web Server : Running * * * * &#34; logger 를 이용하여 messages 에 등록 아래 명령어를 통해 /var/log/messages 에 로그를 기록합니다....</p>
+Check Web  #!/bin/bash echo -e &#34; &#34; echo -e &#34; Service Check : httpd &#34; WEBSTAT=`systemctl status httpd | grep &#34;Active:&#34; | grep running | wc -l` echo -e &#34; &#34; if [[ &#34;$WEBSTAT&#34; -eq &#34;0&#34; ]]; then echo -e &#34; ########### Web Service Stop ###########&#34; echo -e &#34; ########### RESTART HTTPD SERVER ########### &#34; systemctl start httpd sleep 5 echo -e &#34; ########### CHECK HTTPD SERVER ########### &#34; systemctl -l status httpd fi echo -e &#34; ########### CHECK HTTPD SERVER ########### &#34; echo -e &#34; * * * * Web Server : Running * * * * &#34; logger 를 이용하여 messages 에 등록 아래 명령어를 통해 /var/log/messages 에 로그를 기록합니다....</p>
   </div>
   <footer class="entry-footer"><span title='2019-01-19 00:00:00 +0000 UTC'>January 19, 2019</span>&nbsp;·&nbsp;chhanz</footer>
   <a class="entry-link" aria-label="post link to [Linux] logger 를 이용한 로그 관리" href="https://chhanz88.github.io/post/post/2019-01-19-linux-how-to-use-logger/"></a>
@@ -277,7 +279,7 @@ Check Web  #!/bin/bash  echo -e &#34; &#34; echo -e &#34; Service Check : httpd 
   <div class="entry-content">
     <p>[Linux][RHEL/CentOS] systemd 에 Service 등록  Systemd 에 사용자가 자주 사용하는 Service 를 등록하고 Systemd 를 통해 관리 할 수 있습니다.
 아래는 Systemd 에 등록할 Service Script 입니다.
-Systemd test 용 Script  #!/bin/bash  echo -e &#34; Start Systemd Test &#34; | logger -t Testsystemd  while : do 	echo -e &#34;Running systemd&#34; 	sleep 30 done systemd 에 Service 등록  systemd 에 서비스를 등록하기 위해 아래 경로에 아래와 같이 설정을 합니다....</p>
+Systemd test 용 Script  #!/bin/bash echo -e &#34; Start Systemd Test &#34; | logger -t Testsystemd while : do echo -e &#34;Running systemd&#34; sleep 30 done systemd 에 Service 등록  systemd 에 서비스를 등록하기 위해 아래 경로에 아래와 같이 설정을 합니다....</p>
   </div>
   <footer class="entry-footer"><span title='2019-01-18 00:00:00 +0000 UTC'>January 18, 2019</span>&nbsp;·&nbsp;chhanz</footer>
   <a class="entry-link" aria-label="post link to [Linux] systemd 에 Service 등록" href="https://chhanz88.github.io/post/post/2019-01-18-linux-how-to-create-custom-systemd-service/"></a>

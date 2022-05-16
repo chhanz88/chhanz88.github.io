@@ -95,7 +95,7 @@
   "keywords": [
     "aix"
   ],
-  "articleBody": "Could not load program: Cannot run a 64-bit program until the 64-bit environment has been configured. aix maintenance mode 로 부팅 진행 후, shell 환경에서 아래와 같이 Error 가 발생하면서\n일부 명령어들이 정상 작동 하지 않습니다.\ncf. Booting AIX into Maintenance Mode\nError 내용 # ls  Could not load program ls: Cannot run a 64-bit program until the 64-bit  environment has been configured. See the system administrator. 해결 방법 # /etc/methods/cfg64 해결 이후 # ls  test.log  test.sh  .profile  ... ",
+  "articleBody": "Could not load program: Cannot run a 64-bit program until the 64-bit environment has been configured. aix maintenance mode 로 부팅 진행 후, shell 환경에서 아래와 같이 Error 가 발생하면서\n일부 명령어들이 정상 작동 하지 않습니다.\ncf. Booting AIX into Maintenance Mode\nError 내용 # ls Could not load program ls: Cannot run a 64-bit program until the 64-bit environment has been configured. See the system administrator. 해결 방법 # /etc/methods/cfg64 해결 이후 # ls test.log test.sh .profile ... ",
   "wordCount" : "82",
   "inLanguage": "en",
   "datePublished": "2017-01-16T00:00:00Z",
@@ -205,18 +205,18 @@
 일부 명령어들이 정상 작동 하지 않습니다.</p>
 <p>cf. <a href="http://www-01.ibm.com/support/docview.wss?uid=isg3T1013056">Booting AIX into Maintenance Mode</a></p>
 <h1 id="error-내용">Error 내용<a hidden class="anchor" aria-hidden="true" href="#error-내용">#</a></h1>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># ls
-</span></span><span style="display:flex;"><span> Could not load program ls: Cannot run a 64-bit program until the 64-bit
-</span></span><span style="display:flex;"><span> environment has been configured. See the system administrator.
-</span></span></code></pre></div><h1 id="해결-방법">해결 방법<a hidden class="anchor" aria-hidden="true" href="#해결-방법">#</a></h1>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># /etc/methods/cfg64
-</span></span></code></pre></div><h1 id="해결-이후">해결 이후<a hidden class="anchor" aria-hidden="true" href="#해결-이후">#</a></h1>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># ls 
-</span></span><span style="display:flex;"><span> test.log
-</span></span><span style="display:flex;"><span> test.sh
-</span></span><span style="display:flex;"><span> .profile
-</span></span><span style="display:flex;"><span> ... &lt; 하략 &gt;
-</span></span></code></pre></div>
+<pre tabindex="0"><code># ls
+ Could not load program ls: Cannot run a 64-bit program until the 64-bit
+ environment has been configured. See the system administrator.
+</code></pre><h1 id="해결-방법">해결 방법<a hidden class="anchor" aria-hidden="true" href="#해결-방법">#</a></h1>
+<pre tabindex="0"><code># /etc/methods/cfg64
+</code></pre><h1 id="해결-이후">해결 이후<a hidden class="anchor" aria-hidden="true" href="#해결-이후">#</a></h1>
+<pre tabindex="0"><code># ls 
+ test.log
+ test.sh
+ .profile
+ ... &lt; 하략 &gt;
+</code></pre>
 
   </div>
 

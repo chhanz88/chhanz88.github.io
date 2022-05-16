@@ -208,36 +208,36 @@
 <ol>
 <li>udev rules 을 사용하여 raw device 를 생성합니다.</li>
 </ol>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># vi /etc/udev/rules.d/60-raw.rules
-</span></span></code></pre></div><ol start="2">
+<pre tabindex="0"><code># vi /etc/udev/rules.d/60-raw.rules
+</code></pre><ol start="2">
 <li>SCSI Device 를 사용하는 경우,</li>
 </ol>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>ACTION==&#34;add|change&#34;, KERNEL==&#34;sdc&#34;, RUN+=&#34;/usr/bin/raw /dev/raw/raw1 %N&#34;
-</span></span></code></pre></div><ol start="3">
+<pre tabindex="0"><code>ACTION==&#34;add|change&#34;, KERNEL==&#34;sdc&#34;, RUN+=&#34;/usr/bin/raw /dev/raw/raw1 %N&#34;
+</code></pre><ol start="3">
 <li>multipath device 를 사용하는 경우,</li>
 </ol>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>ACTION==&#34;add|change&#34;, ENV{DM_NAME}==&#34;mpath1&#34;, RUN+=&#34;/usr/bin/raw /dev/raw/raw1 %N&#34; 
-</span></span></code></pre></div><ol start="4">
+<pre tabindex="0"><code>ACTION==&#34;add|change&#34;, ENV{DM_NAME}==&#34;mpath1&#34;, RUN+=&#34;/usr/bin/raw /dev/raw/raw1 %N&#34; 
+</code></pre><ol start="4">
 <li>LVM device 를 사용하는 경우,</li>
 </ol>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>ACTION==&#34;add|change&#34;, ENV{DM_VG_NAME}==&#34;vg_test&#34;, ENV{DM_LV_NAME}==&#34;lv_test1&#34;, RUN+=&#34;/bin/raw /dev/raw/raw1 %N&#34;
-</span></span></code></pre></div><ol start="5">
+<pre tabindex="0"><code>ACTION==&#34;add|change&#34;, ENV{DM_VG_NAME}==&#34;vg_test&#34;, ENV{DM_LV_NAME}==&#34;lv_test1&#34;, RUN+=&#34;/bin/raw /dev/raw/raw1 %N&#34;
+</code></pre><ol start="5">
 <li>raw device 의 권한 설정</li>
 </ol>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>ACTION==&#34;add&#34;, KERNEL==&#34;raw*&#34;, OWNER=&#34;oracle&#34;, GROUP=&#34;dba&#34;, MODE=&#34;0660&#34;
-</span></span></code></pre></div><ol start="6">
+<pre tabindex="0"><code>ACTION==&#34;add&#34;, KERNEL==&#34;raw*&#34;, OWNER=&#34;oracle&#34;, GROUP=&#34;dba&#34;, MODE=&#34;0660&#34;
+</code></pre><ol start="6">
 <li>udev rules 갱신</li>
 </ol>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># udevadm trigger --action=add
-</span></span></code></pre></div><ol start="7">
+<pre tabindex="0"><code># udevadm trigger --action=add
+</code></pre><ol start="7">
 <li>raw device 설정 확인</li>
 </ol>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># raw -qa
-</span></span><span style="display:flex;"><span>/dev/raw/raw1:  bound to major 8, minor 17
-</span></span><span style="display:flex;"><span># ls -l /dev/raw
-</span></span><span style="display:flex;"><span>total 0
-</span></span><span style="display:flex;"><span>crw-rw---- 1 oracle  dba 162,  2 Jan 21 05:21 raw1
-</span></span></code></pre></div>
+<pre tabindex="0"><code># raw -qa
+/dev/raw/raw1:  bound to major 8, minor 17
+# ls -l /dev/raw
+total 0
+crw-rw---- 1 oracle  dba 162,  2 Jan 21 05:21 raw1
+</code></pre>
 
   </div>
 

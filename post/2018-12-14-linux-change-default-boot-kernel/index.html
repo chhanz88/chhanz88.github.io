@@ -95,7 +95,7 @@
   "keywords": [
     "linux"
   ],
-  "articleBody": "RHEL / CentOS 7 - Default boot kernel 변경 방법  시스템을 부팅을 하면서 GRUB Menu 에서 Kernel 을 특정 버전으로 선택하여, 부팅을 할 수 있습니다.\n하지만 시스템을 물리적으로 접근이 불가능하거나, 원격으로만 작업이 가능할 경우에는 아래와 같은 방법으로 Default boot Kernel 을 변경해서 특정 버전으로 선택하여 부팅을 할 수 있습니다.\n주로 Kernel Update 이후, Kernel Version 원복 등으로 사용 할 수 있습니다.\nKernel Entry 확인  GRUB Menu 에서 Kernel Entry 가 어떻게 나올지 확인을 합니다.\n# cat /etc/grub2.cfg | grep \"menuentry \" | awk -F\"'\" '{print $2}' CentOS Linux (3.10.0-957.1.3.el7.x86_64.debug) 7 (Core) CentOS Linux (3.10.0-957.1.3.el7.x86_64) 7 (Core) CentOS Linux (3.10.0-862.el7.x86_64) 7 (Core) CentOS Linux (0-rescue-300ad7a22ef1472facc28c7d606e6ca3) 7 (Core) 위와 같이 확인되면 Entry 는 아래와 같이 지정을 할 수 있습니다.\nCentOS Linux (3.10.0-957.1.3.el7.x86_64.debug) 7 (Core)\t Entry 0 CentOS Linux (3.10.0-957.1.3.el7.x86_64) 7 (Core)  Entry 1 CentOS Linux (3.10.0-862.el7.x86_64) 7 (Core)\t Entry 2 CentOS Linux (0-rescue-300ad7a22ef1472facc28c7d606e6ca3) 7 (Core)  Entry 3 Entry 변경  grub2-set-default 명령을 통해 변경이 가능합니다.\n기존 Kernel Version 은 아래와 같습니다.\n# cat /boot/grub2/grubenv # GRUB Environment Block saved_entry=CentOS Linux (3.10.0-957.1.3.el7.x86_64) 7 (Core)  # uname -a Linux localhost.local 3.10.0-957.1.3.el7.x86_64 #1 SMP Thu Nov 29 14:49:43 UTC 2018 x86_64 x86_64 x86_64 GNU/Linux  Entry 변경  # grub2-set-default 2  # cat /boot/grub2/grubenv # GRUB Environment Block saved_entry=2 위와 같이 변경을 하고 시스템을 재부팅 합니다.\nDefault Boot Kernel 변경 확인  시스템이 재부팅 되면 아래와 같이 Default Boot Kernel 이 변경된 것을 확인 할 수 있습니다.\n# uptime  22:11:20 up 1 min, 1 user, load average: 0.89, 0.37, 0.14  # uname -a Linux localhost.local 3.10.0-862.el7.x86_64 #1 SMP Fri Apr 20 16:44:24 UTC 2018 x86_64 x86_64 x86_64 GNU/Linux  # cat /boot/grub2/grubenv # GRUB Environment Block saved_entry=2 ",
+  "articleBody": "RHEL / CentOS 7 - Default boot kernel 변경 방법  시스템을 부팅을 하면서 GRUB Menu 에서 Kernel 을 특정 버전으로 선택하여, 부팅을 할 수 있습니다.\n하지만 시스템을 물리적으로 접근이 불가능하거나, 원격으로만 작업이 가능할 경우에는 아래와 같은 방법으로 Default boot Kernel 을 변경해서 특정 버전으로 선택하여 부팅을 할 수 있습니다.\n주로 Kernel Update 이후, Kernel Version 원복 등으로 사용 할 수 있습니다.\nKernel Entry 확인  GRUB Menu 에서 Kernel Entry 가 어떻게 나올지 확인을 합니다.\n# cat /etc/grub2.cfg | grep \"menuentry \" | awk -F\"'\" '{print $2}' CentOS Linux (3.10.0-957.1.3.el7.x86_64.debug) 7 (Core) CentOS Linux (3.10.0-957.1.3.el7.x86_64) 7 (Core) CentOS Linux (3.10.0-862.el7.x86_64) 7 (Core) CentOS Linux (0-rescue-300ad7a22ef1472facc28c7d606e6ca3) 7 (Core) 위와 같이 확인되면 Entry 는 아래와 같이 지정을 할 수 있습니다.\nCentOS Linux (3.10.0-957.1.3.el7.x86_64.debug) 7 (Core)\t Entry 0 CentOS Linux (3.10.0-957.1.3.el7.x86_64) 7 (Core)  Entry 1 CentOS Linux (3.10.0-862.el7.x86_64) 7 (Core)\t Entry 2 CentOS Linux (0-rescue-300ad7a22ef1472facc28c7d606e6ca3) 7 (Core)  Entry 3 Entry 변경  grub2-set-default 명령을 통해 변경이 가능합니다.\n기존 Kernel Version 은 아래와 같습니다.\n# cat /boot/grub2/grubenv # GRUB Environment Block saved_entry=CentOS Linux (3.10.0-957.1.3.el7.x86_64) 7 (Core) # uname -a Linux localhost.local 3.10.0-957.1.3.el7.x86_64 #1 SMP Thu Nov 29 14:49:43 UTC 2018 x86_64 x86_64 x86_64 GNU/Linux  Entry 변경  # grub2-set-default 2 # cat /boot/grub2/grubenv # GRUB Environment Block saved_entry=2 위와 같이 변경을 하고 시스템을 재부팅 합니다.\nDefault Boot Kernel 변경 확인  시스템이 재부팅 되면 아래와 같이 Default Boot Kernel 이 변경된 것을 확인 할 수 있습니다.\n# uptime 22:11:20 up 1 min, 1 user, load average: 0.89, 0.37, 0.14 # uname -a Linux localhost.local 3.10.0-862.el7.x86_64 #1 SMP Fri Apr 20 16:44:24 UTC 2018 x86_64 x86_64 x86_64 GNU/Linux # cat /boot/grub2/grubenv # GRUB Environment Block saved_entry=2 ",
   "wordCount" : "271",
   "inLanguage": "en",
   "datePublished": "2018-12-14T00:00:00Z",
@@ -208,48 +208,48 @@
 <h1 id="kernel-entry-확인">Kernel Entry 확인<a hidden class="anchor" aria-hidden="true" href="#kernel-entry-확인">#</a></h1>
 <hr>
 <p>GRUB Menu 에서 Kernel Entry 가 어떻게 나올지 확인을 합니다.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># cat /etc/grub2.cfg | grep &#34;menuentry &#34; | awk -F&#34;&#39;&#34; &#39;{print $2}&#39;
-</span></span><span style="display:flex;"><span>CentOS Linux (3.10.0-957.1.3.el7.x86_64.debug) 7 (Core)
-</span></span><span style="display:flex;"><span>CentOS Linux (3.10.0-957.1.3.el7.x86_64) 7 (Core)
-</span></span><span style="display:flex;"><span>CentOS Linux (3.10.0-862.el7.x86_64) 7 (Core)
-</span></span><span style="display:flex;"><span>CentOS Linux (0-rescue-300ad7a22ef1472facc28c7d606e6ca3) 7 (Core)
-</span></span></code></pre></div><p>위와 같이 확인되면 Entry 는 아래와 같이 지정을 할 수 있습니다.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>CentOS Linux (3.10.0-957.1.3.el7.x86_64.debug) 7 (Core)			 &gt;&gt; Entry 0
-</span></span><span style="display:flex;"><span>CentOS Linux (3.10.0-957.1.3.el7.x86_64) 7 (Core) 					 &gt;&gt; Entry 1 
-</span></span><span style="display:flex;"><span>CentOS Linux (3.10.0-862.el7.x86_64) 7 (Core)					 &gt;&gt; Entry 2
-</span></span><span style="display:flex;"><span>CentOS Linux (0-rescue-300ad7a22ef1472facc28c7d606e6ca3) 7 (Core) 	 &gt;&gt; Entry 3
-</span></span></code></pre></div><h1 id="entry-변경">Entry 변경<a hidden class="anchor" aria-hidden="true" href="#entry-변경">#</a></h1>
+<pre tabindex="0"><code># cat /etc/grub2.cfg | grep &#34;menuentry &#34; | awk -F&#34;&#39;&#34; &#39;{print $2}&#39;
+CentOS Linux (3.10.0-957.1.3.el7.x86_64.debug) 7 (Core)
+CentOS Linux (3.10.0-957.1.3.el7.x86_64) 7 (Core)
+CentOS Linux (3.10.0-862.el7.x86_64) 7 (Core)
+CentOS Linux (0-rescue-300ad7a22ef1472facc28c7d606e6ca3) 7 (Core)
+</code></pre><p>위와 같이 확인되면 Entry 는 아래와 같이 지정을 할 수 있습니다.</p>
+<pre tabindex="0"><code>CentOS Linux (3.10.0-957.1.3.el7.x86_64.debug) 7 (Core)			 &gt;&gt; Entry 0
+CentOS Linux (3.10.0-957.1.3.el7.x86_64) 7 (Core) 					 &gt;&gt; Entry 1 
+CentOS Linux (3.10.0-862.el7.x86_64) 7 (Core)					 &gt;&gt; Entry 2
+CentOS Linux (0-rescue-300ad7a22ef1472facc28c7d606e6ca3) 7 (Core) 	 &gt;&gt; Entry 3
+</code></pre><h1 id="entry-변경">Entry 변경<a hidden class="anchor" aria-hidden="true" href="#entry-변경">#</a></h1>
 <hr>
 <p><em>grub2-set-default</em> 명령을 통해 변경이 가능합니다.</p>
 <p>기존 Kernel Version 은 아래와 같습니다.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># cat /boot/grub2/grubenv
-</span></span><span style="display:flex;"><span># GRUB Environment Block
-</span></span><span style="display:flex;"><span>saved_entry=CentOS Linux (3.10.0-957.1.3.el7.x86_64) 7 (Core)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span># uname -a
-</span></span><span style="display:flex;"><span>Linux localhost.local 3.10.0-957.1.3.el7.x86_64 #1 SMP Thu Nov 29 14:49:43 UTC 2018 x86_64 x86_64 x86_64 GNU/Linux
-</span></span></code></pre></div><ul>
+<pre tabindex="0"><code># cat /boot/grub2/grubenv
+# GRUB Environment Block
+saved_entry=CentOS Linux (3.10.0-957.1.3.el7.x86_64) 7 (Core)
+
+# uname -a
+Linux localhost.local 3.10.0-957.1.3.el7.x86_64 #1 SMP Thu Nov 29 14:49:43 UTC 2018 x86_64 x86_64 x86_64 GNU/Linux
+</code></pre><ul>
 <li>Entry 변경</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># grub2-set-default 2
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span># cat /boot/grub2/grubenv
-</span></span><span style="display:flex;"><span># GRUB Environment Block
-</span></span><span style="display:flex;"><span>saved_entry=2
-</span></span></code></pre></div><p>위와 같이 변경을 하고 시스템을 재부팅 합니다.</p>
+<pre tabindex="0"><code># grub2-set-default 2
+
+# cat /boot/grub2/grubenv
+# GRUB Environment Block
+saved_entry=2
+</code></pre><p>위와 같이 변경을 하고 시스템을 재부팅 합니다.</p>
 <h1 id="default-boot-kernel-변경-확인">Default Boot Kernel 변경 확인<a hidden class="anchor" aria-hidden="true" href="#default-boot-kernel-변경-확인">#</a></h1>
 <hr>
 <p>시스템이 재부팅 되면 아래와 같이 Default Boot Kernel 이 변경된 것을 확인 할 수 있습니다.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># uptime
-</span></span><span style="display:flex;"><span> 22:11:20 up 1 min,  1 user,  load average: 0.89, 0.37, 0.14
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span># uname -a
-</span></span><span style="display:flex;"><span>Linux localhost.local 3.10.0-862.el7.x86_64 #1 SMP Fri Apr 20 16:44:24 UTC 2018 x86_64 x86_64 x86_64 GNU/Linux
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span># cat /boot/grub2/grubenv
-</span></span><span style="display:flex;"><span># GRUB Environment Block
-</span></span><span style="display:flex;"><span>saved_entry=2
-</span></span></code></pre></div>
+<pre tabindex="0"><code># uptime
+ 22:11:20 up 1 min,  1 user,  load average: 0.89, 0.37, 0.14
+
+# uname -a
+Linux localhost.local 3.10.0-862.el7.x86_64 #1 SMP Fri Apr 20 16:44:24 UTC 2018 x86_64 x86_64 x86_64 GNU/Linux
+
+# cat /boot/grub2/grubenv
+# GRUB Environment Block
+saved_entry=2
+</code></pre>
 
   </div>
 

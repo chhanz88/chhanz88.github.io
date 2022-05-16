@@ -98,7 +98,7 @@ Script 내용  #! /bin/ksh # Make by. chhan  DATEC=$(date &#43;%Y%m%d-%H%M) IdCh
   "keywords": [
     "aix"
   ],
-  "articleBody": "[AIX] System Information collection Script  회사 U2C 솔루션 개발을 하는 중, AIX 에서 필수 시스템 정보를 수집하는 Script 가 필요로 해서 간단하게 제작한 Script 입니다.\nScript 내용  #! /bin/ksh # Make by. chhan  DATEC=$(date +%Y%m%d-%H%M) IdChk=`id | grep root | wc -l` OutFile=\"`hostname`_\"$DATEC\".txt\"  #Checking ROOT  if [ $IdChk -eq 0 ]; then  echo  echo \"You must login root... Try again...\"  echo  exit  fi  echo \" * * * * * Check AIX System Information * * * * * \" echo \" \" echo \" This Check Output File \" echo \" View ./\"$OutFile echo \" Date : \" $(date) echo \" \" echo \" # Gethering Information . . . . . \"  prtconf  /tmp/prtconf-$DATEC.txt sleep 1  cputype=$(cat /tmp/prtconf-$DATEC.txt | grep \"Processor Type\" | awk -F \":\" '{print $2}') kerneltype=$(cat /tmp/prtconf-$DATEC.txt | grep \"Kernel Type\" | awk -F \":\" '{print $2}') sizemem=$(cat /tmp/prtconf-$DATEC.txt | grep \"^Memory Size\" | awk -F \":\" '{print $2}') cpucore=$(cat /tmp/prtconf-$DATEC.txt | grep \"Number Of Processors\" | awk -F \":\" '{print $2}') ipaddr=$(cat /tmp/prtconf-$DATEC.txt | grep \"IP Address:\" | awk -F \":\" '{print $2}') subnet=$(cat /tmp/prtconf-$DATEC.txt | grep \"Sub Netmask:\" | awk -F \":\" '{print $2}') gateway=$(cat /tmp/prtconf-$DATEC.txt | grep \"Gateway:\" | awk -F \":\" '{print $2}') totalps=$(cat /tmp/prtconf-$DATEC.txt | grep \"Total Paging Space:\" | awk -F \":\" '{print $2}')  echo \" # Print \u0026 Save Information\" echo \"-------------------------------------------\"| tee -a $OutFile echo \" System Infomation \"| tee -a $OutFile echo \"-------------------------------------------\"| tee -a $OutFile echo \" Host Name :\" $(hostname)| tee -a $OutFile echo \" Vender :\" $(uname -M | awk -F \",\" '{print $1}')| tee -a $OutFile echo \" CPU Type :\" $cputype| tee -a $OutFile #echo \" Kernel Type :\" $kerneltype| tee -a $OutFile echo \" Kernel Bit :\" $(getconf KERNEL_BITMODE)\"-bit\"| tee -a $OutFile echo \" OS Version :\" $(oslevel -s)| tee -a $OutFile echo \" Number Of Processors :\" $cpucore| tee -a $OutFile echo \" Memory :\" $sizemem | tee -a $OutFile echo \" \" | tee -a $OutFile echo \" IP Address :\" $ipaddr\" /\"$subnet| tee -a $OutFile echo \" Gateway IP: \" $gateway| tee -a $OutFile echo \" \" | tee -a $OutFile echo \" Total Page Space Size :\" $totalps| tee -a $OutFile echo \" Detail Page Space :\"| tee -a $OutFile lsps -a| tee -a $OutFile echo \" \" | tee -a $OutFile echo \" LVM Information :\"| tee -a $OutFile lsvg -l rootvg| tee -a $OutFile echo \" \" | tee -a $OutFile echo \" Total df Size :\" | tee -a $OutFile df -gt| tee -a $OutFile echo \" \"| tee -a $OutFile echo \" rootvg Filesystem Size : \"| tee -a $OutFile df -gt | grep \"Mounted\"| tee -a $OutFile lsvg -l rootvg | grep \"/\" | grep -v \"N/A\" | awk '{print \"df -gt \"$7}' | sh | grep -v Mounted| tee -a $OutFile SCRIPT Output   * * * * * Check AIX System Information * * * * *   This Check Output File  View ./aix_test_20181104-2237.txt  Date : Wed Jan 9 22:37:52 KST 2019   # Gethering Information . . . . .  # Print \u0026 Save Information -------------------------------------------  System Infomation -------------------------------------------  Host Name : aix_test  Vender : IBM  CPU Type : PowerPC_POWER7  Kernel Bit : 64-bit  OS Version : 6100-09-03-1415  Number Of Processors : 2  Memory : 31744 MB   IP Address : 192.168.00.000 / 255.255.255.0  Gateway IP: 192.168.00.00   Total Page Space Size : 16384MB  Detail Page Space : Page Space Physical Volume Volume Group Size %Used Active Auto Type Chksum hd6 hdisk0 rootvg 16384MB 0 yes yes lv 0   LVM Information : rootvg: LV NAME TYPE LPs PPs PVs LV STATE MOUNT POINT hd5 boot 1 1 1 closed/syncd N/A hd6 paging 32 32 1 open/syncd N/A hd8 jfs2log 1 1 1 open/syncd N/A hd4 jfs2 8 8 1 open/syncd / hd2 jfs2 20 20 1 open/syncd /usr hd9var jfs2 2 2 1 open/syncd /var hd3 jfs2 10 10 1 open/syncd /tmp hd1 jfs2 2 2 1 open/syncd /home hd10opt jfs2 2 2 1 open/syncd /opt hd11admin jfs2 1 1 1 open/syncd /admin lg_dumplv sysdump 4 4 1 open/syncd N/A livedump jfs2 1 1 1 open/syncd /var/adm/ras/livedump loglv00 jfslog 1 1 1 open/syncd N/A lv00 jfs 1 1 1 open/syncd /var/adm/csd app_lv jfs2 180 180 1 open/syncd /app   Total df Size : Filesystem GB blocks Used Free %Used Mounted on /dev/hd4 4.00 1.27 2.73 32% / /dev/hd2 10.00 6.48 3.52 65% /usr /dev/hd9var 1.00 0.40 0.60 41% /var /dev/hd3 5.00 0.90 4.10 19% /tmp /dev/hd1 1.00 0.14 0.86 15% /home /dev/hd11admin 0.50 0.00 0.50 1% /admin /proc - - - - /proc /dev/hd10opt 1.00 0.61 0.39 61% /opt /dev/livedump 0.50 0.00 0.50 1% /var/adm/ras/livedump /dev/lv00 0.50 0.02 0.48 4% /var/adm/csd /dev/app_lv 90.00 41.10 48.90 46% /app   rootvg Filesystem Size : Filesystem GB blocks Used Free %Used Mounted on /dev/hd4 4.00 1.27 2.73 32% / /dev/hd2 10.00 6.48 3.52 65% /usr /dev/hd9var 1.00 0.40 0.60 41% /var /dev/hd3 5.00 0.90 4.10 19% /tmp /dev/hd1 1.00 0.14 0.86 15% /home /dev/hd10opt 1.00 0.61 0.39 61% /opt /dev/hd11admin 0.50 0.00 0.50 1% /admin /dev/livedump 0.50 0.00 0.50 1% /var/adm/ras/livedump /dev/lv00 0.50 0.02 0.48 4% /var/adm/csd /dev/app_lv 90.00 41.10 48.90 46% /app 해당 SCRIPT 의 일부가 사용된 솔루션  Playce RoRo : https://roro.play-ce.io/\n",
+  "articleBody": "[AIX] System Information collection Script  회사 U2C 솔루션 개발을 하는 중, AIX 에서 필수 시스템 정보를 수집하는 Script 가 필요로 해서 간단하게 제작한 Script 입니다.\nScript 내용  #! /bin/ksh # Make by. chhan  DATEC=$(date +%Y%m%d-%H%M) IdChk=`id | grep root | wc -l` OutFile=\"`hostname`_\"$DATEC\".txt\"  #Checking ROOT  if [ $IdChk -eq 0 ]; then  echo  echo \"You must login root... Try again...\"  echo  exit  fi  echo \" * * * * * Check AIX System Information * * * * * \" echo \" \" echo \" This Check Output File \" echo \" View ./\"$OutFile echo \" Date : \" $(date) echo \" \" echo \" # Gethering Information . . . . . \"  prtconf  /tmp/prtconf-$DATEC.txt sleep 1  cputype=$(cat /tmp/prtconf-$DATEC.txt | grep \"Processor Type\" | awk -F \":\" '{print $2}') kerneltype=$(cat /tmp/prtconf-$DATEC.txt | grep \"Kernel Type\" | awk -F \":\" '{print $2}') sizemem=$(cat /tmp/prtconf-$DATEC.txt | grep \"^Memory Size\" | awk -F \":\" '{print $2}') cpucore=$(cat /tmp/prtconf-$DATEC.txt | grep \"Number Of Processors\" | awk -F \":\" '{print $2}') ipaddr=$(cat /tmp/prtconf-$DATEC.txt | grep \"IP Address:\" | awk -F \":\" '{print $2}') subnet=$(cat /tmp/prtconf-$DATEC.txt | grep \"Sub Netmask:\" | awk -F \":\" '{print $2}') gateway=$(cat /tmp/prtconf-$DATEC.txt | grep \"Gateway:\" | awk -F \":\" '{print $2}') totalps=$(cat /tmp/prtconf-$DATEC.txt | grep \"Total Paging Space:\" | awk -F \":\" '{print $2}')  echo \" # Print \u0026 Save Information\" echo \"-------------------------------------------\"| tee -a $OutFile echo \" System Infomation \"| tee -a $OutFile echo \"-------------------------------------------\"| tee -a $OutFile echo \" Host Name :\" $(hostname)| tee -a $OutFile echo \" Vender :\" $(uname -M | awk -F \",\" '{print $1}')| tee -a $OutFile echo \" CPU Type :\" $cputype| tee -a $OutFile #echo \" Kernel Type :\" $kerneltype| tee -a $OutFile echo \" Kernel Bit :\" $(getconf KERNEL_BITMODE)\"-bit\"| tee -a $OutFile echo \" OS Version :\" $(oslevel -s)| tee -a $OutFile echo \" Number Of Processors :\" $cpucore| tee -a $OutFile echo \" Memory :\" $sizemem | tee -a $OutFile echo \" \" | tee -a $OutFile echo \" IP Address :\" $ipaddr\" /\"$subnet| tee -a $OutFile echo \" Gateway IP: \" $gateway| tee -a $OutFile echo \" \" | tee -a $OutFile echo \" Total Page Space Size :\" $totalps| tee -a $OutFile echo \" Detail Page Space :\"| tee -a $OutFile lsps -a| tee -a $OutFile echo \" \" | tee -a $OutFile echo \" LVM Information :\"| tee -a $OutFile lsvg -l rootvg| tee -a $OutFile echo \" \" | tee -a $OutFile echo \" Total df Size :\" | tee -a $OutFile df -gt| tee -a $OutFile echo \" \"| tee -a $OutFile echo \" rootvg Filesystem Size : \"| tee -a $OutFile df -gt | grep \"Mounted\"| tee -a $OutFile lsvg -l rootvg | grep \"/\" | grep -v \"N/A\" | awk '{print \"df -gt \"$7}' | sh | grep -v Mounted| tee -a $OutFile SCRIPT Output   * * * * * Check AIX System Information * * * * * This Check Output File View ./aix_test_20181104-2237.txt Date : Wed Jan 9 22:37:52 KST 2019 # Gethering Information . . . . . # Print \u0026 Save Information ------------------------------------------- System Infomation ------------------------------------------- Host Name : aix_test Vender : IBM CPU Type : PowerPC_POWER7 Kernel Bit : 64-bit OS Version : 6100-09-03-1415 Number Of Processors : 2 Memory : 31744 MB IP Address : 192.168.00.000 / 255.255.255.0 Gateway IP: 192.168.00.00 Total Page Space Size : 16384MB Detail Page Space : Page Space Physical Volume Volume Group Size %Used Active Auto Type Chksum hd6 hdisk0 rootvg 16384MB 0 yes yes lv 0 LVM Information : rootvg: LV NAME TYPE LPs PPs PVs LV STATE MOUNT POINT hd5 boot 1 1 1 closed/syncd N/A hd6 paging 32 32 1 open/syncd N/A hd8 jfs2log 1 1 1 open/syncd N/A hd4 jfs2 8 8 1 open/syncd / hd2 jfs2 20 20 1 open/syncd /usr hd9var jfs2 2 2 1 open/syncd /var hd3 jfs2 10 10 1 open/syncd /tmp hd1 jfs2 2 2 1 open/syncd /home hd10opt jfs2 2 2 1 open/syncd /opt hd11admin jfs2 1 1 1 open/syncd /admin lg_dumplv sysdump 4 4 1 open/syncd N/A livedump jfs2 1 1 1 open/syncd /var/adm/ras/livedump loglv00 jfslog 1 1 1 open/syncd N/A lv00 jfs 1 1 1 open/syncd /var/adm/csd app_lv jfs2 180 180 1 open/syncd /app Total df Size : Filesystem GB blocks Used Free %Used Mounted on /dev/hd4 4.00 1.27 2.73 32% / /dev/hd2 10.00 6.48 3.52 65% /usr /dev/hd9var 1.00 0.40 0.60 41% /var /dev/hd3 5.00 0.90 4.10 19% /tmp /dev/hd1 1.00 0.14 0.86 15% /home /dev/hd11admin 0.50 0.00 0.50 1% /admin /proc - - - - /proc /dev/hd10opt 1.00 0.61 0.39 61% /opt /dev/livedump 0.50 0.00 0.50 1% /var/adm/ras/livedump /dev/lv00 0.50 0.02 0.48 4% /var/adm/csd /dev/app_lv 90.00 41.10 48.90 46% /app rootvg Filesystem Size : Filesystem GB blocks Used Free %Used Mounted on /dev/hd4 4.00 1.27 2.73 32% / /dev/hd2 10.00 6.48 3.52 65% /usr /dev/hd9var 1.00 0.40 0.60 41% /var /dev/hd3 5.00 0.90 4.10 19% /tmp /dev/hd1 1.00 0.14 0.86 15% /home /dev/hd10opt 1.00 0.61 0.39 61% /opt /dev/hd11admin 0.50 0.00 0.50 1% /admin /dev/livedump 0.50 0.00 0.50 1% /var/adm/ras/livedump /dev/lv00 0.50 0.02 0.48 4% /var/adm/csd /dev/app_lv 90.00 41.10 48.90 46% /app 해당 SCRIPT 의 일부가 사용된 솔루션  Playce RoRo : https://roro.play-ce.io/\n",
   "wordCount" : "866",
   "inLanguage": "en",
   "datePublished": "2018-11-04T00:00:00Z",
@@ -271,79 +271,79 @@ Script 내용  #! /bin/ksh # Make by. chhan  DATEC=$(date &#43;%Y%m%d-%H%M) IdCh
 </span></span><span style="display:flex;"><span>lsvg -l rootvg | grep <span style="color:#e6db74">&#34;/&#34;</span> | grep -v <span style="color:#e6db74">&#34;N/A&#34;</span> | awk <span style="color:#e6db74">&#39;{print &#34;df -gt &#34;$7}&#39;</span> | sh | grep -v Mounted| tee -a $OutFile
 </span></span></code></pre></div><h1 id="script-output">SCRIPT Output<a hidden class="anchor" aria-hidden="true" href="#script-output">#</a></h1>
 <hr>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span> * * * * * Check AIX System Information * * * * *
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span> This Check Output File
-</span></span><span style="display:flex;"><span> View ./aix_test_20181104-2237.txt
-</span></span><span style="display:flex;"><span> Date :  Wed Jan 9 22:37:52 KST 2019
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span> # Gethering Information . . . . .
-</span></span><span style="display:flex;"><span> # Print &amp; Save Information
-</span></span><span style="display:flex;"><span>-------------------------------------------
-</span></span><span style="display:flex;"><span>            System Infomation
-</span></span><span style="display:flex;"><span>-------------------------------------------
-</span></span><span style="display:flex;"><span> Host Name : aix_test
-</span></span><span style="display:flex;"><span> Vender : IBM
-</span></span><span style="display:flex;"><span> CPU Type : PowerPC_POWER7
-</span></span><span style="display:flex;"><span> Kernel Bit : 64-bit
-</span></span><span style="display:flex;"><span> OS Version : 6100-09-03-1415
-</span></span><span style="display:flex;"><span> Number Of Processors : 2
-</span></span><span style="display:flex;"><span> Memory : 31744 MB
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span> IP Address : 192.168.00.000 / 255.255.255.0
-</span></span><span style="display:flex;"><span> Gateway IP:  192.168.00.00
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span> Total Page Space Size : 16384MB
-</span></span><span style="display:flex;"><span> Detail Page Space :
-</span></span><span style="display:flex;"><span>Page Space      Physical Volume   Volume Group Size %Used Active  Auto  Type Chksum
-</span></span><span style="display:flex;"><span>hd6             hdisk0            rootvg       16384MB     0   yes   yes    lv     0
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span> LVM Information :
-</span></span><span style="display:flex;"><span>rootvg:
-</span></span><span style="display:flex;"><span>LV NAME             TYPE       LPs     PPs     PVs  LV STATE      MOUNT POINT
-</span></span><span style="display:flex;"><span>hd5                 boot       1       1       1    closed/syncd  N/A
-</span></span><span style="display:flex;"><span>hd6                 paging     32      32      1    open/syncd    N/A
-</span></span><span style="display:flex;"><span>hd8                 jfs2log    1       1       1    open/syncd    N/A
-</span></span><span style="display:flex;"><span>hd4                 jfs2       8       8       1    open/syncd    /
-</span></span><span style="display:flex;"><span>hd2                 jfs2       20      20      1    open/syncd    /usr
-</span></span><span style="display:flex;"><span>hd9var              jfs2       2       2       1    open/syncd    /var
-</span></span><span style="display:flex;"><span>hd3                 jfs2       10      10      1    open/syncd    /tmp
-</span></span><span style="display:flex;"><span>hd1                 jfs2       2       2       1    open/syncd    /home
-</span></span><span style="display:flex;"><span>hd10opt             jfs2       2       2       1    open/syncd    /opt
-</span></span><span style="display:flex;"><span>hd11admin           jfs2       1       1       1    open/syncd    /admin
-</span></span><span style="display:flex;"><span>lg_dumplv           sysdump    4       4       1    open/syncd    N/A
-</span></span><span style="display:flex;"><span>livedump            jfs2       1       1       1    open/syncd    /var/adm/ras/livedump
-</span></span><span style="display:flex;"><span>loglv00             jfslog     1       1       1    open/syncd    N/A
-</span></span><span style="display:flex;"><span>lv00                jfs        1       1       1    open/syncd    /var/adm/csd
-</span></span><span style="display:flex;"><span>app_lv              jfs2       180     180     1    open/syncd    /app
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span> Total df Size :
-</span></span><span style="display:flex;"><span>Filesystem    GB blocks      Used      Free %Used Mounted on
-</span></span><span style="display:flex;"><span>/dev/hd4           4.00      1.27      2.73   32% /
-</span></span><span style="display:flex;"><span>/dev/hd2          10.00      6.48      3.52   65% /usr
-</span></span><span style="display:flex;"><span>/dev/hd9var        1.00      0.40      0.60   41% /var
-</span></span><span style="display:flex;"><span>/dev/hd3           5.00      0.90      4.10   19% /tmp
-</span></span><span style="display:flex;"><span>/dev/hd1           1.00      0.14      0.86   15% /home
-</span></span><span style="display:flex;"><span>/dev/hd11admin      0.50      0.00      0.50    1% /admin
-</span></span><span style="display:flex;"><span>/proc                 -         -         -    -  /proc
-</span></span><span style="display:flex;"><span>/dev/hd10opt       1.00      0.61      0.39   61% /opt
-</span></span><span style="display:flex;"><span>/dev/livedump      0.50      0.00      0.50    1% /var/adm/ras/livedump
-</span></span><span style="display:flex;"><span>/dev/lv00          0.50      0.02      0.48    4% /var/adm/csd
-</span></span><span style="display:flex;"><span>/dev/app_lv       90.00     41.10     48.90   46% /app
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span> rootvg Filesystem Size :
-</span></span><span style="display:flex;"><span>Filesystem    GB blocks      Used      Free %Used Mounted on
-</span></span><span style="display:flex;"><span>/dev/hd4           4.00      1.27      2.73   32% /
-</span></span><span style="display:flex;"><span>/dev/hd2          10.00      6.48      3.52   65% /usr
-</span></span><span style="display:flex;"><span>/dev/hd9var        1.00      0.40      0.60   41% /var
-</span></span><span style="display:flex;"><span>/dev/hd3           5.00      0.90      4.10   19% /tmp
-</span></span><span style="display:flex;"><span>/dev/hd1           1.00      0.14      0.86   15% /home
-</span></span><span style="display:flex;"><span>/dev/hd10opt       1.00      0.61      0.39   61% /opt
-</span></span><span style="display:flex;"><span>/dev/hd11admin      0.50      0.00      0.50    1% /admin
-</span></span><span style="display:flex;"><span>/dev/livedump      0.50      0.00      0.50    1% /var/adm/ras/livedump
-</span></span><span style="display:flex;"><span>/dev/lv00          0.50      0.02      0.48    4% /var/adm/csd
-</span></span><span style="display:flex;"><span>/dev/app_lv       90.00     41.10     48.90   46% /app
-</span></span></code></pre></div><h1 id="해당-script-의-일부가-사용된-솔루션">해당 SCRIPT 의 일부가 사용된 솔루션<a hidden class="anchor" aria-hidden="true" href="#해당-script-의-일부가-사용된-솔루션">#</a></h1>
+<pre tabindex="0"><code> * * * * * Check AIX System Information * * * * *
+
+ This Check Output File
+ View ./aix_test_20181104-2237.txt
+ Date :  Wed Jan 9 22:37:52 KST 2019
+
+ # Gethering Information . . . . .
+ # Print &amp; Save Information
+-------------------------------------------
+            System Infomation
+-------------------------------------------
+ Host Name : aix_test
+ Vender : IBM
+ CPU Type : PowerPC_POWER7
+ Kernel Bit : 64-bit
+ OS Version : 6100-09-03-1415
+ Number Of Processors : 2
+ Memory : 31744 MB
+
+ IP Address : 192.168.00.000 / 255.255.255.0
+ Gateway IP:  192.168.00.00
+
+ Total Page Space Size : 16384MB
+ Detail Page Space :
+Page Space      Physical Volume   Volume Group Size %Used Active  Auto  Type Chksum
+hd6             hdisk0            rootvg       16384MB     0   yes   yes    lv     0
+
+ LVM Information :
+rootvg:
+LV NAME             TYPE       LPs     PPs     PVs  LV STATE      MOUNT POINT
+hd5                 boot       1       1       1    closed/syncd  N/A
+hd6                 paging     32      32      1    open/syncd    N/A
+hd8                 jfs2log    1       1       1    open/syncd    N/A
+hd4                 jfs2       8       8       1    open/syncd    /
+hd2                 jfs2       20      20      1    open/syncd    /usr
+hd9var              jfs2       2       2       1    open/syncd    /var
+hd3                 jfs2       10      10      1    open/syncd    /tmp
+hd1                 jfs2       2       2       1    open/syncd    /home
+hd10opt             jfs2       2       2       1    open/syncd    /opt
+hd11admin           jfs2       1       1       1    open/syncd    /admin
+lg_dumplv           sysdump    4       4       1    open/syncd    N/A
+livedump            jfs2       1       1       1    open/syncd    /var/adm/ras/livedump
+loglv00             jfslog     1       1       1    open/syncd    N/A
+lv00                jfs        1       1       1    open/syncd    /var/adm/csd
+app_lv              jfs2       180     180     1    open/syncd    /app
+
+ Total df Size :
+Filesystem    GB blocks      Used      Free %Used Mounted on
+/dev/hd4           4.00      1.27      2.73   32% /
+/dev/hd2          10.00      6.48      3.52   65% /usr
+/dev/hd9var        1.00      0.40      0.60   41% /var
+/dev/hd3           5.00      0.90      4.10   19% /tmp
+/dev/hd1           1.00      0.14      0.86   15% /home
+/dev/hd11admin      0.50      0.00      0.50    1% /admin
+/proc                 -         -         -    -  /proc
+/dev/hd10opt       1.00      0.61      0.39   61% /opt
+/dev/livedump      0.50      0.00      0.50    1% /var/adm/ras/livedump
+/dev/lv00          0.50      0.02      0.48    4% /var/adm/csd
+/dev/app_lv       90.00     41.10     48.90   46% /app
+
+ rootvg Filesystem Size :
+Filesystem    GB blocks      Used      Free %Used Mounted on
+/dev/hd4           4.00      1.27      2.73   32% /
+/dev/hd2          10.00      6.48      3.52   65% /usr
+/dev/hd9var        1.00      0.40      0.60   41% /var
+/dev/hd3           5.00      0.90      4.10   19% /tmp
+/dev/hd1           1.00      0.14      0.86   15% /home
+/dev/hd10opt       1.00      0.61      0.39   61% /opt
+/dev/hd11admin      0.50      0.00      0.50    1% /admin
+/dev/livedump      0.50      0.00      0.50    1% /var/adm/ras/livedump
+/dev/lv00          0.50      0.02      0.48    4% /var/adm/csd
+/dev/app_lv       90.00     41.10     48.90   46% /app
+</code></pre><h1 id="해당-script-의-일부가-사용된-솔루션">해당 SCRIPT 의 일부가 사용된 솔루션<a hidden class="anchor" aria-hidden="true" href="#해당-script-의-일부가-사용된-솔루션">#</a></h1>
 <hr>
 <p>Playce RoRo : <a href="https://roro.play-ce.io/">https://roro.play-ce.io/</a></p>
 
