@@ -1,8 +1,127 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto">
 
-<head><link rel="icon" type="image/png" href="https://chhanz88.github.io/assets/favicon.png">
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>[Kubernetes] Node 상태 확인 | chhanz 기술 블로그
+</title>
+<meta name="keywords" content="kubernetes">
+<meta name="description" content=" ">
+<meta name="author" content="chhanz">
+<link rel="canonical" href="https://chhanz88.github.io/post/2020-09-24-check-the-node/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.ec8da366ca2fb647537ccb7a8f6fa5b4e9cd3c7a0d3171dd2d3baad1e49c8bfc.css" integrity="sha256-7I2jZsovtkdTfMt6j2&#43;ltOnNPHoNMXHdLTuq0eSci/w=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.min.4dcb3c4f38462f66c6b6137227726f5543cb934cca9788f041c087e374491df2.js" integrity="sha256-Tcs8TzhGL2bGthNyJ3JvVUPLk0zKl4jwQcCH43RJHfI="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" type="image/png" href="https://chhanz88.github.io/assets/favicon.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://chhanz88.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://chhanz88.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://chhanz88.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://chhanz88.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
 
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="[Kubernetes] Node 상태 확인" />
+<meta property="og:description" content=" " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://chhanz88.github.io/post/2020-09-24-check-the-node/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2020-09-24T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2020-09-24T00:00:00&#43;00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[Kubernetes] Node 상태 확인"/>
+<meta name="twitter:description" content=" "/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Posts",
+      "item": "https://chhanz88.github.io/post/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "[Kubernetes] Node 상태 확인",
+      "item": "https://chhanz88.github.io/post/2020-09-24-check-the-node/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "[Kubernetes] Node 상태 확인",
+  "name": "[Kubernetes] Node 상태 확인",
+  "description": " ",
+  "keywords": [
+    "kubernetes"
+  ],
+  "articleBody": "목차  Build APP - Container image Deploy APP  Build APP Create The Deployment   Check APP  Check The Node Check The APP   Expose APP  Expose APP - NodePort   Scale APP  Scale APP   Update APP  Update APP - Rolling Update/Rollback    Check The Node 이 문서는 Kubernetes Node 를 확인하는 방법에 대해 포함되어 있습니다.\nKubernetes Node Kubernetes Node 는 최소한 다음과 같이 동작합니다.\n Kubelet은, 쿠버네티스 마스터와 노드 간 통신을 책임지는 프로세스이며, 하나의 머신 상에서 동작하는 파드와 컨테이너를 관리합니다. (도커, rkt)와 같은 컨테이너 런타임은 레지스트리에서 컨테이너 이미지를 가져와 묶여 있는 것을 풀고 애플리케이션을 동작시키는 책임을 맡습니다.  Check Kubernetes Node  Node 정보 확인 $ kubectl get node NAME STATUS ROLES AGE VERSION fastvm-centos-7-7-110 Ready master 16d v1.18.8+k3s1  Node 상세 정보 확인 $ kubectl get node -o wide NAME STATUS ROLES AGE VERSION INTERNAL-IP EXTERNAL-IP OS-IMAGE KERNEL-VERSION CONTAINER-RUNTIME fastvm-centos-7-7-110 Ready master 16d v1.18.8+k3s1 192.168.200.110  CentOS Linux 7 (Core) 3.10.0-1062.el7.x86_64 containerd://1.3.3-k3s2  Node 성능 사용량 확인 $ kubectl top nodes NAME CPU(cores) CPU% MEMORY(bytes) MEMORY% fastvm-centos-7-7-110 127m 6% 573Mi 66%   Node Management  Node Schedule 관련 $ kubectl --help ...  cordon Mark node as unschedulable  uncordon Mark node as schedulable  drain Drain node in preparation for maintenance ...  Mark node as unschedulable $ kubectl cordon   Mark node as schedulable $ kubectl uncordon   Drain node in preparation for maintenance $ kubectl drain    참고 문서  https://github.com/chhanz/kubernetes-hands-on-lab https://github.com/chhanz/kubernetes-hands-on-lab/blob/master/doc/check-the-node.md  ",
+  "wordCount" : "220",
+  "inLanguage": "en",
+  "datePublished": "2020-09-24T00:00:00Z",
+  "dateModified": "2020-09-24T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "chhanz"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://chhanz88.github.io/post/2020-09-24-check-the-node/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "chhanz 기술 블로그\n",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://chhanz88.github.io/assets/favicon.png"
+    }
+  }
+}
+</script>
 </head>
 
 <body class="" id="top">

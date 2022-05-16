@@ -1,8 +1,127 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto">
 
-<head><link rel="icon" type="image/png" href="https://chhanz88.github.io/assets/favicon.png">
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>[Kubernetes] kubeadm 을 이용한 Kubernetes 설치 | chhanz 기술 블로그
+</title>
+<meta name="keywords" content="kubernetes">
+<meta name="description" content=" ">
+<meta name="author" content="chhanz">
+<link rel="canonical" href="https://chhanz88.github.io/post/2019-09-04-kubernetes-install-1_15_3/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.ec8da366ca2fb647537ccb7a8f6fa5b4e9cd3c7a0d3171dd2d3baad1e49c8bfc.css" integrity="sha256-7I2jZsovtkdTfMt6j2&#43;ltOnNPHoNMXHdLTuq0eSci/w=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.min.4dcb3c4f38462f66c6b6137227726f5543cb934cca9788f041c087e374491df2.js" integrity="sha256-Tcs8TzhGL2bGthNyJ3JvVUPLk0zKl4jwQcCH43RJHfI="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" type="image/png" href="https://chhanz88.github.io/assets/favicon.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://chhanz88.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://chhanz88.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://chhanz88.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://chhanz88.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
 
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="[Kubernetes] kubeadm 을 이용한 Kubernetes 설치" />
+<meta property="og:description" content=" " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://chhanz88.github.io/post/2019-09-04-kubernetes-install-1_15_3/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2019-09-04T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2019-09-04T00:00:00&#43;00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[Kubernetes] kubeadm 을 이용한 Kubernetes 설치"/>
+<meta name="twitter:description" content=" "/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Posts",
+      "item": "https://chhanz88.github.io/post/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "[Kubernetes] kubeadm 을 이용한 Kubernetes 설치",
+      "item": "https://chhanz88.github.io/post/2019-09-04-kubernetes-install-1_15_3/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "[Kubernetes] kubeadm 을 이용한 Kubernetes 설치",
+  "name": "[Kubernetes] kubeadm 을 이용한 Kubernetes 설치",
+  "description": " ",
+  "keywords": [
+    "kubernetes"
+  ],
+  "articleBody": "kubeadm 을 이용한 Kubernetes 설치  kubeadm 을 이용하여 kubernetes 테스트 환경을 쉽고 빠르게 구축하도록 하겠습니다.\n준비 사항 이번 테스트 환경은 1 Master node, 2 Worker node 로 구성을 할 예정입니다. 상세 내역은 아래와 같습니다.\n OS Version : CentOS 7.6 Docker Version : v18.6.1\nKubernetes Version : v1.15.3\n 사전 준비 Kubernetes 설치를 위해 사전 준비 작업이 필요합니다.\n위 작업은 운영체제 설정 작업 및 Package 설치 작업이며,\n해당 작업은 Kubernetes Preinstaller 를 이용하여 손쉽게 작업하도록 하겠습니다.\n Kubernetes Preinstaller : https://github.com/chhanz/k8s-install-script  해당 source 는\n$ git clone https://github.com/chhanz/k8s-install-script.git git clone 명령을 통해 로컬에 복제합니다.\n Preinstaller File list (v1.15.3)  ├── README.md  ├── inventory ├── old_bash-1.12  ## Old Bash Script (v1.12) │ ├── 0_preinstall_base.sh │ ├── 1_mk_master.yml │ ├── 2_master1_install.sh │ ├── 3_deploy_key.sh │ ├── 4_deploy_install_script.sh │ ├── 5_network_plugin.sh  │ ├── kube-flannel.yml │ ├── kubeadm-config_master1.yaml │ ├── kubeadm-config_master2.yaml │ ├── kubeadm-config_master3.yaml │ ├── node2_deploy.sh │ └── node3_deploy.sh └── preinstall.yaml  ## Preinstaller (ansible)  1 directory, 15 files VM 이 접근이 가능한 시스템 혹은 PC등, ansible 수행이 가능한 위치에서 inventory 작성을 하고 playbook 을 실행하면 됩니다.\nInventory 변경 [all]  fastvm-centos-7-6-22 ansible_host=192.168.200.22 fastvm-centos-7-6-23 ansible_host=192.168.200.23 fastvm-centos-7-6-24 ansible_host=192.168.200.24  [all:vars] ansible_ssh_user=root ansible_ssh_pass=password docker_package_version=docker-ce-18.06.1.ce kubernetes_package_version=1.15.3-0 위와 같이 VM IP 정보, root 접속 정보, docker \u0026 kubernetes version 정보를 입력합니다.\nPlaybook 수행 $ ansible-playbook -i inventory preinstall.yaml 해당 명령을 통해 preinstall playbook 을 수행합니다.\n아래와 같이 완료가 되면\n해당 시스템을 Reboot 하여, preinstaller playbook 을 통해 설정된 값이 적용되도록 합니다.\nPlaybook 수행 내역 해당 preinstall playbook 은 아래와 같은 항목을 자동으로 설정합니다.\n  firewalld 중지 및 Disabled SELinux Disabled SWAP 중지 및 해제 Kernel Parameter 설정 Docker-CE, Kubernetes Repository 등록 Requirement Package 설치 systemd 설정   Kubernetes 설치 kubeadm 을 이용하여 설치하기 위해 아래 명령을 Master node 에서 수행합니다.\n$ kubeadm init --apiserver-advertise-address= 수행이 완료가 되면 아래와 같이 Worker node 연결을 위한 token 이 생성됩니다.\nkubeconfig 생성 mkdir -p $HOME/.kube cp -i /etc/kubernetes/admin.conf $HOME/.kube/config chown $(id -u):$(id -g) $HOME/.kube/config kubeconfig 를 생성하면 kubectl 명령이 정상적으로 작동 할 것 입니다.\nPod Network 설치 CNI 를 설치하기 위해 하기 문서를 참고합니다.\n참고 문서 : https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/\n이번 포스팅의 테스트에서는 Calico CNI 를 사용하도록 하겠습니다.\n아래와 같이 cailco.yaml 을 배포합니다.\n# kubectl apply -f https://docs.projectcalico.org/v3.8/manifests/calico.yaml  configmap/calico-config created customresourcedefinition.apiextensions.k8s.io/felixconfigurations.crd.projectcalico.org created customresourcedefinition.apiextensions.k8s.io/ipamblocks.crd.projectcalico.org created customresourcedefinition.apiextensions.k8s.io/blockaffinities.crd.projectcalico.org created customresourcedefinition.apiextensions.k8s.io/ipamhandles.crd.projectcalico.org created customresourcedefinition.apiextensions.k8s.io/ipamconfigs.crd.projectcalico.org created customresourcedefinition.apiextensions.k8s.io/bgppeers.crd.projectcalico.org created customresourcedefinition.apiextensions.k8s.io/bgpconfigurations.crd.projectcalico.org created customresourcedefinition.apiextensions.k8s.io/ippools.crd.projectcalico.org created customresourcedefinition.apiextensions.k8s.io/hostendpoints.crd.projectcalico.org created customresourcedefinition.apiextensions.k8s.io/clusterinformations.crd.projectcalico.org created customresourcedefinition.apiextensions.k8s.io/globalnetworkpolicies.crd.projectcalico.org created customresourcedefinition.apiextensions.k8s.io/globalnetworksets.crd.projectcalico.org created customresourcedefinition.apiextensions.k8s.io/networkpolicies.crd.projectcalico.org created customresourcedefinition.apiextensions.k8s.io/networksets.crd.projectcalico.org created clusterrole.rbac.authorization.k8s.io/calico-kube-controllers created clusterrolebinding.rbac.authorization.k8s.io/calico-kube-controllers created clusterrole.rbac.authorization.k8s.io/calico-node created clusterrolebinding.rbac.authorization.k8s.io/calico-node created daemonset.apps/calico-node created serviceaccount/calico-node created deployment.apps/calico-kube-controllers created serviceaccount/calico-kube-controllers created 배포가 완료가 되면 아래와 같이 calico 관련 Pod 이 생성이 되고 Running 상태가 되면 CNI 설치가 완료가 된 것 입니다.\n$ kubectl get pod -n kube-system NAME READY STATUS RESTARTS AGE pod/calico-kube-controllers-65b8787765-brdv7 1/1 Running 0 117s pod/calico-node-lggxn 1/1 Running 0 117s pod/coredns-5c98db65d4-m6svd 1/1 Running 0 23m pod/coredns-5c98db65d4-x7gcb 1/1 Running 0 23m pod/etcd-fastvm-centos-7-6-22 1/1 Running 1 22m pod/kube-apiserver-fastvm-centos-7-6-22 1/1 Running 1 22m pod/kube-controller-manager-fastvm-centos-7-6-22 1/1 Running 5 22m pod/kube-proxy-82v78 1/1 Running 1 23m pod/kube-scheduler-fastvm-centos-7-6-22 1/1 Running 5 22m Worker node 연결 Master node 가 초기화가 되고, 마지막에 생성된 token 값을 연결할 Worker node 에 입력합니다.\n$ kubeadm join 192.168.200.22:6443 --token cdw8cj.4guf1fr9e7shc7u8 \\  --discovery-token-ca-cert-hash sha256:bc3604fb648338821d84ddf5b5259064ae5ceb2ee159f708d6741b2d1e7c65a2 위와 같이 Worker node 가 연결 되는 것을 확인하였습니다. 사용할 모든 Worker node 에 수행합니다.\n배포 완료 APP 배포 테스트 구성이 완료된 kubernetes 가 정상적으로 작동하는지 APP 을 배포하여 테스트하도록 하겠습니다.\n Pod 생성  $ kubectl run test-httpd --image=httpd deployment.apps/test-httpd created  Pod 생성 확인  $ kubectl get po NAME READY STATUS RESTARTS AGE test-httpd-7dd7c96c8f-hvbzl 1/1 Running 0 31s  Service 생성  $ kubectl expose deployment.apps/test-httpd --port 80 service/test-httpd exposed  Service 작동 확인  $ curl 10.97.176.30 It works! 이처럼 손쉽게 kubernetes 테스트 환경을 구축 하였습니다.\n참고 문서  Kubernetes Preinstaller github : https://github.com/chhanz/k8s-install-script kubeadm을 이용한 설치 : https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/ calico CNI 설치 : https://docs.projectcalico.org/v3.8/getting-started/kubernetes/installation/calico  ",
+  "wordCount" : "595",
+  "inLanguage": "en",
+  "datePublished": "2019-09-04T00:00:00Z",
+  "dateModified": "2019-09-04T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "chhanz"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://chhanz88.github.io/post/2019-09-04-kubernetes-install-1_15_3/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "chhanz 기술 블로그\n",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://chhanz88.github.io/assets/favicon.png"
+    }
+  }
+}
+</script>
 </head>
 
 <body class="" id="top">

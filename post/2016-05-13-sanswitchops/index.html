@@ -1,8 +1,127 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto">
 
-<head><link rel="icon" type="image/png" href="https://chhanz88.github.io/assets/favicon.png">
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>SAN Switch - 운영 매뉴얼 | chhanz 기술 블로그
+</title>
+<meta name="keywords" content="SAN">
+<meta name="description" content=" ">
+<meta name="author" content="chhanz">
+<link rel="canonical" href="https://chhanz88.github.io/post/2016-05-13-sanswitchops/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.ec8da366ca2fb647537ccb7a8f6fa5b4e9cd3c7a0d3171dd2d3baad1e49c8bfc.css" integrity="sha256-7I2jZsovtkdTfMt6j2&#43;ltOnNPHoNMXHdLTuq0eSci/w=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.min.4dcb3c4f38462f66c6b6137227726f5543cb934cca9788f041c087e374491df2.js" integrity="sha256-Tcs8TzhGL2bGthNyJ3JvVUPLk0zKl4jwQcCH43RJHfI="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" type="image/png" href="https://chhanz88.github.io/assets/favicon.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://chhanz88.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://chhanz88.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://chhanz88.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://chhanz88.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
 
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="SAN Switch - 운영 매뉴얼" />
+<meta property="og:description" content=" " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://chhanz88.github.io/post/2016-05-13-sanswitchops/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2016-05-13T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2016-05-13T00:00:00&#43;00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="SAN Switch - 운영 매뉴얼"/>
+<meta name="twitter:description" content=" "/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Posts",
+      "item": "https://chhanz88.github.io/post/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "SAN Switch - 운영 매뉴얼",
+      "item": "https://chhanz88.github.io/post/2016-05-13-sanswitchops/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "SAN Switch - 운영 매뉴얼",
+  "name": "SAN Switch - 운영 매뉴얼",
+  "description": " ",
+  "keywords": [
+    "SAN"
+  ],
+  "articleBody": "SAN Switch - 운영 매뉴얼  SAN Switch 의 설정을 위해 주로 GUI - Web Console 을 접속합니다.\n하지만 장비 및 접속 PC 에 따라 JAVA Version 에 대한 제약 사항으로 인해 접속이 안되는 경우가 많습니다.\n그리하여 telnet , ssh 를 통한 CLI 접근을 통해 설정을 하면 편리하게 SAN Switch 설정을 할 수 있습니다.\n아래 명령들을 통해 SAN Switch 설정을 배워봅시다.\nSwitch configuration  Switch name 변경 switch_name  switchname \"san_sw_new_name\" Switch Domain ID 변경 Domain ID는 fabric내에서의 switch 구별을 위한 것으로 유일한 ID를 부여해야 합니다.\nswitch_name switchdisable switch_name configure Configure… Fabric parameters (yes, y, no, n): [no] y Domain: (1..239) [1]  switchenable 위와 같이 설정을 하며, 주로 Domain ID 를 제외한 나머지 설정은 Enter 를 입력 하여 기본값으로 설정합니다.\nSwitch IP 변경 SAN Switch 의 기본 접속 IP 는 10.77.77.77 입니다.\n변경을 위해 아래와 같이 설정하여 변경을 합니다.\nswitch_name ipaddrset Ethernet IP Address [10.77.77.77]: 192.168.0.23 Ethernet Subnetmask [255.255.255.0]: 255.255.255.0 Fibre Channel IP Address [0.0.0.0]: Fibre Channel Subnetmask [0.0.0.0]: Committing configuration...Done. switch_name ipaddrshow ipaddrshow 명령을 통해 IP 설정을 확인 할 수 있습니다.\nPort Configuration  Port Speed 설정 설정 가능한 Port Speed 는 아래와 같습니다.\n 0 : Auto\n1 : 1G\n2 : 2G\n4 : 4G\n8 : 8G\n16 : 16G (16 G 지원 Switch)\n switch_name portcfgspeed Port 설정 확인 switch_name portcfgshow Zone Configuration  Alias Switch 의 Port 번호 혹은 WWWN 을 알기쉽게 alias 로 지정하여, zone member 확인을 쉽게 합니다.\n Alias 생성  switch_name alicreate , switch_name alicreate \"test_fc0\",\"1,0\" switch_name alicreate \"test_fc0\",\"10:00:00:00:C9:4E:03:76\"  Port Zoning : switch_name alicreate “test_fc0”,“1,0”\nWWWN Zoning : switch_name alicreate “test_fc0”,“10:00:00:00:C9:4E:03:76”\n  Alias 삭제  switch_name alidelete Zone Zone 은 일종의 Network Switch 의 VLAN 과 비슷한 역할을 하는 기능이며, member 들 사이의 통신을 제한 하는 기능입니다.\n Zone 생성  switch_name zonecreate , switch_name zonecreate \"test_fc0__stg_fc1\",\"test_fc0;stg_fc1\" Zone 생성할 때 alias 대신 Port 번호 및 WWWN 을 바로 입력을 할 수 있습니다.\n하지만 관리의 편의를 위해 alias 를 사용하는 것을 권장합니다.\n Zone 삭제  switch_name zonedelete switch_name zonedelete \"test_fc0__stg_fc1\" Config 적용 Zone 을 적용하기 위해서는 Config Group 을 생성하여 Zone 을 Group 에 추가 해야합니다.\n Config Group 생성 및 Zone 추가  switch_name cfgcreate , switch_name cfgcreate \"test_zone\",\"test_fc0__stg_fc1\"  생성 되있는 Group 에 Zone 추가  switch_name cfgadd , switch_name cfgadd \"test_zone\",\"test_fc1__stg_fc2\"  Zone Config 적용  switch_name cfgenable switch_name cfgenable \"test_zone\"  Zone Config 해제 및 삭제  switch_name cfgdisable switch_name cfgdisable \"test_zone\" switch_name cfgdelete switch_name cfgdelete \"test_zone\"  Zone Configuration 확인(예제)  zoneshow 명령을 통해 현재 Switch 에 설정된 Config 를 확인 할 수 있습니다.\nIBM_2498_B24:admin zoneshow Defined configuration: cfg: ZONE_CFG Server1_fcs0__V7K3_A1; Server1_fcs0__V7K3_B1; Server1_fcs0__V7K3_A2; Server1_fcs0__V7K3_B2; Server2_fcs0__V7K3_A1; Server2_fcs0__V7K3_B1; Server2_fcs0__V7K3_A2; Server2_fcs0__V7K3_B2; Server3_fcs0__V7K4_A1; Server3_fcs0__V7K4_B1; Server3_fcs0__V7K4_A2; Server3_fcs0__V7K4_B2; Server4_fcs0__V7K4_A1; Server4_fcs0__V7K4_B1; Server4_fcs0__V7K4_A2; Server4_fcs0__V7K4_B2; Server5_fcs0__V7K5_A1; Server5_fcs0__V7K5_B1; Server5_fcs0__V7K5_A2; Server5_fcs0__V7K5_B2; Server6_fcs0__V7K5_A1; Server6_fcs0__V7K5_B1; Server6_fcs0__V7K5_A2; Server6_fcs0__V7K5_B2 zone: Server1_fcs0__V7K3_A1 Server1_fcs0; V7K3_A1 zone: Server1_fcs0__V7K3_A2 Server1_fcs0; V7K3_A2 zone: Server1_fcs0__V7K3_B1 Server1_fcs0; V7K3_B1 zone: Server1_fcs0__V7K3_B2 Server1_fcs0; V7K3_B2 zone: Server2_fcs0__V7K3_A1 Server2_fcs0; V7K3_A1 zone: Server2_fcs0__V7K3_A2 Server2_fcs0; V7K3_A2 .... 중략 .... alias: Server1_fcs0 1,12 alias: Server2_fcs0 1,13 alias: Server3_fcs0 1,14 alias: Server4_fcs0 1,15 alias: Server5_fcs0 1,16 alias: Server6_fcs0 1,17 alias: V7K3_A1 1,0 alias: V7K3_A2 1,2 alias: V7K3_B1 1,1 alias: V7K3_B2 1,3 Switch 정보 확인  Switch 의 모든 Port 의 연결 상태, WWWN 정보를 확인 할 수 있습니다.\n예제) IBM_2498_B24:admin switchshow switchName: IBM_2498_B24 switchType: 71.2 switchState: Online switchMode: Native switchRole: Principal switchDomain: 1 switchId: 000000 switchWwn: 00:00:00:aa:aa:aa:aa:aa zoning: ON (ZONE_CFG) switchBeacon: OFF Index Port Address Media Speed State Proto ============================================== 0 0 010000 id N8 Online FC F-Port a0:01:07:00:04:00:00:00 1 1 010100 id N8 Online FC F-Port a0:01:07:00:04:00:00:00 2 2 010200 id N8 Online FC F-Port a0:01:07:00:04:00:00:00 3 3 010300 id N8 Online FC F-Port a0:01:07:00:04:00:00:00 4 4 010400 id N8 Online FC F-Port a0:01:07:00:04:00:00:00 5 5 010500 id N8 Online FC F-Port a0:01:07:00:04:00:00:00 6 6 010600 id N8 Online FC F-Port a0:01:07:00:04:00:00:00 7 7 010700 id N8 Online FC F-Port a0:01:07:00:04:00:00:00 8 8 010800 id N8 Online FC F-Port a0:01:07:00:04:00:00:00 9 9 010900 id N8 Online FC F-Port a0:01:07:00:04:00:00:00 10 10 010a00 id N8 Online FC F-Port a0:01:07:00:04:00:00:00 11 11 010b00 id N8 Online FC F-Port v0:01:07:00:04:20:20:20 12 12 010c00 id N8 Online FC F-Port v0:01:07:00:00:20:20:20 13 13 010d00 id N8 Online FC F-Port v0:01:07:00:00:20:20:20 14 14 010e00 id N8 Online FC F-Port v0:01:07:00:00:20:20:20 15 15 010f00 id N8 Online FC F-Port v0:01:07:00:00:20:20:20 16 16 011000 id N8 Online FC F-Port v0:01:07:00:00:20:20:20 17 17 011100 id N8 Online FC F-Port v0:01:07:00:00:20:20:20 18 18 011200 id N8 No_Light FC 19 19 011300 id N8 No_Light FC 20 20 011400 id N8 No_Light FC 21 21 011500 id N8 No_Light FC 22 22 011600 id N8 No_Light FC 23 23 011700 id N8 No_Light FC 위 명령어를 이용하면 쉽게 SAN Switch Configuration 이 가능합니다.\n",
+  "wordCount" : "883",
+  "inLanguage": "en",
+  "datePublished": "2016-05-13T00:00:00Z",
+  "dateModified": "2016-05-13T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "chhanz"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://chhanz88.github.io/post/2016-05-13-sanswitchops/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "chhanz 기술 블로그\n",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://chhanz88.github.io/assets/favicon.png"
+    }
+  }
+}
+</script>
 </head>
 
 <body class="" id="top">

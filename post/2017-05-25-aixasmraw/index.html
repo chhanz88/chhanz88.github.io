@@ -1,8 +1,127 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto">
 
-<head><link rel="icon" type="image/png" href="https://chhanz88.github.io/assets/favicon.png">
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>[AIX] Create a raw Logical Volume for Oracle ASM On AIX | chhanz 기술 블로그
+</title>
+<meta name="keywords" content="aix">
+<meta name="description" content=" ">
+<meta name="author" content="chhanz">
+<link rel="canonical" href="https://chhanz88.github.io/post/2017-05-25-aixasmraw/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.ec8da366ca2fb647537ccb7a8f6fa5b4e9cd3c7a0d3171dd2d3baad1e49c8bfc.css" integrity="sha256-7I2jZsovtkdTfMt6j2&#43;ltOnNPHoNMXHdLTuq0eSci/w=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.min.4dcb3c4f38462f66c6b6137227726f5543cb934cca9788f041c087e374491df2.js" integrity="sha256-Tcs8TzhGL2bGthNyJ3JvVUPLk0zKl4jwQcCH43RJHfI="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" type="image/png" href="https://chhanz88.github.io/assets/favicon.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://chhanz88.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://chhanz88.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://chhanz88.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://chhanz88.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
 
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="[AIX] Create a raw Logical Volume for Oracle ASM On AIX" />
+<meta property="og:description" content=" " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://chhanz88.github.io/post/2017-05-25-aixasmraw/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2017-05-25T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2017-05-25T00:00:00&#43;00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[AIX] Create a raw Logical Volume for Oracle ASM On AIX"/>
+<meta name="twitter:description" content=" "/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Posts",
+      "item": "https://chhanz88.github.io/post/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "[AIX] Create a raw Logical Volume for Oracle ASM On AIX",
+      "item": "https://chhanz88.github.io/post/2017-05-25-aixasmraw/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "[AIX] Create a raw Logical Volume for Oracle ASM On AIX",
+  "name": "[AIX] Create a raw Logical Volume for Oracle ASM On AIX",
+  "description": " ",
+  "keywords": [
+    "aix"
+  ],
+  "articleBody": "Create a raw Logical Volume for Oracle ASM On AIX  Raw Device 의 용량 산정은 VG 의 PP Size 를 기준으로 합니다.\n# lsvg RAWVG VOLUME GROUP: RAWVG VG IDENTIFIER: 00c25b6700004c00000001399f63219x VG STATE: active PP SIZE: 64 megabyte(s) VG PERMISSION: read/write TOTAL PPs: 30 (1920 megabytes) MAX LVs: 4096 FREE PPs: 6 (384 megabytes) LVs: 3 USED PPs: 24 (1536 megabytes) OPEN LVs: 3 QUORUM: 2 (Enabled) TOTAL PVs: 1 VG DESCRIPTORS: 2 STALE PVs: 0 STALE PPs: 0 ACTIVE PVs: 1 AUTO ON: no Concurrent: Enhanced-Capable Auto-Concurrent: Disabled VG Mode: Concurrent Node ID: 1 Active Nodes: 2 MAX PPs per VG: 2097152 MAX PVs: 1024 LTG size (Dynamic): 1024 kilobyte(s) AUTO SYNC: no HOT SPARE: no BB POLICY: relocatable MIRROR POOL STRICT: off PV RESTRICTION: none INFINITE RETRY: no 위 RAWVG 정보를 보면 PP SIZE 가 64 mb 로 확인 됩니다.\n그럼 10 GB 의 Raw Device 를 만들기 위해서는\n10240 = 64 * 160 160 개의 PP 가 필요합니다.\n용량 산정이 완료가 되었다면, 아래 명령을 통해 Raw Device 를 생성합니다.\nmklv -y rawlv1 -t raw RAWVG 160 mklv -y rawlv2 -t raw RAWVG 160 mklv -y rawlv3 -t raw RAWVG 160 ... ",
+  "wordCount" : "194",
+  "inLanguage": "en",
+  "datePublished": "2017-05-25T00:00:00Z",
+  "dateModified": "2017-05-25T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "chhanz"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://chhanz88.github.io/post/2017-05-25-aixasmraw/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "chhanz 기술 블로그\n",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://chhanz88.github.io/assets/favicon.png"
+    }
+  }
+}
+</script>
 </head>
 
 <body class="" id="top">

@@ -1,8 +1,127 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto">
 
-<head><link rel="icon" type="image/png" href="https://chhanz88.github.io/assets/favicon.png">
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>[Linux] CentOS6 OPENSSL 최신버전 설치 | chhanz 기술 블로그
+</title>
+<meta name="keywords" content="linux">
+<meta name="description" content=" ">
+<meta name="author" content="chhanz">
+<link rel="canonical" href="https://chhanz88.github.io/post/2020-07-21-centos6-install-latest-openssl/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.ec8da366ca2fb647537ccb7a8f6fa5b4e9cd3c7a0d3171dd2d3baad1e49c8bfc.css" integrity="sha256-7I2jZsovtkdTfMt6j2&#43;ltOnNPHoNMXHdLTuq0eSci/w=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.min.4dcb3c4f38462f66c6b6137227726f5543cb934cca9788f041c087e374491df2.js" integrity="sha256-Tcs8TzhGL2bGthNyJ3JvVUPLk0zKl4jwQcCH43RJHfI="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" type="image/png" href="https://chhanz88.github.io/assets/favicon.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://chhanz88.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://chhanz88.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://chhanz88.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://chhanz88.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
 
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="[Linux] CentOS6 OPENSSL 최신버전 설치" />
+<meta property="og:description" content=" " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://chhanz88.github.io/post/2020-07-21-centos6-install-latest-openssl/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2020-07-21T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2020-07-21T00:00:00&#43;00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[Linux] CentOS6 OPENSSL 최신버전 설치"/>
+<meta name="twitter:description" content=" "/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Posts",
+      "item": "https://chhanz88.github.io/post/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "[Linux] CentOS6 OPENSSL 최신버전 설치",
+      "item": "https://chhanz88.github.io/post/2020-07-21-centos6-install-latest-openssl/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "[Linux] CentOS6 OPENSSL 최신버전 설치",
+  "name": "[Linux] CentOS6 OPENSSL 최신버전 설치",
+  "description": " ",
+  "keywords": [
+    "linux"
+  ],
+  "articleBody": "CentOS6 에 OPENSSL 최신버전 설치 CentOS 6 에서는 openssl 1.0.1e-58.el6_10 까지만 지원하고 (Repository 에서 제공하는 Version)\nhttps://www.openssl.org 에서 제공하는 버전은 openssl-1.1.1g 입니다.\nCentOS 6 에서는 Source 설치를 해야지만 최신 버전 사용이 가능한 것입니다.\nRequirement package 아래와 같이 필수 패키지를 설치합니다.\n$ yum install gcc make gcc-c++ perl perl-Test-Harness perl-Test-Simple zlib-devel Source 설치 설치 방법은 간단합니다.\n$ wget https://www.openssl.org/source/openssl-1.1.1g.tar.gz $ cd openssl-1.1.1g $ ./config $ make $ make test $ make install 하지만 위와 같이 하면 make test 부분에서 ERROR 가 발생합니다.\n Test::More version 0.96 required\n 위와 같은 ERROR 이 발생하는데 CentOS6 에서 지원하는 perl 의 version 이 낮아서 그렇습니다.\nperl source 설치 아래와 같이 perl 을 source 설치합니다.\n$ wget https://www.cpan.org/src/5.0/perl-5.32.0.tar.gz $ tar -xzf perl-5.32.0.tar.gz $ cd perl-5.32.0 $ ./Configure -des -Dprefix=/usr/local/perl-5.32 $ make $ make test $ make install 섫치가 완료되면 기존 perl 실행 파일을 bakcup 받고 최신 버전 perl 로 PATH 설정을 합니다.\n$ mv /usr/bin/perl perl_5_10 $ ln -s /usr/local/localperl/bin/perl perl 아래와 같이 최신 버전 perl 을 확인 할 수 있습니다.\n[root@fastvm-centos-6-10-108 /]# perl -v  This is perl 5, version 32, subversion 0 (v5.32.0) built for x86_64-linux  Copyright 1987-2020, Larry Wall  Perl may be copied only under the terms of either the Artistic License or the GNU General Public License, which may be found in the Perl 5 source kit.  Complete documentation for Perl, including FAQ lists, should be found on this system using \"man perl\" or \"perldoc perl\". If you have access to the Internet, point your browser at http://www.perl.org/, the Perl Home Page.  [root@fastvm-centos-6-10-108 /]# perl 설치 이후 재시도 라이브러리 PATH 설정을 합니다.\n$ cd /etc/ld.so.conf.d/ $ cat openssl-1.1.1g.conf /usr/local/ssl/lib  $ ldconfig -v openssl version 을 확인합니다.\n$ cd /usr/local/ssl/bin $ ./openssl version OpenSSL 1.1.1g 21 Apr 2020 PATH 를 변경합니다.\n$ ln -s /usr/local/ssl/bin/openssl /usr/bin/openssl $ ls -l $(which openssl) lrwxrwxrwx. 1 root root 26 Jul 21 23:01 /usr/bin/openssl - /usr/local/ssl/bin/openssl 최종 확인합니다.\n[root@fastvm-centos-6-10-108 ~]# openssl version OpenSSL 1.1.1g 21 Apr 2020 [root@fastvm-centos-6-10-108 ~]# 설치가 완료는 되었으나, 개인적으론 CentOS 7 을 사용하는게 정신 건강에 좋을 것 같습니다. ㅎㅎㅎㅎ\n",
+  "wordCount" : "334",
+  "inLanguage": "en",
+  "datePublished": "2020-07-21T00:00:00Z",
+  "dateModified": "2020-07-21T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "chhanz"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://chhanz88.github.io/post/2020-07-21-centos6-install-latest-openssl/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "chhanz 기술 블로그\n",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://chhanz88.github.io/assets/favicon.png"
+    }
+  }
+}
+</script>
 </head>
 
 <body class="" id="top">

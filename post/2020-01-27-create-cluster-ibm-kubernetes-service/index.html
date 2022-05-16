@@ -1,8 +1,127 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto">
 
-<head><link rel="icon" type="image/png" href="https://chhanz88.github.io/assets/favicon.png">
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>[Kubernetes] IBM Cloud Kubernetes Service 를 Free Tier 로 사용해보자! | chhanz 기술 블로그
+</title>
+<meta name="keywords" content="kubernetes, cloud">
+<meta name="description" content=" ">
+<meta name="author" content="chhanz">
+<link rel="canonical" href="https://chhanz88.github.io/post/2020-01-27-create-cluster-ibm-kubernetes-service/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.ec8da366ca2fb647537ccb7a8f6fa5b4e9cd3c7a0d3171dd2d3baad1e49c8bfc.css" integrity="sha256-7I2jZsovtkdTfMt6j2&#43;ltOnNPHoNMXHdLTuq0eSci/w=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.min.4dcb3c4f38462f66c6b6137227726f5543cb934cca9788f041c087e374491df2.js" integrity="sha256-Tcs8TzhGL2bGthNyJ3JvVUPLk0zKl4jwQcCH43RJHfI="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" type="image/png" href="https://chhanz88.github.io/assets/favicon.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://chhanz88.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://chhanz88.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://chhanz88.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://chhanz88.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
 
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="[Kubernetes] IBM Cloud Kubernetes Service 를 Free Tier 로 사용해보자!" />
+<meta property="og:description" content=" " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://chhanz88.github.io/post/2020-01-27-create-cluster-ibm-kubernetes-service/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2020-01-27T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2020-01-27T00:00:00&#43;00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[Kubernetes] IBM Cloud Kubernetes Service 를 Free Tier 로 사용해보자!"/>
+<meta name="twitter:description" content=" "/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Posts",
+      "item": "https://chhanz88.github.io/post/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "[Kubernetes] IBM Cloud Kubernetes Service 를 Free Tier 로 사용해보자!",
+      "item": "https://chhanz88.github.io/post/2020-01-27-create-cluster-ibm-kubernetes-service/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "[Kubernetes] IBM Cloud Kubernetes Service 를 Free Tier 로 사용해보자!",
+  "name": "[Kubernetes] IBM Cloud Kubernetes Service 를 Free Tier 로 사용해보자!",
+  "description": " ",
+  "keywords": [
+    "kubernetes", "cloud"
+  ],
+  "articleBody": "목차  IBM Cloud Kubernetes Service 생성 IBM Cloud Cli 및 Kubectl 설치 Deploy Sample Service Delete Kubernetes Cluster 참고 자료  관리형 Kubernetes Service  각 Public Cloud Provider 에서는 관리형 Kubernetes Service를 제공하고 있습니다.\nAWS 에서는 Amazon Elastic Kubernetes Service(AWS EKS),\nAzure 에서는 Azure Kubernetes Service(AKS)의 이름으로 서비스를 하고 있으며,\nIBM 에서는 IBM Cloud Kubernetes Service(IKS) 라는 서비스를 제공하고 있습니다.\n 이번 포스팅에서는 무료로 관리형 Kubernetes 서비스를 이용 할 수 있는 IBM Cloud Kubernetes Service(이하 IKS) 를 이용하여\nCluster 를 생성하고 Sample 서비스를 배포해보도록 하겠습니다.\nIBM Cloud Kubernetes Service 생성 IKS 서비스 생성을 위해서는 IBM Cloud 계정 생성이 필요하며, 해당 계정에 신용카드 등록이 필요합니다.\n(신용카드 등록은 하지만 Free 요금제 사용으로 추가 과금은 없습니다.)\n또한 IKS Free 요금제의 경우, Cluster 의 사용 기간이 한달이며, 한달 후엔 Cluster 사용이 중지됩니다.\nIBM Cloud Cli 및 Kubectl 설치 IBM Cloud Cli 설치에 사용되는 운영체제는 CentOS 7.7 을 사용 하였습니다.\n IBM Cloud Cli 설치  $ curl -sL https://ibm.biz/idt-installer | bash 자동으로 필요한 패키지 설치합니다.\n설치가 완료된 후, ssh 재접속을 하면 ibmcloud(ic) 라는 명령어가 사용 가능합니다.\n[root@fastvm-centos-7-7-31 ~]# ic NAME:  ibmcloud - A command line tool to interact with IBM Cloud  Find more information at: https://ibm.biz/cli-docs  USAGE:  [environment variables] ibmcloud [global options] command [arguments...] [command options]  VERSION:  0.22.0+5ccbbea-2020-01-21T09:34:49+00:00  COMMANDS:  api Set or view target API endpoint  login Log user in  target Set or view the targeted region, account, resource group, org or space  config Write default values to the config  update Update CLI to the latest version  logout Log user out  regions List all the regions  version Print the version  resource Manage resource groups and resources  iam Manage identities and access to resources  dev Create, develop, deploy, and monitor applications  app [Deprecated] Manage Cloud Foundry applications and application related domains and routes.  service [Deprecated] Manage Cloud Foundry services.  billing Retrieve usage and billing information  plugin Manage plug-ins and plug-in repositories  cf Run Cloud Foundry CLI with IBM Cloud CLI context  catalog Manage catalog  account Manage accounts, users, orgs and spaces  enterprise Manage enterprise, account groups and accounts.  cfee Manage Cloud Foundry Enterprise Environments  cloud-functions, wsk, functions, fn Manage Cloud Functions  cos Interact with IBM Cloud Object Storage services  cr Manage IBM Cloud Container Registry content and configuration.  cs, ks, oc Manage IBM Cloud Kubernetes Service clusters.  sl Manage Classic infrastructure services  help, h Show help  Enter 'ibmcloud help [command]' for more information about a command.  ENVIRONMENT VARIABLES:  IBMCLOUD_COLOR=false Do not colorize output  IBMCLOUD_ANALYTICS=false Do not collect usage statistics for analytics  IBMCLOUD_VERSION_CHECK=false Do not check latest version for update  IBMCLOUD_HTTP_TIMEOUT=5 A time limit for HTTP requests  IBMCLOUD_API_KEY=api_key_value API Key used for login  IBMCLOUD_TRACE=true Print API request diagnostics to stdout  IBMCLOUD_TRACE=path/to/trace.log Append API request diagnostics to a log file  IBMCLOUD_HOME=path/to/dir Path to config directory  GLOBAL OPTIONS:  --version, -v Print the version  --help, -h Show help  [root@fastvm-centos-7-7-31 ~]#  Login IBM Cloud\n아래 명령을 입력하여 Login 을 합니다.  $ ibmcloud login -a cloud.ibm.com -r us-south 아래와 같은 Login 과정이 필요합니다.\n[root@fastvm-centos-7-7-31 ~]# ibmcloud login -a cloud.ibm.com -r us-south API endpoint: https://cloud.ibm.com  Email \"계정명@이메일\"  Password \"패스워드\" Authenticating... OK  Targeted account CheolHee Han`s Account (\"Account ID\")  \"Account ID\"  Targeted region us-south   API endpoint: https://cloud.ibm.com Region: us-south User: \"계정명@이메일\" Account: CheolHee Han`s Account (\"Account ID\")  \"Account ID\" Resource group: No resource group targeted, use 'ibmcloud target -g RESOURCE_GROUP' CF API endpoint: Org: Space:  Tip: If you are managing Cloud Foundry applications and services - Use 'ibmcloud target --cf' to target Cloud Foundry org/space interactively, or use 'ibmcloud target --cf-api ENDPOINT -o ORG -s SPACE' to target the org/space. - Use 'ibmcloud cf' if you want to run the Cloud Foundry CLI with current IBM Cloud CLI context.  Kubeconfig 설정\n아래 명령을 입력하고 생성된 Export 명령을 입력합니다.  [root@fastvm-centos-7-7-31 ~]# ibmcloud ks cluster config --cluster \"IKS Cluster ID\" Kubernetes version 1.16 has removed deprecated APIs. For more information, see   If you have clusters that run Kubernetes versions 1.11, 1.12 or 1.13, update them now to continue receiving important security updates and support. Kubernetes version 1.13 is deprecated and will be unsupported 22 February 2020. Versions 1.12 and earlier are already unsupported. For more information and update actions, see   WARNING: The behavior of this command in your current CLI version is deprecated, and becomes unsupported when CLI version 1.0 is released in March 2020. To use the new behavior now, set the 'IKS_BETA_VERSION' environment variable. In bash, run 'export IKS_BETA_VERSION=1'. Note: Changing the beta version can include other breaking changes. For more information, see http://ibm.biz/iks-cli-v1  OK The configuration for \"IKS Cluster ID\" was downloaded successfully.  Export environment variables to start using Kubernetes.  export KUBECONFIG=/root/.bluemix/plugins/container-service/clusters/\"IKS Cluster ID\"/kube-config-hou02-chhanz-kubecluster.yml  [root@fastvm-centos-7-7-31 ~]# export KUBECONFIG=/root/.bluemix/plugins/container-service/clusters/\"IKS Cluster ID\"/kube-config-hou02-chhanz-kubecluster.yml  Kubernetes 상태 확인\n아래와 같이 kubectl 명령을 통해 확인이 가능합니다.  [root@fastvm-centos-7-7-31 ~]# kubectl get nodes NAME STATUS ROLES AGE VERSION 10.76.68.233 Ready  107s v1.15.8+IKS [root@fastvm-centos-7-7-31 ~]# Deploy Sample Service IKS 에 Web 서비스를 올려보도록 하겠습니다.\n sample-httpd 배포\n아래와 같이 sample-httpd Container 이미지를 IKS 에 배포합니다.  [root@fastvm-centos-7-7-31 ~]# kubectl run sample-httpd --image=han0495/sample-httpd  kubectl run --generator=deployment/apps.v1 is DEPRECATED and will be removed in a future version. Use kubectl run --generator=run-pod/v1 or kubectl create instead. deployment.apps/sample-httpd created  [root@fastvm-centos-7-7-31 ~]# kubectl get all NAME READY STATUS RESTARTS AGE pod/sample-httpd-86b74f6f64-7gcmj 1/1 Running 0 7s NAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGE service/kubernetes ClusterIP 172.21.0.1  443/TCP 33m  NAME READY UP-TO-DATE AVAILABLE AGE deployment.apps/sample-httpd 1/1 1 1 8s  NAME DESIRED CURRENT READY AGE replicaset.apps/sample-httpd-86b74f6f64 1 1 1 8s  Expose Service\n아래 명령을 통해 sample-httpd 를 외부에 서비스 가능하도록 svc 를 생성합니다.  [root@fastvm-centos-7-7-31 ~]# kubectl expose deployment.apps/sample-httpd --port=80 --type=NodePort service/sample-httpd exposed  [root@fastvm-centos-7-7-31 ~]# kubectl get svc NAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGE kubernetes ClusterIP 172.21.0.1  443/TCP 37m sample-httpd NodePort 172.21.162.229  80:31154/TCP 5s 완료'  접속 테스트\nIKS Cluster 메뉴에서 Worker nodes 에서 Public IP 확인이 가능합니다.  Delete Kubernetes Cluster 참고 자료  Source 자료  sample-httpd-github : https://github.com/chhanz/sample-httpd-example   Docker Image 정보  sample-httpd-dockerhub : https://hub.docker.com/r/han0495/sample-httpd    ",
+  "wordCount" : "960",
+  "inLanguage": "en",
+  "datePublished": "2020-01-27T00:00:00Z",
+  "dateModified": "2020-01-27T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "chhanz"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://chhanz88.github.io/post/2020-01-27-create-cluster-ibm-kubernetes-service/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "chhanz 기술 블로그\n",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://chhanz88.github.io/assets/favicon.png"
+    }
+  }
+}
+</script>
 </head>
 
 <body class="" id="top">

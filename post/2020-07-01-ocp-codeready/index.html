@@ -1,8 +1,127 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto">
 
-<head><link rel="icon" type="image/png" href="https://chhanz88.github.io/assets/favicon.png">
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>[OpenShift 4.4] CodeReady Workspaces 를 이용하여 통합 개발 환경(IDE) 구현 | chhanz 기술 블로그
+</title>
+<meta name="keywords" content="kubernetes, openshift">
+<meta name="description" content=" ">
+<meta name="author" content="chhanz">
+<link rel="canonical" href="https://chhanz88.github.io/post/2020-07-01-ocp-codeready/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.ec8da366ca2fb647537ccb7a8f6fa5b4e9cd3c7a0d3171dd2d3baad1e49c8bfc.css" integrity="sha256-7I2jZsovtkdTfMt6j2&#43;ltOnNPHoNMXHdLTuq0eSci/w=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.min.4dcb3c4f38462f66c6b6137227726f5543cb934cca9788f041c087e374491df2.js" integrity="sha256-Tcs8TzhGL2bGthNyJ3JvVUPLk0zKl4jwQcCH43RJHfI="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" type="image/png" href="https://chhanz88.github.io/assets/favicon.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://chhanz88.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://chhanz88.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://chhanz88.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://chhanz88.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
 
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="[OpenShift 4.4] CodeReady Workspaces 를 이용하여 통합 개발 환경(IDE) 구현" />
+<meta property="og:description" content=" " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://chhanz88.github.io/post/2020-07-01-ocp-codeready/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2020-07-01T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2020-07-01T00:00:00&#43;00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[OpenShift 4.4] CodeReady Workspaces 를 이용하여 통합 개발 환경(IDE) 구현"/>
+<meta name="twitter:description" content=" "/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Posts",
+      "item": "https://chhanz88.github.io/post/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "[OpenShift 4.4] CodeReady Workspaces 를 이용하여 통합 개발 환경(IDE) 구현",
+      "item": "https://chhanz88.github.io/post/2020-07-01-ocp-codeready/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "[OpenShift 4.4] CodeReady Workspaces 를 이용하여 통합 개발 환경(IDE) 구현",
+  "name": "[OpenShift 4.4] CodeReady Workspaces 를 이용하여 통합 개발 환경(IDE) 구현",
+  "description": " ",
+  "keywords": [
+    "kubernetes", "openshift"
+  ],
+  "articleBody": "CodeReady Workspace 란? Red Hat® CodeReady Workspaces는 팀을 위한 클라우드 네이티브 개발을 실용적으로 만들어주는 개발자 툴입니다.\n쿠버네티스와 컨테이너를 사용해 개발 또는 IT 팀의 누구에게든 일관적으로 사전 설정된 개발 환경을 제공합니다.\n개발자는 Red Hat OpenShift®에서 구동되는 컨테이너에서 코드를 작성하고, 빌드하고, 테스트할 수 있습니다.\n사용자 경험 또한 노트북에서 통합 개발 환경(IDE)을 사용하는 것만큼이나 빠르고 친숙합니다.\n https://www.redhat.com/ko/technologies/jboss-middleware/codeready-workspaces  CodeReady Workspace 배포 CodeReady 배포 할 Project 생성합니다.\nadmin 계정으로 로그인 후, OperatorHub 에서 CodeReady 를 검색합니다.\nInstall 을 누르고 설치를 시작합니다.\nNamespace 를 선택하고 Subscribe 를 선택합니다.\nInstalled Operators 에서 CodeReady 의 Status 가 Succeeded 가 될 때까지 기다립니다.\n위와 같이 install strategy completed with no errors Event 메뉴에서 메시지가 나올때까지 대기합니다.\nInstalled Operators 에서 CodeReady 를 선택 후 Create Instance 를 선택합니다.\n수정이 필요할 경우, 수정 후 Create 를 선택 합니다.\n위와 같이 CheCluster 생성이 된 것을 볼 수 있습니다.\nCheCluster 에서 Pod 들이 순차적으로 배포가 되고 실행이 완료되면 CodeReady 에 접근이 가능해집니다.\nCodeReady Workspace URL 을 통해 접근합니다.\nCodeReady Workspace 을 이용해서 개발해보자 초기 접속을 하면 사용할 계정을 생성합니다.\nSample 을 선택합니다.\n테스트를 위해 Python 을 선택하도록 하겠습니다.\n위와 같이 Sample Python code 가 있고, IDE 환경이 실행됩니다.\nDebug 메뉴를 통해 debug 할 수 있습니다.\n하단에 Debug Console 에서 debug 된 내용을 확인 할 수 있습니다.\nTerminal 에서 Run Task 를 선택하고 개발된 Code 를 Run 할 수 있습니다.\n하단에 RUN 내용이 출력됩니다.\nSample Code marks = [90, 25 ,67, 45, 80] number = 0  for mark in marks:  number = number + 1  if mark = 60:  print(\"%dis pass.\" % number)  else:  print(\"%dis fail.\" % number) 위 Source 를 이용해서 간단하게 Python 프로그래밍을 해보았습니다.\n별도의 개발 환경 구축 없이 간편하게 WEB Console 을 통해 개발 할 수 있었습니다.\n참고 자료  https://access.redhat.com/documentation/en-us/red_hat_codeready_workspaces/2.1/html/installation_guide/installing-codeready-workspaces-on-ocp-4#creating-the-codeready-workspaces-project-in-openshift-4-web-console_installing-codeready-workspaces-on-openshift-4-from-operatorhub CodeReady 배포시 TLS 에러로 인해 배포가 안 되는 경우,  https://access.redhat.com/solutions/4675271   https://access.redhat.com/documentation/en-us/red_hat_codeready_workspaces/2.1/html/end-user_guide/navigating-codeready-workspaces-using-the-dashboard_crw https://www.eclipse.org/che/  ",
+  "wordCount" : "291",
+  "inLanguage": "en",
+  "datePublished": "2020-07-01T00:00:00Z",
+  "dateModified": "2020-07-01T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "chhanz"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://chhanz88.github.io/post/2020-07-01-ocp-codeready/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "chhanz 기술 블로그\n",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://chhanz88.github.io/assets/favicon.png"
+    }
+  }
+}
+</script>
 </head>
 
 <body class="" id="top">

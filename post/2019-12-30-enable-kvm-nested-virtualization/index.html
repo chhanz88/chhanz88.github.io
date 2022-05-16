@@ -1,8 +1,127 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto">
 
-<head><link rel="icon" type="image/png" href="https://chhanz88.github.io/assets/favicon.png">
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>[Linux] KVM nested virtualization | chhanz 기술 블로그
+</title>
+<meta name="keywords" content="linux">
+<meta name="description" content=" ">
+<meta name="author" content="chhanz">
+<link rel="canonical" href="https://chhanz88.github.io/post/2019-12-30-enable-kvm-nested-virtualization/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.ec8da366ca2fb647537ccb7a8f6fa5b4e9cd3c7a0d3171dd2d3baad1e49c8bfc.css" integrity="sha256-7I2jZsovtkdTfMt6j2&#43;ltOnNPHoNMXHdLTuq0eSci/w=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.min.4dcb3c4f38462f66c6b6137227726f5543cb934cca9788f041c087e374491df2.js" integrity="sha256-Tcs8TzhGL2bGthNyJ3JvVUPLk0zKl4jwQcCH43RJHfI="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" type="image/png" href="https://chhanz88.github.io/assets/favicon.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://chhanz88.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://chhanz88.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://chhanz88.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://chhanz88.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
 
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="[Linux] KVM nested virtualization" />
+<meta property="og:description" content=" " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://chhanz88.github.io/post/2019-12-30-enable-kvm-nested-virtualization/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2019-12-30T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2019-12-30T00:00:00&#43;00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[Linux] KVM nested virtualization"/>
+<meta name="twitter:description" content=" "/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Posts",
+      "item": "https://chhanz88.github.io/post/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "[Linux] KVM nested virtualization",
+      "item": "https://chhanz88.github.io/post/2019-12-30-enable-kvm-nested-virtualization/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "[Linux] KVM nested virtualization",
+  "name": "[Linux] KVM nested virtualization",
+  "description": " ",
+  "keywords": [
+    "linux"
+  ],
+  "articleBody": "KVM nested virtualization KVM nested virtualization 를 구성하여 VM CPU 가상화를 활성화 할 수 있습니다.\n이와 같이 구성 할 경우, 가상화 VM 내에서 한번더 가상화 구성이 가능합니다.\nkvm-intel module 설정 아래와 같이 kvm-intel module parameter 를 추가합니다.\n[root@kvm ~]# cat /etc/modprobe.d/kvm-nested-module.conf options kvm-intel nested=1 이후 시스템을 재부팅하고 KVM nested virtualization 구성이 되었는지 확인합니다.\n[root@kvm ~]# cat /sys/module/kvm_intel/parameters/nested Y kvm-intel module 상세 확인 [root@kvm ~]# modinfo kvm-intel filename: /lib/modules/3.10.0-1062.4.3.el7.x86_64/kernel/arch/x86/kvm/kvm-intel.ko.xz license: GPL author: Qumranet retpoline: Y rhelversion: 7.7 srcversion: B7943A94D7B227C40ACD718 alias: x86cpu:vendor:*:family:*:model:*:feature:*0085* depends: kvm intree: Y vermagic: 3.10.0-1062.4.3.el7.x86_64 SMP mod_unload modversions signer: CentOS Linux kernel signing key sig_key: 3F:59:AE:15:77:D5:87:23:18:4F:6D:BA:B1:8A:D5:F5:9D:E4:1D:39 sig_hashalgo: sha256 parm: vpid:bool parm: flexpriority:bool parm: ept:bool parm: unrestricted_guest:bool parm: eptad:bool parm: emulate_invalid_guest_state:bool parm: vmm_exclusive:bool parm: fasteoi:bool parm: enable_apicv:bool parm: enable_shadow_vmcs:bool parm: nested:bool parm: pml:bool parm: preemption_timer:bool parm: ple_gap:uint parm: ple_window:uint parm: ple_window_grow:uint parm: ple_window_shrink:uint parm: ple_window_max:uint VM 가상화 활성화 아래와 같이 virt-manager 에서 CPU 메뉴에서 Copy Host CPU Configuration 을 선택합니다.\n이후 해당 VM 에서 가상화 활성화 여부를 확인합니다.\n참고 문서  https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/virtualization_deployment_and_administration_guide/sect-nested_virt_setup https://docs.fedoraproject.org/en-US/quick-docs/using-nested-virtualization-in-kvm/  ",
+  "wordCount" : "162",
+  "inLanguage": "en",
+  "datePublished": "2019-12-30T00:00:00Z",
+  "dateModified": "2019-12-30T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "chhanz"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://chhanz88.github.io/post/2019-12-30-enable-kvm-nested-virtualization/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "chhanz 기술 블로그\n",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://chhanz88.github.io/assets/favicon.png"
+    }
+  }
+}
+</script>
 </head>
 
 <body class="" id="top">

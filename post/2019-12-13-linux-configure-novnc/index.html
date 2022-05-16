@@ -1,8 +1,127 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto">
 
-<head><link rel="icon" type="image/png" href="https://chhanz88.github.io/assets/favicon.png">
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>[Linux] noVNC 구성 | chhanz 기술 블로그
+</title>
+<meta name="keywords" content="linux">
+<meta name="description" content=" ">
+<meta name="author" content="chhanz">
+<link rel="canonical" href="https://chhanz88.github.io/post/2019-12-13-linux-configure-novnc/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.ec8da366ca2fb647537ccb7a8f6fa5b4e9cd3c7a0d3171dd2d3baad1e49c8bfc.css" integrity="sha256-7I2jZsovtkdTfMt6j2&#43;ltOnNPHoNMXHdLTuq0eSci/w=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.min.4dcb3c4f38462f66c6b6137227726f5543cb934cca9788f041c087e374491df2.js" integrity="sha256-Tcs8TzhGL2bGthNyJ3JvVUPLk0zKl4jwQcCH43RJHfI="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" type="image/png" href="https://chhanz88.github.io/assets/favicon.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://chhanz88.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://chhanz88.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://chhanz88.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://chhanz88.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
 
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="[Linux] noVNC 구성" />
+<meta property="og:description" content=" " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://chhanz88.github.io/post/2019-12-13-linux-configure-novnc/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2019-12-13T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2019-12-13T00:00:00&#43;00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[Linux] noVNC 구성"/>
+<meta name="twitter:description" content=" "/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Posts",
+      "item": "https://chhanz88.github.io/post/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "[Linux] noVNC 구성",
+      "item": "https://chhanz88.github.io/post/2019-12-13-linux-configure-novnc/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "[Linux] noVNC 구성",
+  "name": "[Linux] noVNC 구성",
+  "description": " ",
+  "keywords": [
+    "linux"
+  ],
+  "articleBody": "noVNC 구성 noVNC 란? noVNC는 HTML VNC 클라이언트 프로그램입니다.\nnoVNC 구성  install requirement package  $ yum -y groupinstall \"GNOME Desktop\" $ yum -y install epel-release  install noVNC package  $ yum -y install novnc python-websockify numpy tigervnc-server  start service vncserver  $ vncserver :1 vncserver 가 시작되면 vnc 접속용 password 입력을 요구합니다. 해당 password 는 noVNC 에 접근 할 때 필요한 password 입니다.\n start service websockify  $ websockify -D --web=/usr/share/novnc/ 6080 localhost:5901 위와 같이 명령을 수행하면 6080 포트로 noVNC 서비스가 작동합니다.\nnoVNC 이용 noVNC 가 설치된 서버의 아이피로 접속합니다.\n ex) http://192.168.100.100:6080\n 아래와 같이 접속이 되며 vnc password 를 입력을 요청합니다.\nvnc password 를 입력하면 아래와 같이 VNC Viewer 클라이언트 프로그램 없이 웹브라우저를 통해 VNC 접속이 가능합니다.\n참고 자료  noVNC : https://github.com/novnc/noVNC  ",
+  "wordCount" : "119",
+  "inLanguage": "en",
+  "datePublished": "2019-12-13T00:00:00Z",
+  "dateModified": "2019-12-13T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "chhanz"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://chhanz88.github.io/post/2019-12-13-linux-configure-novnc/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "chhanz 기술 블로그\n",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://chhanz88.github.io/assets/favicon.png"
+    }
+  }
+}
+</script>
 </head>
 
 <body class="" id="top">
