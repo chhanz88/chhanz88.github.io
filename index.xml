@@ -1081,5 +1081,6 @@ Script 내용  #! /bin/ksh # Make by. chhan  DATEC=$(date +%Y%m%d-%H%M) IdChk=`i
     </item>
     
     
+    
   </channel>
 </rss>
