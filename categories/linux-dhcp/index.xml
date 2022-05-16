@@ -3,18 +3,18 @@
   <channel>
     <title>linux, dhcp on chhanz 기술 블로그
 </title>
-    <link>https://chhanz88.github.io/categories/linux-dhcp/</link>
+    <link>https://chhanz88.github.io/post/categories/linux-dhcp/</link>
     <description>Recent content in linux, dhcp on chhanz 기술 블로그
 </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 17 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://chhanz88.github.io/categories/linux-dhcp/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 17 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://chhanz88.github.io/post/categories/linux-dhcp/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>[Linux] DHCP 서버 구성 (on CentOS7)</title>
-      <link>https://chhanz88.github.io/post/2020-11-17-configuration-dhcp/</link>
+      <link>https://chhanz88.github.io/post/post/2020-11-17-configuration-dhcp/</link>
       <pubDate>Tue, 17 Nov 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-11-17-configuration-dhcp/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-11-17-configuration-dhcp/</guid>
       <description> </description>
     </item>
     

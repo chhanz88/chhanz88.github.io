@@ -3,55 +3,55 @@
   <channel>
     <title>aix on chhanz 기술 블로그
 </title>
-    <link>https://chhanz88.github.io/categories/aix/</link>
+    <link>https://chhanz88.github.io/post/categories/aix/</link>
     <description>Recent content in aix on chhanz 기술 블로그
 </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 04 Nov 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://chhanz88.github.io/categories/aix/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 04 Nov 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://chhanz88.github.io/post/categories/aix/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>[AIX] System Information collection Script</title>
-      <link>https://chhanz88.github.io/post/2018-11-04-aix-system-info-script/</link>
+      <link>https://chhanz88.github.io/post/post/2018-11-04-aix-system-info-script/</link>
       <pubDate>Sun, 04 Nov 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2018-11-04-aix-system-info-script/</guid>
+      <guid>https://chhanz88.github.io/post/post/2018-11-04-aix-system-info-script/</guid>
       <description>[AIX] System Information collection Script  회사 U2C 솔루션 개발을 하는 중, AIX 에서 필수 시스템 정보를 수집하는 Script 가 필요로 해서 간단하게 제작한 Script 입니다.
 Script 내용  #! /bin/ksh # Make by. chhan  DATEC=$(date +%Y%m%d-%H%M) IdChk=`id | grep root | wc -l` OutFile=&amp;#34;`hostname`_&amp;#34;$DATEC&amp;#34;.txt&amp;#34;  #Checking ROOT  if [ $IdChk -eq 0 ]; then  echo  echo &amp;#34;You must login root... Try again...&amp;#34;  echo  exit  fi  echo &amp;#34; * * * * * Check AIX System Information * * * * * &amp;#34; echo &amp;#34; &amp;#34; echo &amp;#34; This Check Output File &amp;#34; echo &amp;#34; View .</description>
     </item>
     
     <item>
       <title>[AIX] hdisk format - diag command</title>
-      <link>https://chhanz88.github.io/post/2018-02-21-aixuformat/</link>
+      <link>https://chhanz88.github.io/post/post/2018-02-21-aixuformat/</link>
       <pubDate>Wed, 21 Feb 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2018-02-21-aixuformat/</guid>
+      <guid>https://chhanz88.github.io/post/post/2018-02-21-aixuformat/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[AIX] Create a raw Logical Volume for Oracle ASM On AIX</title>
-      <link>https://chhanz88.github.io/post/2017-05-25-aixasmraw/</link>
+      <link>https://chhanz88.github.io/post/post/2017-05-25-aixasmraw/</link>
       <pubDate>Thu, 25 May 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2017-05-25-aixasmraw/</guid>
+      <guid>https://chhanz88.github.io/post/post/2017-05-25-aixasmraw/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[AIX] Could not load program: Cannot run a 64-bit program until the 64-bit environment has been configured.</title>
-      <link>https://chhanz88.github.io/post/2017-01-16-aixerrorcfg64/</link>
+      <link>https://chhanz88.github.io/post/post/2017-01-16-aixerrorcfg64/</link>
       <pubDate>Mon, 16 Jan 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2017-01-16-aixerrorcfg64/</guid>
+      <guid>https://chhanz88.github.io/post/post/2017-01-16-aixerrorcfg64/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[AIX] RDX Device Backup Guide</title>
-      <link>https://chhanz88.github.io/post/2016-02-15-aix-rdx-drive-backup-mksysb/</link>
+      <link>https://chhanz88.github.io/post/post/2016-02-15-aix-rdx-drive-backup-mksysb/</link>
       <pubDate>Mon, 15 Feb 2016 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2016-02-15-aix-rdx-drive-backup-mksysb/</guid>
+      <guid>https://chhanz88.github.io/post/post/2016-02-15-aix-rdx-drive-backup-mksysb/</guid>
       <description>[AIX] RDX Device Backup Guide  AIX RDX Device Backup Guide 입니다.
 (RDX 를 이용한 백업 방법입니다.)
 2016년 프로젝트 참여하면서 작성한 가이드입니다.
@@ -60,56 +60,56 @@ Script 내용  #! /bin/ksh # Make by. chhan  DATEC=$(date +%Y%m%d-%H%M) IdChk=`i
     
     <item>
       <title>[HACMP71] Force remove cluster</title>
-      <link>https://chhanz88.github.io/post/2014-07-25-hacmpforceremove/</link>
+      <link>https://chhanz88.github.io/post/post/2014-07-25-hacmpforceremove/</link>
       <pubDate>Fri, 25 Jul 2014 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2014-07-25-hacmpforceremove/</guid>
+      <guid>https://chhanz88.github.io/post/post/2014-07-25-hacmpforceremove/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[AIX] LVM 이란?</title>
-      <link>https://chhanz88.github.io/post/2014-01-12-aix-lvm-informarion/</link>
+      <link>https://chhanz88.github.io/post/post/2014-01-12-aix-lvm-informarion/</link>
       <pubDate>Sun, 12 Jan 2014 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2014-01-12-aix-lvm-informarion/</guid>
+      <guid>https://chhanz88.github.io/post/post/2014-01-12-aix-lvm-informarion/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[AIX] JFS vs JFS2</title>
-      <link>https://chhanz88.github.io/post/2012-09-06-aixjfsvsjfs2/</link>
+      <link>https://chhanz88.github.io/post/post/2012-09-06-aixjfsvsjfs2/</link>
       <pubDate>Thu, 06 Sep 2012 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2012-09-06-aixjfsvsjfs2/</guid>
+      <guid>https://chhanz88.github.io/post/post/2012-09-06-aixjfsvsjfs2/</guid>
       <description>JFS 와 JFS2의 차이점</description>
     </item>
     
     <item>
       <title>[AIX] Mirror 상태인 VG, alt_disk_install 하는 법</title>
-      <link>https://chhanz88.github.io/post/2012-09-06-aixmirroraltdisk/</link>
+      <link>https://chhanz88.github.io/post/post/2012-09-06-aixmirroraltdisk/</link>
       <pubDate>Thu, 06 Sep 2012 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2012-09-06-aixmirroraltdisk/</guid>
+      <guid>https://chhanz88.github.io/post/post/2012-09-06-aixmirroraltdisk/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[AIX] Mirror Disk 교체</title>
-      <link>https://chhanz88.github.io/post/2012-08-26-aix-mirror-disk-change/</link>
+      <link>https://chhanz88.github.io/post/post/2012-08-26-aix-mirror-disk-change/</link>
       <pubDate>Sun, 26 Aug 2012 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2012-08-26-aix-mirror-disk-change/</guid>
+      <guid>https://chhanz88.github.io/post/post/2012-08-26-aix-mirror-disk-change/</guid>
       <description>Mirror Disk 교체  Mirroring 으로 구성된 rootvg 에서 장애난 DISK 교체 절차는 아래와 같습니다.
  장애 디스크 확인  # errpt 613E5F38 1212232603 P H LVDD I/O ERROR DETECTED BY LVM A668F553 1212092003 P H hdisk1 DISK OPERATION ERROR bootlist 확인  # bootlist -om normal bootlist 재설정  # unmirrorvg rootvg hdisk1 Unmirror VG 수행  # unmirrorvg rootvg hdisk1 각 DISK 의 LV 상태 확인  # lspv -l hdisk0 # lspv -l hdisk1 제거가 안되거나, Mirroring 이 아닌 LV 가 남아 있는 경우  # migratepv -l hd6 hdisk1 hdisk0 # lspv -l hdisk0 // 확인 # lspv -l hdisk1 // 확인 VG 에서 DISK 제거  # reducevg rootvg hdisk1 시스템에서 DISK 제거  rmdev -Rdl hdisk1 bosboot 수행  # bosboot -ad hdisk0 신규 디스크 추가(물리 DISK 교체 및 장착)  # diag 혹은 # cfgmgr -v VG 에 신규 DISK 추가  # extendvg rootvg hdisk1 Mirror VG 수행  # mirrorvg -S rootvg hdisk0 hdisk1 rootvg Mirror 확인  # lsvg -l rootvg bosboot 수행  # bosboot -ad hdisk0 bootlist 신규 등록  # bootlist -om normal hdisk0 hdisk1 bootlist 확인  # bootlist -om normal </description>
     </item>
     
     <item>
       <title>[AIX] Mount CD/DVD &amp; ISO Image</title>
-      <link>https://chhanz88.github.io/post/2012-08-24-aix-mount-cd-iso/</link>
+      <link>https://chhanz88.github.io/post/post/2012-08-24-aix-mount-cd-iso/</link>
       <pubDate>Fri, 24 Aug 2012 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2012-08-24-aix-mount-cd-iso/</guid>
+      <guid>https://chhanz88.github.io/post/post/2012-08-24-aix-mount-cd-iso/</guid>
       <description>[AIX] Mount CD/DVD &amp;amp; ISO Image  CD 혹은 DVD 를 CLI Command 로 Mount : # mount -V cdrfs -o ro /dev/cd0 /mnt ISO Image 를 CLI Command 로 Mount : # loopmount -i aix-6100-09-02-icd.iso -o &amp;#34;-V cdrfs -o ro&amp;#34; -m /mnt </description>
     </item>
     

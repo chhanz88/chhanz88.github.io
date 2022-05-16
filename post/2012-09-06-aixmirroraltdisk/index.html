@@ -10,11 +10,11 @@
 <meta name="keywords" content="aix, alt_disk_install">
 <meta name="description" content=" ">
 <meta name="author" content="chhanz">
-<link rel="canonical" href="https://chhanz88.github.io/post/2012-09-06-aixmirroraltdisk/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.min.ec8da366ca2fb647537ccb7a8f6fa5b4e9cd3c7a0d3171dd2d3baad1e49c8bfc.css" integrity="sha256-7I2jZsovtkdTfMt6j2&#43;ltOnNPHoNMXHdLTuq0eSci/w=" rel="preload stylesheet" as="style">
-<script defer crossorigin="anonymous" src="/assets/js/highlight.min.4dcb3c4f38462f66c6b6137227726f5543cb934cca9788f041c087e374491df2.js" integrity="sha256-Tcs8TzhGL2bGthNyJ3JvVUPLk0zKl4jwQcCH43RJHfI="
+<link rel="canonical" href="https://chhanz88.github.io/post/post/2012-09-06-aixmirroraltdisk/">
+<link crossorigin="anonymous" href="/post/assets/css/stylesheet.min.ec8da366ca2fb647537ccb7a8f6fa5b4e9cd3c7a0d3171dd2d3baad1e49c8bfc.css" integrity="sha256-7I2jZsovtkdTfMt6j2&#43;ltOnNPHoNMXHdLTuq0eSci/w=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/post/assets/js/highlight.min.4dcb3c4f38462f66c6b6137227726f5543cb934cca9788f041c087e374491df2.js" integrity="sha256-Tcs8TzhGL2bGthNyJ3JvVUPLk0zKl4jwQcCH43RJHfI="
     onload="hljs.initHighlightingOnLoad();"></script>
-<link rel="icon" type="image/png" href="https://chhanz88.github.io/favicon.ico">
+<link rel="icon" type="image/png" href="https://chhanz88.github.io/post/favicon.ico">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
 <noscript>
@@ -56,7 +56,7 @@
 </noscript><meta property="og:title" content="[AIX] Mirror 상태인 VG, alt_disk_install 하는 법" />
 <meta property="og:description" content=" " />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://chhanz88.github.io/post/2012-09-06-aixmirroraltdisk/" /><meta property="article:section" content="post" />
+<meta property="og:url" content="https://chhanz88.github.io/post/post/2012-09-06-aixmirroraltdisk/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2012-09-06T00:00:00&#43;00:00" />
 <meta property="article:modified_time" content="2012-09-06T00:00:00&#43;00:00" />
 
@@ -69,18 +69,18 @@
 {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
-  "itemListElement": [, 
+  "itemListElement": [
     {
       "@type": "ListItem",
-      "position":  2 ,
+      "position":  1 ,
       "name": "Posts",
-      "item": "https://chhanz88.github.io/post/"
+      "item": "https://chhanz88.github.io/post/post/"
     }, 
     {
       "@type": "ListItem",
-      "position":  3 ,
+      "position":  2 ,
       "name": "[AIX] Mirror 상태인 VG, alt_disk_install 하는 법",
-      "item": "https://chhanz88.github.io/post/2012-09-06-aixmirroraltdisk/"
+      "item": "https://chhanz88.github.io/post/post/2012-09-06-aixmirroraltdisk/"
     }
   ]
 }
@@ -95,7 +95,7 @@
   "keywords": [
     "aix", "alt_disk_install"
   ],
-  "articleBody": "Mirror VG, 한개의 PV 로 alt_disk_install 하는 방법  Mirror 된 VG 를 alt_disk_install 을 진행하면 target PV 는 2EA 가 필요합니다.\n따라서 Mirror 된 VG 는 한개의 target PV 에 하기 위해서는 -i 옵션을 사용합니다.\nimage.data 수정  -i 옵션에 사용될 image.data 를 수정합니다.\n# lspv hdisk0 000aaaa120011111 rootvg active hdisk1 000aaaa120222222 rootvg active hdisk2 none None # vi /image.data ## lv_data의 항목중 * LV_SOURCE_DISK_LIST= hdisk0 hdisk1 - hdisk0로 변경 * COPIES= 2 - 1로 변경 * PP= 2 - 1로 변경 위와 같이 Source PV 하나를 제거하고, LV의 COPY 수량, LV 용량을 수정합니다.\nalt_disk_install 진행  # alt_disk_install -COB -i /image.data hdisk2 ",
+  "articleBody": "Mirror VG, 한개의 PV 로 alt_disk_install 하는 방법  Mirror 된 VG 를 alt_disk_install 을 진행하면 target PV 는 2EA 가 필요합니다.\n따라서 Mirror 된 VG 는 한개의 target PV 에 하기 위해서는 -i 옵션을 사용합니다.\nimage.data 수정  -i 옵션에 사용될 image.data 를 수정합니다.\n# lspv hdisk0 000aaaa120011111 rootvg active hdisk1 000aaaa120222222 rootvg active hdisk2 none None  # vi /image.data  ## lv_data의 항목중 * LV_SOURCE_DISK_LIST= hdisk0 hdisk1 - hdisk0로 변경 * COPIES= 2 - 1로 변경 * PP= 2 - 1로 변경 위와 같이 Source PV 하나를 제거하고, LV의 COPY 수량, LV 용량을 수정합니다.\nalt_disk_install 진행  # alt_disk_install -COB -i /image.data hdisk2 ",
   "wordCount" : "101",
   "inLanguage": "en",
   "datePublished": "2012-09-06T00:00:00Z",
@@ -106,14 +106,14 @@
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://chhanz88.github.io/post/2012-09-06-aixmirroraltdisk/"
+    "@id": "https://chhanz88.github.io/post/post/2012-09-06-aixmirroraltdisk/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "chhanz 기술 블로그\n",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://chhanz88.github.io/favicon.ico"
+      "url": "https://chhanz88.github.io/post/favicon.ico"
     }
   }
 }
@@ -135,7 +135,7 @@
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://chhanz88.github.io" accesskey="h" title="chhanz 기술 블로그
+            <a href="https://chhanz88.github.io/post/" accesskey="h" title="chhanz 기술 블로그
  (Alt + H)">chhanz 기술 블로그
 </a>
             <span class="logo-switches">
@@ -163,22 +163,22 @@
         </div>
         <ul id="menu">
             <li>
-                <a href="https://chhanz88.github.io/categories/" title="categories">
-                    <span>categories</span>
-                </a>
-            </li>
-            <li>
-                <a href="https://chhanz88.github.io/archives" title="Archives">
+                <a href="https://chhanz88.github.io/post/archives" title="Archives">
                     <span>Archives</span>
                 </a>
             </li>
             <li>
-                <a href="https://chhanz88.github.io/search/" title="Search (Alt &#43; /)" accesskey=/>
+                <a href="https://chhanz88.github.io/post/links/" title="Links">
+                    <span>Links</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://chhanz88.github.io/post/search/" title="Search (Alt &#43; /)" accesskey=/>
                     <span>Search</span>
                 </a>
             </li>
             <li>
-                <a href="https://chhanz88.github.io/about/" title="About">
+                <a href="https://chhanz88.github.io/post/about/" title="About">
                     <span>About</span>
                 </a>
             </li>
@@ -207,29 +207,29 @@
 <h2 id="imagedata-수정">image.data 수정<a hidden class="anchor" aria-hidden="true" href="#imagedata-수정">#</a></h2>
 <hr>
 <p>-i 옵션에 사용될 image.data 를 수정합니다.</p>
-<pre tabindex="0"><code># lspv 
-hdisk0 000aaaa120011111 rootvg active 
-hdisk1 000aaaa120222222 rootvg active 
-hdisk2 none None 
-
-# vi /image.data
-
-## lv_data의 항목중 
-* LV_SOURCE_DISK_LIST= hdisk0 hdisk1 -&gt; hdisk0로 변경 
-* COPIES= 2 -&gt; 1로 변경 
-* PP= 2 -&gt; 1로 변경 
-</code></pre><p>위와 같이 Source PV 하나를 제거하고, LV의 COPY 수량, LV 용량을 수정합니다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># lspv 
+</span></span><span style="display:flex;"><span>hdisk0 000aaaa120011111 rootvg active 
+</span></span><span style="display:flex;"><span>hdisk1 000aaaa120222222 rootvg active 
+</span></span><span style="display:flex;"><span>hdisk2 none None 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span># vi /image.data
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>## lv_data의 항목중 
+</span></span><span style="display:flex;"><span>* LV_SOURCE_DISK_LIST= hdisk0 hdisk1 -&gt; hdisk0로 변경 
+</span></span><span style="display:flex;"><span>* COPIES= 2 -&gt; 1로 변경 
+</span></span><span style="display:flex;"><span>* PP= 2 -&gt; 1로 변경 
+</span></span></code></pre></div><p>위와 같이 Source PV 하나를 제거하고, LV의 COPY 수량, LV 용량을 수정합니다.</p>
 <h2 id="alt_disk_install-진행">alt_disk_install 진행<a hidden class="anchor" aria-hidden="true" href="#alt_disk_install-진행">#</a></h2>
 <hr>
-<pre tabindex="0"><code># alt_disk_install -COB -i /image.data hdisk2
-</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># alt_disk_install -COB -i /image.data hdisk2
+</span></span></code></pre></div>
 
   </div>
 
   <footer class="post-footer">
     <ul class="post-tags">
-      <li><a href="https://chhanz88.github.io/tags/aix/">aix</a></li>
-      <li><a href="https://chhanz88.github.io/tags/alt_disk_install/">alt_disk_install</a></li>
+      <li><a href="https://chhanz88.github.io/post/tags/aix/">aix</a></li>
+      <li><a href="https://chhanz88.github.io/post/tags/alt_disk_install/">alt_disk_install</a></li>
     </ul>
   </footer><script src="https://utteranc.es/client.js"
         repo="chhanz88/chhanz88.github.io"
@@ -243,7 +243,7 @@ hdisk2 none None
     </main>
     
 <footer class="footer">
-    <span>&copy; 2022 <a href="https://chhanz88.github.io">chhanz 기술 블로그
+    <span>&copy; 2022 <a href="https://chhanz88.github.io/post/">chhanz 기술 블로그
 </a></span>
     <span>
         Powered by

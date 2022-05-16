@@ -3,27 +3,27 @@
   <channel>
     <title>openshift on chhanz 기술 블로그
 </title>
-    <link>https://chhanz88.github.io/tags/openshift/</link>
+    <link>https://chhanz88.github.io/post/tags/openshift/</link>
     <description>Recent content in openshift on chhanz 기술 블로그
 </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 26 Jan 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://chhanz88.github.io/tags/openshift/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 26 Jan 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://chhanz88.github.io/post/tags/openshift/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>[OpenShift] Matchbox 를 이용하여 OpenShift 배포서버 구성</title>
-      <link>https://chhanz88.github.io/post/2021-01-26-matchbox/</link>
+      <link>https://chhanz88.github.io/post/post/2021-01-26-matchbox/</link>
       <pubDate>Tue, 26 Jan 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2021-01-26-matchbox/</guid>
+      <guid>https://chhanz88.github.io/post/post/2021-01-26-matchbox/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[OpenShift] OpenShift 를 이용한 CI(Continuous Integration) 구성</title>
-      <link>https://chhanz88.github.io/post/2020-10-16-ocp4-ci/</link>
+      <link>https://chhanz88.github.io/post/post/2020-10-16-ocp4-ci/</link>
       <pubDate>Fri, 16 Oct 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-10-16-ocp4-ci/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-10-16-ocp4-ci/</guid>
       <description>[OpenShift] OpenShift 4.5 를 이용한 CI(Continuous Integration) 구성 이번 포스팅은 OpenShift 를 이용한 Continuous Integration(이하 CI)를 구성하도록 하겠습니다.
  사전 구성 : gogs  Continuous Integration 란? CI는 개발자를 위한 자동화 프로세스인 지속적인 통합(Continuous Integration)을 의미합니다.
 CI를 성공적으로 구현할 경우 애플리케이션에 대한 새로운 코드 변경 사항이 정기적으로 빌드 및 테스트되어 공유 리포지토리에 통합되므로 여러 명의 개발자가 동시에 애플리케이션 개발과 관련된 코드 작업을 할 경우 서로 충돌할 수 있는 문제를 해결할 수 있습니다.</description>
@@ -31,82 +31,82 @@ CI를 성공적으로 구현할 경우 애플리케이션에 대한 새로운 �
     
     <item>
       <title>[OpenShift 4.4] CodeReady Workspaces 를 이용하여 통합 개발 환경(IDE) 구현</title>
-      <link>https://chhanz88.github.io/post/2020-07-01-ocp-codeready/</link>
+      <link>https://chhanz88.github.io/post/post/2020-07-01-ocp-codeready/</link>
       <pubDate>Wed, 01 Jul 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-07-01-ocp-codeready/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-07-01-ocp-codeready/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[OpenShift 4.4] Deploying Applications From Template</title>
-      <link>https://chhanz88.github.io/post/2020-06-24-ocp4-template/</link>
+      <link>https://chhanz88.github.io/post/post/2020-06-24-ocp4-template/</link>
       <pubDate>Wed, 24 Jun 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-06-24-ocp4-template/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-06-24-ocp4-template/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[OpenShift 4.4] Deploying Applications From Source</title>
-      <link>https://chhanz88.github.io/post/2020-06-22-ocp4-deploy-source/</link>
+      <link>https://chhanz88.github.io/post/post/2020-06-22-ocp4-deploy-source/</link>
       <pubDate>Mon, 22 Jun 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-06-22-ocp4-deploy-source/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-06-22-ocp4-deploy-source/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[OpenShift 4.4] Deploying Applications From Images</title>
-      <link>https://chhanz88.github.io/post/2020-06-18-ocp4-deploy-image/</link>
+      <link>https://chhanz88.github.io/post/post/2020-06-18-ocp4-deploy-image/</link>
       <pubDate>Thu, 18 Jun 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-06-18-ocp4-deploy-image/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-06-18-ocp4-deploy-image/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Container] Container &amp; Orchestration 교육 자료 </title>
-      <link>https://chhanz88.github.io/post/2020-05-21-container-hands-on/</link>
+      <link>https://chhanz88.github.io/post/post/2020-05-21-container-hands-on/</link>
       <pubDate>Thu, 21 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-05-21-container-hands-on/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-05-21-container-hands-on/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[OpenShift] KVM 환경에 OpenShift 4 구동해보자!</title>
-      <link>https://chhanz88.github.io/post/2019-11-29-openshift4-dev-env/</link>
+      <link>https://chhanz88.github.io/post/post/2019-11-29-openshift4-dev-env/</link>
       <pubDate>Fri, 29 Nov 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2019-11-29-openshift4-dev-env/</guid>
+      <guid>https://chhanz88.github.io/post/post/2019-11-29-openshift4-dev-env/</guid>
       <description>Install on Laptop: Red Hat CodeReady Containers</description>
     </item>
     
     <item>
       <title>[Openshift] Openshift 의 HPA 를 이용한 Auto-Scaling 구현</title>
-      <link>https://chhanz88.github.io/post/2019-07-15-okd-hpa/</link>
+      <link>https://chhanz88.github.io/post/post/2019-07-15-okd-hpa/</link>
       <pubDate>Mon, 15 Jul 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2019-07-15-okd-hpa/</guid>
+      <guid>https://chhanz88.github.io/post/post/2019-07-15-okd-hpa/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Openshift] Openshift Web Console 을 이용한 배포</title>
-      <link>https://chhanz88.github.io/post/2019-06-24-overview-okd-gui/</link>
+      <link>https://chhanz88.github.io/post/post/2019-06-24-overview-okd-gui/</link>
       <pubDate>Mon, 24 Jun 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2019-06-24-overview-okd-gui/</guid>
+      <guid>https://chhanz88.github.io/post/post/2019-06-24-overview-okd-gui/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Openshift] Openshift Origin v3.11 설치, App 배포</title>
-      <link>https://chhanz88.github.io/post/2019-06-07-install-okd-all-in-one/</link>
+      <link>https://chhanz88.github.io/post/post/2019-06-07-install-okd-all-in-one/</link>
       <pubDate>Fri, 07 Jun 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2019-06-07-install-okd-all-in-one/</guid>
+      <guid>https://chhanz88.github.io/post/post/2019-06-07-install-okd-all-in-one/</guid>
       <description> </description>
     </item>
     

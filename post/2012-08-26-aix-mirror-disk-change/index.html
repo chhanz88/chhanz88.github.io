@@ -11,11 +11,11 @@
 <meta name="description" content="Mirror Disk 교체  Mirroring 으로 구성된 rootvg 에서 장애난 DISK 교체 절차는 아래와 같습니다.
  장애 디스크 확인  # errpt 613E5F38 1212232603 P H LVDD I/O ERROR DETECTED BY LVM A668F553 1212092003 P H hdisk1 DISK OPERATION ERROR bootlist 확인  # bootlist -om normal bootlist 재설정  # unmirrorvg rootvg hdisk1 Unmirror VG 수행  # unmirrorvg rootvg hdisk1 각 DISK 의 LV 상태 확인  # lspv -l hdisk0 # lspv -l hdisk1 제거가 안되거나, Mirroring 이 아닌 LV 가 남아 있는 경우  # migratepv -l hd6 hdisk1 hdisk0 # lspv -l hdisk0 // 확인 # lspv -l hdisk1 // 확인 VG 에서 DISK 제거  # reducevg rootvg hdisk1 시스템에서 DISK 제거  rmdev -Rdl hdisk1 bosboot 수행  # bosboot -ad hdisk0 신규 디스크 추가(물리 DISK 교체 및 장착)  # diag 혹은 # cfgmgr -v VG 에 신규 DISK 추가  # extendvg rootvg hdisk1 Mirror VG 수행  # mirrorvg -S rootvg hdisk0 hdisk1 rootvg Mirror 확인  # lsvg -l rootvg bosboot 수행  # bosboot -ad hdisk0 bootlist 신규 등록  # bootlist -om normal hdisk0 hdisk1 bootlist 확인  # bootlist -om normal ">
 <meta name="author" content="chhanz">
-<link rel="canonical" href="https://chhanz88.github.io/post/2012-08-26-aix-mirror-disk-change/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.min.ec8da366ca2fb647537ccb7a8f6fa5b4e9cd3c7a0d3171dd2d3baad1e49c8bfc.css" integrity="sha256-7I2jZsovtkdTfMt6j2&#43;ltOnNPHoNMXHdLTuq0eSci/w=" rel="preload stylesheet" as="style">
-<script defer crossorigin="anonymous" src="/assets/js/highlight.min.4dcb3c4f38462f66c6b6137227726f5543cb934cca9788f041c087e374491df2.js" integrity="sha256-Tcs8TzhGL2bGthNyJ3JvVUPLk0zKl4jwQcCH43RJHfI="
+<link rel="canonical" href="https://chhanz88.github.io/post/post/2012-08-26-aix-mirror-disk-change/">
+<link crossorigin="anonymous" href="/post/assets/css/stylesheet.min.ec8da366ca2fb647537ccb7a8f6fa5b4e9cd3c7a0d3171dd2d3baad1e49c8bfc.css" integrity="sha256-7I2jZsovtkdTfMt6j2&#43;ltOnNPHoNMXHdLTuq0eSci/w=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/post/assets/js/highlight.min.4dcb3c4f38462f66c6b6137227726f5543cb934cca9788f041c087e374491df2.js" integrity="sha256-Tcs8TzhGL2bGthNyJ3JvVUPLk0zKl4jwQcCH43RJHfI="
     onload="hljs.initHighlightingOnLoad();"></script>
-<link rel="icon" type="image/png" href="https://chhanz88.github.io/favicon.ico">
+<link rel="icon" type="image/png" href="https://chhanz88.github.io/post/favicon.ico">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
 <noscript>
@@ -58,7 +58,7 @@
 <meta property="og:description" content="Mirror Disk 교체  Mirroring 으로 구성된 rootvg 에서 장애난 DISK 교체 절차는 아래와 같습니다.
  장애 디스크 확인  # errpt 613E5F38 1212232603 P H LVDD I/O ERROR DETECTED BY LVM A668F553 1212092003 P H hdisk1 DISK OPERATION ERROR bootlist 확인  # bootlist -om normal bootlist 재설정  # unmirrorvg rootvg hdisk1 Unmirror VG 수행  # unmirrorvg rootvg hdisk1 각 DISK 의 LV 상태 확인  # lspv -l hdisk0 # lspv -l hdisk1 제거가 안되거나, Mirroring 이 아닌 LV 가 남아 있는 경우  # migratepv -l hd6 hdisk1 hdisk0 # lspv -l hdisk0 // 확인 # lspv -l hdisk1 // 확인 VG 에서 DISK 제거  # reducevg rootvg hdisk1 시스템에서 DISK 제거  rmdev -Rdl hdisk1 bosboot 수행  # bosboot -ad hdisk0 신규 디스크 추가(물리 DISK 교체 및 장착)  # diag 혹은 # cfgmgr -v VG 에 신규 DISK 추가  # extendvg rootvg hdisk1 Mirror VG 수행  # mirrorvg -S rootvg hdisk0 hdisk1 rootvg Mirror 확인  # lsvg -l rootvg bosboot 수행  # bosboot -ad hdisk0 bootlist 신규 등록  # bootlist -om normal hdisk0 hdisk1 bootlist 확인  # bootlist -om normal " />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://chhanz88.github.io/post/2012-08-26-aix-mirror-disk-change/" /><meta property="article:section" content="post" />
+<meta property="og:url" content="https://chhanz88.github.io/post/post/2012-08-26-aix-mirror-disk-change/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2012-08-26T00:00:00&#43;00:00" />
 <meta property="article:modified_time" content="2012-08-26T00:00:00&#43;00:00" />
 
@@ -72,18 +72,18 @@
 {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
-  "itemListElement": [, 
+  "itemListElement": [
     {
       "@type": "ListItem",
-      "position":  2 ,
+      "position":  1 ,
       "name": "Posts",
-      "item": "https://chhanz88.github.io/post/"
+      "item": "https://chhanz88.github.io/post/post/"
     }, 
     {
       "@type": "ListItem",
-      "position":  3 ,
+      "position":  2 ,
       "name": "[AIX] Mirror Disk 교체",
-      "item": "https://chhanz88.github.io/post/2012-08-26-aix-mirror-disk-change/"
+      "item": "https://chhanz88.github.io/post/post/2012-08-26-aix-mirror-disk-change/"
     }
   ]
 }
@@ -109,14 +109,14 @@
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://chhanz88.github.io/post/2012-08-26-aix-mirror-disk-change/"
+    "@id": "https://chhanz88.github.io/post/post/2012-08-26-aix-mirror-disk-change/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "chhanz 기술 블로그\n",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://chhanz88.github.io/favicon.ico"
+      "url": "https://chhanz88.github.io/post/favicon.ico"
     }
   }
 }
@@ -138,7 +138,7 @@
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://chhanz88.github.io" accesskey="h" title="chhanz 기술 블로그
+            <a href="https://chhanz88.github.io/post/" accesskey="h" title="chhanz 기술 블로그
  (Alt + H)">chhanz 기술 블로그
 </a>
             <span class="logo-switches">
@@ -166,22 +166,22 @@
         </div>
         <ul id="menu">
             <li>
-                <a href="https://chhanz88.github.io/categories/" title="categories">
-                    <span>categories</span>
-                </a>
-            </li>
-            <li>
-                <a href="https://chhanz88.github.io/archives" title="Archives">
+                <a href="https://chhanz88.github.io/post/archives" title="Archives">
                     <span>Archives</span>
                 </a>
             </li>
             <li>
-                <a href="https://chhanz88.github.io/search/" title="Search (Alt &#43; /)" accesskey=/>
+                <a href="https://chhanz88.github.io/post/links/" title="Links">
+                    <span>Links</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://chhanz88.github.io/post/search/" title="Search (Alt &#43; /)" accesskey=/>
                     <span>Search</span>
                 </a>
             </li>
             <li>
-                <a href="https://chhanz88.github.io/about/" title="About">
+                <a href="https://chhanz88.github.io/post/about/" title="About">
                     <span>About</span>
                 </a>
             </li>
@@ -206,81 +206,81 @@
 <ol>
 <li>장애 디스크 확인</li>
 </ol>
-<pre tabindex="0"><code># errpt 
-613E5F38  1212232603  P  H  LVDD  I/O ERROR DETECTED BY LVM
-A668F553  1212092003  P  H  hdisk1  DISK OPERATION ERROR
-</code></pre><ol start="2">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># errpt 
+</span></span><span style="display:flex;"><span>613E5F38  1212232603  P  H  LVDD  I/O ERROR DETECTED BY LVM
+</span></span><span style="display:flex;"><span>A668F553  1212092003  P  H  hdisk1  DISK OPERATION ERROR
+</span></span></code></pre></div><ol start="2">
 <li>bootlist 확인</li>
 </ol>
-<pre tabindex="0"><code># bootlist -om normal
-</code></pre><ol start="3">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># bootlist -om normal
+</span></span></code></pre></div><ol start="3">
 <li>bootlist 재설정</li>
 </ol>
-<pre tabindex="0"><code># unmirrorvg rootvg hdisk1
-</code></pre><ol start="4">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># unmirrorvg rootvg hdisk1
+</span></span></code></pre></div><ol start="4">
 <li>Unmirror VG 수행</li>
 </ol>
-<pre tabindex="0"><code># unmirrorvg rootvg hdisk1
-</code></pre><ol start="5">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># unmirrorvg rootvg hdisk1
+</span></span></code></pre></div><ol start="5">
 <li>각 DISK 의 LV 상태 확인</li>
 </ol>
-<pre tabindex="0"><code># lspv -l hdisk0
-# lspv -l hdisk1
-</code></pre><ol start="6">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># lspv -l hdisk0
+</span></span><span style="display:flex;"><span># lspv -l hdisk1
+</span></span></code></pre></div><ol start="6">
 <li>제거가 안되거나, Mirroring 이 아닌 LV 가 남아 있는 경우</li>
 </ol>
-<pre tabindex="0"><code># migratepv -l hd6 hdisk1 hdisk0
-# lspv -l hdisk0    // 확인
-# lspv -l hdisk1    // 확인
-</code></pre><ol start="7">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># migratepv -l hd6 hdisk1 hdisk0
+</span></span><span style="display:flex;"><span># lspv -l hdisk0    // 확인
+</span></span><span style="display:flex;"><span># lspv -l hdisk1    // 확인
+</span></span></code></pre></div><ol start="7">
 <li>VG 에서 DISK 제거</li>
 </ol>
-<pre tabindex="0"><code># reducevg rootvg hdisk1
-</code></pre><ol start="8">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># reducevg rootvg hdisk1
+</span></span></code></pre></div><ol start="8">
 <li>시스템에서 DISK 제거</li>
 </ol>
-<pre tabindex="0"><code>rmdev -Rdl hdisk1
-</code></pre><ol start="9">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>rmdev -Rdl hdisk1
+</span></span></code></pre></div><ol start="9">
 <li>bosboot 수행</li>
 </ol>
-<pre tabindex="0"><code># bosboot -ad hdisk0
-</code></pre><ol start="10">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># bosboot -ad hdisk0
+</span></span></code></pre></div><ol start="10">
 <li>신규 디스크 추가(물리 DISK 교체 및 장착)</li>
 </ol>
-<pre tabindex="0"><code># diag 
-혹은
-# cfgmgr -v
-</code></pre><ol start="11">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># diag 
+</span></span><span style="display:flex;"><span>혹은
+</span></span><span style="display:flex;"><span># cfgmgr -v
+</span></span></code></pre></div><ol start="11">
 <li>VG 에 신규 DISK 추가</li>
 </ol>
-<pre tabindex="0"><code># extendvg rootvg hdisk1
-</code></pre><ol start="12">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># extendvg rootvg hdisk1
+</span></span></code></pre></div><ol start="12">
 <li>Mirror VG 수행</li>
 </ol>
-<pre tabindex="0"><code># mirrorvg -S rootvg hdisk0 hdisk1
-</code></pre><ol start="13">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># mirrorvg -S rootvg hdisk0 hdisk1
+</span></span></code></pre></div><ol start="13">
 <li>rootvg Mirror 확인</li>
 </ol>
-<pre tabindex="0"><code># lsvg -l rootvg
-</code></pre><ol start="14">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># lsvg -l rootvg
+</span></span></code></pre></div><ol start="14">
 <li>bosboot 수행</li>
 </ol>
-<pre tabindex="0"><code># bosboot -ad hdisk0
-</code></pre><ol start="15">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># bosboot -ad hdisk0
+</span></span></code></pre></div><ol start="15">
 <li>bootlist 신규 등록</li>
 </ol>
-<pre tabindex="0"><code># bootlist -om normal hdisk0 hdisk1
-</code></pre><ol start="16">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># bootlist -om normal hdisk0 hdisk1
+</span></span></code></pre></div><ol start="16">
 <li>bootlist 확인</li>
 </ol>
-<pre tabindex="0"><code># bootlist -om normal
-</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># bootlist -om normal
+</span></span></code></pre></div>
 
   </div>
 
   <footer class="post-footer">
     <ul class="post-tags">
-      <li><a href="https://chhanz88.github.io/tags/aix/">aix</a></li>
+      <li><a href="https://chhanz88.github.io/post/tags/aix/">aix</a></li>
     </ul>
   </footer><script src="https://utteranc.es/client.js"
         repo="chhanz88/chhanz88.github.io"
@@ -294,7 +294,7 @@ A668F553  1212092003  P  H  hdisk1  DISK OPERATION ERROR
     </main>
     
 <footer class="footer">
-    <span>&copy; 2022 <a href="https://chhanz88.github.io">chhanz 기술 블로그
+    <span>&copy; 2022 <a href="https://chhanz88.github.io/post/">chhanz 기술 블로그
 </a></span>
     <span>
         Powered by

@@ -3,279 +3,279 @@
   <channel>
     <title>Tags on chhanz 기술 블로그
 </title>
-    <link>https://chhanz88.github.io/tags/</link>
+    <link>https://chhanz88.github.io/post/tags/</link>
     <description>Recent content in Tags on chhanz 기술 블로그
 </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 11 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://chhanz88.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 11 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://chhanz88.github.io/post/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>linux</title>
-      <link>https://chhanz88.github.io/tags/linux/</link>
+      <link>https://chhanz88.github.io/post/tags/linux/</link>
       <pubDate>Wed, 11 May 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/tags/linux/</guid>
+      <guid>https://chhanz88.github.io/post/tags/linux/</guid>
       <description></description>
     </item>
     
     <item>
       <title>aix</title>
-      <link>https://chhanz88.github.io/tags/aix/</link>
+      <link>https://chhanz88.github.io/post/tags/aix/</link>
       <pubDate>Fri, 18 Feb 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/tags/aix/</guid>
+      <guid>https://chhanz88.github.io/post/tags/aix/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Windows</title>
-      <link>https://chhanz88.github.io/tags/Windows/</link>
+      <link>https://chhanz88.github.io/post/tags/Windows/</link>
       <pubDate>Thu, 03 Feb 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/tags/Windows/</guid>
+      <guid>https://chhanz88.github.io/post/tags/Windows/</guid>
       <description></description>
     </item>
     
     <item>
       <title>openstack</title>
-      <link>https://chhanz88.github.io/tags/openstack/</link>
+      <link>https://chhanz88.github.io/post/tags/openstack/</link>
       <pubDate>Mon, 17 Jan 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/tags/openstack/</guid>
+      <guid>https://chhanz88.github.io/post/tags/openstack/</guid>
       <description></description>
     </item>
     
     <item>
       <title>kubernetes</title>
-      <link>https://chhanz88.github.io/tags/kubernetes/</link>
+      <link>https://chhanz88.github.io/post/tags/kubernetes/</link>
       <pubDate>Wed, 01 Dec 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/tags/kubernetes/</guid>
+      <guid>https://chhanz88.github.io/post/tags/kubernetes/</guid>
       <description></description>
     </item>
     
     <item>
       <title>ceph</title>
-      <link>https://chhanz88.github.io/tags/ceph/</link>
+      <link>https://chhanz88.github.io/post/tags/ceph/</link>
       <pubDate>Wed, 18 Aug 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/tags/ceph/</guid>
+      <guid>https://chhanz88.github.io/post/tags/ceph/</guid>
       <description></description>
     </item>
     
     <item>
       <title>ansible</title>
-      <link>https://chhanz88.github.io/tags/ansible/</link>
+      <link>https://chhanz88.github.io/post/tags/ansible/</link>
       <pubDate>Wed, 24 Feb 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/tags/ansible/</guid>
+      <guid>https://chhanz88.github.io/post/tags/ansible/</guid>
       <description></description>
     </item>
     
     <item>
       <title>openshift</title>
-      <link>https://chhanz88.github.io/tags/openshift/</link>
+      <link>https://chhanz88.github.io/post/tags/openshift/</link>
       <pubDate>Tue, 26 Jan 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/tags/openshift/</guid>
+      <guid>https://chhanz88.github.io/post/tags/openshift/</guid>
       <description></description>
     </item>
     
     <item>
       <title>RHV</title>
-      <link>https://chhanz88.github.io/tags/RHV/</link>
+      <link>https://chhanz88.github.io/post/tags/RHV/</link>
       <pubDate>Tue, 06 Oct 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/tags/RHV/</guid>
+      <guid>https://chhanz88.github.io/post/tags/RHV/</guid>
       <description></description>
     </item>
     
     <item>
       <title>virtualization</title>
-      <link>https://chhanz88.github.io/tags/virtualization/</link>
+      <link>https://chhanz88.github.io/post/tags/virtualization/</link>
       <pubDate>Tue, 06 Oct 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/tags/virtualization/</guid>
+      <guid>https://chhanz88.github.io/post/tags/virtualization/</guid>
       <description></description>
     </item>
     
     <item>
       <title>podman</title>
-      <link>https://chhanz88.github.io/tags/podman/</link>
+      <link>https://chhanz88.github.io/post/tags/podman/</link>
       <pubDate>Tue, 22 Sep 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/tags/podman/</guid>
+      <guid>https://chhanz88.github.io/post/tags/podman/</guid>
       <description></description>
     </item>
     
     <item>
       <title>python</title>
-      <link>https://chhanz88.github.io/tags/python/</link>
+      <link>https://chhanz88.github.io/post/tags/python/</link>
       <pubDate>Sun, 05 Jul 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/tags/python/</guid>
+      <guid>https://chhanz88.github.io/post/tags/python/</guid>
       <description></description>
     </item>
     
     <item>
       <title>docker</title>
-      <link>https://chhanz88.github.io/tags/docker/</link>
+      <link>https://chhanz88.github.io/post/tags/docker/</link>
       <pubDate>Thu, 21 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/tags/docker/</guid>
+      <guid>https://chhanz88.github.io/post/tags/docker/</guid>
       <description></description>
     </item>
     
     <item>
       <title>devops</title>
-      <link>https://chhanz88.github.io/tags/devops/</link>
+      <link>https://chhanz88.github.io/post/tags/devops/</link>
       <pubDate>Mon, 04 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/tags/devops/</guid>
+      <guid>https://chhanz88.github.io/post/tags/devops/</guid>
       <description></description>
     </item>
     
     <item>
       <title>tomcat</title>
-      <link>https://chhanz88.github.io/tags/tomcat/</link>
+      <link>https://chhanz88.github.io/post/tags/tomcat/</link>
       <pubDate>Thu, 12 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/tags/tomcat/</guid>
+      <guid>https://chhanz88.github.io/post/tags/tomcat/</guid>
       <description></description>
     </item>
     
     <item>
       <title>container</title>
-      <link>https://chhanz88.github.io/tags/container/</link>
+      <link>https://chhanz88.github.io/post/tags/container/</link>
       <pubDate>Mon, 02 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/tags/container/</guid>
+      <guid>https://chhanz88.github.io/post/tags/container/</guid>
       <description></description>
     </item>
     
     <item>
       <title>cloud</title>
-      <link>https://chhanz88.github.io/tags/cloud/</link>
+      <link>https://chhanz88.github.io/post/tags/cloud/</link>
       <pubDate>Mon, 27 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/tags/cloud/</guid>
+      <guid>https://chhanz88.github.io/post/tags/cloud/</guid>
       <description></description>
     </item>
     
     <item>
       <title>VMware</title>
-      <link>https://chhanz88.github.io/tags/VMware/</link>
+      <link>https://chhanz88.github.io/post/tags/VMware/</link>
       <pubDate>Tue, 22 Oct 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/tags/VMware/</guid>
+      <guid>https://chhanz88.github.io/post/tags/VMware/</guid>
       <description></description>
     </item>
     
     <item>
       <title>fast-vm</title>
-      <link>https://chhanz88.github.io/tags/fast-vm/</link>
+      <link>https://chhanz88.github.io/post/tags/fast-vm/</link>
       <pubDate>Wed, 25 Sep 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/tags/fast-vm/</guid>
+      <guid>https://chhanz88.github.io/post/tags/fast-vm/</guid>
       <description></description>
     </item>
     
     <item>
       <title>github</title>
-      <link>https://chhanz88.github.io/tags/github/</link>
+      <link>https://chhanz88.github.io/post/tags/github/</link>
       <pubDate>Wed, 24 Jul 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/tags/github/</guid>
+      <guid>https://chhanz88.github.io/post/tags/github/</guid>
       <description></description>
     </item>
     
     <item>
       <title>GPFS</title>
-      <link>https://chhanz88.github.io/tags/GPFS/</link>
+      <link>https://chhanz88.github.io/post/tags/GPFS/</link>
       <pubDate>Fri, 05 Apr 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/tags/GPFS/</guid>
+      <guid>https://chhanz88.github.io/post/tags/GPFS/</guid>
       <description></description>
     </item>
     
     <item>
       <title>spacewalk</title>
-      <link>https://chhanz88.github.io/tags/spacewalk/</link>
+      <link>https://chhanz88.github.io/post/tags/spacewalk/</link>
       <pubDate>Mon, 07 Jan 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/tags/spacewalk/</guid>
+      <guid>https://chhanz88.github.io/post/tags/spacewalk/</guid>
       <description></description>
     </item>
     
     <item>
       <title>powerkvm</title>
-      <link>https://chhanz88.github.io/tags/powerkvm/</link>
+      <link>https://chhanz88.github.io/post/tags/powerkvm/</link>
       <pubDate>Wed, 01 Aug 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/tags/powerkvm/</guid>
+      <guid>https://chhanz88.github.io/post/tags/powerkvm/</guid>
       <description></description>
     </item>
     
     <item>
       <title>SAN</title>
-      <link>https://chhanz88.github.io/tags/SAN/</link>
+      <link>https://chhanz88.github.io/post/tags/SAN/</link>
       <pubDate>Fri, 13 May 2016 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/tags/SAN/</guid>
+      <guid>https://chhanz88.github.io/post/tags/SAN/</guid>
       <description></description>
     </item>
     
     <item>
       <title>backup</title>
-      <link>https://chhanz88.github.io/tags/backup/</link>
+      <link>https://chhanz88.github.io/post/tags/backup/</link>
       <pubDate>Mon, 15 Feb 2016 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/tags/backup/</guid>
+      <guid>https://chhanz88.github.io/post/tags/backup/</guid>
       <description></description>
     </item>
     
     <item>
       <title>hacmp</title>
-      <link>https://chhanz88.github.io/tags/hacmp/</link>
+      <link>https://chhanz88.github.io/post/tags/hacmp/</link>
       <pubDate>Fri, 25 Jul 2014 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/tags/hacmp/</guid>
+      <guid>https://chhanz88.github.io/post/tags/hacmp/</guid>
       <description></description>
     </item>
     
     <item>
       <title>MSCS</title>
-      <link>https://chhanz88.github.io/tags/MSCS/</link>
+      <link>https://chhanz88.github.io/post/tags/MSCS/</link>
       <pubDate>Sat, 27 Apr 2013 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/tags/MSCS/</guid>
+      <guid>https://chhanz88.github.io/post/tags/MSCS/</guid>
       <description></description>
     </item>
     
     <item>
       <title>alt_disk_install</title>
-      <link>https://chhanz88.github.io/tags/alt_disk_install/</link>
+      <link>https://chhanz88.github.io/post/tags/alt_disk_install/</link>
       <pubDate>Thu, 06 Sep 2012 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/tags/alt_disk_install/</guid>
+      <guid>https://chhanz88.github.io/post/tags/alt_disk_install/</guid>
       <description></description>
     </item>
     
     <item>
       <title>jfs</title>
-      <link>https://chhanz88.github.io/tags/jfs/</link>
+      <link>https://chhanz88.github.io/post/tags/jfs/</link>
       <pubDate>Thu, 06 Sep 2012 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/tags/jfs/</guid>
+      <guid>https://chhanz88.github.io/post/tags/jfs/</guid>
       <description></description>
     </item>
     
     <item>
       <title>jfs2</title>
-      <link>https://chhanz88.github.io/tags/jfs2/</link>
+      <link>https://chhanz88.github.io/post/tags/jfs2/</link>
       <pubDate>Thu, 06 Sep 2012 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/tags/jfs2/</guid>
+      <guid>https://chhanz88.github.io/post/tags/jfs2/</guid>
       <description></description>
     </item>
     

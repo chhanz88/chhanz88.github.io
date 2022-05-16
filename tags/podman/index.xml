@@ -3,36 +3,36 @@
   <channel>
     <title>podman on chhanz 기술 블로그
 </title>
-    <link>https://chhanz88.github.io/tags/podman/</link>
+    <link>https://chhanz88.github.io/post/tags/podman/</link>
     <description>Recent content in podman on chhanz 기술 블로그
 </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 22 Sep 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://chhanz88.github.io/tags/podman/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 22 Sep 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://chhanz88.github.io/post/tags/podman/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>[Container] podman 을 이용한 container image build</title>
-      <link>https://chhanz88.github.io/post/2020-09-22-podman-build-flask-example-app/</link>
+      <link>https://chhanz88.github.io/post/post/2020-09-22-podman-build-flask-example-app/</link>
       <pubDate>Tue, 22 Sep 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-09-22-podman-build-flask-example-app/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-09-22-podman-build-flask-example-app/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Container] Container image build with buildah (podman builder)</title>
-      <link>https://chhanz88.github.io/post/2020-09-21-buildah/</link>
+      <link>https://chhanz88.github.io/post/post/2020-09-21-buildah/</link>
       <pubDate>Mon, 21 Sep 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-09-21-buildah/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-09-21-buildah/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Container] Container &amp; Orchestration 교육 자료 </title>
-      <link>https://chhanz88.github.io/post/2020-05-21-container-hands-on/</link>
+      <link>https://chhanz88.github.io/post/post/2020-05-21-container-hands-on/</link>
       <pubDate>Thu, 21 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-05-21-container-hands-on/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-05-21-container-hands-on/</guid>
       <description> </description>
     </item>
     

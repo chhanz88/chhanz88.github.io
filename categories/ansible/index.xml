@@ -3,18 +3,18 @@
   <channel>
     <title>ansible on chhanz 기술 블로그
 </title>
-    <link>https://chhanz88.github.io/categories/ansible/</link>
+    <link>https://chhanz88.github.io/post/categories/ansible/</link>
     <description>Recent content in ansible on chhanz 기술 블로그
 </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 24 Feb 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://chhanz88.github.io/categories/ansible/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 24 Feb 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://chhanz88.github.io/post/categories/ansible/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>[Ansible] Windows 10 WSL 을 이용하여 Ansible 를 써보자</title>
-      <link>https://chhanz88.github.io/post/2021-02-24-ansible-wsl/</link>
+      <link>https://chhanz88.github.io/post/post/2021-02-24-ansible-wsl/</link>
       <pubDate>Wed, 24 Feb 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2021-02-24-ansible-wsl/</guid>
+      <guid>https://chhanz88.github.io/post/post/2021-02-24-ansible-wsl/</guid>
       <description>[Ansible] Windows 10 WSL 을 이용하여 Ansible 를 써보자 MacOS 을 사용하거나 Linux laptop 을 사용하는 분들은 Ansible 을 사용하는 것에 있어 문제가 될 것이 없습니다.
 OS 내부에 brew 이나 apt , yum 같은 Package manager 가 있고 Command 를 이용 할 수 있기 때문이죠.
 그럼 Windows 는 사용이 불가능한 것인가?
@@ -24,28 +24,28 @@ Windows 에서는 Windows Subsystem for Linux (WSL) 을 이용하여 Command 환
     
     <item>
       <title>[Ansible] USER/GROUP 생성 Playbook</title>
-      <link>https://chhanz88.github.io/post/2021-01-18-ansible-role-user-grp/</link>
+      <link>https://chhanz88.github.io/post/post/2021-01-18-ansible-role-user-grp/</link>
       <pubDate>Mon, 18 Jan 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2021-01-18-ansible-role-user-grp/</guid>
+      <guid>https://chhanz88.github.io/post/post/2021-01-18-ansible-role-user-grp/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Ansible] Red Hat Ansible Tower Bundle 설치(v3.6.3)</title>
-      <link>https://chhanz88.github.io/post/2020-05-12-install-ansible-tower/</link>
+      <link>https://chhanz88.github.io/post/post/2020-05-12-install-ansible-tower/</link>
       <pubDate>Tue, 12 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-05-12-install-ansible-tower/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-05-12-install-ansible-tower/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[ansible] ansible-vault 를 이용하여 암호화 하기</title>
-      <link>https://chhanz88.github.io/post/2019-01-30-ansible-vault-create-groupvars/</link>
+      <link>https://chhanz88.github.io/post/post/2019-01-30-ansible-vault-create-groupvars/</link>
       <pubDate>Wed, 30 Jan 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2019-01-30-ansible-vault-create-groupvars/</guid>
+      <guid>https://chhanz88.github.io/post/post/2019-01-30-ansible-vault-create-groupvars/</guid>
       <description> </description>
     </item>
     

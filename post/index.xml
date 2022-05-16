@@ -3,72 +3,72 @@
   <channel>
     <title>Posts on chhanz 기술 블로그
 </title>
-    <link>https://chhanz88.github.io/post/</link>
+    <link>https://chhanz88.github.io/post/post/</link>
     <description>Recent content in Posts on chhanz 기술 블로그
 </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 11 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://chhanz88.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 11 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://chhanz88.github.io/post/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>[Ubuntu] unattended-upgrades 설정 (자동 업데이트)</title>
-      <link>https://chhanz88.github.io/post/2022-05-11-ubuntu-unattended-upgrades/</link>
+      <link>https://chhanz88.github.io/post/post/2022-05-11-ubuntu-unattended-upgrades/</link>
       <pubDate>Wed, 11 May 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2022-05-11-ubuntu-unattended-upgrades/</guid>
+      <guid>https://chhanz88.github.io/post/post/2022-05-11-ubuntu-unattended-upgrades/</guid>
       <description>Ubuntu 22.04</description>
     </item>
     
     <item>
       <title>[Ubuntu] APT Repository 사용법</title>
-      <link>https://chhanz88.github.io/post/2022-05-09-ubuntu-apt/</link>
+      <link>https://chhanz88.github.io/post/post/2022-05-09-ubuntu-apt/</link>
       <pubDate>Mon, 09 May 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2022-05-09-ubuntu-apt/</guid>
+      <guid>https://chhanz88.github.io/post/post/2022-05-09-ubuntu-apt/</guid>
       <description>Ubuntu 22.04</description>
     </item>
     
     <item>
       <title>[Ubuntu] apt-mirror 를 이용하여 sync 후, apt-get error 발생</title>
-      <link>https://chhanz88.github.io/post/2022-05-09-ubuntu-apt-mirror-issue/</link>
+      <link>https://chhanz88.github.io/post/post/2022-05-09-ubuntu-apt-mirror-issue/</link>
       <pubDate>Mon, 09 May 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2022-05-09-ubuntu-apt-mirror-issue/</guid>
+      <guid>https://chhanz88.github.io/post/post/2022-05-09-ubuntu-apt-mirror-issue/</guid>
       <description>Ubuntu 22.04</description>
     </item>
     
     <item>
       <title>[Ubuntu] Local mirror site 구성(DVD/Repository sync)</title>
-      <link>https://chhanz88.github.io/post/2022-05-09-ubuntu-config-apt-mirror-site/</link>
+      <link>https://chhanz88.github.io/post/post/2022-05-09-ubuntu-config-apt-mirror-site/</link>
       <pubDate>Mon, 09 May 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2022-05-09-ubuntu-config-apt-mirror-site/</guid>
+      <guid>https://chhanz88.github.io/post/post/2022-05-09-ubuntu-config-apt-mirror-site/</guid>
       <description>Ubuntu 22.04</description>
     </item>
     
     <item>
       <title>[Ubuntu] NTP Service</title>
-      <link>https://chhanz88.github.io/post/2022-05-02-ubuntu-ntp-chrony/</link>
+      <link>https://chhanz88.github.io/post/post/2022-05-02-ubuntu-ntp-chrony/</link>
       <pubDate>Mon, 02 May 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2022-05-02-ubuntu-ntp-chrony/</guid>
+      <guid>https://chhanz88.github.io/post/post/2022-05-02-ubuntu-ntp-chrony/</guid>
       <description>Ubuntu 20.04</description>
     </item>
     
     <item>
       <title>[Linux] VirtualBMC 를 이용한 IPMI node 생성</title>
-      <link>https://chhanz88.github.io/post/2022-04-14-vbmcd-ipminode/</link>
+      <link>https://chhanz88.github.io/post/post/2022-04-14-vbmcd-ipminode/</link>
       <pubDate>Thu, 14 Apr 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2022-04-14-vbmcd-ipminode/</guid>
+      <guid>https://chhanz88.github.io/post/post/2022-04-14-vbmcd-ipminode/</guid>
       <description>use kvm</description>
     </item>
     
     <item>
       <title>[Linux] ipmitool 사용법</title>
-      <link>https://chhanz88.github.io/post/2022-03-01-ipmitool/</link>
+      <link>https://chhanz88.github.io/post/post/2022-03-01-ipmitool/</link>
       <pubDate>Tue, 01 Mar 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2022-03-01-ipmitool/</guid>
+      <guid>https://chhanz88.github.io/post/post/2022-03-01-ipmitool/</guid>
       <description>매번 잊어버려서 따로 정리함.
  ipmitool 설치 아래 명령을 통해 ipmitool 명령을 설치 할 수 있다.
   RHEL/CentOS/Rocky 계열
@@ -79,37 +79,37 @@ $ ipmitool lan print [&amp;lt;channel num&amp;gt;] Set in Progress : Set Complet
     
     <item>
       <title>[Linux] njmon with Prometheus</title>
-      <link>https://chhanz88.github.io/post/2022-02-18-njmon-telegraf-grafana/</link>
+      <link>https://chhanz88.github.io/post/post/2022-02-18-njmon-telegraf-grafana/</link>
       <pubDate>Fri, 18 Feb 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2022-02-18-njmon-telegraf-grafana/</guid>
+      <guid>https://chhanz88.github.io/post/post/2022-02-18-njmon-telegraf-grafana/</guid>
       <description>njmon, telegraf, Prometheus, Grafana</description>
     </item>
     
     <item>
       <title>[Linux] CentOS 8: Failed to download metadata for repo &#39;appstream&#39;</title>
-      <link>https://chhanz88.github.io/post/2022-02-04-dnf-error-centos-8/</link>
+      <link>https://chhanz88.github.io/post/post/2022-02-04-dnf-error-centos-8/</link>
       <pubDate>Fri, 04 Feb 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2022-02-04-dnf-error-centos-8/</guid>
+      <guid>https://chhanz88.github.io/post/post/2022-02-04-dnf-error-centos-8/</guid>
       <description>EOS CentOS 8</description>
     </item>
     
     <item>
       <title>[Ventoy] ISO 를 바로 사용하는 OS Install Boot Device 생성</title>
-      <link>https://chhanz88.github.io/post/2022-02-03-ventoy/</link>
+      <link>https://chhanz88.github.io/post/post/2022-02-03-ventoy/</link>
       <pubDate>Thu, 03 Feb 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2022-02-03-ventoy/</guid>
+      <guid>https://chhanz88.github.io/post/post/2022-02-03-ventoy/</guid>
       <description>Alternative to the IODD</description>
     </item>
     
     <item>
       <title>[OpenStack] [Preview] OpenStack Dashboard - Skyline</title>
-      <link>https://chhanz88.github.io/post/2022-01-17-openstack-dashboard-skyline/</link>
+      <link>https://chhanz88.github.io/post/post/2022-01-17-openstack-dashboard-skyline/</link>
       <pubDate>Mon, 17 Jan 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2022-01-17-openstack-dashboard-skyline/</guid>
+      <guid>https://chhanz88.github.io/post/post/2022-01-17-openstack-dashboard-skyline/</guid>
       <description>흥미 최근 OpenStack 커뮤니티 그룹에서 올라온 글을 보고 기존에 Horizon 의 약한 부분에 대해 매우 아쉬움을 가지고 있던 저는 매우 흥미를 느끼며 이 포스팅을 작성하게 되었습니다.
 Preview 이 흥미로운 Project 는 Skyline 이라는 이름의 새로운 OpenStack Dashboard Project 입니다.
 (https://wiki.openstack.org/wiki/Skyline#Description)
@@ -120,10 +120,10 @@ Install 테스트에 활용된 OpenStack 환경은 아래와 같습니다.
     
     <item>
       <title>[Kubernetes] Kustomize </title>
-      <link>https://chhanz88.github.io/post/2021-12-01-kustomize/</link>
+      <link>https://chhanz88.github.io/post/post/2021-12-01-kustomize/</link>
       <pubDate>Wed, 01 Dec 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2021-12-01-kustomize/</guid>
+      <guid>https://chhanz88.github.io/post/post/2021-12-01-kustomize/</guid>
       <description>목차  Kustomize 란? Kustomize 설치 Completion 설정 Kustomize 기본  Kustomize build Run kustomize resources 추가 patch prefix/label secretGenerator 이용 overlay 적용   참고 자료  Kustomize 란? Kustomize는 쿠버네티스 구성을 사용자 정의화하는 도구이다. 이는 애플리케이션 구성 파일을 관리하기 위해 다음 기능들을 가진다.
  다른 소스에서 리소스 생성 리소스에 대한 교차 편집 필드 설정 리소스 집합을 구성하고 사용자 정의
 (https://kubernetes.io/ko/docs/tasks/manage-kubernetes-objects/kustomization/#kustomize-%EA%B0%9C%EC%9A%94 발췌)  개인적으론 Helm 보다 Kustomize 가 사용하기 좋았다.</description>
@@ -131,10 +131,10 @@ Install 테스트에 활용된 OpenStack 환경은 아래와 같습니다.
     
     <item>
       <title>[Kubernetes] HTTPS ingress 적용 (use prometheus)</title>
-      <link>https://chhanz88.github.io/post/2021-11-08-kube-tls-edge/</link>
+      <link>https://chhanz88.github.io/post/post/2021-11-08-kube-tls-edge/</link>
       <pubDate>Mon, 08 Nov 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2021-11-08-kube-tls-edge/</guid>
+      <guid>https://chhanz88.github.io/post/post/2021-11-08-kube-tls-edge/</guid>
       <description>HTTPS ingress 적용 이전에 배포한 kube-prometheus 의 ingress 를 TLS 적용하여 HTTPS 로 서비스 해보도록 하겠습니다.
 TLS 방식 Kubernetes 에서 사용이 가능한 TLS 방식은 아래와 같습니다.
 아래 내용은 OpenShift 기준으로 작성된 내용이지만 이해하기 좋아서 첨부합니다.
@@ -143,10 +143,10 @@ TLS 방식 Kubernetes 에서 사용이 가능한 TLS 방식은 아래와 같습�
     
     <item>
       <title>[OpenStack] kolla-ansible 을 이용하여 OpenStack multinode 배포 (wallaby)</title>
-      <link>https://chhanz88.github.io/post/2021-10-22-deploy-osp-wallaby-kolla-ansible/</link>
+      <link>https://chhanz88.github.io/post/post/2021-10-22-deploy-osp-wallaby-kolla-ansible/</link>
       <pubDate>Fri, 22 Oct 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2021-10-22-deploy-osp-wallaby-kolla-ansible/</guid>
+      <guid>https://chhanz88.github.io/post/post/2021-10-22-deploy-osp-wallaby-kolla-ansible/</guid>
       <description>kolla-ansible 이란? Kolla-Ansible 은 Docker 컨테이너에 OpenStack 서비스 및 인프라 구성 요소를 배포하는 Tool 이며, OpenStack 클라우드 운영을 위한 프로덕션 준비 컨테이너 및 배포 도구를 제공합니다.
 deploy openstack venv 환경 설정 python venv 환경을 아래와 같이 생성합니다.
 root@u-node-0:~# python3 -m venv osp root@u-node-0:~# . osp/bin/activate requirement module 설치 (osp) root@u-node-0:~# pip install -U pip (osp) root@u-node-0:~# pip install &amp;#39;ansible&amp;lt;3.0&amp;#39; kolla-ansible 설치 (osp) root@u-node-0:~# pip install kolla-ansible kolla-ansible config 아래와 같이 config 및 inventory template 를 copy 하고 ansible 설정을 합니다.</description>
@@ -154,10 +154,10 @@ root@u-node-0:~# python3 -m venv osp root@u-node-0:~# . osp/bin/activate require
     
     <item>
       <title>[OpenStack] kolla-build 를 이용한 kolla image build (wallaby)</title>
-      <link>https://chhanz88.github.io/post/2021-10-21-kolla-build/</link>
+      <link>https://chhanz88.github.io/post/post/2021-10-21-kolla-build/</link>
       <pubDate>Thu, 21 Oct 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2021-10-21-kolla-build/</guid>
+      <guid>https://chhanz88.github.io/post/post/2021-10-21-kolla-build/</guid>
       <description>Registry kolla-build 를 통해 생성한 이미지를 저장할 사설 Registry 를 만든다.
 deploy registry 아래와 같이 배포 진행한다.
 (osp) root@u-node-0:/etc/kolla# docker run -d -p 4000:5000 --name registry -v /etc/kolla/build:/var/lib/registry registry:2 아래와 같이 insecure-registries 를 설정한다.
@@ -168,10 +168,10 @@ deploy registry 아래와 같이 배포 진행한다.
     
     <item>
       <title>[Kubernetes] kube-prometheus 배포 (use storageclass)</title>
-      <link>https://chhanz88.github.io/post/2021-09-30-deploy-kube-prometheus/</link>
+      <link>https://chhanz88.github.io/post/post/2021-09-30-deploy-kube-prometheus/</link>
       <pubDate>Thu, 30 Sep 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2021-09-30-deploy-kube-prometheus/</guid>
+      <guid>https://chhanz88.github.io/post/post/2021-09-30-deploy-kube-prometheus/</guid>
       <description>kube-prometheus 배포 Kubernetes cluster 를 모니터링 하기 위해 Prometheus 를 구성하고 사용하려고 한다.
 Prometheus 에는 다양한 배포 방법이 있으나 이번 글에선 kube-prometheus 를 이용하여 Kubernetes Cluster 에 배포 해보도록 한다.
 Kubernetes Cluster 정보 사용된 Kubernetes Cluster 환경은 아래와 같습니다.
@@ -180,10 +180,10 @@ root@node1:~# kubectl get nodes -o wide NAME STATUS ROLES AGE VERSION INTERNAL-I
     
     <item>
       <title>[CEPH] Ceph Architecture</title>
-      <link>https://chhanz88.github.io/post/2021-08-18-ceph-architecture/</link>
+      <link>https://chhanz88.github.io/post/post/2021-08-18-ceph-architecture/</link>
       <pubDate>Wed, 18 Aug 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2021-08-18-ceph-architecture/</guid>
+      <guid>https://chhanz88.github.io/post/post/2021-08-18-ceph-architecture/</guid>
       <description>Ceph 란? Ceph는 오픈소스 소프트웨어(Software Defined Storage) 스토리지 플랫폼으로 단일 분산 컴퓨터 클러스터에 object 스토리지를 구현하고 object, block 및 file Level 의 스토리지 기능을 제공한다.
 또한 single point of failure 이 없는 완전히 분산된 운영을 주로 목표로 하며 엑사바이트 수준으로 scale-out이 가능하다.
 소프트웨어 정의 스토리지(Software Defined Storage)를 선택해야 하는 이유 소프트웨어 정의 스토리지의 주요 이점은 다음과 같다.
@@ -192,20 +192,20 @@ root@node1:~# kubectl get nodes -o wide NAME STATUS ROLES AGE VERSION INTERNAL-I
     
     <item>
       <title>[Linux] authselect 을 이용하여 faillock module 적용</title>
-      <link>https://chhanz88.github.io/post/2021-07-16-authselect-use-faillock/</link>
+      <link>https://chhanz88.github.io/post/post/2021-07-16-authselect-use-faillock/</link>
       <pubDate>Fri, 16 Jul 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2021-07-16-authselect-use-faillock/</guid>
+      <guid>https://chhanz88.github.io/post/post/2021-07-16-authselect-use-faillock/</guid>
       <description>RHEL v8 이후 변경점 RHEL v8 계열(CentOS/Oracle Linux/Rocky Linux) 부터는 이전과 같이 PAM 을 수정하여 설정하는 것을 권장하지 않습니다.
 [root@chhanz-c8-vm ~]# cat /etc/pam.d/system-auth ... # Generated by authselect on Fri Jul 16 13:13:24 2021 # Do not modify this file manually. &amp;lt;&amp;lt;&amp;lt; ... 추가로 RHEL v8 계열부터는 기존에 사용하던 보안 설정으로 많이 사용 되던 pam_tally2 module 이 deprecated 되었습니다. anthconfig 로 PAM 설정이 가능하였으나, RHEL v8 계열부터 authselect 을 사용하도록 변경 되었습니다.</description>
     </item>
     
     <item>
       <title>[Linux] du / ncdu 활용</title>
-      <link>https://chhanz88.github.io/post/2021-05-25-use-du/</link>
+      <link>https://chhanz88.github.io/post/post/2021-05-25-use-du/</link>
       <pubDate>Tue, 25 May 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2021-05-25-use-du/</guid>
+      <guid>https://chhanz88.github.io/post/post/2021-05-25-use-du/</guid>
       <description>du 현재 경로의 사용률을 확인 하는 명령입니다.
 [opc@instance-20201011-1438 TEST]$ tree . ├── big1 │ ├── 1g_bigfiles.img │ ├── 1g_bigfiles1.img │ └── 1g_bigfiles2.img ├── big2 │ └── 1g_bigfiles6.img ├── big3 ├── big4 ├── dummyfile1 ├── dummyfile10 ├── dummyfile2 ├── dummyfile3 ├── dummyfile4 ├── dummyfile5 ├── dummyfile6 ├── dummyfile7 ├── dummyfile8 └── dummyfile9 4 directories, 14 files 위와 같은 구조를 가지고 있는 경로에서 du 명령을 사용할 경우,
 [opc@instance-20201011-1438 TEST]$ du -h 3.0G .</description>
@@ -213,10 +213,10 @@ root@node1:~# kubectl get nodes -o wide NAME STATUS ROLES AGE VERSION INTERNAL-I
     
     <item>
       <title>[Linux] Yum Group 상세 활용</title>
-      <link>https://chhanz88.github.io/post/2021-05-25-yum-groupinstall/</link>
+      <link>https://chhanz88.github.io/post/post/2021-05-25-yum-groupinstall/</link>
       <pubDate>Tue, 25 May 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2021-05-25-yum-groupinstall/</guid>
+      <guid>https://chhanz88.github.io/post/post/2021-05-25-yum-groupinstall/</guid>
       <description>yum group 관련 명령어 Group Package 를 설치 할 때, 주로 이용하는 명령어 입니다.
 yum groupinstall , yum groupinfo , yum grouplist 등이 있습니다.
 기본 사용법 주로 사용 하는 명령어 몇가지에 대해 알아보자.
@@ -226,10 +226,10 @@ yum grouplist 해당 명령은 Group Package 목록 및 설치 가능, 설치됨
     
     <item>
       <title>[Linux] VDO(Virtual Data Optimizer) 활용</title>
-      <link>https://chhanz88.github.io/post/2021-03-31-vdo/</link>
+      <link>https://chhanz88.github.io/post/post/2021-03-31-vdo/</link>
       <pubDate>Wed, 31 Mar 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2021-03-31-vdo/</guid>
+      <guid>https://chhanz88.github.io/post/post/2021-03-31-vdo/</guid>
       <description>VDO 란? VDO(Virtual Data Optimizer)는 데이터의 중복제거, 압축 등의 기능을 사용해 스토리지의 공간 활용도를 높이는 기술입니다.
 VDO 활용 VDO 장단점  장점 : 중복 제거 및 압축 기능을 이용하여 스토리지 공간 활용도가 높아지며, 주로 VM 및 컨테이너 환경에서 높은 효율을 보인다고 합니다. 단점 : 일반적인 스토리지에 비해 성능 저하가 발생합니다. 참고 자료 : https://www.redhat.com/en/blog/look-vdo-new-linux-compression-layer  VDO 설치  설치 환경 : CentOS 8.1  아래 명령을 통해 설치를 진행합니다.
 [root@fastvm-centos-8-1-30 ~]# dnf install vdo kmod-kvdo .</description>
@@ -237,10 +237,10 @@ VDO 활용 VDO 장단점  장점 : 중복 제거 및 압축 기능을 이용하�
     
     <item>
       <title>[Ansible] Windows 10 WSL 을 이용하여 Ansible 를 써보자</title>
-      <link>https://chhanz88.github.io/post/2021-02-24-ansible-wsl/</link>
+      <link>https://chhanz88.github.io/post/post/2021-02-24-ansible-wsl/</link>
       <pubDate>Wed, 24 Feb 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2021-02-24-ansible-wsl/</guid>
+      <guid>https://chhanz88.github.io/post/post/2021-02-24-ansible-wsl/</guid>
       <description>[Ansible] Windows 10 WSL 을 이용하여 Ansible 를 써보자 MacOS 을 사용하거나 Linux laptop 을 사용하는 분들은 Ansible 을 사용하는 것에 있어 문제가 될 것이 없습니다.
 OS 내부에 brew 이나 apt , yum 같은 Package manager 가 있고 Command 를 이용 할 수 있기 때문이죠.
 그럼 Windows 는 사용이 불가능한 것인가?
@@ -250,64 +250,64 @@ Windows 에서는 Windows Subsystem for Linux (WSL) 을 이용하여 Command 환
     
     <item>
       <title>[ceph] ceph-ansible 을 이용하여 ceph 배포 (containerized deployment)</title>
-      <link>https://chhanz88.github.io/post/2021-02-23-ceph-ansible/</link>
+      <link>https://chhanz88.github.io/post/post/2021-02-23-ceph-ansible/</link>
       <pubDate>Tue, 23 Feb 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2021-02-23-ceph-ansible/</guid>
+      <guid>https://chhanz88.github.io/post/post/2021-02-23-ceph-ansible/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[OpenShift] Matchbox 를 이용하여 OpenShift 배포서버 구성</title>
-      <link>https://chhanz88.github.io/post/2021-01-26-matchbox/</link>
+      <link>https://chhanz88.github.io/post/post/2021-01-26-matchbox/</link>
       <pubDate>Tue, 26 Jan 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2021-01-26-matchbox/</guid>
+      <guid>https://chhanz88.github.io/post/post/2021-01-26-matchbox/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Ansible] USER/GROUP 생성 Playbook</title>
-      <link>https://chhanz88.github.io/post/2021-01-18-ansible-role-user-grp/</link>
+      <link>https://chhanz88.github.io/post/post/2021-01-18-ansible-role-user-grp/</link>
       <pubDate>Mon, 18 Jan 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2021-01-18-ansible-role-user-grp/</guid>
+      <guid>https://chhanz88.github.io/post/post/2021-01-18-ansible-role-user-grp/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Linux] `YumRepo Error: All mirror URLs are not using ftp, http[s] or file.`</title>
-      <link>https://chhanz88.github.io/post/2020-12-10-centos-6-yumrepo-error/</link>
+      <link>https://chhanz88.github.io/post/post/2020-12-10-centos-6-yumrepo-error/</link>
       <pubDate>Thu, 10 Dec 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-12-10-centos-6-yumrepo-error/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-12-10-centos-6-yumrepo-error/</guid>
       <description>해결 방법 (CentOS 6)</description>
     </item>
     
     <item>
       <title>[Linux] haproxy 를 이용한 RoundRobin 구성 (on CentOS7)</title>
-      <link>https://chhanz88.github.io/post/2020-11-30-configuration-haproxy-rr/</link>
+      <link>https://chhanz88.github.io/post/post/2020-11-30-configuration-haproxy-rr/</link>
       <pubDate>Mon, 30 Nov 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-11-30-configuration-haproxy-rr/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-11-30-configuration-haproxy-rr/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Linux] DHCP 서버 구성 (on CentOS7)</title>
-      <link>https://chhanz88.github.io/post/2020-11-17-configuration-dhcp/</link>
+      <link>https://chhanz88.github.io/post/post/2020-11-17-configuration-dhcp/</link>
       <pubDate>Tue, 17 Nov 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-11-17-configuration-dhcp/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-11-17-configuration-dhcp/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[DNS] CentOS 7 - DNS 설치 및 forwarders 구성</title>
-      <link>https://chhanz88.github.io/post/2020-11-06-configuration-dns/</link>
+      <link>https://chhanz88.github.io/post/post/2020-11-06-configuration-dns/</link>
       <pubDate>Fri, 06 Nov 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-11-06-configuration-dns/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-11-06-configuration-dns/</guid>
       <description>DNS 설치 (on CentOS 7) DNS 설치는 아래 커맨드를 통해 설치가 가능합니다.
 $ sudo yum -y install bind DNS 실행 아래 커맨드로 실행을 합니다.
 $ sudo systemctl enable --now named $ sudo systemctl status named ● named.service - Berkeley Internet Name Domain (DNS)  Loaded: loaded (/usr/lib/systemd/system/named.service; enabled; vendor preset: disabled)  Active: active (running) since Thu 2020-11-05 10:27:12 KST; 889ms ago  Process: 25609 ExecStart=/usr/sbin/named -u named -c ${NAMEDCONF} $OPTIONS (code=exited, status=0/SUCCESS)  Process: 25607 ExecStartPre=/bin/bash -c if [ !</description>
@@ -315,10 +315,10 @@ $ sudo systemctl enable --now named $ sudo systemctl status named ● named.serv
     
     <item>
       <title>[OpenShift] OpenShift 를 이용한 CI(Continuous Integration) 구성</title>
-      <link>https://chhanz88.github.io/post/2020-10-16-ocp4-ci/</link>
+      <link>https://chhanz88.github.io/post/post/2020-10-16-ocp4-ci/</link>
       <pubDate>Fri, 16 Oct 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-10-16-ocp4-ci/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-10-16-ocp4-ci/</guid>
       <description>[OpenShift] OpenShift 4.5 를 이용한 CI(Continuous Integration) 구성 이번 포스팅은 OpenShift 를 이용한 Continuous Integration(이하 CI)를 구성하도록 하겠습니다.
  사전 구성 : gogs  Continuous Integration 란? CI는 개발자를 위한 자동화 프로세스인 지속적인 통합(Continuous Integration)을 의미합니다.
 CI를 성공적으로 구현할 경우 애플리케이션에 대한 새로운 코드 변경 사항이 정기적으로 빌드 및 테스트되어 공유 리포지토리에 통합되므로 여러 명의 개발자가 동시에 애플리케이션 개발과 관련된 코드 작업을 할 경우 서로 충돌할 수 있는 문제를 해결할 수 있습니다.</description>
@@ -326,10 +326,10 @@ CI를 성공적으로 구현할 경우 애플리케이션에 대한 새로운 �
     
     <item>
       <title>[oVirt] Install oVirt 4.3 (Self Hosted Engine)</title>
-      <link>https://chhanz88.github.io/post/2020-10-06-ovirt-install-self-hosted-engine/</link>
+      <link>https://chhanz88.github.io/post/post/2020-10-06-ovirt-install-self-hosted-engine/</link>
       <pubDate>Tue, 06 Oct 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-10-06-ovirt-install-self-hosted-engine/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-10-06-ovirt-install-self-hosted-engine/</guid>
       <description>[oVirt] Install oVirt 4.3 (Self Hosted Engine)   oVirt Self Hosted engine 설치 가이드입니다.
 oVirt 4.3 기준으로 작성 되었습니다.
 작성일 : 2019-11
@@ -339,677 +339,677 @@ oVirt 4.3 기준으로 작성 되었습니다.
     
     <item>
       <title>[Kubernetes] Update App (Rolling Update / Rollback)</title>
-      <link>https://chhanz88.github.io/post/2020-09-28-update-app/</link>
+      <link>https://chhanz88.github.io/post/post/2020-09-28-update-app/</link>
       <pubDate>Mon, 28 Sep 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-09-28-update-app/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-09-28-update-app/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Kubernetes] Scale App (kubectl scale)</title>
-      <link>https://chhanz88.github.io/post/2020-09-27-scale-app/</link>
+      <link>https://chhanz88.github.io/post/post/2020-09-27-scale-app/</link>
       <pubDate>Sun, 27 Sep 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-09-27-scale-app/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-09-27-scale-app/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Kubernetes] Expose App (Service 생성)</title>
-      <link>https://chhanz88.github.io/post/2020-09-25-expose-app/</link>
+      <link>https://chhanz88.github.io/post/post/2020-09-25-expose-app/</link>
       <pubDate>Fri, 25 Sep 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-09-25-expose-app/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-09-25-expose-app/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Kubernetes] App 확인 (Pod 확인)</title>
-      <link>https://chhanz88.github.io/post/2020-09-24-check-the-app/</link>
+      <link>https://chhanz88.github.io/post/post/2020-09-24-check-the-app/</link>
       <pubDate>Thu, 24 Sep 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-09-24-check-the-app/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-09-24-check-the-app/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Kubernetes] Node 상태 확인</title>
-      <link>https://chhanz88.github.io/post/2020-09-24-check-the-node/</link>
+      <link>https://chhanz88.github.io/post/post/2020-09-24-check-the-node/</link>
       <pubDate>Thu, 24 Sep 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-09-24-check-the-node/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-09-24-check-the-node/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Kubernetes] Deployment 생성</title>
-      <link>https://chhanz88.github.io/post/2020-09-23-create-deployment/</link>
+      <link>https://chhanz88.github.io/post/post/2020-09-23-create-deployment/</link>
       <pubDate>Wed, 23 Sep 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-09-23-create-deployment/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-09-23-create-deployment/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Container] podman 을 이용한 container image build</title>
-      <link>https://chhanz88.github.io/post/2020-09-22-podman-build-flask-example-app/</link>
+      <link>https://chhanz88.github.io/post/post/2020-09-22-podman-build-flask-example-app/</link>
       <pubDate>Tue, 22 Sep 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-09-22-podman-build-flask-example-app/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-09-22-podman-build-flask-example-app/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Container] Container image build with buildah (podman builder)</title>
-      <link>https://chhanz88.github.io/post/2020-09-21-buildah/</link>
+      <link>https://chhanz88.github.io/post/post/2020-09-21-buildah/</link>
       <pubDate>Mon, 21 Sep 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-09-21-buildah/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-09-21-buildah/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Kubernetes] Ansible 으로 k3s 배포하기 (on VMware)</title>
-      <link>https://chhanz88.github.io/post/2020-09-05-fast-k3s-use-ansible/</link>
+      <link>https://chhanz88.github.io/post/post/2020-09-05-fast-k3s-use-ansible/</link>
       <pubDate>Sat, 05 Sep 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-09-05-fast-k3s-use-ansible/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-09-05-fast-k3s-use-ansible/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Linux] ReaR 를 이용하여 OS Backup 구성</title>
-      <link>https://chhanz88.github.io/post/2020-08-12-linux-backup-rear/</link>
+      <link>https://chhanz88.github.io/post/post/2020-08-12-linux-backup-rear/</link>
       <pubDate>Wed, 12 Aug 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-08-12-linux-backup-rear/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-08-12-linux-backup-rear/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Linux] How to reposync only latest package</title>
-      <link>https://chhanz88.github.io/post/2020-07-30-linux-reposync/</link>
+      <link>https://chhanz88.github.io/post/post/2020-07-30-linux-reposync/</link>
       <pubDate>Thu, 30 Jul 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-07-30-linux-reposync/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-07-30-linux-reposync/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Linux] CentOS6 OPENSSL 최신버전 설치</title>
-      <link>https://chhanz88.github.io/post/2020-07-21-centos6-install-latest-openssl/</link>
+      <link>https://chhanz88.github.io/post/post/2020-07-21-centos6-install-latest-openssl/</link>
       <pubDate>Tue, 21 Jul 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-07-21-centos6-install-latest-openssl/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-07-21-centos6-install-latest-openssl/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Python] Python 으로 간단히 웹서비스 구동</title>
-      <link>https://chhanz88.github.io/post/2020-07-05-python-simplehttpserver/</link>
+      <link>https://chhanz88.github.io/post/post/2020-07-05-python-simplehttpserver/</link>
       <pubDate>Sun, 05 Jul 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-07-05-python-simplehttpserver/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-07-05-python-simplehttpserver/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[OpenShift 4.4] CodeReady Workspaces 를 이용하여 통합 개발 환경(IDE) 구현</title>
-      <link>https://chhanz88.github.io/post/2020-07-01-ocp-codeready/</link>
+      <link>https://chhanz88.github.io/post/post/2020-07-01-ocp-codeready/</link>
       <pubDate>Wed, 01 Jul 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-07-01-ocp-codeready/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-07-01-ocp-codeready/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[OpenShift 4.4] Deploying Applications From Template</title>
-      <link>https://chhanz88.github.io/post/2020-06-24-ocp4-template/</link>
+      <link>https://chhanz88.github.io/post/post/2020-06-24-ocp4-template/</link>
       <pubDate>Wed, 24 Jun 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-06-24-ocp4-template/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-06-24-ocp4-template/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[OpenShift 4.4] Deploying Applications From Source</title>
-      <link>https://chhanz88.github.io/post/2020-06-22-ocp4-deploy-source/</link>
+      <link>https://chhanz88.github.io/post/post/2020-06-22-ocp4-deploy-source/</link>
       <pubDate>Mon, 22 Jun 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-06-22-ocp4-deploy-source/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-06-22-ocp4-deploy-source/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[OpenShift 4.4] Deploying Applications From Images</title>
-      <link>https://chhanz88.github.io/post/2020-06-18-ocp4-deploy-image/</link>
+      <link>https://chhanz88.github.io/post/post/2020-06-18-ocp4-deploy-image/</link>
       <pubDate>Thu, 18 Jun 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-06-18-ocp4-deploy-image/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-06-18-ocp4-deploy-image/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Container] Container &amp; Orchestration 교육 자료 </title>
-      <link>https://chhanz88.github.io/post/2020-05-21-container-hands-on/</link>
+      <link>https://chhanz88.github.io/post/post/2020-05-21-container-hands-on/</link>
       <pubDate>Thu, 21 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-05-21-container-hands-on/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-05-21-container-hands-on/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Ansible] Red Hat Ansible Tower Bundle 설치(v3.6.3)</title>
-      <link>https://chhanz88.github.io/post/2020-05-12-install-ansible-tower/</link>
+      <link>https://chhanz88.github.io/post/post/2020-05-12-install-ansible-tower/</link>
       <pubDate>Tue, 12 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-05-12-install-ansible-tower/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-05-12-install-ansible-tower/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Devops] Jenkins CI Pipeline 구성</title>
-      <link>https://chhanz88.github.io/post/2020-05-04-jenkins-ci/</link>
+      <link>https://chhanz88.github.io/post/post/2020-05-04-jenkins-ci/</link>
       <pubDate>Mon, 04 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-05-04-jenkins-ci/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-05-04-jenkins-ci/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Devops] Nexus Repository Manager 설치(use docker)</title>
-      <link>https://chhanz88.github.io/post/2020-04-17-install-nexus-ce/</link>
+      <link>https://chhanz88.github.io/post/post/2020-04-17-install-nexus-ce/</link>
       <pubDate>Fri, 17 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-04-17-install-nexus-ce/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-04-17-install-nexus-ce/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Devops] Jenkins 설치(RPM/WAR)</title>
-      <link>https://chhanz88.github.io/post/2020-04-16-install-jenkins/</link>
+      <link>https://chhanz88.github.io/post/post/2020-04-16-install-jenkins/</link>
       <pubDate>Thu, 16 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-04-16-install-jenkins/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-04-16-install-jenkins/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Tomcat] Tomcat War file 배포</title>
-      <link>https://chhanz88.github.io/post/2020-03-12-deploy-warfile/</link>
+      <link>https://chhanz88.github.io/post/post/2020-03-12-deploy-warfile/</link>
       <pubDate>Thu, 12 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-03-12-deploy-warfile/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-03-12-deploy-warfile/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Linux] .bash_history 로그에 timestamp 추가하기</title>
-      <link>https://chhanz88.github.io/post/2020-03-10-bash-history-timestamp/</link>
+      <link>https://chhanz88.github.io/post/post/2020-03-10-bash-history-timestamp/</link>
       <pubDate>Tue, 10 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-03-10-bash-history-timestamp/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-03-10-bash-history-timestamp/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Container] Podman 설치 및 사용법</title>
-      <link>https://chhanz88.github.io/post/2020-03-02-podman/</link>
+      <link>https://chhanz88.github.io/post/post/2020-03-02-podman/</link>
       <pubDate>Mon, 02 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-03-02-podman/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-03-02-podman/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Devops] Gitlab CE 설치</title>
-      <link>https://chhanz88.github.io/post/2020-02-16-install-gitlab/</link>
+      <link>https://chhanz88.github.io/post/post/2020-02-16-install-gitlab/</link>
       <pubDate>Sun, 16 Feb 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-02-16-install-gitlab/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-02-16-install-gitlab/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Kubernetes] IBM Cloud Kubernetes Service 를 Free Tier 로 사용해보자!</title>
-      <link>https://chhanz88.github.io/post/2020-01-27-create-cluster-ibm-kubernetes-service/</link>
+      <link>https://chhanz88.github.io/post/post/2020-01-27-create-cluster-ibm-kubernetes-service/</link>
       <pubDate>Mon, 27 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-01-27-create-cluster-ibm-kubernetes-service/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-01-27-create-cluster-ibm-kubernetes-service/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[RHV] Red Hat Virtualization Host 추가 및 VM 생성</title>
-      <link>https://chhanz88.github.io/post/2020-01-18-install-rhvm-admin/</link>
+      <link>https://chhanz88.github.io/post/post/2020-01-18-install-rhvm-admin/</link>
       <pubDate>Sat, 18 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-01-18-install-rhvm-admin/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-01-18-install-rhvm-admin/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[RHV] Red Hat Virtualization Standalone Manager 설치</title>
-      <link>https://chhanz88.github.io/post/2020-01-17-install-rhvm/</link>
+      <link>https://chhanz88.github.io/post/post/2020-01-17-install-rhvm/</link>
       <pubDate>Fri, 17 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-01-17-install-rhvm/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-01-17-install-rhvm/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[RHV] Red Hat Virtualization Host 설치</title>
-      <link>https://chhanz88.github.io/post/2020-01-03-install-rhvh/</link>
+      <link>https://chhanz88.github.io/post/post/2020-01-03-install-rhvh/</link>
       <pubDate>Fri, 03 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-01-03-install-rhvh/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-01-03-install-rhvh/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Linux] KVM nested virtualization</title>
-      <link>https://chhanz88.github.io/post/2019-12-30-enable-kvm-nested-virtualization/</link>
+      <link>https://chhanz88.github.io/post/post/2019-12-30-enable-kvm-nested-virtualization/</link>
       <pubDate>Mon, 30 Dec 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2019-12-30-enable-kvm-nested-virtualization/</guid>
+      <guid>https://chhanz88.github.io/post/post/2019-12-30-enable-kvm-nested-virtualization/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Linux] noVNC 구성</title>
-      <link>https://chhanz88.github.io/post/2019-12-13-linux-configure-novnc/</link>
+      <link>https://chhanz88.github.io/post/post/2019-12-13-linux-configure-novnc/</link>
       <pubDate>Fri, 13 Dec 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2019-12-13-linux-configure-novnc/</guid>
+      <guid>https://chhanz88.github.io/post/post/2019-12-13-linux-configure-novnc/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[OpenShift] KVM 환경에 OpenShift 4 구동해보자!</title>
-      <link>https://chhanz88.github.io/post/2019-11-29-openshift4-dev-env/</link>
+      <link>https://chhanz88.github.io/post/post/2019-11-29-openshift4-dev-env/</link>
       <pubDate>Fri, 29 Nov 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2019-11-29-openshift4-dev-env/</guid>
+      <guid>https://chhanz88.github.io/post/post/2019-11-29-openshift4-dev-env/</guid>
       <description>Install on Laptop: Red Hat CodeReady Containers</description>
     </item>
     
     <item>
       <title>[Linux] Squid 를 이용한 Proxy 서버 구성</title>
-      <link>https://chhanz88.github.io/post/2019-11-12-configuration-squid-proxy/</link>
+      <link>https://chhanz88.github.io/post/post/2019-11-12-configuration-squid-proxy/</link>
       <pubDate>Tue, 12 Nov 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2019-11-12-configuration-squid-proxy/</guid>
+      <guid>https://chhanz88.github.io/post/post/2019-11-12-configuration-squid-proxy/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Linux] Converting VMware ESXi Linux VM to KVM (virt-v2v)</title>
-      <link>https://chhanz88.github.io/post/2019-10-22-virt-v2v/</link>
+      <link>https://chhanz88.github.io/post/post/2019-10-22-virt-v2v/</link>
       <pubDate>Tue, 22 Oct 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2019-10-22-virt-v2v/</guid>
+      <guid>https://chhanz88.github.io/post/post/2019-10-22-virt-v2v/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Kubernetes] CKA(Certified Kubernetes Administrator) 시험 합격 후기</title>
-      <link>https://chhanz88.github.io/post/2019-09-30-cka-exam-review/</link>
+      <link>https://chhanz88.github.io/post/post/2019-09-30-cka-exam-review/</link>
       <pubDate>Mon, 30 Sep 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2019-09-30-cka-exam-review/</guid>
+      <guid>https://chhanz88.github.io/post/post/2019-09-30-cka-exam-review/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[fast-vm] CentOS 8 custom image 생성</title>
-      <link>https://chhanz88.github.io/post/2019-09-25-fastvm-public-image/</link>
+      <link>https://chhanz88.github.io/post/post/2019-09-25-fastvm-public-image/</link>
       <pubDate>Wed, 25 Sep 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2019-09-25-fastvm-public-image/</guid>
+      <guid>https://chhanz88.github.io/post/post/2019-09-25-fastvm-public-image/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Docker] nvidia container runtime 설정</title>
-      <link>https://chhanz88.github.io/post/2019-09-20-docker-configuration-nvidia-runtime/</link>
+      <link>https://chhanz88.github.io/post/post/2019-09-20-docker-configuration-nvidia-runtime/</link>
       <pubDate>Fri, 20 Sep 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2019-09-20-docker-configuration-nvidia-runtime/</guid>
+      <guid>https://chhanz88.github.io/post/post/2019-09-20-docker-configuration-nvidia-runtime/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Kubernetes] kubeadm 을 이용한 Kubernetes 설치</title>
-      <link>https://chhanz88.github.io/post/2019-09-04-kubernetes-install-1_15_3/</link>
+      <link>https://chhanz88.github.io/post/post/2019-09-04-kubernetes-install-1_15_3/</link>
       <pubDate>Wed, 04 Sep 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2019-09-04-kubernetes-install-1_15_3/</guid>
+      <guid>https://chhanz88.github.io/post/post/2019-09-04-kubernetes-install-1_15_3/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Linux] Fast-VM 설치 및 활용</title>
-      <link>https://chhanz88.github.io/post/2019-08-16-linux-fast-vm/</link>
+      <link>https://chhanz88.github.io/post/post/2019-08-16-linux-fast-vm/</link>
       <pubDate>Fri, 16 Aug 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2019-08-16-linux-fast-vm/</guid>
+      <guid>https://chhanz88.github.io/post/post/2019-08-16-linux-fast-vm/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Linux] sosreport 생성 경로 변경</title>
-      <link>https://chhanz88.github.io/post/2019-08-01-linux-sosreport/</link>
+      <link>https://chhanz88.github.io/post/post/2019-08-01-linux-sosreport/</link>
       <pubDate>Thu, 01 Aug 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2019-08-01-linux-sosreport/</guid>
+      <guid>https://chhanz88.github.io/post/post/2019-08-01-linux-sosreport/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Github] Jekyll을 이용하여 Github Page를 만들어보자!</title>
-      <link>https://chhanz88.github.io/post/2019-07-24-github-io/</link>
+      <link>https://chhanz88.github.io/post/post/2019-07-24-github-io/</link>
       <pubDate>Wed, 24 Jul 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2019-07-24-github-io/</guid>
+      <guid>https://chhanz88.github.io/post/post/2019-07-24-github-io/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Openshift] Openshift 의 HPA 를 이용한 Auto-Scaling 구현</title>
-      <link>https://chhanz88.github.io/post/2019-07-15-okd-hpa/</link>
+      <link>https://chhanz88.github.io/post/post/2019-07-15-okd-hpa/</link>
       <pubDate>Mon, 15 Jul 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2019-07-15-okd-hpa/</guid>
+      <guid>https://chhanz88.github.io/post/post/2019-07-15-okd-hpa/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Openshift] Openshift Web Console 을 이용한 배포</title>
-      <link>https://chhanz88.github.io/post/2019-06-24-overview-okd-gui/</link>
+      <link>https://chhanz88.github.io/post/post/2019-06-24-overview-okd-gui/</link>
       <pubDate>Mon, 24 Jun 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2019-06-24-overview-okd-gui/</guid>
+      <guid>https://chhanz88.github.io/post/post/2019-06-24-overview-okd-gui/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[VMware] Linux SCSI ID 확인 방법</title>
-      <link>https://chhanz88.github.io/post/2019-06-16-vmware-scsi-id-check/</link>
+      <link>https://chhanz88.github.io/post/post/2019-06-16-vmware-scsi-id-check/</link>
       <pubDate>Sun, 16 Jun 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2019-06-16-vmware-scsi-id-check/</guid>
+      <guid>https://chhanz88.github.io/post/post/2019-06-16-vmware-scsi-id-check/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Openshift] Openshift Origin v3.11 설치, App 배포</title>
-      <link>https://chhanz88.github.io/post/2019-06-07-install-okd-all-in-one/</link>
+      <link>https://chhanz88.github.io/post/post/2019-06-07-install-okd-all-in-one/</link>
       <pubDate>Fri, 07 Jun 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2019-06-07-install-okd-all-in-one/</guid>
+      <guid>https://chhanz88.github.io/post/post/2019-06-07-install-okd-all-in-one/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Linux] CentOS7 PPC 설치 on PowerVM</title>
-      <link>https://chhanz88.github.io/post/2019-05-10-install-centos7-ppc-on-vios/</link>
+      <link>https://chhanz88.github.io/post/post/2019-05-10-install-centos7-ppc-on-vios/</link>
       <pubDate>Fri, 10 May 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2019-05-10-install-centos7-ppc-on-vios/</guid>
+      <guid>https://chhanz88.github.io/post/post/2019-05-10-install-centos7-ppc-on-vios/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Linux] grubby 사용법</title>
-      <link>https://chhanz88.github.io/post/2019-04-17-grubby_and_proc_cmdline/</link>
+      <link>https://chhanz88.github.io/post/post/2019-04-17-grubby_and_proc_cmdline/</link>
       <pubDate>Wed, 17 Apr 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2019-04-17-grubby_and_proc_cmdline/</guid>
+      <guid>https://chhanz88.github.io/post/post/2019-04-17-grubby_and_proc_cmdline/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Kubernetes] Kubernetes Volume #2</title>
-      <link>https://chhanz88.github.io/post/2019-04-15-kubernetes-chapter-2-network-volume/</link>
+      <link>https://chhanz88.github.io/post/post/2019-04-15-kubernetes-chapter-2-network-volume/</link>
       <pubDate>Mon, 15 Apr 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2019-04-15-kubernetes-chapter-2-network-volume/</guid>
+      <guid>https://chhanz88.github.io/post/post/2019-04-15-kubernetes-chapter-2-network-volume/</guid>
       <description>Network Volume - nfs / cephfs / ceph rbd</description>
     </item>
     
     <item>
       <title>[Kubernetes] Kubernetes Volume #1</title>
-      <link>https://chhanz88.github.io/post/2019-04-12-kubernetes-chapter-1-volume/</link>
+      <link>https://chhanz88.github.io/post/post/2019-04-12-kubernetes-chapter-1-volume/</link>
       <pubDate>Fri, 12 Apr 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2019-04-12-kubernetes-chapter-1-volume/</guid>
+      <guid>https://chhanz88.github.io/post/post/2019-04-12-kubernetes-chapter-1-volume/</guid>
       <description>emptyDir / hostPath / gitRepo</description>
     </item>
     
     <item>
       <title>[Kubernetes] Kubernetes HPA 테스트</title>
-      <link>https://chhanz88.github.io/post/2019-04-09-kubernetes-hpa-example/</link>
+      <link>https://chhanz88.github.io/post/post/2019-04-09-kubernetes-hpa-example/</link>
       <pubDate>Tue, 09 Apr 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2019-04-09-kubernetes-hpa-example/</guid>
+      <guid>https://chhanz88.github.io/post/post/2019-04-09-kubernetes-hpa-example/</guid>
       <description>Auto-Scale 기능 테스트</description>
     </item>
     
     <item>
       <title>[GPFS] CentOS 7 - IBM GPFS Hands on Tranining</title>
-      <link>https://chhanz88.github.io/post/2019-04-05-linux-gpfs-hands-on-training/</link>
+      <link>https://chhanz88.github.io/post/post/2019-04-05-linux-gpfs-hands-on-training/</link>
       <pubDate>Fri, 05 Apr 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2019-04-05-linux-gpfs-hands-on-training/</guid>
+      <guid>https://chhanz88.github.io/post/post/2019-04-05-linux-gpfs-hands-on-training/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Linux] CentOS 7 HP SSACLI Command 사용법</title>
-      <link>https://chhanz88.github.io/post/2019-04-01-linux--use-ssacil/</link>
+      <link>https://chhanz88.github.io/post/post/2019-04-01-linux--use-ssacil/</link>
       <pubDate>Mon, 01 Apr 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2019-04-01-linux--use-ssacil/</guid>
+      <guid>https://chhanz88.github.io/post/post/2019-04-01-linux--use-ssacil/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Linux] CentOS 7 raw device 자동 생성 스크립트</title>
-      <link>https://chhanz88.github.io/post/2019-03-31-linux-raw-device-generator-script/</link>
+      <link>https://chhanz88.github.io/post/post/2019-03-31-linux-raw-device-generator-script/</link>
       <pubDate>Sun, 31 Mar 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2019-03-31-linux-raw-device-generator-script/</guid>
+      <guid>https://chhanz88.github.io/post/post/2019-03-31-linux-raw-device-generator-script/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>Docker Swarm 을 이용한 Container Orchestration 환경 만들기</title>
-      <link>https://chhanz88.github.io/post/2019-02-13-containerorchestration-docker-swarm/</link>
+      <link>https://chhanz88.github.io/post/post/2019-02-13-containerorchestration-docker-swarm/</link>
       <pubDate>Wed, 13 Feb 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2019-02-13-containerorchestration-docker-swarm/</guid>
+      <guid>https://chhanz88.github.io/post/post/2019-02-13-containerorchestration-docker-swarm/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[ansible] ansible-vault 를 이용하여 암호화 하기</title>
-      <link>https://chhanz88.github.io/post/2019-01-30-ansible-vault-create-groupvars/</link>
+      <link>https://chhanz88.github.io/post/post/2019-01-30-ansible-vault-create-groupvars/</link>
       <pubDate>Wed, 30 Jan 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2019-01-30-ansible-vault-create-groupvars/</guid>
+      <guid>https://chhanz88.github.io/post/post/2019-01-30-ansible-vault-create-groupvars/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Linux] logger 를 이용한 로그 관리</title>
-      <link>https://chhanz88.github.io/post/2019-01-19-linux-how-to-use-logger/</link>
+      <link>https://chhanz88.github.io/post/post/2019-01-19-linux-how-to-use-logger/</link>
       <pubDate>Sat, 19 Jan 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2019-01-19-linux-how-to-use-logger/</guid>
+      <guid>https://chhanz88.github.io/post/post/2019-01-19-linux-how-to-use-logger/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Linux] systemd 에 Service 등록</title>
-      <link>https://chhanz88.github.io/post/2019-01-18-linux-how-to-create-custom-systemd-service/</link>
+      <link>https://chhanz88.github.io/post/post/2019-01-18-linux-how-to-create-custom-systemd-service/</link>
       <pubDate>Fri, 18 Jan 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2019-01-18-linux-how-to-create-custom-systemd-service/</guid>
+      <guid>https://chhanz88.github.io/post/post/2019-01-18-linux-how-to-create-custom-systemd-service/</guid>
       <description>RHEL/CentOS</description>
     </item>
     
     <item>
       <title>[Linux] CentOS 6 Python 2.7 설치</title>
-      <link>https://chhanz88.github.io/post/2019-01-09-rhel6-python27/</link>
+      <link>https://chhanz88.github.io/post/post/2019-01-09-rhel6-python27/</link>
       <pubDate>Wed, 09 Jan 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2019-01-09-rhel6-python27/</guid>
+      <guid>https://chhanz88.github.io/post/post/2019-01-09-rhel6-python27/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Docker] Spacewalk latest Docker Image 제작기</title>
-      <link>https://chhanz88.github.io/post/2019-01-07-spacewalkdocker/</link>
+      <link>https://chhanz88.github.io/post/post/2019-01-07-spacewalkdocker/</link>
       <pubDate>Mon, 07 Jan 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2019-01-07-spacewalkdocker/</guid>
+      <guid>https://chhanz88.github.io/post/post/2019-01-07-spacewalkdocker/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Linux] Default boot kernel 변경 방법</title>
-      <link>https://chhanz88.github.io/post/2018-12-14-linux-change-default-boot-kernel/</link>
+      <link>https://chhanz88.github.io/post/post/2018-12-14-linux-change-default-boot-kernel/</link>
       <pubDate>Fri, 14 Dec 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2018-12-14-linux-change-default-boot-kernel/</guid>
+      <guid>https://chhanz88.github.io/post/post/2018-12-14-linux-change-default-boot-kernel/</guid>
       <description>RHEL/CentOS</description>
     </item>
     
     <item>
       <title>[Docker] Docker 기초 실습 교육자료</title>
-      <link>https://chhanz88.github.io/post/2018-11-13-docker-training/</link>
+      <link>https://chhanz88.github.io/post/post/2018-11-13-docker-training/</link>
       <pubDate>Tue, 13 Nov 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2018-11-13-docker-training/</guid>
+      <guid>https://chhanz88.github.io/post/post/2018-11-13-docker-training/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[AIX] System Information collection Script</title>
-      <link>https://chhanz88.github.io/post/2018-11-04-aix-system-info-script/</link>
+      <link>https://chhanz88.github.io/post/post/2018-11-04-aix-system-info-script/</link>
       <pubDate>Sun, 04 Nov 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2018-11-04-aix-system-info-script/</guid>
+      <guid>https://chhanz88.github.io/post/post/2018-11-04-aix-system-info-script/</guid>
       <description>[AIX] System Information collection Script  회사 U2C 솔루션 개발을 하는 중, AIX 에서 필수 시스템 정보를 수집하는 Script 가 필요로 해서 간단하게 제작한 Script 입니다.
 Script 내용  #! /bin/ksh # Make by. chhan  DATEC=$(date +%Y%m%d-%H%M) IdChk=`id | grep root | wc -l` OutFile=&amp;#34;`hostname`_&amp;#34;$DATEC&amp;#34;.txt&amp;#34;  #Checking ROOT  if [ $IdChk -eq 0 ]; then  echo  echo &amp;#34;You must login root... Try again...&amp;#34;  echo  exit  fi  echo &amp;#34; * * * * * Check AIX System Information * * * * * &amp;#34; echo &amp;#34; &amp;#34; echo &amp;#34; This Check Output File &amp;#34; echo &amp;#34; View .</description>
     </item>
     
     <item>
       <title>[VMware] ESXi VM Clone Script</title>
-      <link>https://chhanz88.github.io/post/2018-10-23-esxi-vmclone/</link>
+      <link>https://chhanz88.github.io/post/post/2018-10-23-esxi-vmclone/</link>
       <pubDate>Tue, 23 Oct 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2018-10-23-esxi-vmclone/</guid>
+      <guid>https://chhanz88.github.io/post/post/2018-10-23-esxi-vmclone/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Linux] CentOS 7 raw device 생성</title>
-      <link>https://chhanz88.github.io/post/2018-10-01-linux_rawdevice/</link>
+      <link>https://chhanz88.github.io/post/post/2018-10-01-linux_rawdevice/</link>
       <pubDate>Mon, 01 Oct 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2018-10-01-linux_rawdevice/</guid>
+      <guid>https://chhanz88.github.io/post/post/2018-10-01-linux_rawdevice/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Docker] Docker 이해하기</title>
-      <link>https://chhanz88.github.io/post/2018-09-10-45749387/</link>
+      <link>https://chhanz88.github.io/post/post/2018-09-10-45749387/</link>
       <pubDate>Mon, 10 Sep 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2018-09-10-45749387/</guid>
+      <guid>https://chhanz88.github.io/post/post/2018-09-10-45749387/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Linux] Bonding Network Currently Active Slave 변경</title>
-      <link>https://chhanz88.github.io/post/2018-08-16-linux-change-slave-bond-device/</link>
+      <link>https://chhanz88.github.io/post/post/2018-08-16-linux-change-slave-bond-device/</link>
       <pubDate>Thu, 16 Aug 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2018-08-16-linux-change-slave-bond-device/</guid>
+      <guid>https://chhanz88.github.io/post/post/2018-08-16-linux-change-slave-bond-device/</guid>
       <description>RHEL/CentOS</description>
     </item>
     
     <item>
       <title>[PowerKVM] PowerKVM Install Guide</title>
-      <link>https://chhanz88.github.io/post/2018-08-01-linux-powerkvm-install-guide/</link>
+      <link>https://chhanz88.github.io/post/post/2018-08-01-linux-powerkvm-install-guide/</link>
       <pubDate>Wed, 01 Aug 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2018-08-01-linux-powerkvm-install-guide/</guid>
+      <guid>https://chhanz88.github.io/post/post/2018-08-01-linux-powerkvm-install-guide/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Linux] CentOS 7 네트워크 Bonding 구성</title>
-      <link>https://chhanz88.github.io/post/2018-03-02-linux-create-bond-device/</link>
+      <link>https://chhanz88.github.io/post/post/2018-03-02-linux-create-bond-device/</link>
       <pubDate>Fri, 02 Mar 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2018-03-02-linux-create-bond-device/</guid>
+      <guid>https://chhanz88.github.io/post/post/2018-03-02-linux-create-bond-device/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[AIX] hdisk format - diag command</title>
-      <link>https://chhanz88.github.io/post/2018-02-21-aixuformat/</link>
+      <link>https://chhanz88.github.io/post/post/2018-02-21-aixuformat/</link>
       <pubDate>Wed, 21 Feb 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2018-02-21-aixuformat/</guid>
+      <guid>https://chhanz88.github.io/post/post/2018-02-21-aixuformat/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[RHEL] Local Yum Repository 만들기</title>
-      <link>https://chhanz88.github.io/post/2018-02-02-rhel-create-yum-repo/</link>
+      <link>https://chhanz88.github.io/post/post/2018-02-02-rhel-create-yum-repo/</link>
       <pubDate>Fri, 02 Feb 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2018-02-02-rhel-create-yum-repo/</guid>
+      <guid>https://chhanz88.github.io/post/post/2018-02-02-rhel-create-yum-repo/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[AIX] Create a raw Logical Volume for Oracle ASM On AIX</title>
-      <link>https://chhanz88.github.io/post/2017-05-25-aixasmraw/</link>
+      <link>https://chhanz88.github.io/post/post/2017-05-25-aixasmraw/</link>
       <pubDate>Thu, 25 May 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2017-05-25-aixasmraw/</guid>
+      <guid>https://chhanz88.github.io/post/post/2017-05-25-aixasmraw/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[AIX] Could not load program: Cannot run a 64-bit program until the 64-bit environment has been configured.</title>
-      <link>https://chhanz88.github.io/post/2017-01-16-aixerrorcfg64/</link>
+      <link>https://chhanz88.github.io/post/post/2017-01-16-aixerrorcfg64/</link>
       <pubDate>Mon, 16 Jan 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2017-01-16-aixerrorcfg64/</guid>
+      <guid>https://chhanz88.github.io/post/post/2017-01-16-aixerrorcfg64/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>SAN Switch - 운영 매뉴얼</title>
-      <link>https://chhanz88.github.io/post/2016-05-13-sanswitchops/</link>
+      <link>https://chhanz88.github.io/post/post/2016-05-13-sanswitchops/</link>
       <pubDate>Fri, 13 May 2016 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2016-05-13-sanswitchops/</guid>
+      <guid>https://chhanz88.github.io/post/post/2016-05-13-sanswitchops/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[AIX] RDX Device Backup Guide</title>
-      <link>https://chhanz88.github.io/post/2016-02-15-aix-rdx-drive-backup-mksysb/</link>
+      <link>https://chhanz88.github.io/post/post/2016-02-15-aix-rdx-drive-backup-mksysb/</link>
       <pubDate>Mon, 15 Feb 2016 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2016-02-15-aix-rdx-drive-backup-mksysb/</guid>
+      <guid>https://chhanz88.github.io/post/post/2016-02-15-aix-rdx-drive-backup-mksysb/</guid>
       <description>[AIX] RDX Device Backup Guide  AIX RDX Device Backup Guide 입니다.
 (RDX 를 이용한 백업 방법입니다.)
 2016년 프로젝트 참여하면서 작성한 가이드입니다.
@@ -1018,65 +1018,65 @@ Script 내용  #! /bin/ksh # Make by. chhan  DATEC=$(date +%Y%m%d-%H%M) IdChk=`i
     
     <item>
       <title>[HACMP71] Force remove cluster</title>
-      <link>https://chhanz88.github.io/post/2014-07-25-hacmpforceremove/</link>
+      <link>https://chhanz88.github.io/post/post/2014-07-25-hacmpforceremove/</link>
       <pubDate>Fri, 25 Jul 2014 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2014-07-25-hacmpforceremove/</guid>
+      <guid>https://chhanz88.github.io/post/post/2014-07-25-hacmpforceremove/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[AIX] LVM 이란?</title>
-      <link>https://chhanz88.github.io/post/2014-01-12-aix-lvm-informarion/</link>
+      <link>https://chhanz88.github.io/post/post/2014-01-12-aix-lvm-informarion/</link>
       <pubDate>Sun, 12 Jan 2014 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2014-01-12-aix-lvm-informarion/</guid>
+      <guid>https://chhanz88.github.io/post/post/2014-01-12-aix-lvm-informarion/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Windows] MSCS Cluster 구성 메뉴얼</title>
-      <link>https://chhanz88.github.io/post/2013-04-27-windows-mscs-cluster/</link>
+      <link>https://chhanz88.github.io/post/post/2013-04-27-windows-mscs-cluster/</link>
       <pubDate>Sat, 27 Apr 2013 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2013-04-27-windows-mscs-cluster/</guid>
+      <guid>https://chhanz88.github.io/post/post/2013-04-27-windows-mscs-cluster/</guid>
       <description>Windows 2003 / Windows 2008</description>
     </item>
     
     <item>
       <title>[AIX] JFS vs JFS2</title>
-      <link>https://chhanz88.github.io/post/2012-09-06-aixjfsvsjfs2/</link>
+      <link>https://chhanz88.github.io/post/post/2012-09-06-aixjfsvsjfs2/</link>
       <pubDate>Thu, 06 Sep 2012 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2012-09-06-aixjfsvsjfs2/</guid>
+      <guid>https://chhanz88.github.io/post/post/2012-09-06-aixjfsvsjfs2/</guid>
       <description>JFS 와 JFS2의 차이점</description>
     </item>
     
     <item>
       <title>[AIX] Mirror 상태인 VG, alt_disk_install 하는 법</title>
-      <link>https://chhanz88.github.io/post/2012-09-06-aixmirroraltdisk/</link>
+      <link>https://chhanz88.github.io/post/post/2012-09-06-aixmirroraltdisk/</link>
       <pubDate>Thu, 06 Sep 2012 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2012-09-06-aixmirroraltdisk/</guid>
+      <guid>https://chhanz88.github.io/post/post/2012-09-06-aixmirroraltdisk/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[AIX] Mirror Disk 교체</title>
-      <link>https://chhanz88.github.io/post/2012-08-26-aix-mirror-disk-change/</link>
+      <link>https://chhanz88.github.io/post/post/2012-08-26-aix-mirror-disk-change/</link>
       <pubDate>Sun, 26 Aug 2012 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2012-08-26-aix-mirror-disk-change/</guid>
+      <guid>https://chhanz88.github.io/post/post/2012-08-26-aix-mirror-disk-change/</guid>
       <description>Mirror Disk 교체  Mirroring 으로 구성된 rootvg 에서 장애난 DISK 교체 절차는 아래와 같습니다.
  장애 디스크 확인  # errpt 613E5F38 1212232603 P H LVDD I/O ERROR DETECTED BY LVM A668F553 1212092003 P H hdisk1 DISK OPERATION ERROR bootlist 확인  # bootlist -om normal bootlist 재설정  # unmirrorvg rootvg hdisk1 Unmirror VG 수행  # unmirrorvg rootvg hdisk1 각 DISK 의 LV 상태 확인  # lspv -l hdisk0 # lspv -l hdisk1 제거가 안되거나, Mirroring 이 아닌 LV 가 남아 있는 경우  # migratepv -l hd6 hdisk1 hdisk0 # lspv -l hdisk0 // 확인 # lspv -l hdisk1 // 확인 VG 에서 DISK 제거  # reducevg rootvg hdisk1 시스템에서 DISK 제거  rmdev -Rdl hdisk1 bosboot 수행  # bosboot -ad hdisk0 신규 디스크 추가(물리 DISK 교체 및 장착)  # diag 혹은 # cfgmgr -v VG 에 신규 DISK 추가  # extendvg rootvg hdisk1 Mirror VG 수행  # mirrorvg -S rootvg hdisk0 hdisk1 rootvg Mirror 확인  # lsvg -l rootvg bosboot 수행  # bosboot -ad hdisk0 bootlist 신규 등록  # bootlist -om normal hdisk0 hdisk1 bootlist 확인  # bootlist -om normal </description>
     </item>
     
     <item>
       <title>[AIX] Mount CD/DVD &amp; ISO Image</title>
-      <link>https://chhanz88.github.io/post/2012-08-24-aix-mount-cd-iso/</link>
+      <link>https://chhanz88.github.io/post/post/2012-08-24-aix-mount-cd-iso/</link>
       <pubDate>Fri, 24 Aug 2012 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2012-08-24-aix-mount-cd-iso/</guid>
+      <guid>https://chhanz88.github.io/post/post/2012-08-24-aix-mount-cd-iso/</guid>
       <description>[AIX] Mount CD/DVD &amp;amp; ISO Image  CD 혹은 DVD 를 CLI Command 로 Mount : # mount -V cdrfs -o ro /dev/cd0 /mnt ISO Image 를 CLI Command 로 Mount : # loopmount -i aix-6100-09-02-icd.iso -o &amp;#34;-V cdrfs -o ro&amp;#34; -m /mnt </description>
     </item>
     

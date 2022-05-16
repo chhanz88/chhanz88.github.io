@@ -3,45 +3,45 @@
   <channel>
     <title>devops on chhanz 기술 블로그
 </title>
-    <link>https://chhanz88.github.io/categories/devops/</link>
+    <link>https://chhanz88.github.io/post/categories/devops/</link>
     <description>Recent content in devops on chhanz 기술 블로그
 </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 04 May 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://chhanz88.github.io/categories/devops/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 04 May 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://chhanz88.github.io/post/categories/devops/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>[Devops] Jenkins CI Pipeline 구성</title>
-      <link>https://chhanz88.github.io/post/2020-05-04-jenkins-ci/</link>
+      <link>https://chhanz88.github.io/post/post/2020-05-04-jenkins-ci/</link>
       <pubDate>Mon, 04 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-05-04-jenkins-ci/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-05-04-jenkins-ci/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Devops] Nexus Repository Manager 설치(use docker)</title>
-      <link>https://chhanz88.github.io/post/2020-04-17-install-nexus-ce/</link>
+      <link>https://chhanz88.github.io/post/post/2020-04-17-install-nexus-ce/</link>
       <pubDate>Fri, 17 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-04-17-install-nexus-ce/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-04-17-install-nexus-ce/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Devops] Jenkins 설치(RPM/WAR)</title>
-      <link>https://chhanz88.github.io/post/2020-04-16-install-jenkins/</link>
+      <link>https://chhanz88.github.io/post/post/2020-04-16-install-jenkins/</link>
       <pubDate>Thu, 16 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-04-16-install-jenkins/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-04-16-install-jenkins/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Devops] Gitlab CE 설치</title>
-      <link>https://chhanz88.github.io/post/2020-02-16-install-gitlab/</link>
+      <link>https://chhanz88.github.io/post/post/2020-02-16-install-gitlab/</link>
       <pubDate>Sun, 16 Feb 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-02-16-install-gitlab/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-02-16-install-gitlab/</guid>
       <description> </description>
     </item>
     

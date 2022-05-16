@@ -3,27 +3,27 @@
   <channel>
     <title>fast-vm on chhanz 기술 블로그
 </title>
-    <link>https://chhanz88.github.io/tags/fast-vm/</link>
+    <link>https://chhanz88.github.io/post/tags/fast-vm/</link>
     <description>Recent content in fast-vm on chhanz 기술 블로그
 </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 25 Sep 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://chhanz88.github.io/tags/fast-vm/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 25 Sep 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://chhanz88.github.io/post/tags/fast-vm/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>[fast-vm] CentOS 8 custom image 생성</title>
-      <link>https://chhanz88.github.io/post/2019-09-25-fastvm-public-image/</link>
+      <link>https://chhanz88.github.io/post/post/2019-09-25-fastvm-public-image/</link>
       <pubDate>Wed, 25 Sep 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2019-09-25-fastvm-public-image/</guid>
+      <guid>https://chhanz88.github.io/post/post/2019-09-25-fastvm-public-image/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Linux] Fast-VM 설치 및 활용</title>
-      <link>https://chhanz88.github.io/post/2019-08-16-linux-fast-vm/</link>
+      <link>https://chhanz88.github.io/post/post/2019-08-16-linux-fast-vm/</link>
       <pubDate>Fri, 16 Aug 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2019-08-16-linux-fast-vm/</guid>
+      <guid>https://chhanz88.github.io/post/post/2019-08-16-linux-fast-vm/</guid>
       <description> </description>
     </item>
     

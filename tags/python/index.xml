@@ -3,27 +3,27 @@
   <channel>
     <title>python on chhanz 기술 블로그
 </title>
-    <link>https://chhanz88.github.io/tags/python/</link>
+    <link>https://chhanz88.github.io/post/tags/python/</link>
     <description>Recent content in python on chhanz 기술 블로그
 </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 05 Jul 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://chhanz88.github.io/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 05 Jul 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://chhanz88.github.io/post/tags/python/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>[Python] Python 으로 간단히 웹서비스 구동</title>
-      <link>https://chhanz88.github.io/post/2020-07-05-python-simplehttpserver/</link>
+      <link>https://chhanz88.github.io/post/post/2020-07-05-python-simplehttpserver/</link>
       <pubDate>Sun, 05 Jul 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-07-05-python-simplehttpserver/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-07-05-python-simplehttpserver/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Linux] CentOS 6 Python 2.7 설치</title>
-      <link>https://chhanz88.github.io/post/2019-01-09-rhel6-python27/</link>
+      <link>https://chhanz88.github.io/post/post/2019-01-09-rhel6-python27/</link>
       <pubDate>Wed, 09 Jan 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2019-01-09-rhel6-python27/</guid>
+      <guid>https://chhanz88.github.io/post/post/2019-01-09-rhel6-python27/</guid>
       <description> </description>
     </item>
     

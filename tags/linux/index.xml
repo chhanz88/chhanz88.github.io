@@ -3,72 +3,72 @@
   <channel>
     <title>linux on chhanz 기술 블로그
 </title>
-    <link>https://chhanz88.github.io/tags/linux/</link>
+    <link>https://chhanz88.github.io/post/tags/linux/</link>
     <description>Recent content in linux on chhanz 기술 블로그
 </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 11 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://chhanz88.github.io/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 11 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://chhanz88.github.io/post/tags/linux/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>[Ubuntu] unattended-upgrades 설정 (자동 업데이트)</title>
-      <link>https://chhanz88.github.io/post/2022-05-11-ubuntu-unattended-upgrades/</link>
+      <link>https://chhanz88.github.io/post/post/2022-05-11-ubuntu-unattended-upgrades/</link>
       <pubDate>Wed, 11 May 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2022-05-11-ubuntu-unattended-upgrades/</guid>
+      <guid>https://chhanz88.github.io/post/post/2022-05-11-ubuntu-unattended-upgrades/</guid>
       <description>Ubuntu 22.04</description>
     </item>
     
     <item>
       <title>[Ubuntu] APT Repository 사용법</title>
-      <link>https://chhanz88.github.io/post/2022-05-09-ubuntu-apt/</link>
+      <link>https://chhanz88.github.io/post/post/2022-05-09-ubuntu-apt/</link>
       <pubDate>Mon, 09 May 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2022-05-09-ubuntu-apt/</guid>
+      <guid>https://chhanz88.github.io/post/post/2022-05-09-ubuntu-apt/</guid>
       <description>Ubuntu 22.04</description>
     </item>
     
     <item>
       <title>[Ubuntu] apt-mirror 를 이용하여 sync 후, apt-get error 발생</title>
-      <link>https://chhanz88.github.io/post/2022-05-09-ubuntu-apt-mirror-issue/</link>
+      <link>https://chhanz88.github.io/post/post/2022-05-09-ubuntu-apt-mirror-issue/</link>
       <pubDate>Mon, 09 May 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2022-05-09-ubuntu-apt-mirror-issue/</guid>
+      <guid>https://chhanz88.github.io/post/post/2022-05-09-ubuntu-apt-mirror-issue/</guid>
       <description>Ubuntu 22.04</description>
     </item>
     
     <item>
       <title>[Ubuntu] Local mirror site 구성(DVD/Repository sync)</title>
-      <link>https://chhanz88.github.io/post/2022-05-09-ubuntu-config-apt-mirror-site/</link>
+      <link>https://chhanz88.github.io/post/post/2022-05-09-ubuntu-config-apt-mirror-site/</link>
       <pubDate>Mon, 09 May 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2022-05-09-ubuntu-config-apt-mirror-site/</guid>
+      <guid>https://chhanz88.github.io/post/post/2022-05-09-ubuntu-config-apt-mirror-site/</guid>
       <description>Ubuntu 22.04</description>
     </item>
     
     <item>
       <title>[Ubuntu] NTP Service</title>
-      <link>https://chhanz88.github.io/post/2022-05-02-ubuntu-ntp-chrony/</link>
+      <link>https://chhanz88.github.io/post/post/2022-05-02-ubuntu-ntp-chrony/</link>
       <pubDate>Mon, 02 May 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2022-05-02-ubuntu-ntp-chrony/</guid>
+      <guid>https://chhanz88.github.io/post/post/2022-05-02-ubuntu-ntp-chrony/</guid>
       <description>Ubuntu 20.04</description>
     </item>
     
     <item>
       <title>[Linux] VirtualBMC 를 이용한 IPMI node 생성</title>
-      <link>https://chhanz88.github.io/post/2022-04-14-vbmcd-ipminode/</link>
+      <link>https://chhanz88.github.io/post/post/2022-04-14-vbmcd-ipminode/</link>
       <pubDate>Thu, 14 Apr 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2022-04-14-vbmcd-ipminode/</guid>
+      <guid>https://chhanz88.github.io/post/post/2022-04-14-vbmcd-ipminode/</guid>
       <description>use kvm</description>
     </item>
     
     <item>
       <title>[Linux] ipmitool 사용법</title>
-      <link>https://chhanz88.github.io/post/2022-03-01-ipmitool/</link>
+      <link>https://chhanz88.github.io/post/post/2022-03-01-ipmitool/</link>
       <pubDate>Tue, 01 Mar 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2022-03-01-ipmitool/</guid>
+      <guid>https://chhanz88.github.io/post/post/2022-03-01-ipmitool/</guid>
       <description>매번 잊어버려서 따로 정리함.
  ipmitool 설치 아래 명령을 통해 ipmitool 명령을 설치 할 수 있다.
   RHEL/CentOS/Rocky 계열
@@ -79,47 +79,47 @@ $ ipmitool lan print [&amp;lt;channel num&amp;gt;] Set in Progress : Set Complet
     
     <item>
       <title>[Linux] njmon with Prometheus</title>
-      <link>https://chhanz88.github.io/post/2022-02-18-njmon-telegraf-grafana/</link>
+      <link>https://chhanz88.github.io/post/post/2022-02-18-njmon-telegraf-grafana/</link>
       <pubDate>Fri, 18 Feb 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2022-02-18-njmon-telegraf-grafana/</guid>
+      <guid>https://chhanz88.github.io/post/post/2022-02-18-njmon-telegraf-grafana/</guid>
       <description>njmon, telegraf, Prometheus, Grafana</description>
     </item>
     
     <item>
       <title>[Linux] CentOS 8: Failed to download metadata for repo &#39;appstream&#39;</title>
-      <link>https://chhanz88.github.io/post/2022-02-04-dnf-error-centos-8/</link>
+      <link>https://chhanz88.github.io/post/post/2022-02-04-dnf-error-centos-8/</link>
       <pubDate>Fri, 04 Feb 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2022-02-04-dnf-error-centos-8/</guid>
+      <guid>https://chhanz88.github.io/post/post/2022-02-04-dnf-error-centos-8/</guid>
       <description>EOS CentOS 8</description>
     </item>
     
     <item>
       <title>[Ventoy] ISO 를 바로 사용하는 OS Install Boot Device 생성</title>
-      <link>https://chhanz88.github.io/post/2022-02-03-ventoy/</link>
+      <link>https://chhanz88.github.io/post/post/2022-02-03-ventoy/</link>
       <pubDate>Thu, 03 Feb 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2022-02-03-ventoy/</guid>
+      <guid>https://chhanz88.github.io/post/post/2022-02-03-ventoy/</guid>
       <description>Alternative to the IODD</description>
     </item>
     
     <item>
       <title>[Linux] authselect 을 이용하여 faillock module 적용</title>
-      <link>https://chhanz88.github.io/post/2021-07-16-authselect-use-faillock/</link>
+      <link>https://chhanz88.github.io/post/post/2021-07-16-authselect-use-faillock/</link>
       <pubDate>Fri, 16 Jul 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2021-07-16-authselect-use-faillock/</guid>
+      <guid>https://chhanz88.github.io/post/post/2021-07-16-authselect-use-faillock/</guid>
       <description>RHEL v8 이후 변경점 RHEL v8 계열(CentOS/Oracle Linux/Rocky Linux) 부터는 이전과 같이 PAM 을 수정하여 설정하는 것을 권장하지 않습니다.
 [root@chhanz-c8-vm ~]# cat /etc/pam.d/system-auth ... # Generated by authselect on Fri Jul 16 13:13:24 2021 # Do not modify this file manually. &amp;lt;&amp;lt;&amp;lt; ... 추가로 RHEL v8 계열부터는 기존에 사용하던 보안 설정으로 많이 사용 되던 pam_tally2 module 이 deprecated 되었습니다. anthconfig 로 PAM 설정이 가능하였으나, RHEL v8 계열부터 authselect 을 사용하도록 변경 되었습니다.</description>
     </item>
     
     <item>
       <title>[Linux] du / ncdu 활용</title>
-      <link>https://chhanz88.github.io/post/2021-05-25-use-du/</link>
+      <link>https://chhanz88.github.io/post/post/2021-05-25-use-du/</link>
       <pubDate>Tue, 25 May 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2021-05-25-use-du/</guid>
+      <guid>https://chhanz88.github.io/post/post/2021-05-25-use-du/</guid>
       <description>du 현재 경로의 사용률을 확인 하는 명령입니다.
 [opc@instance-20201011-1438 TEST]$ tree . ├── big1 │ ├── 1g_bigfiles.img │ ├── 1g_bigfiles1.img │ └── 1g_bigfiles2.img ├── big2 │ └── 1g_bigfiles6.img ├── big3 ├── big4 ├── dummyfile1 ├── dummyfile10 ├── dummyfile2 ├── dummyfile3 ├── dummyfile4 ├── dummyfile5 ├── dummyfile6 ├── dummyfile7 ├── dummyfile8 └── dummyfile9 4 directories, 14 files 위와 같은 구조를 가지고 있는 경로에서 du 명령을 사용할 경우,
 [opc@instance-20201011-1438 TEST]$ du -h 3.0G .</description>
@@ -127,10 +127,10 @@ $ ipmitool lan print [&amp;lt;channel num&amp;gt;] Set in Progress : Set Complet
     
     <item>
       <title>[Linux] Yum Group 상세 활용</title>
-      <link>https://chhanz88.github.io/post/2021-05-25-yum-groupinstall/</link>
+      <link>https://chhanz88.github.io/post/post/2021-05-25-yum-groupinstall/</link>
       <pubDate>Tue, 25 May 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2021-05-25-yum-groupinstall/</guid>
+      <guid>https://chhanz88.github.io/post/post/2021-05-25-yum-groupinstall/</guid>
       <description>yum group 관련 명령어 Group Package 를 설치 할 때, 주로 이용하는 명령어 입니다.
 yum groupinstall , yum groupinfo , yum grouplist 등이 있습니다.
 기본 사용법 주로 사용 하는 명령어 몇가지에 대해 알아보자.
@@ -140,10 +140,10 @@ yum grouplist 해당 명령은 Group Package 목록 및 설치 가능, 설치됨
     
     <item>
       <title>[Linux] VDO(Virtual Data Optimizer) 활용</title>
-      <link>https://chhanz88.github.io/post/2021-03-31-vdo/</link>
+      <link>https://chhanz88.github.io/post/post/2021-03-31-vdo/</link>
       <pubDate>Wed, 31 Mar 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2021-03-31-vdo/</guid>
+      <guid>https://chhanz88.github.io/post/post/2021-03-31-vdo/</guid>
       <description>VDO 란? VDO(Virtual Data Optimizer)는 데이터의 중복제거, 압축 등의 기능을 사용해 스토리지의 공간 활용도를 높이는 기술입니다.
 VDO 활용 VDO 장단점  장점 : 중복 제거 및 압축 기능을 이용하여 스토리지 공간 활용도가 높아지며, 주로 VM 및 컨테이너 환경에서 높은 효율을 보인다고 합니다. 단점 : 일반적인 스토리지에 비해 성능 저하가 발생합니다. 참고 자료 : https://www.redhat.com/en/blog/look-vdo-new-linux-compression-layer  VDO 설치  설치 환경 : CentOS 8.1  아래 명령을 통해 설치를 진행합니다.
 [root@fastvm-centos-8-1-30 ~]# dnf install vdo kmod-kvdo .</description>
@@ -151,37 +151,37 @@ VDO 활용 VDO 장단점  장점 : 중복 제거 및 압축 기능을 이용하�
     
     <item>
       <title>[Linux] `YumRepo Error: All mirror URLs are not using ftp, http[s] or file.`</title>
-      <link>https://chhanz88.github.io/post/2020-12-10-centos-6-yumrepo-error/</link>
+      <link>https://chhanz88.github.io/post/post/2020-12-10-centos-6-yumrepo-error/</link>
       <pubDate>Thu, 10 Dec 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-12-10-centos-6-yumrepo-error/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-12-10-centos-6-yumrepo-error/</guid>
       <description>해결 방법 (CentOS 6)</description>
     </item>
     
     <item>
       <title>[Linux] haproxy 를 이용한 RoundRobin 구성 (on CentOS7)</title>
-      <link>https://chhanz88.github.io/post/2020-11-30-configuration-haproxy-rr/</link>
+      <link>https://chhanz88.github.io/post/post/2020-11-30-configuration-haproxy-rr/</link>
       <pubDate>Mon, 30 Nov 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-11-30-configuration-haproxy-rr/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-11-30-configuration-haproxy-rr/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Linux] DHCP 서버 구성 (on CentOS7)</title>
-      <link>https://chhanz88.github.io/post/2020-11-17-configuration-dhcp/</link>
+      <link>https://chhanz88.github.io/post/post/2020-11-17-configuration-dhcp/</link>
       <pubDate>Tue, 17 Nov 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-11-17-configuration-dhcp/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-11-17-configuration-dhcp/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[DNS] CentOS 7 - DNS 설치 및 forwarders 구성</title>
-      <link>https://chhanz88.github.io/post/2020-11-06-configuration-dns/</link>
+      <link>https://chhanz88.github.io/post/post/2020-11-06-configuration-dns/</link>
       <pubDate>Fri, 06 Nov 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-11-06-configuration-dns/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-11-06-configuration-dns/</guid>
       <description>DNS 설치 (on CentOS 7) DNS 설치는 아래 커맨드를 통해 설치가 가능합니다.
 $ sudo yum -y install bind DNS 실행 아래 커맨드로 실행을 합니다.
 $ sudo systemctl enable --now named $ sudo systemctl status named ● named.service - Berkeley Internet Name Domain (DNS)  Loaded: loaded (/usr/lib/systemd/system/named.service; enabled; vendor preset: disabled)  Active: active (running) since Thu 2020-11-05 10:27:12 KST; 889ms ago  Process: 25609 ExecStart=/usr/sbin/named -u named -c ${NAMEDCONF} $OPTIONS (code=exited, status=0/SUCCESS)  Process: 25607 ExecStartPre=/bin/bash -c if [ !</description>
@@ -189,271 +189,271 @@ $ sudo systemctl enable --now named $ sudo systemctl status named ● named.serv
     
     <item>
       <title>[Linux] ReaR 를 이용하여 OS Backup 구성</title>
-      <link>https://chhanz88.github.io/post/2020-08-12-linux-backup-rear/</link>
+      <link>https://chhanz88.github.io/post/post/2020-08-12-linux-backup-rear/</link>
       <pubDate>Wed, 12 Aug 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-08-12-linux-backup-rear/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-08-12-linux-backup-rear/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Linux] How to reposync only latest package</title>
-      <link>https://chhanz88.github.io/post/2020-07-30-linux-reposync/</link>
+      <link>https://chhanz88.github.io/post/post/2020-07-30-linux-reposync/</link>
       <pubDate>Thu, 30 Jul 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-07-30-linux-reposync/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-07-30-linux-reposync/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Linux] CentOS6 OPENSSL 최신버전 설치</title>
-      <link>https://chhanz88.github.io/post/2020-07-21-centos6-install-latest-openssl/</link>
+      <link>https://chhanz88.github.io/post/post/2020-07-21-centos6-install-latest-openssl/</link>
       <pubDate>Tue, 21 Jul 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-07-21-centos6-install-latest-openssl/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-07-21-centos6-install-latest-openssl/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Python] Python 으로 간단히 웹서비스 구동</title>
-      <link>https://chhanz88.github.io/post/2020-07-05-python-simplehttpserver/</link>
+      <link>https://chhanz88.github.io/post/post/2020-07-05-python-simplehttpserver/</link>
       <pubDate>Sun, 05 Jul 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-07-05-python-simplehttpserver/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-07-05-python-simplehttpserver/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Linux] .bash_history 로그에 timestamp 추가하기</title>
-      <link>https://chhanz88.github.io/post/2020-03-10-bash-history-timestamp/</link>
+      <link>https://chhanz88.github.io/post/post/2020-03-10-bash-history-timestamp/</link>
       <pubDate>Tue, 10 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-03-10-bash-history-timestamp/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-03-10-bash-history-timestamp/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[RHV] Red Hat Virtualization Host 추가 및 VM 생성</title>
-      <link>https://chhanz88.github.io/post/2020-01-18-install-rhvm-admin/</link>
+      <link>https://chhanz88.github.io/post/post/2020-01-18-install-rhvm-admin/</link>
       <pubDate>Sat, 18 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-01-18-install-rhvm-admin/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-01-18-install-rhvm-admin/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[RHV] Red Hat Virtualization Standalone Manager 설치</title>
-      <link>https://chhanz88.github.io/post/2020-01-17-install-rhvm/</link>
+      <link>https://chhanz88.github.io/post/post/2020-01-17-install-rhvm/</link>
       <pubDate>Fri, 17 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-01-17-install-rhvm/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-01-17-install-rhvm/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[RHV] Red Hat Virtualization Host 설치</title>
-      <link>https://chhanz88.github.io/post/2020-01-03-install-rhvh/</link>
+      <link>https://chhanz88.github.io/post/post/2020-01-03-install-rhvh/</link>
       <pubDate>Fri, 03 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2020-01-03-install-rhvh/</guid>
+      <guid>https://chhanz88.github.io/post/post/2020-01-03-install-rhvh/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Linux] KVM nested virtualization</title>
-      <link>https://chhanz88.github.io/post/2019-12-30-enable-kvm-nested-virtualization/</link>
+      <link>https://chhanz88.github.io/post/post/2019-12-30-enable-kvm-nested-virtualization/</link>
       <pubDate>Mon, 30 Dec 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2019-12-30-enable-kvm-nested-virtualization/</guid>
+      <guid>https://chhanz88.github.io/post/post/2019-12-30-enable-kvm-nested-virtualization/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Linux] noVNC 구성</title>
-      <link>https://chhanz88.github.io/post/2019-12-13-linux-configure-novnc/</link>
+      <link>https://chhanz88.github.io/post/post/2019-12-13-linux-configure-novnc/</link>
       <pubDate>Fri, 13 Dec 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2019-12-13-linux-configure-novnc/</guid>
+      <guid>https://chhanz88.github.io/post/post/2019-12-13-linux-configure-novnc/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Linux] Squid 를 이용한 Proxy 서버 구성</title>
-      <link>https://chhanz88.github.io/post/2019-11-12-configuration-squid-proxy/</link>
+      <link>https://chhanz88.github.io/post/post/2019-11-12-configuration-squid-proxy/</link>
       <pubDate>Tue, 12 Nov 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2019-11-12-configuration-squid-proxy/</guid>
+      <guid>https://chhanz88.github.io/post/post/2019-11-12-configuration-squid-proxy/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Linux] Converting VMware ESXi Linux VM to KVM (virt-v2v)</title>
-      <link>https://chhanz88.github.io/post/2019-10-22-virt-v2v/</link>
+      <link>https://chhanz88.github.io/post/post/2019-10-22-virt-v2v/</link>
       <pubDate>Tue, 22 Oct 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2019-10-22-virt-v2v/</guid>
+      <guid>https://chhanz88.github.io/post/post/2019-10-22-virt-v2v/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[fast-vm] CentOS 8 custom image 생성</title>
-      <link>https://chhanz88.github.io/post/2019-09-25-fastvm-public-image/</link>
+      <link>https://chhanz88.github.io/post/post/2019-09-25-fastvm-public-image/</link>
       <pubDate>Wed, 25 Sep 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2019-09-25-fastvm-public-image/</guid>
+      <guid>https://chhanz88.github.io/post/post/2019-09-25-fastvm-public-image/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Linux] Fast-VM 설치 및 활용</title>
-      <link>https://chhanz88.github.io/post/2019-08-16-linux-fast-vm/</link>
+      <link>https://chhanz88.github.io/post/post/2019-08-16-linux-fast-vm/</link>
       <pubDate>Fri, 16 Aug 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2019-08-16-linux-fast-vm/</guid>
+      <guid>https://chhanz88.github.io/post/post/2019-08-16-linux-fast-vm/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Linux] sosreport 생성 경로 변경</title>
-      <link>https://chhanz88.github.io/post/2019-08-01-linux-sosreport/</link>
+      <link>https://chhanz88.github.io/post/post/2019-08-01-linux-sosreport/</link>
       <pubDate>Thu, 01 Aug 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2019-08-01-linux-sosreport/</guid>
+      <guid>https://chhanz88.github.io/post/post/2019-08-01-linux-sosreport/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[VMware] Linux SCSI ID 확인 방법</title>
-      <link>https://chhanz88.github.io/post/2019-06-16-vmware-scsi-id-check/</link>
+      <link>https://chhanz88.github.io/post/post/2019-06-16-vmware-scsi-id-check/</link>
       <pubDate>Sun, 16 Jun 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2019-06-16-vmware-scsi-id-check/</guid>
+      <guid>https://chhanz88.github.io/post/post/2019-06-16-vmware-scsi-id-check/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Linux] CentOS7 PPC 설치 on PowerVM</title>
-      <link>https://chhanz88.github.io/post/2019-05-10-install-centos7-ppc-on-vios/</link>
+      <link>https://chhanz88.github.io/post/post/2019-05-10-install-centos7-ppc-on-vios/</link>
       <pubDate>Fri, 10 May 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2019-05-10-install-centos7-ppc-on-vios/</guid>
+      <guid>https://chhanz88.github.io/post/post/2019-05-10-install-centos7-ppc-on-vios/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Linux] grubby 사용법</title>
-      <link>https://chhanz88.github.io/post/2019-04-17-grubby_and_proc_cmdline/</link>
+      <link>https://chhanz88.github.io/post/post/2019-04-17-grubby_and_proc_cmdline/</link>
       <pubDate>Wed, 17 Apr 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2019-04-17-grubby_and_proc_cmdline/</guid>
+      <guid>https://chhanz88.github.io/post/post/2019-04-17-grubby_and_proc_cmdline/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[GPFS] CentOS 7 - IBM GPFS Hands on Tranining</title>
-      <link>https://chhanz88.github.io/post/2019-04-05-linux-gpfs-hands-on-training/</link>
+      <link>https://chhanz88.github.io/post/post/2019-04-05-linux-gpfs-hands-on-training/</link>
       <pubDate>Fri, 05 Apr 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2019-04-05-linux-gpfs-hands-on-training/</guid>
+      <guid>https://chhanz88.github.io/post/post/2019-04-05-linux-gpfs-hands-on-training/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Linux] CentOS 7 HP SSACLI Command 사용법</title>
-      <link>https://chhanz88.github.io/post/2019-04-01-linux--use-ssacil/</link>
+      <link>https://chhanz88.github.io/post/post/2019-04-01-linux--use-ssacil/</link>
       <pubDate>Mon, 01 Apr 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2019-04-01-linux--use-ssacil/</guid>
+      <guid>https://chhanz88.github.io/post/post/2019-04-01-linux--use-ssacil/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Linux] CentOS 7 raw device 자동 생성 스크립트</title>
-      <link>https://chhanz88.github.io/post/2019-03-31-linux-raw-device-generator-script/</link>
+      <link>https://chhanz88.github.io/post/post/2019-03-31-linux-raw-device-generator-script/</link>
       <pubDate>Sun, 31 Mar 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2019-03-31-linux-raw-device-generator-script/</guid>
+      <guid>https://chhanz88.github.io/post/post/2019-03-31-linux-raw-device-generator-script/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Linux] logger 를 이용한 로그 관리</title>
-      <link>https://chhanz88.github.io/post/2019-01-19-linux-how-to-use-logger/</link>
+      <link>https://chhanz88.github.io/post/post/2019-01-19-linux-how-to-use-logger/</link>
       <pubDate>Sat, 19 Jan 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2019-01-19-linux-how-to-use-logger/</guid>
+      <guid>https://chhanz88.github.io/post/post/2019-01-19-linux-how-to-use-logger/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Linux] systemd 에 Service 등록</title>
-      <link>https://chhanz88.github.io/post/2019-01-18-linux-how-to-create-custom-systemd-service/</link>
+      <link>https://chhanz88.github.io/post/post/2019-01-18-linux-how-to-create-custom-systemd-service/</link>
       <pubDate>Fri, 18 Jan 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2019-01-18-linux-how-to-create-custom-systemd-service/</guid>
+      <guid>https://chhanz88.github.io/post/post/2019-01-18-linux-how-to-create-custom-systemd-service/</guid>
       <description>RHEL/CentOS</description>
     </item>
     
     <item>
       <title>[Linux] CentOS 6 Python 2.7 설치</title>
-      <link>https://chhanz88.github.io/post/2019-01-09-rhel6-python27/</link>
+      <link>https://chhanz88.github.io/post/post/2019-01-09-rhel6-python27/</link>
       <pubDate>Wed, 09 Jan 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2019-01-09-rhel6-python27/</guid>
+      <guid>https://chhanz88.github.io/post/post/2019-01-09-rhel6-python27/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Linux] Default boot kernel 변경 방법</title>
-      <link>https://chhanz88.github.io/post/2018-12-14-linux-change-default-boot-kernel/</link>
+      <link>https://chhanz88.github.io/post/post/2018-12-14-linux-change-default-boot-kernel/</link>
       <pubDate>Fri, 14 Dec 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2018-12-14-linux-change-default-boot-kernel/</guid>
+      <guid>https://chhanz88.github.io/post/post/2018-12-14-linux-change-default-boot-kernel/</guid>
       <description>RHEL/CentOS</description>
     </item>
     
     <item>
       <title>[Linux] CentOS 7 raw device 생성</title>
-      <link>https://chhanz88.github.io/post/2018-10-01-linux_rawdevice/</link>
+      <link>https://chhanz88.github.io/post/post/2018-10-01-linux_rawdevice/</link>
       <pubDate>Mon, 01 Oct 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2018-10-01-linux_rawdevice/</guid>
+      <guid>https://chhanz88.github.io/post/post/2018-10-01-linux_rawdevice/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Linux] Bonding Network Currently Active Slave 변경</title>
-      <link>https://chhanz88.github.io/post/2018-08-16-linux-change-slave-bond-device/</link>
+      <link>https://chhanz88.github.io/post/post/2018-08-16-linux-change-slave-bond-device/</link>
       <pubDate>Thu, 16 Aug 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2018-08-16-linux-change-slave-bond-device/</guid>
+      <guid>https://chhanz88.github.io/post/post/2018-08-16-linux-change-slave-bond-device/</guid>
       <description>RHEL/CentOS</description>
     </item>
     
     <item>
       <title>[PowerKVM] PowerKVM Install Guide</title>
-      <link>https://chhanz88.github.io/post/2018-08-01-linux-powerkvm-install-guide/</link>
+      <link>https://chhanz88.github.io/post/post/2018-08-01-linux-powerkvm-install-guide/</link>
       <pubDate>Wed, 01 Aug 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2018-08-01-linux-powerkvm-install-guide/</guid>
+      <guid>https://chhanz88.github.io/post/post/2018-08-01-linux-powerkvm-install-guide/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[Linux] CentOS 7 네트워크 Bonding 구성</title>
-      <link>https://chhanz88.github.io/post/2018-03-02-linux-create-bond-device/</link>
+      <link>https://chhanz88.github.io/post/post/2018-03-02-linux-create-bond-device/</link>
       <pubDate>Fri, 02 Mar 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2018-03-02-linux-create-bond-device/</guid>
+      <guid>https://chhanz88.github.io/post/post/2018-03-02-linux-create-bond-device/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[RHEL] Local Yum Repository 만들기</title>
-      <link>https://chhanz88.github.io/post/2018-02-02-rhel-create-yum-repo/</link>
+      <link>https://chhanz88.github.io/post/post/2018-02-02-rhel-create-yum-repo/</link>
       <pubDate>Fri, 02 Feb 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/2018-02-02-rhel-create-yum-repo/</guid>
+      <guid>https://chhanz88.github.io/post/post/2018-02-02-rhel-create-yum-repo/</guid>
       <description> </description>
     </item>
     

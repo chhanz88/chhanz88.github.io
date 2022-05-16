@@ -11,12 +11,12 @@
 <meta name="description" content="Posts - chhanz 기술 블로그
 ">
 <meta name="author" content="">
-<link rel="canonical" href="https://chhanz88.github.io/post/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.min.ec8da366ca2fb647537ccb7a8f6fa5b4e9cd3c7a0d3171dd2d3baad1e49c8bfc.css" integrity="sha256-7I2jZsovtkdTfMt6j2&#43;ltOnNPHoNMXHdLTuq0eSci/w=" rel="preload stylesheet" as="style">
-<link rel="icon" type="image/png" href="https://chhanz88.github.io/favicon.ico">
+<link rel="canonical" href="https://chhanz88.github.io/post/post/">
+<link crossorigin="anonymous" href="/post/assets/css/stylesheet.min.ec8da366ca2fb647537ccb7a8f6fa5b4e9cd3c7a0d3171dd2d3baad1e49c8bfc.css" integrity="sha256-7I2jZsovtkdTfMt6j2&#43;ltOnNPHoNMXHdLTuq0eSci/w=" rel="preload stylesheet" as="style">
+<link rel="icon" type="image/png" href="https://chhanz88.github.io/post/favicon.ico">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" type="application/rss+xml" href="https://chhanz88.github.io/post/index.xml">
+<link rel="alternate" type="application/rss+xml" href="https://chhanz88.github.io/post/post/index.xml">
 <noscript>
     <style>
         #theme-toggle,
@@ -56,7 +56,7 @@
 </noscript><meta property="og:title" content="Posts" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://chhanz88.github.io/post/" />
+<meta property="og:url" content="https://chhanz88.github.io/post/post/" />
 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Posts"/>
@@ -67,12 +67,12 @@
 {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
-  "itemListElement": [, 
+  "itemListElement": [
     {
       "@type": "ListItem",
-      "position":  2 ,
+      "position":  1 ,
       "name": "Posts",
-      "item": "https://chhanz88.github.io/post/"
+      "item": "https://chhanz88.github.io/post/post/"
     }
   ]
 }
@@ -94,7 +94,7 @@
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://chhanz88.github.io" accesskey="h" title="chhanz 기술 블로그
+            <a href="https://chhanz88.github.io/post/" accesskey="h" title="chhanz 기술 블로그
  (Alt + H)">chhanz 기술 블로그
 </a>
             <span class="logo-switches">
@@ -122,22 +122,22 @@
         </div>
         <ul id="menu">
             <li>
-                <a href="https://chhanz88.github.io/categories/" title="categories">
-                    <span>categories</span>
-                </a>
-            </li>
-            <li>
-                <a href="https://chhanz88.github.io/archives" title="Archives">
+                <a href="https://chhanz88.github.io/post/archives" title="Archives">
                     <span>Archives</span>
                 </a>
             </li>
             <li>
-                <a href="https://chhanz88.github.io/search/" title="Search (Alt &#43; /)" accesskey=/>
+                <a href="https://chhanz88.github.io/post/links/" title="Links">
+                    <span>Links</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://chhanz88.github.io/post/search/" title="Search (Alt &#43; /)" accesskey=/>
                     <span>Search</span>
                 </a>
             </li>
             <li>
-                <a href="https://chhanz88.github.io/about/" title="About">
+                <a href="https://chhanz88.github.io/post/about/" title="About">
                     <span>About</span>
                 </a>
             </li>
@@ -160,10 +160,10 @@
     <p>Mirror VG, 한개의 PV 로 alt_disk_install 하는 방법  Mirror 된 VG 를 alt_disk_install 을 진행하면 target PV 는 2EA 가 필요합니다.
 따라서 Mirror 된 VG 는 한개의 target PV 에 하기 위해서는 -i 옵션을 사용합니다.
 image.data 수정  -i 옵션에 사용될 image.data 를 수정합니다.
-# lspv hdisk0 000aaaa120011111 rootvg active hdisk1 000aaaa120222222 rootvg active hdisk2 none None # vi /image.data ## lv_data의 항목중 * LV_SOURCE_DISK_LIST= hdisk0 hdisk1 -&gt; hdisk0로 변경 * COPIES= 2 -&gt; 1로 변경 * PP= 2 -&gt; 1로 변경 위와 같이 Source PV 하나를 제거하고, LV의 COPY 수량, LV 용량을 수정합니다....</p>
+# lspv hdisk0 000aaaa120011111 rootvg active hdisk1 000aaaa120222222 rootvg active hdisk2 none None  # vi /image.data  ## lv_data의 항목중 * LV_SOURCE_DISK_LIST= hdisk0 hdisk1 -&gt; hdisk0로 변경 * COPIES= 2 -&gt; 1로 변경 * PP= 2 -&gt; 1로 변경 위와 같이 Source PV 하나를 제거하고, LV의 COPY 수량, LV 용량을 수정합니다....</p>
   </div>
   <footer class="entry-footer"><span title='2012-09-06 00:00:00 +0000 UTC'>September 6, 2012</span>&nbsp;·&nbsp;chhanz</footer>
-  <a class="entry-link" aria-label="post link to [AIX] Mirror 상태인 VG, alt_disk_install 하는 법" href="https://chhanz88.github.io/post/2012-09-06-aixmirroraltdisk/"></a>
+  <a class="entry-link" aria-label="post link to [AIX] Mirror 상태인 VG, alt_disk_install 하는 법" href="https://chhanz88.github.io/post/post/2012-09-06-aixmirroraltdisk/"></a>
 </article>
 
 <article class="post-entry"> 
@@ -176,7 +176,7 @@ image.data 수정  -i 옵션에 사용될 image.data 를 수정합니다.
  장애 디스크 확인  # errpt 613E5F38 1212232603 P H LVDD I/O ERROR DETECTED BY LVM A668F553 1212092003 P H hdisk1 DISK OPERATION ERROR bootlist 확인  # bootlist -om normal bootlist 재설정  # unmirrorvg rootvg hdisk1 Unmirror VG 수행  # unmirrorvg rootvg hdisk1 각 DISK 의 LV 상태 확인  # lspv -l hdisk0 # lspv -l hdisk1 제거가 안되거나, Mirroring 이 아닌 LV 가 남아 있는 경우  # migratepv -l hd6 hdisk1 hdisk0 # lspv -l hdisk0 // 확인 # lspv -l hdisk1 // 확인 VG 에서 DISK 제거  # reducevg rootvg hdisk1 시스템에서 DISK 제거  rmdev -Rdl hdisk1 bosboot 수행  # bosboot -ad hdisk0 신규 디스크 추가(물리 DISK 교체 및 장착)  # diag 혹은 # cfgmgr -v VG 에 신규 DISK 추가  # extendvg rootvg hdisk1 Mirror VG 수행  # mirrorvg -S rootvg hdisk0 hdisk1 rootvg Mirror 확인  # lsvg -l rootvg bosboot 수행  # bosboot -ad hdisk0 bootlist 신규 등록  # bootlist -om normal hdisk0 hdisk1 bootlist 확인  # bootlist -om normal </p>
   </div>
   <footer class="entry-footer"><span title='2012-08-26 00:00:00 +0000 UTC'>August 26, 2012</span>&nbsp;·&nbsp;chhanz</footer>
-  <a class="entry-link" aria-label="post link to [AIX] Mirror Disk 교체" href="https://chhanz88.github.io/post/2012-08-26-aix-mirror-disk-change/"></a>
+  <a class="entry-link" aria-label="post link to [AIX] Mirror Disk 교체" href="https://chhanz88.github.io/post/post/2012-08-26-aix-mirror-disk-change/"></a>
 </article>
 
 <article class="post-entry"> 
@@ -188,17 +188,17 @@ image.data 수정  -i 옵션에 사용될 image.data 를 수정합니다.
     <p>[AIX] Mount CD/DVD &amp; ISO Image  CD 혹은 DVD 를 CLI Command 로 Mount : # mount -V cdrfs -o ro /dev/cd0 /mnt ISO Image 를 CLI Command 로 Mount : # loopmount -i aix-6100-09-02-icd.iso -o &#34;-V cdrfs -o ro&#34; -m /mnt </p>
   </div>
   <footer class="entry-footer"><span title='2012-08-24 00:00:00 +0000 UTC'>August 24, 2012</span>&nbsp;·&nbsp;chhanz</footer>
-  <a class="entry-link" aria-label="post link to [AIX] Mount CD/DVD &amp; ISO Image" href="https://chhanz88.github.io/post/2012-08-24-aix-mount-cd-iso/"></a>
+  <a class="entry-link" aria-label="post link to [AIX] Mount CD/DVD &amp; ISO Image" href="https://chhanz88.github.io/post/post/2012-08-24-aix-mount-cd-iso/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">
-    <a class="prev" href="https://chhanz88.github.io/post/page/11/">« Prev Page</a>
+    <a class="prev" href="https://chhanz88.github.io/post/post/page/11/">« Prev Page</a>
   </nav>
 </footer>
     </main>
     
 <footer class="footer">
-    <span>&copy; 2022 <a href="https://chhanz88.github.io">chhanz 기술 블로그
+    <span>&copy; 2022 <a href="https://chhanz88.github.io/post/">chhanz 기술 블로그
 </a></span>
     <span>
         Powered by
