@@ -2,507 +2,507 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://chhanz88.github.io/post/post/2022-05-11-ubuntu-unattended-upgrades/</loc>
+    <loc>https://chhanz88.github.io/post/2022-05-11-ubuntu-unattended-upgrades/</loc>
     <lastmod>2022-05-11T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/categories/</loc>
+    <loc>https://chhanz88.github.io/categories/</loc>
+    <lastmod>2022-05-11T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://chhanz88.github.io/</loc>
+    <lastmod>2022-05-11T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://chhanz88.github.io/tags/linux/</loc>
+    <lastmod>2022-05-11T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://chhanz88.github.io/categories/linux/</loc>
     <lastmod>2022-05-11T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://chhanz88.github.io/post/</loc>
     <lastmod>2022-05-11T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/tags/linux/</loc>
+    <loc>https://chhanz88.github.io/tags/</loc>
     <lastmod>2022-05-11T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/categories/linux/</loc>
-    <lastmod>2022-05-11T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://chhanz88.github.io/post/post/</loc>
-    <lastmod>2022-05-11T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://chhanz88.github.io/post/tags/</loc>
-    <lastmod>2022-05-11T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://chhanz88.github.io/post/post/2022-05-09-ubuntu-apt/</loc>
+    <loc>https://chhanz88.github.io/post/2022-05-09-ubuntu-apt/</loc>
     <lastmod>2022-05-09T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2022-05-09-ubuntu-apt-mirror-issue/</loc>
+    <loc>https://chhanz88.github.io/post/2022-05-09-ubuntu-apt-mirror-issue/</loc>
     <lastmod>2022-05-09T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2022-05-09-ubuntu-config-apt-mirror-site/</loc>
+    <loc>https://chhanz88.github.io/post/2022-05-09-ubuntu-config-apt-mirror-site/</loc>
     <lastmod>2022-05-09T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2022-05-02-ubuntu-ntp-chrony/</loc>
+    <loc>https://chhanz88.github.io/post/2022-05-02-ubuntu-ntp-chrony/</loc>
     <lastmod>2022-05-02T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2022-04-14-vbmcd-ipminode/</loc>
+    <loc>https://chhanz88.github.io/post/2022-04-14-vbmcd-ipminode/</loc>
     <lastmod>2022-04-14T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2022-03-01-ipmitool/</loc>
+    <loc>https://chhanz88.github.io/post/2022-03-01-ipmitool/</loc>
     <lastmod>2022-03-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2022-02-18-njmon-telegraf-grafana/</loc>
+    <loc>https://chhanz88.github.io/post/2022-02-18-njmon-telegraf-grafana/</loc>
     <lastmod>2022-02-18T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/tags/aix/</loc>
+    <loc>https://chhanz88.github.io/tags/aix/</loc>
     <lastmod>2022-02-18T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2022-02-04-dnf-error-centos-8/</loc>
+    <loc>https://chhanz88.github.io/post/2022-02-04-dnf-error-centos-8/</loc>
     <lastmod>2022-02-04T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2022-02-03-ventoy/</loc>
+    <loc>https://chhanz88.github.io/post/2022-02-03-ventoy/</loc>
     <lastmod>2022-02-03T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/tags/Windows/</loc>
+    <loc>https://chhanz88.github.io/tags/Windows/</loc>
     <lastmod>2022-02-03T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2022-01-17-openstack-dashboard-skyline/</loc>
+    <loc>https://chhanz88.github.io/post/2022-01-17-openstack-dashboard-skyline/</loc>
     <lastmod>2022-01-17T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/tags/openstack/</loc>
+    <loc>https://chhanz88.github.io/tags/openstack/</loc>
     <lastmod>2022-01-17T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/categories/openstack/</loc>
+    <loc>https://chhanz88.github.io/categories/openstack/</loc>
     <lastmod>2022-01-17T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2021-12-01-kustomize/</loc>
+    <loc>https://chhanz88.github.io/post/2021-12-01-kustomize/</loc>
     <lastmod>2021-12-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/tags/kubernetes/</loc>
+    <loc>https://chhanz88.github.io/tags/kubernetes/</loc>
     <lastmod>2021-12-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/categories/kubernetes/</loc>
+    <loc>https://chhanz88.github.io/categories/kubernetes/</loc>
     <lastmod>2021-12-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2021-11-08-kube-tls-edge/</loc>
+    <loc>https://chhanz88.github.io/post/2021-11-08-kube-tls-edge/</loc>
     <lastmod>2021-11-08T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2021-10-22-deploy-osp-wallaby-kolla-ansible/</loc>
+    <loc>https://chhanz88.github.io/post/2021-10-22-deploy-osp-wallaby-kolla-ansible/</loc>
     <lastmod>2021-10-22T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2021-10-21-kolla-build/</loc>
+    <loc>https://chhanz88.github.io/post/2021-10-21-kolla-build/</loc>
     <lastmod>2021-10-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2021-09-30-deploy-kube-prometheus/</loc>
+    <loc>https://chhanz88.github.io/post/2021-09-30-deploy-kube-prometheus/</loc>
     <lastmod>2021-09-30T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2021-08-18-ceph-architecture/</loc>
+    <loc>https://chhanz88.github.io/post/2021-08-18-ceph-architecture/</loc>
     <lastmod>2021-08-18T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/tags/ceph/</loc>
+    <loc>https://chhanz88.github.io/tags/ceph/</loc>
     <lastmod>2021-08-18T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/categories/ceph/</loc>
+    <loc>https://chhanz88.github.io/categories/ceph/</loc>
     <lastmod>2021-08-18T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2021-07-16-authselect-use-faillock/</loc>
+    <loc>https://chhanz88.github.io/post/2021-07-16-authselect-use-faillock/</loc>
     <lastmod>2021-07-16T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2021-05-25-use-du/</loc>
+    <loc>https://chhanz88.github.io/post/2021-05-25-use-du/</loc>
     <lastmod>2021-05-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2021-05-25-yum-groupinstall/</loc>
+    <loc>https://chhanz88.github.io/post/2021-05-25-yum-groupinstall/</loc>
     <lastmod>2021-05-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2021-03-31-vdo/</loc>
+    <loc>https://chhanz88.github.io/post/2021-03-31-vdo/</loc>
     <lastmod>2021-03-31T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2021-02-24-ansible-wsl/</loc>
+    <loc>https://chhanz88.github.io/post/2021-02-24-ansible-wsl/</loc>
     <lastmod>2021-02-24T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/tags/ansible/</loc>
+    <loc>https://chhanz88.github.io/tags/ansible/</loc>
     <lastmod>2021-02-24T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/categories/ansible/</loc>
+    <loc>https://chhanz88.github.io/categories/ansible/</loc>
     <lastmod>2021-02-24T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2021-02-23-ceph-ansible/</loc>
+    <loc>https://chhanz88.github.io/post/2021-02-23-ceph-ansible/</loc>
     <lastmod>2021-02-23T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2021-01-26-matchbox/</loc>
+    <loc>https://chhanz88.github.io/post/2021-01-26-matchbox/</loc>
     <lastmod>2021-01-26T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/tags/openshift/</loc>
+    <loc>https://chhanz88.github.io/tags/openshift/</loc>
     <lastmod>2021-01-26T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/categories/openshift/</loc>
+    <loc>https://chhanz88.github.io/categories/openshift/</loc>
     <lastmod>2021-01-26T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2021-01-18-ansible-role-user-grp/</loc>
+    <loc>https://chhanz88.github.io/post/2021-01-18-ansible-role-user-grp/</loc>
     <lastmod>2021-01-18T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2020-12-10-centos-6-yumrepo-error/</loc>
+    <loc>https://chhanz88.github.io/post/2020-12-10-centos-6-yumrepo-error/</loc>
     <lastmod>2020-12-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2020-11-30-configuration-haproxy-rr/</loc>
+    <loc>https://chhanz88.github.io/post/2020-11-30-configuration-haproxy-rr/</loc>
     <lastmod>2020-11-30T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2020-11-17-configuration-dhcp/</loc>
+    <loc>https://chhanz88.github.io/post/2020-11-17-configuration-dhcp/</loc>
     <lastmod>2020-11-17T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/categories/linux-dhcp/</loc>
+    <loc>https://chhanz88.github.io/categories/linux-dhcp/</loc>
     <lastmod>2020-11-17T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2020-11-06-configuration-dns/</loc>
+    <loc>https://chhanz88.github.io/post/2020-11-06-configuration-dns/</loc>
     <lastmod>2020-11-06T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2020-10-16-ocp4-ci/</loc>
+    <loc>https://chhanz88.github.io/post/2020-10-16-ocp4-ci/</loc>
     <lastmod>2020-10-16T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2020-10-06-ovirt-install-self-hosted-engine/</loc>
+    <loc>https://chhanz88.github.io/post/2020-10-06-ovirt-install-self-hosted-engine/</loc>
     <lastmod>2020-10-06T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/tags/RHV/</loc>
+    <loc>https://chhanz88.github.io/tags/RHV/</loc>
     <lastmod>2020-10-06T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/tags/virtualization/</loc>
+    <loc>https://chhanz88.github.io/tags/virtualization/</loc>
     <lastmod>2020-10-06T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2020-09-28-update-app/</loc>
+    <loc>https://chhanz88.github.io/post/2020-09-28-update-app/</loc>
     <lastmod>2020-09-28T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2020-09-27-scale-app/</loc>
+    <loc>https://chhanz88.github.io/post/2020-09-27-scale-app/</loc>
     <lastmod>2020-09-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2020-09-25-expose-app/</loc>
+    <loc>https://chhanz88.github.io/post/2020-09-25-expose-app/</loc>
     <lastmod>2020-09-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2020-09-24-check-the-app/</loc>
+    <loc>https://chhanz88.github.io/post/2020-09-24-check-the-app/</loc>
     <lastmod>2020-09-24T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2020-09-24-check-the-node/</loc>
+    <loc>https://chhanz88.github.io/post/2020-09-24-check-the-node/</loc>
     <lastmod>2020-09-24T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2020-09-23-create-deployment/</loc>
+    <loc>https://chhanz88.github.io/post/2020-09-23-create-deployment/</loc>
     <lastmod>2020-09-23T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2020-09-22-podman-build-flask-example-app/</loc>
+    <loc>https://chhanz88.github.io/post/2020-09-22-podman-build-flask-example-app/</loc>
     <lastmod>2020-09-22T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/categories/container/</loc>
+    <loc>https://chhanz88.github.io/categories/container/</loc>
     <lastmod>2020-09-22T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/tags/podman/</loc>
+    <loc>https://chhanz88.github.io/tags/podman/</loc>
     <lastmod>2020-09-22T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2020-09-21-buildah/</loc>
+    <loc>https://chhanz88.github.io/post/2020-09-21-buildah/</loc>
     <lastmod>2020-09-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2020-09-05-fast-k3s-use-ansible/</loc>
+    <loc>https://chhanz88.github.io/post/2020-09-05-fast-k3s-use-ansible/</loc>
     <lastmod>2020-09-05T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2020-08-12-linux-backup-rear/</loc>
+    <loc>https://chhanz88.github.io/post/2020-08-12-linux-backup-rear/</loc>
     <lastmod>2020-08-12T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2020-07-30-linux-reposync/</loc>
+    <loc>https://chhanz88.github.io/post/2020-07-30-linux-reposync/</loc>
     <lastmod>2020-07-30T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2020-07-21-centos6-install-latest-openssl/</loc>
+    <loc>https://chhanz88.github.io/post/2020-07-21-centos6-install-latest-openssl/</loc>
     <lastmod>2020-07-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2020-07-05-python-simplehttpserver/</loc>
+    <loc>https://chhanz88.github.io/post/2020-07-05-python-simplehttpserver/</loc>
     <lastmod>2020-07-05T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/tags/python/</loc>
+    <loc>https://chhanz88.github.io/tags/python/</loc>
     <lastmod>2020-07-05T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/categories/python/</loc>
+    <loc>https://chhanz88.github.io/categories/python/</loc>
     <lastmod>2020-07-05T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2020-07-01-ocp-codeready/</loc>
+    <loc>https://chhanz88.github.io/post/2020-07-01-ocp-codeready/</loc>
     <lastmod>2020-07-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2020-06-24-ocp4-template/</loc>
+    <loc>https://chhanz88.github.io/post/2020-06-24-ocp4-template/</loc>
     <lastmod>2020-06-24T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2020-06-22-ocp4-deploy-source/</loc>
+    <loc>https://chhanz88.github.io/post/2020-06-22-ocp4-deploy-source/</loc>
     <lastmod>2020-06-22T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2020-06-18-ocp4-deploy-image/</loc>
+    <loc>https://chhanz88.github.io/post/2020-06-18-ocp4-deploy-image/</loc>
     <lastmod>2020-06-18T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2020-05-21-container-hands-on/</loc>
+    <loc>https://chhanz88.github.io/post/2020-05-21-container-hands-on/</loc>
     <lastmod>2020-05-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/tags/docker/</loc>
+    <loc>https://chhanz88.github.io/tags/docker/</loc>
     <lastmod>2020-05-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2020-05-12-install-ansible-tower/</loc>
+    <loc>https://chhanz88.github.io/post/2020-05-12-install-ansible-tower/</loc>
     <lastmod>2020-05-12T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2020-05-04-jenkins-ci/</loc>
+    <loc>https://chhanz88.github.io/post/2020-05-04-jenkins-ci/</loc>
     <lastmod>2020-05-04T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/tags/devops/</loc>
+    <loc>https://chhanz88.github.io/tags/devops/</loc>
     <lastmod>2020-05-04T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/categories/devops/</loc>
+    <loc>https://chhanz88.github.io/categories/devops/</loc>
     <lastmod>2020-05-04T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2020-04-17-install-nexus-ce/</loc>
+    <loc>https://chhanz88.github.io/post/2020-04-17-install-nexus-ce/</loc>
     <lastmod>2020-04-17T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2020-04-16-install-jenkins/</loc>
+    <loc>https://chhanz88.github.io/post/2020-04-16-install-jenkins/</loc>
     <lastmod>2020-04-16T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2020-03-12-deploy-warfile/</loc>
+    <loc>https://chhanz88.github.io/post/2020-03-12-deploy-warfile/</loc>
     <lastmod>2020-03-12T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/tags/tomcat/</loc>
+    <loc>https://chhanz88.github.io/tags/tomcat/</loc>
     <lastmod>2020-03-12T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/categories/tomcat/</loc>
+    <loc>https://chhanz88.github.io/categories/tomcat/</loc>
     <lastmod>2020-03-12T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2020-03-10-bash-history-timestamp/</loc>
+    <loc>https://chhanz88.github.io/post/2020-03-10-bash-history-timestamp/</loc>
     <lastmod>2020-03-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2020-03-02-podman/</loc>
+    <loc>https://chhanz88.github.io/post/2020-03-02-podman/</loc>
     <lastmod>2020-03-02T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/tags/container/</loc>
+    <loc>https://chhanz88.github.io/tags/container/</loc>
     <lastmod>2020-03-02T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2020-02-16-install-gitlab/</loc>
+    <loc>https://chhanz88.github.io/post/2020-02-16-install-gitlab/</loc>
     <lastmod>2020-02-16T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2020-01-27-create-cluster-ibm-kubernetes-service/</loc>
+    <loc>https://chhanz88.github.io/post/2020-01-27-create-cluster-ibm-kubernetes-service/</loc>
     <lastmod>2020-01-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/tags/cloud/</loc>
+    <loc>https://chhanz88.github.io/tags/cloud/</loc>
     <lastmod>2020-01-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2020-01-18-install-rhvm-admin/</loc>
+    <loc>https://chhanz88.github.io/post/2020-01-18-install-rhvm-admin/</loc>
     <lastmod>2020-01-18T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/categories/RHV/</loc>
+    <loc>https://chhanz88.github.io/categories/RHV/</loc>
     <lastmod>2020-01-18T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2020-01-17-install-rhvm/</loc>
+    <loc>https://chhanz88.github.io/post/2020-01-17-install-rhvm/</loc>
     <lastmod>2020-01-17T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2020-01-03-install-rhvh/</loc>
+    <loc>https://chhanz88.github.io/post/2020-01-03-install-rhvh/</loc>
     <lastmod>2020-01-03T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2019-12-30-enable-kvm-nested-virtualization/</loc>
+    <loc>https://chhanz88.github.io/post/2019-12-30-enable-kvm-nested-virtualization/</loc>
     <lastmod>2019-12-30T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2019-12-13-linux-configure-novnc/</loc>
+    <loc>https://chhanz88.github.io/post/2019-12-13-linux-configure-novnc/</loc>
     <lastmod>2019-12-13T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2019-11-29-openshift4-dev-env/</loc>
+    <loc>https://chhanz88.github.io/post/2019-11-29-openshift4-dev-env/</loc>
     <lastmod>2019-11-29T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2019-11-12-configuration-squid-proxy/</loc>
+    <loc>https://chhanz88.github.io/post/2019-11-12-configuration-squid-proxy/</loc>
     <lastmod>2019-11-12T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2019-10-22-virt-v2v/</loc>
+    <loc>https://chhanz88.github.io/post/2019-10-22-virt-v2v/</loc>
     <lastmod>2019-10-22T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/tags/VMware/</loc>
+    <loc>https://chhanz88.github.io/tags/VMware/</loc>
     <lastmod>2019-10-22T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2019-09-30-cka-exam-review/</loc>
+    <loc>https://chhanz88.github.io/post/2019-09-30-cka-exam-review/</loc>
     <lastmod>2019-09-30T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2019-09-25-fastvm-public-image/</loc>
+    <loc>https://chhanz88.github.io/post/2019-09-25-fastvm-public-image/</loc>
     <lastmod>2019-09-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/tags/fast-vm/</loc>
+    <loc>https://chhanz88.github.io/tags/fast-vm/</loc>
     <lastmod>2019-09-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2019-09-20-docker-configuration-nvidia-runtime/</loc>
+    <loc>https://chhanz88.github.io/post/2019-09-20-docker-configuration-nvidia-runtime/</loc>
     <lastmod>2019-09-20T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/categories/docker/</loc>
+    <loc>https://chhanz88.github.io/categories/docker/</loc>
     <lastmod>2019-09-20T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2019-09-04-kubernetes-install-1_15_3/</loc>
+    <loc>https://chhanz88.github.io/post/2019-09-04-kubernetes-install-1_15_3/</loc>
     <lastmod>2019-09-04T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2019-08-16-linux-fast-vm/</loc>
+    <loc>https://chhanz88.github.io/post/2019-08-16-linux-fast-vm/</loc>
     <lastmod>2019-08-16T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2019-08-01-linux-sosreport/</loc>
+    <loc>https://chhanz88.github.io/post/2019-08-01-linux-sosreport/</loc>
     <lastmod>2019-08-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2019-07-24-github-io/</loc>
+    <loc>https://chhanz88.github.io/post/2019-07-24-github-io/</loc>
     <lastmod>2019-07-24T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/tags/github/</loc>
+    <loc>https://chhanz88.github.io/tags/github/</loc>
     <lastmod>2019-07-24T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/categories/github/</loc>
+    <loc>https://chhanz88.github.io/categories/github/</loc>
     <lastmod>2019-07-24T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2019-07-15-okd-hpa/</loc>
+    <loc>https://chhanz88.github.io/post/2019-07-15-okd-hpa/</loc>
     <lastmod>2019-07-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2019-06-24-overview-okd-gui/</loc>
+    <loc>https://chhanz88.github.io/post/2019-06-24-overview-okd-gui/</loc>
     <lastmod>2019-06-24T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2019-06-16-vmware-scsi-id-check/</loc>
+    <loc>https://chhanz88.github.io/post/2019-06-16-vmware-scsi-id-check/</loc>
     <lastmod>2019-06-16T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/categories/VMware/</loc>
+    <loc>https://chhanz88.github.io/categories/VMware/</loc>
     <lastmod>2019-06-16T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2019-06-07-install-okd-all-in-one/</loc>
+    <loc>https://chhanz88.github.io/post/2019-06-07-install-okd-all-in-one/</loc>
     <lastmod>2019-06-07T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2019-05-10-install-centos7-ppc-on-vios/</loc>
+    <loc>https://chhanz88.github.io/post/2019-05-10-install-centos7-ppc-on-vios/</loc>
     <lastmod>2019-05-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2019-04-17-grubby_and_proc_cmdline/</loc>
+    <loc>https://chhanz88.github.io/post/2019-04-17-grubby_and_proc_cmdline/</loc>
     <lastmod>2019-04-17T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2019-04-15-kubernetes-chapter-2-network-volume/</loc>
+    <loc>https://chhanz88.github.io/post/2019-04-15-kubernetes-chapter-2-network-volume/</loc>
     <lastmod>2019-04-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2019-04-12-kubernetes-chapter-1-volume/</loc>
+    <loc>https://chhanz88.github.io/post/2019-04-12-kubernetes-chapter-1-volume/</loc>
     <lastmod>2019-04-12T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2019-04-09-kubernetes-hpa-example/</loc>
+    <loc>https://chhanz88.github.io/post/2019-04-09-kubernetes-hpa-example/</loc>
     <lastmod>2019-04-09T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2019-04-05-linux-gpfs-hands-on-training/</loc>
+    <loc>https://chhanz88.github.io/post/2019-04-05-linux-gpfs-hands-on-training/</loc>
     <lastmod>2019-04-05T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/tags/GPFS/</loc>
+    <loc>https://chhanz88.github.io/tags/GPFS/</loc>
     <lastmod>2019-04-05T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2019-04-01-linux--use-ssacil/</loc>
+    <loc>https://chhanz88.github.io/post/2019-04-01-linux--use-ssacil/</loc>
     <lastmod>2019-04-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2019-03-31-linux-raw-device-generator-script/</loc>
+    <loc>https://chhanz88.github.io/post/2019-03-31-linux-raw-device-generator-script/</loc>
     <lastmod>2019-03-31T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2019-02-13-containerorchestration-docker-swarm/</loc>
+    <loc>https://chhanz88.github.io/post/2019-02-13-containerorchestration-docker-swarm/</loc>
     <lastmod>2019-02-13T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2019-01-30-ansible-vault-create-groupvars/</loc>
+    <loc>https://chhanz88.github.io/post/2019-01-30-ansible-vault-create-groupvars/</loc>
     <lastmod>2019-01-30T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2019-01-19-linux-how-to-use-logger/</loc>
+    <loc>https://chhanz88.github.io/post/2019-01-19-linux-how-to-use-logger/</loc>
     <lastmod>2019-01-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2019-01-18-linux-how-to-create-custom-systemd-service/</loc>
+    <loc>https://chhanz88.github.io/post/2019-01-18-linux-how-to-create-custom-systemd-service/</loc>
     <lastmod>2019-01-18T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2019-01-09-rhel6-python27/</loc>
+    <loc>https://chhanz88.github.io/post/2019-01-09-rhel6-python27/</loc>
     <lastmod>2019-01-09T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2019-01-07-spacewalkdocker/</loc>
+    <loc>https://chhanz88.github.io/post/2019-01-07-spacewalkdocker/</loc>
     <lastmod>2019-01-07T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/tags/spacewalk/</loc>
+    <loc>https://chhanz88.github.io/tags/spacewalk/</loc>
     <lastmod>2019-01-07T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2018-12-14-linux-change-default-boot-kernel/</loc>
+    <loc>https://chhanz88.github.io/post/2018-12-14-linux-change-default-boot-kernel/</loc>
     <lastmod>2018-12-14T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2018-11-13-docker-training/</loc>
+    <loc>https://chhanz88.github.io/post/2018-11-13-docker-training/</loc>
     <lastmod>2018-11-13T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2018-11-04-aix-system-info-script/</loc>
+    <loc>https://chhanz88.github.io/post/2018-11-04-aix-system-info-script/</loc>
     <lastmod>2018-11-04T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/categories/aix/</loc>
+    <loc>https://chhanz88.github.io/categories/aix/</loc>
     <lastmod>2018-11-04T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2018-10-23-esxi-vmclone/</loc>
+    <loc>https://chhanz88.github.io/post/2018-10-23-esxi-vmclone/</loc>
     <lastmod>2018-10-23T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2018-10-01-linux_rawdevice/</loc>
+    <loc>https://chhanz88.github.io/post/2018-10-01-linux_rawdevice/</loc>
     <lastmod>2018-10-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2018-09-10-45749387/</loc>
+    <loc>https://chhanz88.github.io/post/2018-09-10-45749387/</loc>
     <lastmod>2018-09-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2018-08-16-linux-change-slave-bond-device/</loc>
+    <loc>https://chhanz88.github.io/post/2018-08-16-linux-change-slave-bond-device/</loc>
     <lastmod>2018-08-16T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2018-08-01-linux-powerkvm-install-guide/</loc>
+    <loc>https://chhanz88.github.io/post/2018-08-01-linux-powerkvm-install-guide/</loc>
     <lastmod>2018-08-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/tags/powerkvm/</loc>
+    <loc>https://chhanz88.github.io/tags/powerkvm/</loc>
     <lastmod>2018-08-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2018-03-02-linux-create-bond-device/</loc>
+    <loc>https://chhanz88.github.io/post/2018-03-02-linux-create-bond-device/</loc>
     <lastmod>2018-03-02T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2018-02-21-aixuformat/</loc>
+    <loc>https://chhanz88.github.io/post/2018-02-21-aixuformat/</loc>
     <lastmod>2018-02-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2018-02-02-rhel-create-yum-repo/</loc>
+    <loc>https://chhanz88.github.io/post/2018-02-02-rhel-create-yum-repo/</loc>
     <lastmod>2018-02-02T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2017-05-25-aixasmraw/</loc>
+    <loc>https://chhanz88.github.io/post/2017-05-25-aixasmraw/</loc>
     <lastmod>2017-05-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2017-01-16-aixerrorcfg64/</loc>
+    <loc>https://chhanz88.github.io/post/2017-01-16-aixerrorcfg64/</loc>
     <lastmod>2017-01-16T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/tags/SAN/</loc>
+    <loc>https://chhanz88.github.io/tags/SAN/</loc>
     <lastmod>2016-05-13T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/categories/SAN/</loc>
+    <loc>https://chhanz88.github.io/categories/SAN/</loc>
     <lastmod>2016-05-13T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2016-05-13-sanswitchops/</loc>
+    <loc>https://chhanz88.github.io/post/2016-05-13-sanswitchops/</loc>
     <lastmod>2016-05-13T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2016-02-15-aix-rdx-drive-backup-mksysb/</loc>
+    <loc>https://chhanz88.github.io/post/2016-02-15-aix-rdx-drive-backup-mksysb/</loc>
     <lastmod>2016-02-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/tags/backup/</loc>
+    <loc>https://chhanz88.github.io/tags/backup/</loc>
     <lastmod>2016-02-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2014-07-25-hacmpforceremove/</loc>
+    <loc>https://chhanz88.github.io/post/2014-07-25-hacmpforceremove/</loc>
     <lastmod>2014-07-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/tags/hacmp/</loc>
+    <loc>https://chhanz88.github.io/tags/hacmp/</loc>
     <lastmod>2014-07-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2014-01-12-aix-lvm-informarion/</loc>
+    <loc>https://chhanz88.github.io/post/2014-01-12-aix-lvm-informarion/</loc>
     <lastmod>2014-01-12T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2013-04-27-windows-mscs-cluster/</loc>
+    <loc>https://chhanz88.github.io/post/2013-04-27-windows-mscs-cluster/</loc>
     <lastmod>2013-04-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/tags/MSCS/</loc>
+    <loc>https://chhanz88.github.io/tags/MSCS/</loc>
     <lastmod>2013-04-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/categories/Windows/</loc>
+    <loc>https://chhanz88.github.io/categories/Windows/</loc>
     <lastmod>2013-04-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2012-09-06-aixjfsvsjfs2/</loc>
+    <loc>https://chhanz88.github.io/post/2012-09-06-aixjfsvsjfs2/</loc>
     <lastmod>2012-09-06T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2012-09-06-aixmirroraltdisk/</loc>
+    <loc>https://chhanz88.github.io/post/2012-09-06-aixmirroraltdisk/</loc>
     <lastmod>2012-09-06T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/tags/alt_disk_install/</loc>
+    <loc>https://chhanz88.github.io/tags/alt_disk_install/</loc>
     <lastmod>2012-09-06T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/tags/jfs/</loc>
+    <loc>https://chhanz88.github.io/tags/jfs/</loc>
     <lastmod>2012-09-06T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/tags/jfs2/</loc>
+    <loc>https://chhanz88.github.io/tags/jfs2/</loc>
     <lastmod>2012-09-06T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2012-08-26-aix-mirror-disk-change/</loc>
+    <loc>https://chhanz88.github.io/post/2012-08-26-aix-mirror-disk-change/</loc>
     <lastmod>2012-08-26T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/post/2012-08-24-aix-mount-cd-iso/</loc>
+    <loc>https://chhanz88.github.io/post/2012-08-24-aix-mount-cd-iso/</loc>
     <lastmod>2012-08-24T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://chhanz88.github.io/post/about/</loc>
+    <loc>https://chhanz88.github.io/about/</loc>
   </url><url>
-    <loc>https://chhanz88.github.io/post/archives/</loc>
+    <loc>https://chhanz88.github.io/archives/</loc>
   </url><url>
-    <loc>https://chhanz88.github.io/post/links/</loc>
+    <loc>https://chhanz88.github.io/links/</loc>
   </url><url>
-    <loc>https://chhanz88.github.io/post/search/</loc>
+    <loc>https://chhanz88.github.io/search/</loc>
   </url>
 </urlset>

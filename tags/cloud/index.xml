@@ -3,18 +3,18 @@
   <channel>
     <title>cloud on chhanz 기술 블로그
 </title>
-    <link>https://chhanz88.github.io/post/tags/cloud/</link>
+    <link>https://chhanz88.github.io/tags/cloud/</link>
     <description>Recent content in cloud on chhanz 기술 블로그
 </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 27 Jan 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://chhanz88.github.io/post/tags/cloud/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 27 Jan 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://chhanz88.github.io/tags/cloud/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>[Kubernetes] IBM Cloud Kubernetes Service 를 Free Tier 로 사용해보자!</title>
-      <link>https://chhanz88.github.io/post/post/2020-01-27-create-cluster-ibm-kubernetes-service/</link>
+      <link>https://chhanz88.github.io/post/2020-01-27-create-cluster-ibm-kubernetes-service/</link>
       <pubDate>Mon, 27 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/post/2020-01-27-create-cluster-ibm-kubernetes-service/</guid>
+      <guid>https://chhanz88.github.io/post/2020-01-27-create-cluster-ibm-kubernetes-service/</guid>
       <description> </description>
     </item>
     

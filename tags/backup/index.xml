@@ -3,18 +3,18 @@
   <channel>
     <title>backup on chhanz 기술 블로그
 </title>
-    <link>https://chhanz88.github.io/post/tags/backup/</link>
+    <link>https://chhanz88.github.io/tags/backup/</link>
     <description>Recent content in backup on chhanz 기술 블로그
 </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 15 Feb 2016 00:00:00 +0000</lastBuildDate><atom:link href="https://chhanz88.github.io/post/tags/backup/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 15 Feb 2016 00:00:00 +0000</lastBuildDate><atom:link href="https://chhanz88.github.io/tags/backup/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>[AIX] RDX Device Backup Guide</title>
-      <link>https://chhanz88.github.io/post/post/2016-02-15-aix-rdx-drive-backup-mksysb/</link>
+      <link>https://chhanz88.github.io/post/2016-02-15-aix-rdx-drive-backup-mksysb/</link>
       <pubDate>Mon, 15 Feb 2016 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/post/2016-02-15-aix-rdx-drive-backup-mksysb/</guid>
+      <guid>https://chhanz88.github.io/post/2016-02-15-aix-rdx-drive-backup-mksysb/</guid>
       <description>[AIX] RDX Device Backup Guide  AIX RDX Device Backup Guide 입니다.
 (RDX 를 이용한 백업 방법입니다.)
 2016년 프로젝트 참여하면서 작성한 가이드입니다.

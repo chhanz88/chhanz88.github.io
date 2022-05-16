@@ -3,18 +3,18 @@
   <channel>
     <title>ceph on chhanz 기술 블로그
 </title>
-    <link>https://chhanz88.github.io/post/categories/ceph/</link>
+    <link>https://chhanz88.github.io/categories/ceph/</link>
     <description>Recent content in ceph on chhanz 기술 블로그
 </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 18 Aug 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://chhanz88.github.io/post/categories/ceph/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 18 Aug 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://chhanz88.github.io/categories/ceph/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>[CEPH] Ceph Architecture</title>
-      <link>https://chhanz88.github.io/post/post/2021-08-18-ceph-architecture/</link>
+      <link>https://chhanz88.github.io/post/2021-08-18-ceph-architecture/</link>
       <pubDate>Wed, 18 Aug 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/post/2021-08-18-ceph-architecture/</guid>
+      <guid>https://chhanz88.github.io/post/2021-08-18-ceph-architecture/</guid>
       <description>Ceph 란? Ceph는 오픈소스 소프트웨어(Software Defined Storage) 스토리지 플랫폼으로 단일 분산 컴퓨터 클러스터에 object 스토리지를 구현하고 object, block 및 file Level 의 스토리지 기능을 제공한다.
 또한 single point of failure 이 없는 완전히 분산된 운영을 주로 목표로 하며 엑사바이트 수준으로 scale-out이 가능하다.
 소프트웨어 정의 스토리지(Software Defined Storage)를 선택해야 하는 이유 소프트웨어 정의 스토리지의 주요 이점은 다음과 같다.
@@ -23,10 +23,10 @@
     
     <item>
       <title>[ceph] ceph-ansible 을 이용하여 ceph 배포 (containerized deployment)</title>
-      <link>https://chhanz88.github.io/post/post/2021-02-23-ceph-ansible/</link>
+      <link>https://chhanz88.github.io/post/2021-02-23-ceph-ansible/</link>
       <pubDate>Tue, 23 Feb 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/post/2021-02-23-ceph-ansible/</guid>
+      <guid>https://chhanz88.github.io/post/2021-02-23-ceph-ansible/</guid>
       <description> </description>
     </item>
     

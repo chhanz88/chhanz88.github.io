@@ -3,18 +3,18 @@
   <channel>
     <title>virtualization on chhanz 기술 블로그
 </title>
-    <link>https://chhanz88.github.io/post/tags/virtualization/</link>
+    <link>https://chhanz88.github.io/tags/virtualization/</link>
     <description>Recent content in virtualization on chhanz 기술 블로그
 </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 06 Oct 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://chhanz88.github.io/post/tags/virtualization/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 06 Oct 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://chhanz88.github.io/tags/virtualization/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>[oVirt] Install oVirt 4.3 (Self Hosted Engine)</title>
-      <link>https://chhanz88.github.io/post/post/2020-10-06-ovirt-install-self-hosted-engine/</link>
+      <link>https://chhanz88.github.io/post/2020-10-06-ovirt-install-self-hosted-engine/</link>
       <pubDate>Tue, 06 Oct 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/post/2020-10-06-ovirt-install-self-hosted-engine/</guid>
+      <guid>https://chhanz88.github.io/post/2020-10-06-ovirt-install-self-hosted-engine/</guid>
       <description>[oVirt] Install oVirt 4.3 (Self Hosted Engine)   oVirt Self Hosted engine 설치 가이드입니다.
 oVirt 4.3 기준으로 작성 되었습니다.
 작성일 : 2019-11

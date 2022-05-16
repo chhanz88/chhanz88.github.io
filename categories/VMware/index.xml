@@ -3,27 +3,27 @@
   <channel>
     <title>VMware on chhanz 기술 블로그
 </title>
-    <link>https://chhanz88.github.io/post/categories/VMware/</link>
+    <link>https://chhanz88.github.io/categories/VMware/</link>
     <description>Recent content in VMware on chhanz 기술 블로그
 </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 16 Jun 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://chhanz88.github.io/post/categories/VMware/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 16 Jun 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://chhanz88.github.io/categories/VMware/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>[VMware] Linux SCSI ID 확인 방법</title>
-      <link>https://chhanz88.github.io/post/post/2019-06-16-vmware-scsi-id-check/</link>
+      <link>https://chhanz88.github.io/post/2019-06-16-vmware-scsi-id-check/</link>
       <pubDate>Sun, 16 Jun 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/post/2019-06-16-vmware-scsi-id-check/</guid>
+      <guid>https://chhanz88.github.io/post/2019-06-16-vmware-scsi-id-check/</guid>
       <description> </description>
     </item>
     
     <item>
       <title>[VMware] ESXi VM Clone Script</title>
-      <link>https://chhanz88.github.io/post/post/2018-10-23-esxi-vmclone/</link>
+      <link>https://chhanz88.github.io/post/2018-10-23-esxi-vmclone/</link>
       <pubDate>Tue, 23 Oct 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/post/2018-10-23-esxi-vmclone/</guid>
+      <guid>https://chhanz88.github.io/post/2018-10-23-esxi-vmclone/</guid>
       <description> </description>
     </item>
     

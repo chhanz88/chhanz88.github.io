@@ -3,18 +3,18 @@
   <channel>
     <title>container on chhanz 기술 블로그
 </title>
-    <link>https://chhanz88.github.io/post/tags/container/</link>
+    <link>https://chhanz88.github.io/tags/container/</link>
     <description>Recent content in container on chhanz 기술 블로그
 </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 02 Mar 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://chhanz88.github.io/post/tags/container/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 02 Mar 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://chhanz88.github.io/tags/container/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>[Container] Podman 설치 및 사용법</title>
-      <link>https://chhanz88.github.io/post/post/2020-03-02-podman/</link>
+      <link>https://chhanz88.github.io/post/2020-03-02-podman/</link>
       <pubDate>Mon, 02 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://chhanz88.github.io/post/post/2020-03-02-podman/</guid>
+      <guid>https://chhanz88.github.io/post/2020-03-02-podman/</guid>
       <description> </description>
     </item>
     
