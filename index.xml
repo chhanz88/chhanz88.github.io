@@ -1089,7 +1089,6 @@ Script 내용  #! /bin/ksh # Make by. chhan  DATEC=$(date +%Y%m%d-%H%M) IdChk=`i
       <description>About chhanz</description>
     </item>
     
-    
     <item>
       <title>Links</title>
       <link>https://chhanz88.github.io/links/</link>
